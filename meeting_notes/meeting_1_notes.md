@@ -1,3 +1,5 @@
+[Video link](https://www.youtube.com/watch?v=pKTnU7L2kEk)
+
 ### What problem is PenPal Gladiators trying to solve?
 
 - People are turned off by the usual online spaces.
