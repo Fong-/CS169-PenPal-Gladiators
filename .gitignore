@@ -32,3 +32,5 @@ bower.json
 /log/*.log
 /tmp
 
+# OSX
+.DS_Store
