@@ -1,0 +1,1 @@
+CS169PenpalGladiators::Application.config.secret_token = "14f28f761dd98cc0abb75c9f3416619a988bb25b0eaa388d6cf1ddb92d3b9d125a3f7ece878d35c0639c2b61b12d2ea51ce79bcd3530eb652f6d5691e76009d9"
