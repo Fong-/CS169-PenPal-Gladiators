@@ -1,0 +1,18 @@
+{
+	"folders":
+	[
+		{
+			"follow_symlinks": true,
+			"path": "."
+		}
+	],
+    "settings":
+    {
+        "scroll_past_end": true,
+        "tab_size": 4,
+        "translate_tabs_to_spaces": true,
+        "use_tab_stops": true,
+        "ensure_newline_at_eof_on_save": true,
+        "trim_trailing_white_space_on_save": true
+    }
+}
