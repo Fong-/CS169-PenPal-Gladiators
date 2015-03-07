@@ -16,8 +16,6 @@ group :development, :test do
   gem 'debugger'
   gem 'simplecov', :require => false
   gem 'database_cleaner'
-  gem 'sinon-rails'
-  gem 'jasmine-sinon-rails'
   gem 'jasmine-rails'
   gem 'rspec-rails', '2.14'
   gem 'cucumber-rails', :require => false
