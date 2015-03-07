@@ -8,7 +8,7 @@ gem 'sqlite3'
 group :assets do
   gem 'coffee-rails', '~> 3.2.1'
   gem 'angularjs-rails'
-  gem 'jquery-rails'
+  gem 'angular-ui-bootstrap-rails'
   gem 'uglifier', '>= 1.0.3'
 end
 
