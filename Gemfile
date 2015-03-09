@@ -6,6 +6,8 @@ gem 'rails', '3.2.16'
 gem 'sqlite3'
 
 group :assets do
+  gem 'therubyracer'
+  gem 'less-rails'
   gem 'coffee-rails', '~> 3.2.1'
   gem 'angularjs-rails'
   gem 'angular-ui-bootstrap-rails'
