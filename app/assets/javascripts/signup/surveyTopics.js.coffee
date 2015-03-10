@@ -16,7 +16,7 @@ surveyTopics.config(($routeProvider) ->
     mock_load_topics = (callback) ->
         # TODO Replace with a request to the server.
         setTimeout( ->
-            topics = [{id: 0, icon: "/assets/topic_icons/climate.png", name: "Climate"}, {id: 1, icon: "/assets/topic_icons/education.png", name: "Education"}, {id: 2, icon: "/assets/topic_icons/money.png", name: "Economy"}, {id: 3, icon: "/assets/topic_icons/technology.png", name: "Technology"}, {id: 4, icon: "/assets/topic_icons/lgbt.png", name: "LGBT Rights"}, {id: 5, icon: "/assets/topic_icons/immigration.png", name: "Immigration Law"}, {id: 6, icon: "/assets/topic_icons/foreign.png", name: "Foreign Policy"}, {id: 7, icon: "/assets/topic_icons/religion.png", name: "Religion"}, {id: 8, icon: "/assets/topic_icons/philosophy.png", name: "Philosophy"}, {id: 10, icon: "/assets/topic_icons/justice.png", name: "Criminal Law"}]
+            topics = [{id: 0, icon: "/assets/topic_icons/climate.png", name: "Climate"}, {id: 1, icon: "/assets/topic_icons/education.png", name: "Education"}, {id: 2, icon: "/assets/topic_icons/money.png", name: "Economy"}, {id: 3, icon: "/assets/topic_icons/technology.png", name: "Technology"}, {id: 4, icon: "/assets/topic_icons/lgbt.png", name: "LGBT Rights"}, {id: 5, icon: "/assets/topic_icons/immigration.png", name: "Immigration Law"}, {id: 6, icon: "/assets/topic_icons/international.png", name: "Foreign Policy"}, {id: 7, icon: "/assets/topic_icons/religion.png", name: "Religion"}, {id: 8, icon: "/assets/topic_icons/philosophy.png", name: "Philosophy"}, {id: 10, icon: "/assets/topic_icons/justice.png", name: "Criminal Law"}]
             callback(topics)
         , 250)
 
