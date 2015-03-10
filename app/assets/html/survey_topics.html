@@ -1,0 +1,12 @@
+<h1>Which topics interest you?</h1>
+<p>Select {{MIN_NUM_TOPICS_REQUIRED}} from the below topics. You may change or add topics later through 'settings.'</p>
+<div id="topic-select-container" snap-width>
+    <div class="topicContainer col-xs-3" ng-click="handleTopicSelected(topic.id)" ng-repeat="topic in topics">
+        <input ng-model="topicCheckModel[topic.id]" type="checkbox"/>
+        <label><span/></label>
+        <img ng-src="{{topic.icon}}"/>
+        <p>{{topic.name}}</p>
+    </div>
+    <br/>
+    <input class="col-xs-3" type="button" ng-disabled="disableNextButton()" ng-click="handleAdvanceToQuestions()" value="{{nextButtonValue()}}"/>
+</div>
