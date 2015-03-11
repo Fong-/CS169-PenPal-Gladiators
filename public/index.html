@@ -2,14 +2,16 @@
 <html>
     <head>
         <title>The Colosseum</title>
-        <link rel="stylesheet" type="text/css" href="/assets/signup.css"/>
+        <link rel="stylesheet" href="/assets/bootstrap.min.css">
+        <link rel="stylesheet" href="/assets/bootflat.css">
+        <link rel="stylesheet" type="text/css" href="/assets/startpage.css"/>
+        <script src="/assets/jquery.min.js"></script>
+        <script src="/assets/bootstrap.min.js"></script>
+        <script src="/assets/startpage.js"></script>
     </head>
-
     <body>
-        <div ng-app="Content">
+        <div class="container" ng-app="StartPage">
             <div ng-view/>
         </div>
-        <script src="/assets/app.js"></script>
-        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular-cookies.js"></script>
     </body>
 </html>
