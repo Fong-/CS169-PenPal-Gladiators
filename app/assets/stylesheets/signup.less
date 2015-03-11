@@ -1,5 +1,7 @@
+
 @topic-icon-display-width: 128px;
 @topic-icon-margin: 6px;
+@num-topics-per-row: 4;
 
 .check_sprite {
     position: absolute;
@@ -14,51 +16,63 @@
 }
 
 #topic-select-container {
-    width: 8 * @topic-icon-margin + 4 * @topic-icon-display-width;
+    width: 2 * @num-topics-per-row * @topic-icon-margin + @num-topics-per-row * @topic-icon-display-width;
 
-    .topicContainer {
-        width: @topic-icon-display-width;
-        height: 150px;
-        margin-bottom: 10px;
-        margin-left: @topic-icon-margin;
-        margin-right: @topic-icon-margin;
-        display: inline-block;
-        cursor: pointer;
+    #topic-check-container {
+        .topicContainer {
+            width: @topic-icon-display-width;
+            height: 150px;
+            margin-bottom: 10px;
+            margin-left: @topic-icon-margin;
+            margin-right: @topic-icon-margin;
+            display: inline-block;
+            cursor: pointer;
 
-        p {
-            background-color: #333333;
-            color: #FFFFFF;
-            margin-top: 0px;
-            padding-left: 4px;
-        }
-
-        img {
-            width: 128px;
-            height: 128px;
-            margin-bottom: 0px;
-            display: block;
-        }
-
-        input[type="checkbox"] {
-            display: none;
-
-            &+ label span {
-                .check_sprite;
-                border-color: gray;
-                background-color: white;
-                opacity: 0.4;
+            p {
+                background-color: #333333;
+                color: #FFFFFF;
+                margin-top: 0px;
+                padding-left: 4px;
             }
 
-            &:checked + label span {
-                .check_sprite;
-                border-color: rgb(96, 119, 35);
-                background-color: rgb(196,217,143);
-                opacity: 1;
+            img {
+                width: 128px;
+                height: 128px;
+                margin-bottom: 0px;
+                display: block;
+            }
+
+            input[type="checkbox"] {
+                display: none;
+
+                &+ label span {
+                    .check_sprite;
+                    border-color: gray;
+                    background-color: white;
+                    opacity: 0.4;
+                }
+
+                &:checked + label span {
+                    .check_sprite;
+                    border-color: rgb(96, 119, 35);
+                    background-color: rgb(196,217,143);
+                    opacity: 1;
+                }
             }
         }
     }
 
     input[type="button"] {
         float: right;
+        border: 1px solid #777777;
+        background: #3B5998;
+        color: white;
+        padding: 4px;
+        cursor: pointer;
+        border-radius: 4px;
+
+        &:disabled {
+            background: #6F8AC7;
+        }
     }
 }
