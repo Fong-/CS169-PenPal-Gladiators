@@ -26,8 +26,8 @@ surveyTopics.config(($routeProvider) ->
     # Computes whether or not the next button should be disabled.
     $scope.disableNextButton = -> numTopicsRemaining() > 0
 
-    # Called when a topic is selected.
-    $scope.handleTopicSelected = (topicId) -> $scope.topicCheckModel[topicId] = not $scope.topicCheckModel[topicId]
+    # Called when a topic is toggled.
+    $scope.handleTopicToggled = (topicId) -> $scope.topicCheckModel[topicId] = not $scope.topicCheckModel[topicId]
 
     # Advances to the next view.
     $scope.handleAdvanceToQuestions = -> $location.path("questions").search("topic", id for id of $scope.topicCheckModel when $scope.topicCheckModel[id])
