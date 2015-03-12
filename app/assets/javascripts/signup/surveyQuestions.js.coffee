@@ -10,10 +10,12 @@ surveyQuestions.config(($routeProvider) ->
 ).controller("SurveyQuestionsController", ($scope, $http, $location, $routeParams) ->
     $scope.questions = []
     $scope.questionCheckModel = {}
-    $scope.topicIds = [1,2,3]
     $scope.topicCounter = 0             # corresponds to which topic we're on
     $scope.currentTopic = ""            # the topic we're doing now
-    $scope.numQuestions = 0              # the number of questions for this topic
+    $scope.numQuestions = 0             # the number of questions for this topic
+
+    # TODO: Replace with call(s) to grab the actual topic ids from storage
+    $scope.topicIds = [1,2,3]           # the ids of the topics the user selected
 
     # Call this when a response is selected to toggle -- only allows one
     # response to be selected at once
@@ -22,6 +24,7 @@ surveyQuestions.config(($routeProvider) ->
             $scope.questionCheckModel[response.id] = false
         $scope.questionCheckModel[selectedResponse.id] = true
 
+    # Get the number of questions with no responses selected yet
     $scope.numUnansweredQuestions = ->
         questionsLeft = $scope.questions.length
         for question in $scope.questions
@@ -34,6 +37,7 @@ surveyQuestions.config(($routeProvider) ->
     $scope.disableNextButton = ->
         return $scope.numUnansweredQuestions() > 0
 
+    # Get the text that should be displayed on the Next button
     $scope.nextButtonValue = ->
         questionsLeft = $scope.numUnansweredQuestions()
         if questionsLeft == 0
@@ -68,13 +72,16 @@ surveyQuestions.config(($routeProvider) ->
         else
             $scope.handleAdvanceToSummary()
 
+
     mock_load_questions = (callback) ->
         setTimeout(( ->
             questions = [{id: 0, index:3, question:"Is climate change happening?", possibleResponses:[{id:0,response:"Yes"},{id:1,response:"No"}]}, {id: 1, index:1, question:"Is immigration law working?", possibleResponses:[{id:2,response:"Yes"},{id:3,response:"No"}]},{id: 5, index:9, question:"What's your view on education in the US?", possibleResponses:[{id:9,response:"Education in the US could not be better"},{id:7,response:"Need more concentration on STEM"},{id:10,response:"We need to fund education less"}]}]
-            callback(questions)
+            callback(0, questions)
         ), 250)
 
-    mock_load_questions (questions) ->
+    # Asynchronously load the list of questions for a topic
+    # TODO: Replace with API call to server to grab data from DB
+    mock_load_questions (topicId, questions) ->
         $scope.questions = questions.sort((u, v) -> u.index - v.index)
         $scope.currentTopic = "Testing"
         $scope.numQuestions = $scope.questions.length
