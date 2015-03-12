@@ -47,7 +47,8 @@ surveyQuestions.config(($routeProvider) ->
 
     # Helper function to advance to the question for the next topic
     $scope.handleAdvanceToQuestion = ->
-        $scope.topicCounter += 1
+        # Placeholder for now
+        $scope.topicCounter += 0
 #        mock_load_questions (questions) ->
 #            $scope.questions = questions.sort((u, v) -> u.index - v.index)
 #            $scope.currentTopic = "Testing"
@@ -61,6 +62,7 @@ surveyQuestions.config(($routeProvider) ->
     # Call either handleAdvanceToQuestion or handleAdvanceToSummary depending on
     # if there are more topics to answer questions for
     $scope.handleAdvance = ->
+        $scope.topicCounter += 1
         if $scope.topicCounter < $scope.topicIds.length
             $scope.handleAdvanceToQuestion()
         else
