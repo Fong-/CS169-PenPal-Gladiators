@@ -1,0 +1,8 @@
+# Ignore everything
+/*
+
+# Except the mockups folder
+!/mockups
+
+# But ignore some misc stuff
+.DS_Store
