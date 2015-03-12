@@ -1,0 +1,9 @@
+# Ignore everything
+/*
+
+# Except the meetings folder
+!/meetings
+
+# But ignore random files
+.DS_Store
+
