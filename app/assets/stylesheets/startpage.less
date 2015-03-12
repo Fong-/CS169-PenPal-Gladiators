@@ -1,13 +1,13 @@
-
 @topic-icon-display-size: 128px;
 @topic-icon-margin: 6px;
-@num-topics-per-row: 4;
+@num-topics-per-row: 3;
 
 body {
     background-color: #F5F5F5;
 }
 
 #topic-select-container {
+    height: 640px;
     .check_sprite {
         position: absolute;
         margin-top: 15px;
@@ -21,16 +21,21 @@ body {
     }
     width: 2 * @num-topics-per-row * @topic-icon-margin + @num-topics-per-row * @topic-icon-display-size + 70px;
     padding: 10px 30px 25px 10px;
-    margin: 80px auto 80px auto;
+    margin: 50px auto 0px auto;
     background-color: white;
 
+    #heading {
+        font-size: 30px;
+    }
+
     #heading, #description {
-        margin-left: 40px;
+        margin-left: 35px;
     }
 
     #topic-check-container {
         width: 2 * @num-topics-per-row * @topic-icon-margin + @num-topics-per-row * @topic-icon-display-size + 30px;
-        height: 500px;
+        height: 420px;
+        overflow: auto;
 
         .topic-container {
             width: @topic-icon-display-size;
@@ -79,6 +84,7 @@ body {
 
     input[type="button"] {
         float: right;
+        margin-top: 30px;
         border: 1px solid #777777;
         background: #3B5998;
         color: white;
@@ -87,7 +93,7 @@ body {
         border-radius: 4px;
 
         &:disabled {
-            background: #6F8AC7;
+            background: #899BC1;
             cursor: default;
         }
     }
