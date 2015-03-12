@@ -22,12 +22,9 @@ end
 # Survey Topics, Questions, and Responses
 ############################################################
 
-default_question = "Has anyone really been far as decided to use even go want to do look more like?"
 responses = [
-    { :text => "You've got to be kidding me." },
-    { :text => "I've been further even more decided to use even go need to do look more as anyone can." },
-    { :text => "Can you really be far even as decided half as much to use go wish for that?" },
-    { :text => "No." }
+    { :text => "Yes" },
+    { :text => "No" }
 ]
 
 topics = [
@@ -45,7 +42,8 @@ topics = [
 
 topics.each do |t|
     topic = Topic.create!(t)
-    survey_question = topic.survey_questions.create(:text => default_question)
+
+    survey_question = topic.survey_questions.create(:text => "Do you hate #{topic.name}?")
 
     responses.each do |r|
         survey_question.survey_responses.create(r)
@@ -65,7 +63,7 @@ response = Topic.find_by_name("Philosophy").survey_questions[0].survey_responses
 UserSurveyResponse.create(:user => nick, :survey_response => response)
 
 bob = User.find_by_email("bob@schmitt.com")
-response = Topic.find_by_name("LGBT Rights").survey_questions[0].survey_responses[2]
+response = Topic.find_by_name("LGBT Rights").survey_questions[0].survey_responses[0]
 UserSurveyResponse.create(:user => bob, :survey_response => response)
 
 wenson = User.find_by_email("genericasiankid@gmail.com")
@@ -73,5 +71,5 @@ response = Topic.find_by_name("Education").survey_questions[0].survey_responses[
 UserSurveyResponse.create(:user => wenson, :survey_response => response)
 
 rosenthal = User.find_by_email("rosenthal@policy.com")
-response = Topic.find_by_name("Foreign Policy").survey_questions[0].survey_responses[3]
+response = Topic.find_by_name("Foreign Policy").survey_questions[0].survey_responses[1]
 UserSurveyResponse.create(:user => rosenthal, :survey_response => response)
