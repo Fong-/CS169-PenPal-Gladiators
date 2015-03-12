@@ -10,6 +10,7 @@ startPageServices.service("StartPageData", () ->
     # Password interface.
     this.getPassword = -> password
     this.setPassword = (p) -> password = p
+    this.clearPassword = () -> password = ""
     # Selected topics interface.
     this.getTopicIds = -> Object.keys(topicIds).sort() # Note: does NOT sort numerically.
     this.addTopicId = (topicId) -> topicIds[topicId] = true
