@@ -1,6 +1,6 @@
 <div class="container-fluid" id="topic-select-container">
     <h1 id="heading">Which topics interest you?</h1>
-    <p id="description">Select {{MIN_NUM_TOPICS_REQUIRED}} from the below topics. You may change or add topics later through 'settings.'</p>
+    <p id="description">Select at least {{MIN_NUM_TOPICS_REQUIRED}} from the below topics. You may change or add topics later through 'settings.'</p>
     <div class="container-fluid" id="topic-check-container">
         <div class="container-fluid topic-container col-md-1" ng-click="handleTopicToggled(topic.id)" ng-repeat="topic in allTopics">
             <input ng-model="topicSelectionModel[topic.id]" type="checkbox"/>
