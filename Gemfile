@@ -22,4 +22,5 @@ group :development, :test do
   gem 'rspec-rails', '2.14'
   gem 'cucumber-rails', :require => false
   gem 'capybara'
+  gem 'poltergeist'
 end
