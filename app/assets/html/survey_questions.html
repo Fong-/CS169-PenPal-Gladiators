@@ -2,10 +2,10 @@
 <p>Answer the following {{ numQuestions }} questions to proceed</p>
 <div id="topic-questions-container">
     <div class="question-container" ng-repeat="question in questions">
-        {{ question.question }}
+        {{ question.text }}
         <div class="question-responses-container">
-            <div class="response" ng-repeat="response in question.possibleResponses">
-                <input type="checkbox" ng-model="questionCheckModel[response.id]" ng-change="handleResponseSelected(question,response)">{{ response.response }}</input>
+            <div class="response" ng-repeat="response in question.survey_responses">
+                <input type="checkbox" ng-model="questionCheckModel[response.id]" ng-change="handleResponseSelected(question,response)">{{ response.text }}</input>
             </div>
             <br>
         </div>
