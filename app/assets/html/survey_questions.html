@@ -1,10 +1,10 @@
 <h1>Questions for {{ currentTopic }}</h1>
 <p>Answer the following {{ numQuestions }} questions to proceed</p>
-<div id="QuestionsContainer">
-    <div class="QuestionContainer" ng-repeat="question in questions">
+<div id="topic-questions-container">
+    <div class="question-container" ng-repeat="question in questions">
         {{ question.question }}
-        <div class="ResponsesContainer">
-            <div class="Response" ng-repeat="response in question.possibleResponses">
+        <div class="question-responses-container">
+            <div class="response" ng-repeat="response in question.possibleResponses">
                 <input type="checkbox" ng-model="questionCheckModel[response.id]" ng-change="handleResponseSelected(question,response)">{{ response.response }}</input>
             </div>
             <br>
