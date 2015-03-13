@@ -3,7 +3,45 @@
 @num-topics-per-row: 3;
 
 body {
-    background-color: #F5F5F5;
+    background-color: #EFEFEF;
+}
+
+.vertical-center {
+    min-height: 100%;
+    min-height: 100vh;
+    margin-top: 200px;
+    display: flex;
+    align-items: center;
+    font-weight: 300;
+    font-family: "Avenir"
+}
+
+#login-container {
+    width: 230px;
+    background: white;
+    text-align: center;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+input[type=text], input[type=password] {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: none;
+    background: transparent;
+    border-bottom: 1px dotted;
+    outline: none
+}
+
+.header {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+
+.spacing {
+    height: 20px;
+    width: 100%;
 }
 
 #topic-select-container {
@@ -82,7 +120,7 @@ body {
         }
     }
 
-    input[type="button"] {
+    input[type=button] {
         float: right;
         margin-top: 30px;
         border: 1px solid #777777;
