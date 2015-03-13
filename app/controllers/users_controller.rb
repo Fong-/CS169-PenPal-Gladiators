@@ -1,44 +1,61 @@
 class UsersController < ActionController::Base
+    ERROR_MESSAGES = {
+        :invalid_login => "incorrect credentials",
+        :invalid_email => "invalid email",
+        :invalid_password => "invalid password",
+        :email_exists => "email already exists"
+    }
+
+    @@sha256 = Digest::SHA256.new
+
     def login
-        if not check_params_for_authentication(params)
+        debugger
+        if params_are_invalid(params)
             return
         end
+
         email = params[:email]
-        password = params[:password]
-        if user_exists(email)
+        password = @@sha256.base64digest(params[:password])
+
+        if User.exists_with_password(email, password)
             render :json => {:success => "true"}
             return
         else
-            render :json => {:error => "Invalid email or password."}
+            render :json => {:error => ERROR_MESSAGES[:invalid_login]}
             return
         end
     end
 
     def register
-        if not check_params_for_authentication(params)
-            return
-        end
-        email = params[:email]
-        password = params[:password]
-        if user_exists(email)
-            render :json => {:error => "Username already taken."}
-            return
-        else
-            User.create(:email => email, :password => password)
-            render :json => {:success => "true"}
-            return
+        if can_user_register
+            User.create :email => params[:email], :password => @@sha256.base64digest(params[:password])
         end
     end
 
-    def check_params_for_authentication(hash)
-        if hash[:email] == nil or hash[:password] == nil or hash[:email] == "" or hash[:password] == ""
-            render :json => {:error => "Invalid parameters."}
+    def can_register
+        can_user_register(params)
+    end
+
+    def can_user_register(params)
+        if params_are_invalid(params)
+            return false
+        elsif User.exists(params[:email])
+            render :json => {:error => ERROR_MESSAGES[:email_exists]}
             return false
         end
+
+        render :json => {:success => "true"}
         return true
     end
 
-    def user_exists(email)
-        return !User.find_by_email(email).nil?
+    def params_are_invalid(params)
+        if params[:email] == nil or params[:email] == ""
+            render :json => { :error => ERROR_MESSAGES[:invalid_email] }
+            return true
+        elsif params[:password] == nil or params[:password] == ""
+            render :json => { :error => ERROR_MESSAGES[:invalid_password] }
+            return true
+        end
+        return false
     end
 end

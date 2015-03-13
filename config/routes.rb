@@ -4,6 +4,7 @@ CS169PenpalGladiators::Application.routes.draw do
     get "/api/v1/topic/:id" => "topics#get_by_id"
     post "/api/v1/login" => "users#login"
     post "/api/v1/register" => "users#register"
+    get "/api/v1/register" => "users#can_register"
 
     # The priority is based upon order of creation:
     # first created -> highest priority.
