@@ -4,15 +4,13 @@ Feature: Register
   So that I can use PenPal Gladiators
 
 Background:
-    Given there is one existing username "foo@bar.com" in the database, and
-the user is on the registration page.
+    Given there is one existing username "foo@bar.com" in the database, and the user is on the registration page.
 
 Scenario: The new user registers using a new username and valid password.
     When the new user fills in the username form with username "gar@ply.com"
     When the new user fills in the password form with "fizzbuzz"
     And the new user clicks on "Create new account"
-    Then the new user "gar@ply.com" with the SHA256 hash corresponding to "fizzbuzz" should appear in
-      the database.
+    Then the new user "gar@ply.com" with the SHA256 hash corresponding to "fizzbuzz" should appear in the database.
     And the user should be redirected to the profile page.
 
 Scenario: The new user registers using an existing username.
