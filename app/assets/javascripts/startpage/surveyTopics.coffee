@@ -30,7 +30,7 @@ surveyTopics.config(($routeProvider) ->
 
     # Asynchronously load the list of topics.
     # TODO Cache the results, so we only rerun the query if necessary.
-    SharedRequests.getTopics (allTopics) ->
+    SharedRequests.requestTopics().success (allTopics) ->
         StartPageData.clearAllTopics()
         StartPageData.addTopic(topic) for topic in allTopics
         $scope.allTopics = allTopics.sort((u, v) -> u.id - v.id)
