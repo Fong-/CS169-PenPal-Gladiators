@@ -9,7 +9,10 @@ class UsersController < ActionController::Base
     @@sha256 = Digest::SHA256.new
 
     def login
-        return if is_params_invalid(params)
+        debugger
+        if params_are_invalid(params)
+            return
+        end
 
         email = params[:email]
         password = @@sha256.base64digest(params[:password])
@@ -24,22 +27,28 @@ class UsersController < ActionController::Base
     end
 
     def register
-        return if is_params_invalid(params)
-
-        email = params[:email]
-        password = @@sha256.base64digest(params[:password])
-
-        if User.exists(email)
-            render :json => {:error => ERROR_MESSAGES[:email_exists]}
-            return
-        else
-            User.create(:email => email, :password => password)
-            render :json => {:success => "true"}
-            return
+        if can_user_register
+            User.create :email => params[:email], :password => @@sha256.base64digest(params[:password])
         end
     end
 
-    def is_params_invalid(params)
+    def can_register
+        can_user_register(params)
+    end
+
+    def can_user_register(params)
+        if params_are_invalid(params)
+            return false
+        elsif User.exists(params[:email])
+            render :json => {:error => ERROR_MESSAGES[:email_exists]}
+            return false
+        end
+
+        render :json => {:success => "true"}
+        return true
+    end
+
+    def params_are_invalid(params)
         if params[:email] == nil or params[:email] == ""
             render :json => { :error => ERROR_MESSAGES[:invalid_email] }
             return true
