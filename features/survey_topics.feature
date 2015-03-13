@@ -1,4 +1,4 @@
-@javascript
+@javascript @seed_topics
 Feature: display a set of topic checkboxes
     As a excited gladiator
     So that I can select the discussion categories that I'm interested in
