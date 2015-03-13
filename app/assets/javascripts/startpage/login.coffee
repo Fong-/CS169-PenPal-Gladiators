@@ -19,8 +19,8 @@ login.config(($routeProvider) ->
             else
                 $scope.status = if data then data["error"] else "Oops, an error occurred."
         )
-    $scope.register = () ->
-        SharedRequests.register($scope.email, $scope.password).success((data) ->
+    $scope.can_register = () ->
+        SharedRequests.can_register($scope.email, $scope.password).success((data) ->
             if data && data["success"]
                 document.cookie = "email=" + $scope.email
                 console.log("After email: " + document.cookie)
