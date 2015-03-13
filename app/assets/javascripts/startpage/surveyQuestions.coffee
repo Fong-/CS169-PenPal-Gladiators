@@ -45,13 +45,12 @@ surveyQuestions.config(($routeProvider) ->
             return "#{questionsLeft} Unanswered Questions"
 
     # Helper function to advance to the summary page
-    $scope.handleAdvanceToSummary = ->
+    handleAdvanceToSummary = ->
         $location.path("summary")
 
     # Helper function to advance to the question for the next topic
-    $scope.handleAdvanceToQuestion = ->
+    handleAdvanceToQuestions = ->
         # Placeholder for now
-        $scope.topicCounter += 0
         mock_load_questions (topicId, questions) ->
             $scope.questions = questions.sort((u, v) -> u.index - v.index)
             $scope.currentTopic = "Topic id #{$scope.topicIds[$scope.topicCounter]}"
@@ -62,15 +61,41 @@ surveyQuestions.config(($routeProvider) ->
                     $scope.questionCheckModel[response.id] = false
             $scope.$apply()
 
-    # Call either handleAdvanceToQuestion or handleAdvanceToSummary depending on
+    # Call either handleAdvanceToQuestions or handleAdvanceToSummary depending on
     # if there are more topics to answer questions for
     $scope.handleAdvance = ->
         $scope.topicCounter += 1
         if $scope.topicCounter < $scope.topicIds.length
-            $scope.handleAdvanceToQuestion()
+            handleAdvanceToQuestions()
         else
-            $scope.handleAdvanceToSummary()
+            handleAdvanceToSummary()
 
+    # Helper function to move back to the topic selection page
+    handleBackToTopics = ->
+        $location.path("topics")
+
+    # Helper function to move back to another question page
+    handleBackToQuestions = ->
+        mock_load_questions (topicId, questions) ->
+            $scope.questions = questions.sort((u, v) -> u.index - v.index)
+            $scope.currentTopic = "Topic id #{$scope.topicIds[$scope.topicCounter]}"
+            $scope.numQuestions = $scope.questions.length
+            #TODO: Figure out how to persist state between forward and backward movement within form
+            for question in $scope.questions
+                for response in question.survey_responses
+                    $scope.questionCheckModel[response.id] = false
+            $scope.$apply()
+
+    # Call either handleBackToTopics or handleBackToQuestions depending on
+    # if the previous page is the topic selection page or not
+    $scope.handleBack = ->
+        if $scope.topicCounter > 0
+            $scope.topicCounter -= 1
+            handleBackToQuestions()
+        else
+            handleBackToTopics()
+
+    
 
     mock_load_questions = (callback) ->
         setTimeout(( ->
