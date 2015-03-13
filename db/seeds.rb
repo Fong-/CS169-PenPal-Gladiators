@@ -71,22 +71,22 @@ end
 ############################################################
 
 
-#ben = User.find_by_email("ben@bitdiddle.com")
-#response = Topic.find_by_name("Climate").survey_questions.find_by_index(1).survey_responses.find_by_index(0)
-#UserSurveyResponse.create(:user => ben, :survey_response => response)
+ben = User.find_by_email("ben@bitdiddle.com")
+response = Topic.find_by_name("Climate").survey_questions.find_by_index(1).survey_responses.find_by_index(0)
+UserSurveyResponse.create(:user => ben, :survey_response => response)
 
-#nick = User.find_by_email("generic@email.com")
-#response = Topic.find_by_name("Philosophy").survey_questions.find_by_index(1).survey_responses.find_by_index(1)
-#UserSurveyResponse.create(:user => nick, :survey_response => response)
+nick = User.find_by_email("generic@email.com")
+response = Topic.find_by_name("Philosophy").survey_questions.find_by_index(1).survey_responses.find_by_index(1)
+UserSurveyResponse.create(:user => nick, :survey_response => response)
 
-#bob = User.find_by_email("bob@schmitt.com")
-#response = Topic.find_by_name("LGBT Rights").survey_questions.find_by_index(1).survey_responses.find_by_index(0)
-#UserSurveyResponse.create(:user => bob, :survey_response => response)
+bob = User.find_by_email("bob@schmitt.com")
+response = Topic.find_by_name("LGBT Rights").survey_questions.find_by_index(1).survey_responses.find_by_index(0)
+UserSurveyResponse.create(:user => bob, :survey_response => response)
 
-#wenson = User.find_by_email("genericasiankid@gmail.com")
-#response = Topic.find_by_name("Education").survey_questions.find_by_index(1).survey_responses.find_by_index(1)
-#UserSurveyResponse.create(:user => wenson, :survey_response => response)
+wenson = User.find_by_email("genericasiankid@gmail.com")
+response = Topic.find_by_name("Education").survey_questions.find_by_index(1).survey_responses.find_by_index(1)
+UserSurveyResponse.create(:user => wenson, :survey_response => response)
 
-#rosenthal = User.find_by_email("rosenthal@policy.com")
-#response = Topic.find_by_name("Foreign Policy").survey_questions.find_by_index(1).survey_responses.find_by_index(1)
-#UserSurveyResponse.create(:user => rosenthal, :survey_response => response)
+rosenthal = User.find_by_email("rosenthal@policy.com")
+response = Topic.find_by_name("Foreign Policy").survey_questions.find_by_index(1).survey_responses.find_by_index(1)
+UserSurveyResponse.create(:user => rosenthal, :survey_response => response)
