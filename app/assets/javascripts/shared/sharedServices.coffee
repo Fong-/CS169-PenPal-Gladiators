@@ -9,5 +9,9 @@ shares.service("SharedRequests", ($http) ->
     this.can_register = (email, password) ->
         params = { email: email, password: password }
         $http.get("#{SERVER_API_PREFIX}register", { params: params })
+    this.requestQuestionsByTopic = (id) ->
+        $http.get("#{SERVER_API_PREFIX}topic/#{id}/survey_questions")
+    this.requestResponsesByQuestion = (id) ->
+        $http.get("#{SERVER_API_PREFIX}survey_question/#{id}/survey_responses")
     return # Required to prevent returning the last object.
 )

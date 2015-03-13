@@ -53,18 +53,18 @@ topics.each do |t|
 end
 
 #More complicated responses
-#responses = [
-#  {:text => "Education in the US is the best", :index => 2},
-#  {:text => "Need to fund education less", :index => 1},
-#  {:text => "Need more focus on STEM", :index => 0},
-#  {:text => "Too many college grads, need to raise tuition fee", :index => 3}
-#]
+responses = [
+ {:text => "Education in the US is the best", :index => 2},
+ {:text => "Need to fund education less", :index => 1},
+ {:text => "Need more focus on STEM", :index => 0},
+ {:text => "Too many college grads, need to raise tuition fee", :index => 3}
+]
 
-#education = Topic.find_by_name("Education")
-#survey_question = education.survey_questions.create(:text => "What's your view on US higher education?", :index => 2)
-#responses.each do |r|
-#  survey_question.survey_responses.create(r)
-#end
+education = Topic.find_by_name("Education")
+survey_question = education.survey_questions.create(:text => "What's your view on US higher education?", :index => 2)
+responses.each do |r|
+ survey_question.survey_responses.create(r)
+end
 
 ############################################################
 # Users <-> survey responses through user survey responses
