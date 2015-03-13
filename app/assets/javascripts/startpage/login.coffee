@@ -1,17 +1,17 @@
-login = angular.module("Login", [])
+login = angular.module("Login", ["SharedServices", "StartPageServices"])
 
 login.config(($routeProvider) ->
     $routeProvider.when("/", {
         templateUrl: "/assets/login.html",
         controller: "LoginController"
     })
-).controller("LoginController", ["$http", "$location", "$scope", ($http, $location, $scope) ->
+).controller("LoginController", ["$http", "$location", "$scope", "SharedRequests", "StartPageData", ($http, $location, $scope, SharedRequests, StartPageData) ->
     $scope.email = ""
     $scope.password = ""
     $scope.description = ""
     $scope.status = ""
     $scope.login = () ->
-        $http.post("/api/v1/login", {email: $scope.email, password: $scope.password}).success((data) ->
+        SharedRequests.login($scope.email, $scope.password).success((data) ->
             if data && data["success"]
                 document.cookie = "email=" + $scope.email
                 document.cookie = "password=" + $scope.password
@@ -20,10 +20,14 @@ login.config(($routeProvider) ->
                 $scope.status = if data then data["error"] else "Oops, an error occurred."
         )
     $scope.register = () ->
-        $http.post("/api/v1/register?email=#{$scope.email}&password=#{$scope.password}").success((data) ->
+        SharedRequests.register($scope.email, $scope.password).success((data) ->
             if data && data["success"]
                 document.cookie = "email=" + $scope.email
+                console.log("After email: " + document.cookie)
                 document.cookie = "password=" + $scope.password
+                console.log("After password: " + document.cookie)
+                StartPageData.setEmail($scope.email)
+                StartPageData.setPassword($scope.password)
                 $location.path("topics")
             else
                 $scope.status = if data then data["error"] else "Oops, an error occurred."
