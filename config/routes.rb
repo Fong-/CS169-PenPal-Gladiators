@@ -1,5 +1,7 @@
 CS169PenpalGladiators::Application.routes.draw do
   mount JasmineRails::Engine => '/specs' if defined?(JasmineRails)
+  get "/api/v1/topics" => "topics#get_all"
+  get "/api/v1/topic/:id" => "topics#get_by_id"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
