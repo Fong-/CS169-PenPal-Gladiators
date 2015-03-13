@@ -1,27 +1,36 @@
 class UsersController < ActionController::Base
+    ERROR_MESSAGES = {
+        :invalid_login => "incorrect credentials",
+        :invalid_email => "invalid email",
+        :invalid_password => "invalid password",
+        :email_exists => "email already exists"
+    }
+
+    @@sha256 = Digest::SHA256.new
+
     def login
-        if not check_params_for_authentication(params)
-            return
-        end
+        return if is_params_invalid(params)
+
         email = params[:email]
-        password = params[:password]
-        if user_exists(email)
+        password = @@sha256.base64digest(params[:password])
+
+        if User.exists_with_password(email, password)
             render :json => {:success => "true"}
             return
         else
-            render :json => {:error => "Invalid email or password."}
+            render :json => {:error => ERROR_MESSAGES[:invalid_login]}
             return
         end
     end
 
     def register
-        if not check_params_for_authentication(params)
-            return
-        end
+        return if is_params_invalid(params)
+
         email = params[:email]
-        password = params[:password]
-        if user_exists(email)
-            render :json => {:error => "Username already taken."}
+        password = @@sha256.base64digest(params[:password])
+
+        if User.exists(email)
+            render :json => {:error => ERROR_MESSAGES[:email_exists]}
             return
         else
             User.create(:email => email, :password => password)
@@ -30,15 +39,11 @@ class UsersController < ActionController::Base
         end
     end
 
-    def check_params_for_authentication(hash)
-        if hash[:email] == nil or hash[:password] == nil or hash[:email] == "" or hash[:password] == ""
+    def is_params_invalid(params)
+        if params[:email] == nil or params[:password] == nil or params[:email] == "" or params[:password] == ""
             render :json => {:error => "Invalid parameters."}
-            return false
+            return true
         end
-        return true
-    end
-
-    def user_exists(email)
-        return !User.find_by_email(email).nil?
+        return false
     end
 end
