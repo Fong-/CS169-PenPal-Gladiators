@@ -2,6 +2,7 @@ CS169PenpalGladiators::Application.routes.draw do
     mount JasmineRails::Engine => '/specs' if defined?(JasmineRails)
     get "/api/v1/topics" => "topics#get_all"
     get "/api/v1/topic/:id" => "topics#get_by_id"
+    get "/api/v1/topic/:id/survey_questions" => "topics#get_questions_by_id"
     post "/api/v1/login" => "users#login"
     post "/api/v1/register" => "users#register"
     get "/api/v1/register" => "users#can_register"
