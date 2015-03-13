@@ -1,11 +1,10 @@
+@javascript
 Feature: display a set of topic checkboxes
-
     As a excited gladiator
     So that I can select the discussion categories that I'm interested in
     I want to see topic checkboxes
 
 Background: I am on the survey topic checkboxes page
-    
     Given I am on the "Survey Topic Checkboxes" page
 
 Scenario: select topic checkboxes
@@ -24,4 +23,3 @@ Scenario: can proceed with 3 topics checked
 Scenario: cannot select more than 5 topics
     Given I check "5" topics
     Then unchecked checkboxes should be disabled
-    
