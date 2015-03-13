@@ -1,19 +1,18 @@
-@topic-icon-display-size: 128px;
+@topic-icon-display-size: 100px;
 @topic-icon-margin: 6px;
-@num-topics-per-row: 3;
+@num-topics-per-row: 4;
 
 body {
     background-color: #EFEFEF;
+    font-family: "Avenir";
+    font-weight: 300;
 }
 
 .vertical-center {
     min-height: 100%;
     min-height: 100vh;
-    margin-top: 200px;
     display: flex;
     align-items: center;
-    font-weight: 300;
-    font-family: "Avenir"
 }
 
 #login-container {
@@ -49,7 +48,7 @@ input[type=text], input[type=password] {
 }
 
 #topic-select-container {
-    height: 640px;
+    height: 550px;
     .check_sprite {
         position: absolute;
         margin-top: 15px;
@@ -63,7 +62,7 @@ input[type=text], input[type=password] {
     }
     width: 2 * @num-topics-per-row * @topic-icon-margin + @num-topics-per-row * @topic-icon-display-size + 70px;
     padding: 10px 30px 25px 10px;
-    margin: 50px auto 0px auto;
+    margin: 40px auto 0px auto;
     background-color: white;
 
     #heading {
@@ -76,7 +75,7 @@ input[type=text], input[type=password] {
 
     #topic-check-container {
         width: 2 * @num-topics-per-row * @topic-icon-margin + @num-topics-per-row * @topic-icon-display-size + 30px;
-        height: 420px;
+        height: 330px;
         overflow: auto;
 
         .topic-container {
@@ -89,11 +88,12 @@ input[type=text], input[type=password] {
             cursor: pointer;
 
             p {
-                background-color: #333333;
+                background-color: #444444;
                 color: #FFFFFF;
                 margin-top: 0px;
+                padding-top: 4px;
                 padding-left: 4px;
-                font-size: 14px;
+                font-size: 13px;
                 width: @topic-icon-display-size;
             }
 
