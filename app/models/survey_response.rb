@@ -3,4 +3,8 @@ class SurveyResponse < ActiveRecord::Base
     has_many :user_survey_responses
     has_many :users, :through => :user_survey_responses
     attr_accessible :text, :index
+
+    def response_object
+        { :id => id, :text => text, :index => index }
+    end
 end

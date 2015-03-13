@@ -12,7 +12,9 @@ class TopicsController < ApplicationController
         topic = Topic.find_by_id params[:id]
         if topic.nil?
             render :json => {"error" => true}
-        questions = topic.survey_questions
-        render :json => questions.map { |q| q.response_object }
+        else
+            questions = topic.survey_questions
+            render :json => questions.map { |q| q.response_object }
+        end
     end
 end
