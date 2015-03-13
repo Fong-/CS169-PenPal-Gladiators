@@ -2,8 +2,15 @@
 
 describe "SurveyTopicsController", ->
     beforeEach ->
+        @http.when("GET", "/api/v1/topics").respond([{
+            name: "Climate",
+            icon: "/fake/path",
+            id: 1
+        }]);
+        @http.expectGET("/api/v1/topics")
         @controller("SurveyTopicsController", { $scope: @scope })
         @scope.topicSelectionModel = { 1: true, 2: false, 3: true, 4: true, 5: false, 6: true, 7: false, 8: false, 9: true, 10: false }
+        @http.flush();
 
     it "should display 'Continue to Survey Questions' when the required number of topics is selected", ->
         expect(@scope.nextButtonValue()).toEqual("Continue to Survey Questions")
