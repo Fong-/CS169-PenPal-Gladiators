@@ -7,4 +7,12 @@ class SurveyQuestionsController < ApplicationController
         question = SurveyQuestions.find_by_id params[:id]
         render :json => question.nil? ? {"error" => true} : question.response_object
     end
+
+    def get_responses_by_id
+        question = SurveyQuestions.find_by_id
+        if question.nil?
+            render :json => {"error" => true}
+        responses = question.survey_responses
+        render :json => responses.map { |r| r.response_object }
+    end
 end

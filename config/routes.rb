@@ -7,6 +7,7 @@ CS169PenpalGladiators::Application.routes.draw do
     get "/api/v1/register" => "users#can_register"
     get "/api/v1/survey_questions" => "survey_questions#get_all"
     get "/api/v1/survey_question/:id" => "survey_questions#get_by_id"
+    get "/api/v1/survey_question/:id/survey_responses" => "survey_questions#get_responses_by_id"
     get "/api/v1/survey_responses" => "survey_responses#get_all"
     get "/api/v1/survey_response/:id" => "survey_responses#get_by_id"
 
