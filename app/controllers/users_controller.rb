@@ -40,8 +40,11 @@ class UsersController < ActionController::Base
     end
 
     def is_params_invalid(params)
-        if params[:email] == nil or params[:password] == nil or params[:email] == "" or params[:password] == ""
-            render :json => {:error => "Invalid parameters."}
+        if params[:email] == nil or params[:email] == ""
+            render :json => { :error => ERROR_MESSAGES[:invalid_email] }
+            return true
+        elsif params[:password] == nil or params[:password] == ""
+            render :json => { :error => ERROR_MESSAGES[:invalid_password] }
             return true
         end
         return false
