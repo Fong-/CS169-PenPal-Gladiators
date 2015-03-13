@@ -2,7 +2,8 @@ startPageServices = angular.module("StartPageServices", [])
 startPageServices.service("StartPageData", () ->
     email = ""
     password = ""
-    topicIds = {}
+    topicsById = {}
+    selectedTopicIds = {}
     responseIds = null # TODO Implement me.
     # Email interface.
     this.getEmail = -> email
@@ -10,11 +11,14 @@ startPageServices.service("StartPageData", () ->
     # Password interface.
     this.getPassword = -> password
     this.setPassword = (p) -> password = p
-    this.clearPassword = () -> password = ""
+    # Topics by topic id.
+    this.getAllTopics = -> topicsById
+    this.addTopic = (topic) -> topicsById[topic.id] = topic
+    this.clearAllTopics = -> topicsById = {}
     # Selected topics interface.
-    this.getTopicIds = -> Object.keys(topicIds).sort() # Note: does NOT sort numerically.
-    this.addTopicId = (topicId) -> topicIds[topicId] = true
-    this.clearTopicIds = (topicId) -> topicIds = {}
+    this.getSelectedTopicIds = -> Object.keys(selectedTopicIds).sort() # Note: does NOT sort numerically.
+    this.addSelectedTopicId = (topicId) -> selectedTopicIds[topicId] = true
+    this.clearSelectedTopicIds = (topicId) -> selectedTopicIds = {}
     # User responses interface.
     this.getResponseIds = -> throw "SharedData::responses is not yet implemented!"
     this.addResponseId = (responseId) -> throw "SharedData::addResponse is not yet implemented!"
