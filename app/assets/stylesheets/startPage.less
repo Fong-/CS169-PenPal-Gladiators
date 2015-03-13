@@ -8,6 +8,27 @@ body {
     font-weight: 300;
 }
 
+.check_sprite {
+    position: absolute;
+    margin-top: 15px;
+    margin-left: 6px;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    cursor: pointer;
+    border-style: solid;
+    border-width: 2px;
+}
+
+.flat-button {
+    border: 1px solid #777777;
+    background: #3B5998;
+    color: white;
+    padding: 4px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
 .vertical-center {
     min-height: 100%;
     min-height: 100vh;
@@ -49,17 +70,6 @@ input[type=text], input[type=password] {
 
 #topic-select-container {
     height: 550px;
-    .check_sprite {
-        position: absolute;
-        margin-top: 15px;
-        margin-left: 6px;
-        width: 25px;
-        height: 25px;
-        border-radius: 50%;
-        cursor: pointer;
-        border-style: solid;
-        border-width: 2px;
-    }
     width: 2 * @num-topics-per-row * @topic-icon-margin + @num-topics-per-row * @topic-icon-display-size + 70px;
     padding: 10px 30px 25px 10px;
     margin: 40px auto 0px auto;
@@ -127,16 +137,53 @@ input[type=text], input[type=password] {
     input[type=button] {
         float: right;
         margin-top: 30px;
-        border: 1px solid #777777;
-        background: #3B5998;
-        color: white;
-        padding: 4px;
-        cursor: pointer;
-        border-radius: 4px;
+        .flat-button;
 
         &:disabled {
             background: #899BC1;
             cursor: default;
+        }
+    }
+}
+
+#survey-questions-container {
+    background: white;
+    margin: 40px auto 0px auto;
+    width: 560px;
+    max-height: 640px;
+    overflow: auto;
+
+    h1 {
+        padding-top: 30px;
+        font-size: 30px;
+    }
+
+    h1, #description {
+        margin-left: 50px;
+    }
+
+    #topic-questions-container {
+        padding: 20px 50px 50px 50px;
+
+        #next-question-button {
+            margin-left: 5px;
+        }
+
+        .response-label {
+            margin-left: 4px;
+        }
+
+        .question-text {
+            margin-bottom: 10px;
+        }
+
+        input[type=button] {
+            .flat-button;
+
+            &:disabled {
+                background: #899BC1;
+                cursor: default;
+            }
         }
     }
 }

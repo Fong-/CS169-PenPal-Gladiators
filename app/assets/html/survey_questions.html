@@ -1,16 +1,18 @@
-<h1>{{ currentTopic }}</h1>
-<p>Answer the following {{ numQuestions }} questions to proceed</p>
-<div id="topic-questions-container">
-    <div class="question-container" ng-repeat="question in questions">
-        {{ question.text }}
-        <div class="question-responses-container">
-            <div class="response" ng-repeat="response in question.survey_responses">
-                <input type="checkbox" ng-model="questionCheckModel[response.id]" ng-change="handleResponseSelected(question,response)">{{ response.text }}</input>
+<div id="survey-questions-container">
+    <h1>{{ currentTopic }}</h1>
+    <p id="description">Answer the following {{ numQuestions }} questions to proceed</p>
+    <div id="topic-questions-container">
+        <div class="question-container" ng-repeat="question in questions">
+            <div class="question-text">{{ question.text }}</div>
+            <div class="question-responses-container">
+                <div class="response" ng-repeat="response in question.survey_responses">
+                    <input type="checkbox" ng-model="questionCheckModel[response.id]" ng-change="handleResponseSelected(question,response)"/>
+                    <label><span/></label><span class="response-label">{{ response.text }}</span>
+                </div>
+                <br>
             </div>
-            <br>
         </div>
+        <input type="button" value="Back", ng-click="handleBack()"></input>
+        <input id="next-question-button" type="button" ng-disabled="disableNextButton()" ng-click="handleAdvance()" value="{{nextButtonValue()}}"></input>
     </div>
-    <input type="button" value="Back", ng-click="handleBack()"></input>
-    <input type="button" ng-disabled="disableNextButton()" ng-click="handleAdvance()" value="{{nextButtonValue()}}"></input>
 </div>
-
