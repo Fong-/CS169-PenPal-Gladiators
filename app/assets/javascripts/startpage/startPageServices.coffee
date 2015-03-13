@@ -4,7 +4,7 @@ startPageServices.service("StartPageData", () ->
     password = ""
     topicsById = {}
     selectedTopicIds = {}
-    responseIds = null # TODO Implement me.
+    responseIds = {}
     # Email interface.
     this.getEmail = -> email
     this.setEmail = (e) -> email = e
@@ -20,7 +20,9 @@ startPageServices.service("StartPageData", () ->
     this.addSelectedTopicId = (topicId) -> selectedTopicIds[topicId] = true
     this.clearSelectedTopicIds = (topicId) -> selectedTopicIds = {}
     # User responses interface.
-    this.getResponseIds = -> throw "SharedData::responses is not yet implemented!"
-    this.addResponseId = (responseId) -> throw "SharedData::addResponse is not yet implemented!"
+    this.getResponseIds = -> Object.keys(responseIds)
+    this.addResponseId = (responseId) -> responseIds[responseId] = true
+    this.clearResponseIds = -> responseIds = {}
+    this.getResponseIdsAsHash = -> responseIds
     return # Required to prevent returning the last object.
 )

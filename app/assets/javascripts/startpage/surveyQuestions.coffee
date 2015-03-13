@@ -46,6 +46,8 @@ surveyQuestions.config(($routeProvider) ->
 
     # Helper function to advance to the summary page
     handleAdvanceToSummary = ->
+        StartPageData.clearResponseIds()
+        StartPageData.addResponseId(id) for id of $scope.questionCheckModel when $scope.questionCheckModel[id]
         $location.path("summary")
 
     # Helper function to advance to the question for the next topic
@@ -56,9 +58,9 @@ surveyQuestions.config(($routeProvider) ->
             $scope.currentTopic = "Topic id #{$scope.topicIds[$scope.topicCounter]}"
             $scope.numQuestions = $scope.questions.length
             #TODO: Figure out how to persist state between forward and backward movement within form
-            for question in $scope.questions
-                for response in question.survey_responses
-                    $scope.questionCheckModel[response.id] = false
+            #for question in $scope.questions
+            #    for response in question.survey_responses
+            #        $scope.questionCheckModel[response.id] = false
             $scope.$apply()
 
     # Call either handleAdvanceToQuestions or handleAdvanceToSummary depending on
@@ -81,9 +83,9 @@ surveyQuestions.config(($routeProvider) ->
             $scope.currentTopic = "Topic id #{$scope.topicIds[$scope.topicCounter]}"
             $scope.numQuestions = $scope.questions.length
             #TODO: Figure out how to persist state between forward and backward movement within form
-            for question in $scope.questions
-                for response in question.survey_responses
-                    $scope.questionCheckModel[response.id] = false
+            #for question in $scope.questions
+            #    for response in question.survey_responses
+            #        $scope.questionCheckModel[response.id] = false
             $scope.$apply()
 
     # Call either handleBackToTopics or handleBackToQuestions depending on
@@ -110,8 +112,8 @@ surveyQuestions.config(($routeProvider) ->
         $scope.currentTopic = "Topic id #{$scope.topicIds[$scope.topicCounter]}"
         $scope.numQuestions = $scope.questions.length
         #TODO: Figure out how to persist state between forward and backward movement within form
-        for question in $scope.questions
-            for response in question.survey_responses
-                $scope.questionCheckModel[response.id] = false
+        #for question in $scope.questions
+        #    for response in question.survey_responses
+        #        $scope.questionCheckModel[response.id] = false
         $scope.$apply()
 )
