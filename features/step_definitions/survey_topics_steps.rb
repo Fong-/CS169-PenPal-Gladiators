@@ -5,11 +5,13 @@ end
 When /I click (.*)/ do |topics|
     topics.split(", ").each do |topic_string|
         topic = topic_string[1..-2]
+        topic.gsub!(" ", "_")
         page.find("##{topic.downcase}").click()
     end
 end
 
 Then /the "(.*)" checkbox should( not)? be checked/ do |topic, should_not_be_checked|
+    topic.gsub!(" ", "_")
     expect(page.find("##{topic.downcase}_checkbox", :visible => false).checked?).to be(!should_not_be_checked)
 end
 
