@@ -30,7 +30,7 @@ describe TopicsController do
         expect(responseObject["icon"]).to eq("/some/path/topic_a.png")
     end
 
-    it "should return an empty object if no an id has no corresponding topic" do
+    it "should return an error if the given id has no corresponding topic" do
         get "get_by_id", :id => "100"
         responseObject = JSON.parse(response.body)
         expect(responseObject["error"]).to equal(true)
