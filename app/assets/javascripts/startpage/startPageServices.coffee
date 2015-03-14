@@ -21,17 +21,17 @@ startPageServices.service("StartPageData", () ->
     this.clearSelectedTopicIds = (topicId) -> selectedTopicIds = {}
     # User responses interface.
     # Get ids of responses selected by user
-    this.getResponseIds = -> 
+    this.getResponseIds = ->
         responseIds = []
         for _topicId, responseIds in responseIdsByTopicIds
             for id, selected in responseIds
                 if selected
                     resposneIds.push(id)
         return responseIds
-    this.addResponseIdsByTopicId = (topicId, responseIdsByTopicId) -> 
+    this.addResponseIdsByTopicId = (topicId, responseIdsByTopicId) ->
         responseIdsByTopicIds[topicId] = responseIdsByTopicId
     this.clearResponseIdsByTopics = -> responseIdsByTopicIds = {}
-    this.getResponseIdsByTopicId = (topicId) -> 
+    this.getResponseIdsByTopicId = (topicId) ->
         if topicId of responseIdsByTopicIds
             return responseIdsByTopicIds[topicId]
         else

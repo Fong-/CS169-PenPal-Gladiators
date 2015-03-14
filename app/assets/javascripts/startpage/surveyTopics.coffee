@@ -1,12 +1,12 @@
 surveyTopics = angular.module("SurveyTopics", ["SharedServices", "StartPageServices"])
 
-surveyTopics.config(($routeProvider) ->
+surveyTopics.config(["$routeProvider", ($routeProvider) ->
     $routeProvider.when("/topics", {
         templateUrl: "/assets/survey_topics.html",
         controller: "SurveyTopicsController"
     })
 
-).controller("SurveyTopicsController", ($scope, $http, $location, SharedRequests, StartPageData) ->
+]).controller("SurveyTopicsController", ["$scope", "$http", "$location", "SharedRequests", "StartPageData", ($scope, $http, $location, SharedRequests, StartPageData) ->
     $scope.MIN_NUM_TOPICS_REQUIRED = 5
     $scope.allTopics = []
     $scope.topicSelectionModel = {}
@@ -36,4 +36,4 @@ surveyTopics.config(($routeProvider) ->
         StartPageData.addTopic(topic) for topic in allTopics
         $scope.allTopics = allTopics.sort((u, v) -> u.id - v.id)
         $scope.topicSelectionModel[id] = true for id in StartPageData.getSelectedTopicIds()
-)
+])

@@ -1,5 +1,5 @@
 shares = angular.module("SharedServices", [])
-shares.service("SharedRequests", ($http) ->
+shares.service("SharedRequests", ["$http", ($http) ->
     SERVER_API_PREFIX = "/api/v1/"
     this.requestTopics = -> $http.get("#{SERVER_API_PREFIX}topics")
     this.login = (email, password) ->
@@ -14,4 +14,4 @@ shares.service("SharedRequests", ($http) ->
     this.requestResponsesByQuestion = (id) ->
         $http.get("#{SERVER_API_PREFIX}survey_question/#{id}/survey_responses")
     return # Required to prevent returning the last object.
-)
+])
