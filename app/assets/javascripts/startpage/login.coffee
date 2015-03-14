@@ -23,9 +23,7 @@ login.config(($routeProvider) ->
         SharedRequests.can_register($scope.email, $scope.password).success((data) ->
             if data && data["success"]
                 document.cookie = "email=" + $scope.email
-                console.log("After email: " + document.cookie)
                 document.cookie = "password=" + $scope.password
-                console.log("After password: " + document.cookie)
                 StartPageData.setEmail($scope.email)
                 StartPageData.setPassword($scope.password)
                 $location.path("topics")
