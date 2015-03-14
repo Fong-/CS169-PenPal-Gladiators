@@ -1,11 +1,11 @@
 login = angular.module("Login", ["SharedServices", "StartPageServices"])
 
-login.config(($routeProvider) ->
+login.config(["$routeProvider", ($routeProvider) ->
     $routeProvider.when("/", {
         templateUrl: "/assets/login.html",
         controller: "LoginController"
     })
-).controller("LoginController", ["$http", "$location", "$scope", "SharedRequests", "StartPageData", ($http, $location, $scope, SharedRequests, StartPageData) ->
+]).controller("LoginController", ["$http", "$location", "$scope", "SharedRequests", "StartPageData", ($http, $location, $scope, SharedRequests, StartPageData) ->
     $scope.email = ""
     $scope.password = ""
     $scope.description = ""

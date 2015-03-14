@@ -2,17 +2,17 @@
 
 surveyQuestions = angular.module("SurveyQuestions", ["StartPageServices"])
 
-surveyQuestions.config(($routeProvider) ->
-        $routeProvider.when("/questions/:id", {
-            templateUrl: "/assets/survey_questions.html",
-            controller: "SurveyQuestionsController"
-        })
-).controller("SurveyQuestionsController", ($scope, $http, $location, $routeParams, SharedRequests, StartPageData) ->
+surveyQuestions.config(["$routeProvider", ($routeProvider) ->
+    $routeProvider.when("/questions/:id", {
+        templateUrl: "/assets/survey_questions.html",
+        controller: "SurveyQuestionsController"
+    })
+]).controller("SurveyQuestionsController", ["$scope", "$http", "$location", "$routeParams", "SharedRequests", "StartPageData", ($scope, $http, $location, $routeParams, SharedRequests, StartPageData) ->
     $scope.allTopics = StartPageData.getAllTopics()                 # all the topics
     $scope.selectedTopicIds = StartPageData.getSelectedTopicIds()   # the ids of the topics the user selected
     $scope.currentTopicId = $routeParams.id
     $scope.currentTopic = $scope.allTopics[$scope.currentTopicId].name # the topic we're doing now
-    
+
     $scope.questions = []
     $scope.questionCheckModel = StartPageData.getResponseIdsByTopicId($scope.currentTopicId)
     #if Object.keys($scope.questionCheckModel).length == 0
@@ -92,7 +92,7 @@ surveyQuestions.config(($routeProvider) ->
         else
             handleBackToTopics()
 
-    
+
 
     # Asynchronously load the list of questions for a topic
     load_questions = (topicId) ->
@@ -111,4 +111,4 @@ surveyQuestions.config(($routeProvider) ->
 
 
     load_questions($scope.currentTopicId)
-)
+])
