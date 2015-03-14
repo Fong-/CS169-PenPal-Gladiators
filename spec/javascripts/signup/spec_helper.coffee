@@ -1,4 +1,4 @@
-#= require application
+#= require startPage
 #= require angular-mocks
 #= require angular-route
 #= require sinon
