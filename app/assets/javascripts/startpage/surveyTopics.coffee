@@ -26,7 +26,8 @@ surveyTopics.config(($routeProvider) ->
     $scope.handleAdvanceToQuestions = ->
         StartPageData.clearSelectedTopicIds()
         StartPageData.addSelectedTopicId(id) for id of $scope.topicSelectionModel when $scope.topicSelectionModel[id]
-        $location.path("questions")
+        sortedTopicIds = Object.keys($scope.topicSelectionModel).sort()
+        $location.path("questions/#{sortedTopicIds[0]}")
 
     # Asynchronously load the list of topics.
     # TODO Cache the results, so we only rerun the query if necessary.
