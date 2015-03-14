@@ -9,7 +9,6 @@ class UsersController < ActionController::Base
     @@sha256 = Digest::SHA256.new
 
     def login
-        debugger
         if params_are_invalid(params)
             return
         end
