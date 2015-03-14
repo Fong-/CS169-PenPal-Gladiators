@@ -3,7 +3,6 @@ source 'https://rubygems.org'
 ruby '1.9.3'
 
 gem 'rails', '3.2.16'
-gem 'sqlite3'
 
 group :assets do
   gem 'therubyracer'
@@ -15,6 +14,7 @@ group :assets do
 end
 
 group :development, :test do
+  gem 'sqlite3'
   gem 'rake'
   gem 'debugger'
   gem 'simplecov', :require => false
@@ -25,5 +25,8 @@ group :development, :test do
   gem 'capybara'
   gem 'poltergeist'
   gem 'capybara-angular'
-  gem "codeclimate-test-reporter"
+  gem 'codeclimate-test-reporter'
+
+group :production do
+  gem 'pg'
 end
