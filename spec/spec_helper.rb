@@ -1,9 +1,4 @@
-# Code coverage
 require 'simplecov'
-
-# Code climate
-require "codeclimate-test-reporter"
-CodeClimate::TestReporter.start
 
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 ENV["RAILS_ENV"] ||= 'test'
