@@ -10,10 +10,6 @@ And /I press "(.*)"/ do |button|
     click_button(button)
 end
 
-Then /I should see "(.*)"/ do |content|
-    expect(page.text).to include(content)
-end
-
 Given /^a user with email "(.*)" and password "(.*)" in the database$/ do |email, password|
     User.create({:email => email, :password => password})
 end
