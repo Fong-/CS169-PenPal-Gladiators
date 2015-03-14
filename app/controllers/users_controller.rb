@@ -1,9 +1,9 @@
 class UsersController < ActionController::Base
     ERROR_MESSAGES = {
-        :invalid_login => "Incorrect credentials",
-        :invalid_email => "Incorrect email",
-        :invalid_password => "Incorrect password",
-        :email_exists => "Email already exists"
+        :invalid_login => "incorrect credentials",
+        :invalid_email => "invalid email",
+        :invalid_password => "invalid password",
+        :email_exists => "email already exists"
     }
 
     @@sha256 = Digest::SHA256.new
