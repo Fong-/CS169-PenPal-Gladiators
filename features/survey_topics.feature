@@ -13,6 +13,7 @@ Scenario: can select topic checkboxes
 
 Scenario: can unselect topic checkboxes
     Given I click topics "Education"
+    Given I click topics "Education"
     Then the "Education" checkbox should not be checked
 
 Scenario: cannot proceed with less than 3 topics checked
