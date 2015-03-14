@@ -4,7 +4,7 @@ startPageServices.service("StartPageData", () ->
     password = ""
     topicsById = {}
     selectedTopicIds = {}
-    responseIds = {}
+    responseIdsByTopicIds = {}
     # Email interface.
     this.getEmail = -> email
     this.setEmail = (e) -> email = e
@@ -20,9 +20,22 @@ startPageServices.service("StartPageData", () ->
     this.addSelectedTopicId = (topicId) -> selectedTopicIds[topicId] = true
     this.clearSelectedTopicIds = (topicId) -> selectedTopicIds = {}
     # User responses interface.
-    this.getResponseIds = -> Object.keys(responseIds)
-    this.addResponseId = (responseId) -> responseIds[responseId] = true
-    this.clearResponseIds = -> responseIds = {}
-    this.getResponseIdsAsHash = -> responseIds
+    # Get ids of responses selected by user
+    this.getResponseIds = -> 
+        responseIds = []
+        for _topicId, responseIds in responseIdsByTopicIds
+            for id, selected in responseIds
+                if selected
+                    resposneIds.push(id)
+        return responseIds
+    this.addResponseIdsByTopicId = (topicId, responseIdsByTopicId) -> 
+        responseIdsByTopicIds[topicId] = responseIdsByTopicId
+    this.clearResponseIdsByTopics = -> responseIdsByTopicIds = {}
+    this.getResponseIdsByTopicId = (topicId) -> 
+        if topicId of responseIdsByTopicIds
+            return responseIdsByTopicIds[topicId]
+        else
+            return {}
+    this.getResponseIdsByTopicIds = -> responseIdsByTopicIds
     return # Required to prevent returning the last object.
 )
