@@ -26,7 +26,7 @@ class UsersController < ActionController::Base
     end
 
     def register
-        if can_user_register
+        if can_user_register(params)
             User.create :email => params[:email], :password => @@sha256.base64digest(params[:password])
         end
     end
