@@ -18,10 +18,10 @@ Scenario: The user logs in with the incorrect username and password.
     Given I fill in "email" with "foo@bar.com"
     And I fill in "password" with "fizzbuzz"
     And I press "Login"
-    Then I should see "Incorrect"
+    Then I should see "incorrect"
 
 Scenario: The user attempts a SQL injection.
     Given I fill in "email" with "; DROP * FROM users;"
     And I fill in "password" with "; DROP * FROM users;"
     And I press "Login"
-    Then I should see "Incorrect"
+    Then I should see "incorrect"
