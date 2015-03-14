@@ -13,3 +13,7 @@ script:
     - bundle exec rake cucumber
 
 cache: bundler
+
+addons:
+  code_climate:
+    repo_token: 54f76c90e30ba05d6e0021b4
