@@ -15,6 +15,7 @@ group :assets do
 end
 
 group :development, :test do
+  gem 'rake'
   gem 'debugger'
   gem 'simplecov', :require => false
   gem 'database_cleaner'

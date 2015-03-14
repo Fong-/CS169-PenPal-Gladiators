@@ -194,6 +194,7 @@ DEPENDENCIES
   less-rails
   poltergeist
   rails (= 3.2.16)
+  rake
   rspec-rails (= 2.14)
   simplecov
   sqlite3
