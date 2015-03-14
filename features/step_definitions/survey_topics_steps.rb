@@ -1,3 +1,7 @@
+Given /I am on the "Survey Topic Checkboxes" page/ do
+    visit '/#topics'
+end
+
 When /I click topics (.*)/ do |topics|
     topics.split(", ").each do |topic_string|
         topic = topic_string[1..-2]
