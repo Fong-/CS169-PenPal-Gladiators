@@ -8,11 +8,11 @@ Background: I am on the survey topic checkboxes page
     Given I am on the Survey Topic Checkboxes page
 
 Scenario: can select topic checkboxes
-    When I click topics "Education"
+    Given I click topics "Education"
     Then the "Education" checkbox should be checked
 
 Scenario: can unselect topic checkboxes
-    When I click topics "Education"
+    Given I click topics "Education"
     Then the "Education" checkbox should not be checked
 
 Scenario: cannot proceed with less than 3 topics checked
