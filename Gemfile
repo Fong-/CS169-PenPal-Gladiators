@@ -24,4 +24,5 @@ group :development, :test do
   gem 'capybara'
   gem 'poltergeist'
   gem 'capybara-angular'
+  gem "codeclimate-test-reporter"
 end
