@@ -1,3 +1,5 @@
+include AccessTokenHelper
+
 class UsersController < ActionController::Base
     ERROR_MESSAGES = {
         :invalid_login => "incorrect credentials",
@@ -8,21 +10,37 @@ class UsersController < ActionController::Base
 
     @@sha256 = Digest::SHA256.new
 
-    def login
-        if params_are_invalid(params)
+    def authenticate
+        email, password = extract_email_and_encrypted_password(params)
+        if email.nil?
             return
         end
+        user = User.find_by_email_and_password(email, password)
+        if user.nil?
+            render :json => {:error => ERROR_MESSAGES[:invalid_login]}
+        else
+            render :json => {:success => "true", :token => access_token_from_user(user)}
+        end
+    end
 
-        email = params[:email]
-        password = @@sha256.base64digest(params[:password])
-
+    def login
+        email, password = extract_email_and_encrypted_password(params)
+        if email.nil?
+            return
+        end
         if User.exists_with_password(email, password)
             render :json => {:success => "true"}
-            return
         else
             render :json => {:error => ERROR_MESSAGES[:invalid_login]}
-            return
         end
+    end
+
+    # Returns (email, password) from params and renders upon failure.
+    def extract_email_and_encrypted_password(params)
+        if params_are_invalid(params)
+            return nil, nil
+        end
+        return params[:email], @@sha256.base64digest(params[:password])
     end
 
     def register

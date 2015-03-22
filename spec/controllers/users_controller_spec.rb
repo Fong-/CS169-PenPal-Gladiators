@@ -67,4 +67,30 @@ describe UsersController, :type => :controller do
         kevin = User.find_by_email("kevin.wu@berkeley.edu")
         expect(kevin.password).to eq(@sha256.base64digest("asdfasdf"))
     end
+
+    it "should not try to authenticate invalid email or passwords" do
+        get "authenticate", { :email => "nick@berkeley.edu" }
+        responseObject = JSON.parse(response.body)
+        expect(responseObject["error"]).to eq("invalid password")
+        expect(responseObject["token"]).to eq(nil)
+        get "authenticate", { :password => "asdfasdf" }
+        responseObject = JSON.parse(response.body)
+        expect(responseObject["error"]).to eq("invalid email")
+        expect(responseObject["token"]).to eq(nil)
+    end
+
+    it "should not authenticate an unknown user" do
+        get "authenticate", { :email => "nick@berkeley.edu", :password => "asdfasdf" }
+        responseObject = JSON.parse(response.body)
+        expect(responseObject["error"]).to eq("incorrect credentials")
+        expect(responseObject["token"]).to eq(nil)
+    end
+
+    it "should authenticate an existing user" do
+        get "authenticate", { :email => "whsieh@berkeley.edu", :password => "asdfasdf" }
+        responseObject = JSON.parse(response.body)
+        expect(responseObject["error"]).to eq(nil)
+        expect(responseObject["success"]).to eq("true")
+        expect(responseObject["token"]).to_not eq(nil)
+    end
 end
