@@ -1,7 +1,11 @@
 class User < ActiveRecord::Base
     has_many :user_survey_responses
     has_many :survey_responses, :through => :user_survey_responses
-    attr_accessible :email, :password
+    attr_accessible :email, :password, :secret
+
+    after_initialize do |user|
+        user.secret ||= SecureRandom.base64(24)
+    end
 
     def self.exists(email)
         return User.find_by_email(email).present?
