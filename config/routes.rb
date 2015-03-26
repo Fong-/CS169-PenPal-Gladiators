@@ -13,6 +13,9 @@ CS169PenpalGladiators::Application.routes.draw do
     get "/api/v1/survey_responses" => "survey_responses#get_all"
     get "/api/v1/survey_response/:id" => "survey_responses#get_by_id"
 
+    # Public routes
+    get "/home" => "application#homepage"
+
     # The priority is based upon order of creation:
     # first created -> highest priority.
 
