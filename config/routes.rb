@@ -16,6 +16,9 @@ CS169PenpalGladiators::Application.routes.draw do
     post "/api/v1/user/:id/profile" => "users#post_profile_info_by_id"
     get "/api/v1/arenas/:user_id" => "arenas#get_by_user_id"
 
+    # Public routes
+    get "/home" => "application#homepage"
+
     # The priority is based upon order of creation:
     # first created -> highest priority.
 
