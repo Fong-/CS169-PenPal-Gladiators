@@ -8,13 +8,13 @@ Background: I am on my user profile page
 
 # Consider using identicons and uploaded photo (a la GitHub)
 Scenario: Choose a profile photo
-    When I click "Choose Profile Picture"
-    And I see profile pictures to choose from
-    Then I should be able to select a profile picture
+    When I press "Choose Profile Picture"
+    Then I should see profile pictures to choose from
+    And I should be able to select a profile picture
 
 Scenario: Select a political hero
-    Given there is a text box called "Political-Hero"
-    Then I can write "Foo Bar" in the "Political-Hero" text box.
+    When I fill in "Political-Hero" with "Foo Bar"
+    Then I should see "Foo Bar"
 
 Scenario: Select a position from liberal to conservative
     Given there is a series of five radio buttons ranging from "liberal" to "moderate" to "conservative"
@@ -25,16 +25,15 @@ Scenario: Select a position from liberal to conservative
     And I should be able to select that I am "conservative"
 
 Scenario: Write a political blurb
-    Given there is a text box called "Political-Blurb"
-    Then I can write "I appreciate Foo Bar's dedication to Widgets" in the "Political-Blurb" text box.
+    When I fill in "Political-Blurb" with "I appreciate Foo Bar's dedication to Widgets"
+    Then I should see "I appreciate Foo Bar's dedication to Widgets"
 
 Scenario: Decline to complete profile
-    Given there is a "Complete Profile Later" button
-    Then I should be able to click the button
-    And I should be on the home page
+    Given I press "Complete Profile Later"
+    Then I should be on the home page
 
 Scenario: View other Gladiator's profile
-    Given I navigate to the profile of "Garply"
-    And "Garply"'s political hero is "Widget"
+    Given "Garply" has a political hero of "Widget"
+    And I navigate to the profile page of "Garply"
     Then I should see "Widget" in the "Political-Hero" text box
-    And I can not write "Foo Bar" in the "Political-Hero" text box
+    And I cannot fill in "Political-Hero" with "Foo Bar"
