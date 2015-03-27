@@ -21,12 +21,7 @@ body {
 }
 
 .flat-button {
-    border: 1px solid #777777;
-    background: #3B5998;
-    color: white;
-    padding: 4px;
-    cursor: pointer;
-    border-radius: 4px;
+
 }
 
 .vertical-center {
@@ -42,7 +37,6 @@ body {
     text-align: center;
     padding-top: 30px;
     padding-bottom: 30px;
-
     #status {
         color: red;
     }
@@ -68,26 +62,38 @@ input[type=text], input[type=password] {
     width: 100%;
 }
 
+#description {
+    padding-bottom: 20px;
+    border-bottom: 1px dotted;
+}
+
 #topic-select-container {
+
+    /* Container attributes */
+
     height: 550px;
     width: 2 * @num-topics-per-row * @topic-icon-margin + @num-topics-per-row * @topic-icon-display-size + 70px;
-    padding: 10px 30px 25px 10px;
-    margin: 40px auto 0px auto;
-    background-color: white;
+    max-width: 100%;
+    background: white;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    padding-left: 30px;
+    padding-right: 30px;
+
+    /* Child view attributes */
 
     #heading {
         font-size: 30px;
     }
 
-    #heading, #description {
-        margin-left: 35px;
-    }
-
     #topic-check-container {
-        width: 2 * @num-topics-per-row * @topic-icon-margin + @num-topics-per-row * @topic-icon-display-size + 30px;
+        width: 100%;
+        max-width: 500px;
         height: 330px;
         overflow: auto;
-
+        
         .topic-container {
             width: @topic-icon-display-size;
             height: @topic-icon-display-size + 22px;
@@ -98,8 +104,7 @@ input[type=text], input[type=password] {
             cursor: pointer;
 
             p {
-                background-color: #444444;
-                color: #FFFFFF;
+                color: #888;
                 margin-top: 0px;
                 padding-top: 4px;
                 padding-left: 4px;
@@ -108,6 +113,7 @@ input[type=text], input[type=password] {
             }
 
             img {
+                border-radius: 2px;
                 width: @topic-icon-display-size;
                 height: @topic-icon-display-size;
                 margin-bottom: 0px;
@@ -119,15 +125,15 @@ input[type=text], input[type=password] {
 
                 &+ label span {
                     .check_sprite;
-                    border-color: gray;
+                    border: none;
                     background-color: white;
                     opacity: 0.4;
                 }
 
                 &:checked + label span {
                     .check_sprite;
-                    border-color: rgb(96, 119, 35);
-                    background-color: rgb(196,217,143);
+                    border: none;
+                    background-color: #3bafda;
                     opacity: 1;
                 }
             }
