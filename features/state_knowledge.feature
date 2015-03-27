@@ -10,15 +10,15 @@ Background: I am a new user
 Scenario: Correct message is displayed when going back to topic selection page
     Given I selected five topics
     Then I should see "Select five topics"
-    When I pressed the next button
-    And I pressed the back button
+    When I press "next"
+    And I press "back"
     Then I should see "Edit and press Next button to save changes"
 
 Scenario: Correct message is displayed when going back to survey question page
     Given I selected five topics
-    When I pressed the next button
+    When I press "next"
     Then I should see "Answer the following"
-    When I selected the first responses for each question
-    And I pressed the next button
-    And I pressed the back button
+    When I select the first response for each question
+    And I press "next"
+    And I press "back"
     Then I should see "Edit and press Next button to save changes"
