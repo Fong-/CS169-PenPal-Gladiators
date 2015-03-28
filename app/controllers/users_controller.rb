@@ -6,15 +6,13 @@ class UsersController < ActionController::Base
         :email_exists => "email already exists"
     }
 
-    @@sha256 = Digest::SHA256.new
-
     def login
         if params_are_invalid(params)
             return
         end
 
         email = params[:email]
-        password = @@sha256.base64digest(params[:password])
+        password = params[:password]
 
         if User.exists_with_password(email, password)
             render :json => {:success => "true"}
@@ -27,7 +25,7 @@ class UsersController < ActionController::Base
 
     def register
         if can_user_register(params)
-            User.create :email => params[:email], :password => @@sha256.base64digest(params[:password])
+            User.create :email => params[:email], :password => params[:password]
         end
     end
 
