@@ -1,4 +1,4 @@
-@javascript @seed_topics
+@javascript
 Feature: Login
     As a new user
     I want to log in to an existing account
@@ -16,7 +16,7 @@ Scenario: The user logs in with the correct username and password.
 
 Scenario: The user logs in with the incorrect username and password.
     Given I fill in "email" with "foo@bar.com"
-    And I fill in "password" with "fizzbuzz"
+    And I fill in "password" with "fizzbuzzz"
     And I press "Login"
     Then I should see "incorrect"
 
