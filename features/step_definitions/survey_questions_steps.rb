@@ -1,14 +1,11 @@
-Given /the following responses exist/ do |responses_table|
-    table_hash = responses_table.hashes
-    table_hash.each do |response|
-        SurveyResponse.create!(response)
-    end
+Given /the following questions exist/ do |questions_table|
+    questions_table.hashes.each { |question| SurveyQuestion.create!(question) }
 end
 
-Given /the following questions exist/ do |questions_table|
-    table_hash = questions_table.hashes
-    table_hash.each do |question|
-        SurveyQuestion.create!(question)
+Given /the following responses exist/ do |responses_table|
+    responses_table.hashes.each do |row|
+        question = SurveyQuestion.find_by_text(row[:question_text])
+        question.survey_responses.create!(:text => row[:response_text], :index => row[:index])
     end
 end
 

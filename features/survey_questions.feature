@@ -5,22 +5,20 @@ Feature: Display survey questions so user can select answers.
     I want to fill out a survey.
 
 Background: Questions have been added to database.
-
-    Given the following responses exist:
-        | response                                            |
-        | Climate chage is happening.                         |
-        | Climate chage is not happening.                     |
-        | The current immigration law is adequate.            |
-        | The current immigration law is not adequate.        |
-        | Education should follow no child left behind.       |
-        | Education should not follow no child left behind.   |
-
     Given the following questions exist:
-        | question                         | responses   |
-        | Opinions on climate chnages      | 1,2         |
-        | Opinions on immigration laws     | 3,4         |
-        | Opinions on education            | 5,6         |
-
+        | text                          | index |
+        | Opinion on climate changes?   | 1     |
+        | Opinion on immigration laws?  | 2     |
+        | Opinions on education?        | 3     |
+    And the following responses exist:
+        | question_text                 | response_text                                     | index |
+        | Opinion on climate changes?   | Climate change is happening.                      | 1     |
+        | Opinion on climate changes?   | Climate change is not happening.                  | 2     |
+        | Opinion on immigration laws?  | The current immigration law is adequate.          | 1     |
+        | Opinion on immigration laws?  | The current immigration law is not adequate.      | 2     |
+        | Opinions on education?        | Education should follow no child left behind.     | 1     |
+        | Opinions on education?        | Education should not follow no child left behind. | 2     |
+    And I am on the first survey questions page
 
 Scenario: Display survey questions.
     Given I have selected "Education" for Survey Topic
