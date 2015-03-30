@@ -110,3 +110,13 @@ UserSurveyResponse.create(:user => wenson, :survey_response => response)
 rosenthal = User.find_by_email("rosenthal@policy.com")
 response = Topic.find_by_name("Foreign Policy").survey_questions.find_by_index(1).survey_responses.find_by_index(1)
 UserSurveyResponse.create(:user => rosenthal, :survey_response => response)
+
+####################################################
+# Create new test arenas, conversations, and posts
+####################################################
+
+arena = ben.arenas.create :user1 => ben, :user2 => bob
+conversation = arena.conversations.create :title => "Why does is the US education system terrible?"
+conversation.posts.create :text => "It all starts in the home. If the parents don't care, no one will.", :author => ben
+conversation.posts.create :text => "No, it's actually because the unions have too much power.", :author => bob
+conversation.posts.create :text => "You, sir, are an idiot. This is really why the education system sucks. Because people like you go on and on about unions and never do anything to address the real problems at hand. Damnit Bob, get it together.", :author => ben

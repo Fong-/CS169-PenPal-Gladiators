@@ -10,6 +10,7 @@ class Arena < ActiveRecord::Base
             conversations_response.push({
                 :id => conversation.id,
                 :timestamp => conversation.timestamp,
+                :title => conversation.title,
                 :recent_post => {
                     :author_id => conversation.recent_post.author.id,
                     :text => conversation.recent_post.text
