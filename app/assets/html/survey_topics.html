@@ -1,15 +1,15 @@
-<div class="vertical-center">
-    <div class="container" id="topic-select-container">
-        <div class="header">Which topics interest you?</div>
-        <p id="description">Select at least {{MIN_NUM_TOPICS_REQUIRED}} from the below topics. You may change or add topics later through 'settings.'</p>
-        <div class="container-fluid" id="topic-check-container">
-            <div id="{{topic.name.toLowerCase().replace(' ', '_')}}" class="container-fluid topic-container col-md-1" ng-click="handleTopicToggled(topic.id)" ng-repeat="topic in allTopics">
-                <input id="{{topic.name.toLowerCase().replace(' ', '_')}}_checkbox" ng-model="topicSelectionModel[topic.id]" type="checkbox"/>
-                <label><span/></label>
-                <img ng-src="{{topic.icon}}"/>
-                <p>{{topic.name}}</p>
-            </div>
+<div class="container" id="topic-select-container">
+    <div class="header">Which topics interest you?</div>
+    <p id="description">Pick at least {{MIN_NUM_TOPICS_REQUIRED}} topics.</p>
+    <div class="spacing"></div>
+    <div class="container-fluid" id="topic-check-container">
+        <div id="{{topic.name.toLowerCase().replace(' ', '_')}}" class="topic-container col-md-1" ng-click="handleTopicToggled(topic.id)" ng-repeat="topic in allTopics">
+            <input id="{{topic.name.toLowerCase().replace(' ', '_')}}_checkbox" ng-model="topicSelectionModel[topic.id]" class="check_sprite" type="checkbox"/>
+            <label><span/></label>
+            <img ng-src="{{topic.icon}}"/>
+            <p>{{topic.name}}</p>
         </div>
-        <input class="btn btn-secondary" type="button" ng-disabled="disableNextButton()" ng-click="handleAdvanceToQuestions()" value="{{nextButtonValue()}}"/>
     </div>
+    <input class="btn btn-primary" id="continue-button" type="button" ng-disabled="disableNextButton()" ng-click="handleAdvanceToQuestions()" value="{{nextButtonValue()}}"/>
 </div>
+
