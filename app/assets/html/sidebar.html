@@ -1,0 +1,20 @@
+<div class="nav-side-menu">
+    <div class="menu-list">
+        <ul class="menu-content">
+            <li ng-repeat="gladiator in gladiators">
+                <div class="gladiator-heading-container" ng-click="toggleGladiatorPanel(gladiator)">
+                    <a class="gladiator-heading">{{gladiator}}</a>
+                    <span class="{{expandButtonClass(gladiator)}} click-to-expand"></span>
+                </div>
+                <div class="message-preview" ng-show="shouldShowGladiatorPanel(gladiator)" ng-repeat="message in messages[gladiator]">
+                    <p class="message-title">{{message.title}}</p>
+                    <p class="message-time">{{message.time}}</p>
+                    <p class="message-text">{{gladiator.split(" ")[0]}} said: "{{message.text}}"</p>
+                    <div class="message-actions">
+                        <a class="message-delete">Delete</a><a class="message-reply">Reply</a>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
