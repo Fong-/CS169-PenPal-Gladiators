@@ -1,5 +1,8 @@
 Given /the following questions exist/ do |questions_table|
-    questions_table.hashes.each { |question| SurveyQuestion.create!(question) }
+    questions_table.hashes.each do |row|
+        topic = Topic.find_by_name(row[:topic])
+        topic.survey_questions.create!(:text => row[:text], :index => row[:index])
+    end
 end
 
 Given /the following responses exist/ do |responses_table|
@@ -9,27 +12,19 @@ Given /the following responses exist/ do |responses_table|
     end
 end
 
-Given /I have selected (.*) for Survey Topic/ do |topic|
-    visit '/#/topics' # go to topics page
-    page.find("##{topic.downcase}").click() #click topic
-end
-
-And /I am on the survey questions page/ do
-    current_path = URI.parse(current_url).path
-    until current_path # == something, IMPLEMENT - need to check description of page
-    click_button('next')
-    end
-    # visit '/#/questions/#{topicID}'
-end
-
-Then /I should( not)? see (.*)/ do |should_not_see, content|
-    if should_not_see
-        expect(page).not_to have_text(content)
-    else
-        expect(page).to have_text(content)
+And /I have selected the topics (.*)/ do |topics|
+    step "I am on the Survey Topic Checkboxes page"
+    topics.split(", ").each do |topic_string|
+        step "I click topics #{topic_string}"
     end
 end
 
-Then /^I should be able to check the response: "(.*?)"$/ do |response|
-    expect(page).to have_text(response)
+Given /^I have navigated to the first survey questions page$/ do
+    step "I press \"Continue to Survey Questions\""
+end
+
+And /^I answer all the questions$/ do
+    page.all("input[type='checkbox']").each do |checkbox|
+        checkbox.set(true)
+    end
 end
