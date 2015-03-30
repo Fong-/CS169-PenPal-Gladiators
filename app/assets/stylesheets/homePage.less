@@ -1,1 +1,113 @@
-// TODO Implement style for homepage
+.nav-side-menu {
+    padding-top: 50px;
+    overflow: auto;
+    font-family: verdana;
+    font-size: 12px;
+    font-weight: 200;
+    background-color: #EFEFEF;
+    position: fixed;
+    top: 0px;
+    width: 300px;
+    height: 100%;
+    color: black;
+    right: 0px;
+    border-left: 1px solid #D4D4D4;
+
+    .menu-list .menu-content {
+        display: block;
+    }
+
+    .gladiator-heading-container {
+        background-color: #DFDFDF;
+
+        &:hover {
+            background-color: #CFCFCF;
+        }
+
+        .gladiator-heading {
+            font-size: 16px;
+        }
+
+        .click-to-expand {
+            font-size: 16px;
+            color: black;
+            float: right;
+            padding-right: 5px;
+            padding-top: 8px;
+        }
+    }
+
+    li {
+        padding: 5px 5px 0px 5px;
+        border-bottom: 1px solid #D4D4D4;
+
+        .conversation-preview {
+            padding-left: 10px;
+            font-size: 13px;
+            background-color: white;
+
+            &:hover {
+                background-color: #F8F8F8;
+            }
+
+            .conversation-title {
+                margin-bottom: 0px;
+                font-weight: bold;
+                line-height: 1.7;
+            }
+
+            .conversation-time {
+                color: #888888;
+                padding-right: 5px;
+                margin-bottom: 0px;
+            }
+
+            .conversation-text {
+                margin-top: 0px;
+                padding-right: 5px;
+                margin-bottom: 5px;
+                line-height: 1.7;
+            }
+
+            .conversation-actions {
+                width: 100%;
+                padding-left: 10px;
+                padding-bottom: 10px;
+
+                .conversation-delete, .conversation-reply {
+                    padding: 5px 5px 5px 5px;
+                    background-color: #D4D4D4;
+                    border-radius: 5px;
+                    font-size: 12px;
+
+                    &:hover {
+                        background-color: #C8C8C8;
+                    }
+                }
+                .conversation-reply {
+                    margin-left: 10px;
+                }
+            }
+        }
+
+        a {
+            text-decoration: none;
+            color: #222222;
+            font-size: 13px;
+            padding-left: 10px;
+        }
+    }
+
+    ul, li {
+        list-style: none;
+        padding: 0px;
+        margin: 0px;
+        line-height: 35px;
+        cursor: pointer;
+    }
+}
+
+body {
+    background-color: #EFEFEF;
+    font-family: "Avenir";
+}
