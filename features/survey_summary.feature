@@ -14,14 +14,14 @@ Scenario: A summary of the user responses is displayed
 
 Scenario: Separate page for editing responses to survey questions
     Given I am on the summary page
-    And I click on Edit button for "Education"
-    Then I should see the question page for "Education"
+    And I click on the edit button for "Education"
+    Then I should be on the "Education" question page
     And I should see "Edit and press 'Return to Summary' to save changes"
 
 Scenario: Edit responses to survey questions
     Given I am on the summary page
-    And I click on Edit button for "Education"
-    And I selected response 2 for question 1
-    And I pressed "Return to Summary"
-    Then I should be on summary page
+    And I click on the edit button for "Education"
+    And I select response 2 for question 1
+    And I press "Return to Summary"
+    Then I should be on the summary page
     And I should see response 2 for question 1

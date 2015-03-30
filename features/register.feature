@@ -5,7 +5,7 @@ Feature: Register
   So that I can use PenPal Gladiators
 
 Background:
-    Given a user with email "foo@bar.com" and password "fizzbuzz" in the database
+    Given I am a user with email "foo@bar.com" and password "fizzbuzz"
     And I am on the Login/Register page
 
 Scenario: The user registers with an existing username.
@@ -18,4 +18,4 @@ Scenario: The user registers with a non-existant username.
     Given I fill in "email" with "user@bar.com"
     And I fill in "password" with "fizzbuzz"
     And I press "Register"
-    Then I should be at the survey page
+    Then I should be on the survey page
