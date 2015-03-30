@@ -1,27 +1,17 @@
-@topic-icon-display-size: 100px;
-@topic-icon-margin: 6px;
+@topic-icon-display-size: 120px;
+@topic-icon-margin: 15px;
 @num-topics-per-row: 4;
 
 body {
     background-color: #EFEFEF;
-    font-family: "Avenir";
+    font-family: "Avenir Next";
     font-weight: 300;
+    color: #555;
 }
 
-.check_sprite {
-    position: absolute;
-    margin-top: 15px;
-    margin-left: 6px;
-    width: 25px;
-    height: 25px;
-    border-radius: 50%;
-    cursor: pointer;
-    border-style: solid;
-    border-width: 2px;
-}
-
-.flat-button {
-
+h1, h2, h3, p, div {
+    font-weight: 400;
+    color: #aaa;
 }
 
 .vertical-center {
@@ -31,29 +21,28 @@ body {
     align-items: center;
 }
 
-#login-container {
-    width: 230px;
-    background: white;
-    text-align: center;
-    padding-top: 30px;
-    padding-bottom: 30px;
-    #status {
-        color: red;
-    }
-}
-
 input[type=text], input[type=password] {
-    margin-top: 10px;
-    margin-bottom: 10px;
-    border: none;
-    background: transparent;
-    border-bottom: 1px dotted;
+    background: #EFEFEF;
+    border-radius: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    border: 1px solid #CCC;
     outline: none
 }
 
+.label {
+    background: none;
+    padding: 0px 0px 0px 0px;
+    margin: none;
+    font-family: "Avenir Next";
+    font-weight: 400;
+    font-size: 14px;
+    color: #777;
+}
+
 .header {
-    margin-top: 10px;
-    margin-bottom: 10px;
     font-size: 20px;
 }
 
@@ -62,114 +51,162 @@ input[type=text], input[type=password] {
     width: 100%;
 }
 
-#description {
-    padding-bottom: 20px;
-    border-bottom: 1px dotted;
+.btn {
+    border: 1px solid #ccc;
+    border-radius: 20px;
+}
+
+.center {
+    width: 100%;
+    text-align: center;
+}
+
+#login-container {
+    width: 280px;
+    background: white;
+    text-align: left;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    padding-left: 30px;
+    padding-right: 30px;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+
+    #status {
+        color: red;
+    }
+
+    .main-btn {
+        width: 140px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        border-radius: 20px;
+    }
+
+    #email, #password {
+        width: 100%;
+    }
+}
+
+.btn-primary {
+    background: #5bcffa;
 }
 
 #topic-select-container {
 
     /* Container attributes */
 
-    height: 550px;
     width: 2 * @num-topics-per-row * @topic-icon-margin + @num-topics-per-row * @topic-icon-display-size + 70px;
     max-width: 100%;
     background: white;
     margin-top: 40px;
     margin-bottom: 40px;
+    background: white;
+    text-align: left;
     padding-top: 30px;
     padding-bottom: 30px;
     padding-left: 30px;
     padding-right: 30px;
+    border: 1px solid #ccc;
+    border-radius: 2px;
 
     /* Child view attributes */
 
-    #heading {
-        font-size: 30px;
+    .check_sprite {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        height: 28px;
+        bottom: 0px;
     }
 
     #topic-check-container {
         width: 100%;
-        max-width: 500px;
-        height: 330px;
-        overflow: auto;
-        
+        padding: 0px;
+
+        div {
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            overflow: hidden;
+            padding: 0px;
+        }
+
         .topic-container {
             width: @topic-icon-display-size;
-            height: @topic-icon-display-size + 22px;
-            margin-bottom: 10px;
+            height: @topic-icon-display-size + 26px;
+            margin-bottom: 2 * @topic-icon-margin;
             margin-left: @topic-icon-margin;
             margin-right: @topic-icon-margin;
             display: inline-block;
-            cursor: pointer;
+
 
             p {
                 color: #888;
                 margin-top: 0px;
-                padding-top: 4px;
-                padding-left: 4px;
+                padding: 4px;
                 font-size: 13px;
+                border-top: 1px solid #888;
                 width: @topic-icon-display-size;
+                cursor: pointer;
             }
 
             img {
                 border-radius: 2px;
                 width: @topic-icon-display-size;
-                height: @topic-icon-display-size;
+                height: @topic-icon-display-size - 5px;
                 margin-bottom: 0px;
+                margin-top: -20px;
                 display: block;
             }
 
             input[type="checkbox"] {
                 display: none;
-
+                cursor: pointer;
                 &+ label span {
                     .check_sprite;
                     border: none;
                     background-color: white;
                     opacity: 0.4;
+                    cursor: pointer;
                 }
 
                 &:checked + label span {
                     .check_sprite;
                     border: none;
-                    background-color: #3bafda;
+                    background-color: #5bcffa;
                     opacity: 1;
+                    cursor: pointer;
                 }
             }
         }
     }
 
-    input[type=button] {
+    #continue-button {
         float: right;
-        margin-top: 30px;
-        .flat-button;
-
-        &:disabled {
-            background: #899BC1;
-            cursor: default;
-        }
     }
 }
 
 #survey-questions-container {
     background: white;
-    margin: 40px auto 0px auto;
+    margin: 40px auto 40px auto;
     width: 560px;
     max-height: 640px;
     overflow: auto;
+    background: white;
+    text-align: left;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    padding-left: 30px;
+    padding-right: 30px;
+    border: 1px solid #ccc;
+    border-radius: 2px;
 
     h1 {
         padding-top: 30px;
         font-size: 30px;
     }
 
-    h1, #description {
-        margin-left: 50px;
-    }
-
     #topic-questions-container {
-        padding: 20px 50px 50px 50px;
 
         #next-question-button {
             margin-left: 5px;
@@ -181,15 +218,8 @@ input[type=text], input[type=password] {
 
         .question-text {
             margin-bottom: 10px;
-        }
-
-        input[type=button] {
-            .flat-button;
-
-            &:disabled {
-                background: #899BC1;
-                cursor: default;
-            }
+            color: #888;
+            font-size: 16px;
         }
     }
 }
