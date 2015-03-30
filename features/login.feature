@@ -5,14 +5,14 @@ Feature: Login
     So that I can use PenPal Gladiators.
 
 Background:
-    Given a user with email "foo@bar.com" and password "fizzbuzz" in the database
+    Given I am a user with email "foo@bar.com" and password "fizzbuzz"
     And I am on the Login/Register page
 
 Scenario: The user logs in with the correct username and password.
     Given I fill in "email" with "foo@bar.com"
     And I fill in "password" with "fizzbuzz"
     And I press "Login"
-    Then I should be at the profile page
+    Then I should be on the profile page
 
 Scenario: The user logs in with the incorrect username and password.
     Given I fill in "email" with "foo@bar.com"
