@@ -4,14 +4,12 @@ require "digest"
 # Users
 ############################################################
 
-sha256 = Digest::SHA256.new
-
 users = [
-    { :email => "ben@bitdiddle.com", :password => sha256.base64digest("bitsrocks") },
-    { :email => "generic@email.com", :password => sha256.base64digest("asdfasdf") },
-    { :email => "bob@schmitt.com", :password => sha256.base64digest("imboring") },
-    { :email => "genericasiankid@gmail.com", :password => sha256.base64digest("password") },
-    { :email => "rosenthal@policy.com", :password => sha256.base64digest("publicpolicy") }
+    { :email => "ben@bitdiddle.com", :password => "bitsrocks" },
+    { :email => "generic@email.com", :password => "asdfasdf" },
+    { :email => "bob@schmitt.com", :password => "imboring" },
+    { :email => "genericasiankid@gmail.com", :password => "password" },
+    { :email => "rosenthal@policy.com", :password => "publicpolicy" }
 ]
 
 users.each do |u|
