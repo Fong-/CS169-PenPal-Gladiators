@@ -1,0 +1,20 @@
+language: ruby
+rvm:
+    - 1.9.3
+
+branches:
+  only:
+    - master
+
+script:
+    - bundle exec rake assets:precompile
+    - bundle exec rake db:migrate
+    - bundle exec rake spec
+    - bundle exec rake spec:javascript
+    - bundle exec rake cucumber
+
+cache: bundler
+
+addons:
+  code_climate:
+    repo_token: cbb66e5ccc33f95711001cf1d8acb9d97f20e44d833b9713734fda6ef138cf13

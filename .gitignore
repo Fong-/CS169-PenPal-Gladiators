@@ -7,6 +7,9 @@
 # And the sublime project file
 !CS169-PenPal-Gladiators.sublime-project
 
+# And the travis file
+!.travis.yml
+
 # But ignore random files
 .DS_Store
 
