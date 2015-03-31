@@ -4,7 +4,7 @@ require 'spec_helper'
 describe UsersController, :type => :controller do
     before :each do
         @sha256 = Digest::SHA256.new
-        User.create :email => "whsieh@berkeley.edu", :password => @sha256.base64digest("asdfasdf")
+        User.create :email => "whsieh@berkeley.edu", :password => "asdfasdf"
     end
 
     it "should complain if no email or password is given" do
