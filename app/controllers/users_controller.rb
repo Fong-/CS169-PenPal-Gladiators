@@ -1,3 +1,5 @@
+include AccessTokenHelper
+
 class UsersController < ActionController::Base
     ERROR_MESSAGES = {
         :invalid_login => "incorrect credentials",
@@ -5,6 +7,22 @@ class UsersController < ActionController::Base
         :invalid_password => "invalid password",
         :email_exists => "email already exists"
     }
+
+    def authenticate
+        if params_are_invalid(params)
+            return
+        end
+
+        email = params[:email]
+        password = params[:password]
+
+        user = User.find_by_credentials(email, password)
+        if user.present?
+            render :json => {:success => "true", :token => user.access_token}
+        else
+            render :json => {:error => ERROR_MESSAGES[:invalid_login]}
+        end
+    end
 
     def login
         if params_are_invalid(params)
@@ -16,10 +34,8 @@ class UsersController < ActionController::Base
 
         if User.exists_with_password(email, password)
             render :json => {:success => "true"}
-            return
         else
             render :json => {:error => ERROR_MESSAGES[:invalid_login]}
-            return
         end
     end
 
