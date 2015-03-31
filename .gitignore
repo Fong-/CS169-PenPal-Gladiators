@@ -4,6 +4,9 @@
 # Except the meetings folder
 !/meetings
 
+# And the sublime project file
+!CS169-PenPal-Gladiators.sublime-project
+
 # But ignore random files
 .DS_Store
 
