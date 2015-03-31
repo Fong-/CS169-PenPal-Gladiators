@@ -26,6 +26,7 @@ group :development, :test do
   gem 'poltergeist'
   gem 'capybara-angular'
   gem 'codeclimate-test-reporter'
+  gem 'timecop'
 end
 
 group :production do

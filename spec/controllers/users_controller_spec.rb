@@ -4,7 +4,7 @@ require 'spec_helper'
 describe UsersController, :type => :controller do
     before :each do
         @sha256 = Digest::SHA256.new
-        User.create :email => "whsieh@berkeley.edu", :password => @sha256.base64digest("asdfasdf")
+        User.create :email => "whsieh@berkeley.edu", :password => "asdfasdf"
     end
 
     it "should complain if no email or password is given" do
@@ -66,5 +66,31 @@ describe UsersController, :type => :controller do
         expect(User.all.length).to eq(2)
         kevin = User.find_by_email("kevin.wu@berkeley.edu")
         expect(kevin.password).to eq(@sha256.base64digest("asdfasdf"))
+    end
+
+    it "should not try to authenticate invalid email or passwords" do
+        get "authenticate", { :email => "nick@berkeley.edu" }
+        responseObject = JSON.parse(response.body)
+        expect(responseObject["error"]).to eq("invalid password")
+        expect(responseObject["token"]).to eq(nil)
+        get "authenticate", { :password => "asdfasdf" }
+        responseObject = JSON.parse(response.body)
+        expect(responseObject["error"]).to eq("invalid email")
+        expect(responseObject["token"]).to eq(nil)
+    end
+
+    it "should not authenticate an unknown user" do
+        get "authenticate", { :email => "nick@berkeley.edu", :password => "asdfasdf" }
+        responseObject = JSON.parse(response.body)
+        expect(responseObject["error"]).to eq("incorrect credentials")
+        expect(responseObject["token"]).to eq(nil)
+    end
+
+    it "should authenticate an existing user" do
+        get "authenticate", { :email => "whsieh@berkeley.edu", :password => "asdfasdf" }
+        responseObject = JSON.parse(response.body)
+        expect(responseObject["error"]).to eq(nil)
+        expect(responseObject["success"]).to eq("true")
+        expect(responseObject["token"]).to_not eq(nil)
     end
 end
