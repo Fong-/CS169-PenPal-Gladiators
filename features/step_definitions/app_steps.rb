@@ -24,6 +24,8 @@ Given /^I am on (?:the|a|my) (.*?) page$/ do |page_name|
     visit case(page_name)
         when "Login/Register" then "/#/"
         when "Survey Topic Checkboxes" then "/#topics"
+        when "Home" then "/home"
+        when "Profile" then "/home/#/profile"
         else raise "Could not navigate to the #{page_name} page."
         end
 end
@@ -36,7 +38,8 @@ end
 
 Then /I should be on the (.*?) page/ do |page_name|
     case page_name
-    when "profile"
+    when "Profile" then expect(current_url.index("/home/#/profile")).to_not eq(nil)
+    when "Home" then expect(current_url.index("/home")).to_not eq(nil)
     else raise "No check for the #{page_name} page."
     end
 end
