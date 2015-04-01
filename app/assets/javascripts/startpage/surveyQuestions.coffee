@@ -21,7 +21,6 @@ surveyQuestions.config(["$routeProvider", ($routeProvider) ->
     $scope.questionCheckModel = StartPageData.getResponseIdsByTopicId($scope.currentTopicId)
     $scope.numQuestions = $scope.questions.length                   # the number of questions for this topic
 
-
     # Call this when a response is selected to toggle -- only allows one
     # response to be selected at once
     $scope.handleResponseSelected = (question, selectedResponse) ->
@@ -39,6 +38,19 @@ surveyQuestions.config(["$routeProvider", ($routeProvider) ->
                     questionsLeft -= 1
                     break
         return questionsLeft
+
+    # whether this is the first time the user visits the page
+    isFirstVisit = if Object.keys($scope.questionCheckModel).length == 0 then true else false
+
+    # Get the description for the page, which changes depending on whether the user is visiting
+    # a page with ALL questions answered already
+    $scope.pageDescription = ->
+        questionsLeft = $scope.numUnansweredQuestions()
+        numQuestions = $scope.questions.length
+        if !isFirstVisit && questionsLeft == 0
+            return "Edit and press Next button to save changes"
+        else
+            return "Answer the following #{numQuestions} questions to proceed"
 
     $scope.disableNextButton = ->
         return $scope.numUnansweredQuestions() > 0
