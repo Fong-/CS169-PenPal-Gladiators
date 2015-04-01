@@ -16,7 +16,7 @@ surveyTopics.config(["$routeProvider", ($routeProvider) ->
     # Get the description for the page
     $scope.pageDescription = ->
         if !isFirstVisit
-            res =  "Edit and press Next button to save changes."
+            res =  "Edit selections and press Next to continue"
         else
             res = "Pick at least #{$scope.MIN_NUM_TOPICS_REQUIRED} topics."
         return res + " You may change or add topics later through 'settings.'"
