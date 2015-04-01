@@ -9,7 +9,17 @@ surveyTopics.config(["$routeProvider", ($routeProvider) ->
 ]).controller("SurveyTopicsController", ["$scope", "$http", "$location", "SharedRequests", "StartPageData", ($scope, $http, $location, SharedRequests, StartPageData) ->
     $scope.MIN_NUM_TOPICS_REQUIRED = 5
     $scope.allTopics = []
-    $scope.topicSelectionModel = {}
+    $scope.topicSelectionModel = StartPageData.getAllTopics()
+
+    # whether this is the first time the user visits the page
+    isFirstVisit = if Object.keys($scope.topicSelectionModel).length == 0 then true else false
+    # Get the description for the page
+    $scope.pageDescription = ->
+        if !isFirstVisit
+            res =  "Edit and press Next button to save changes."
+        else
+            res = "Pick at least #{$scope.MIN_NUM_TOPICS_REQUIRED} topics."
+        return res + " You may change or add topics later through 'settings.'"
 
     numSelectedTopics = -> ($scope.topicSelectionModel[id] for id of $scope.topicSelectionModel).reduce(((s, t) -> s + t), 0)
     numTopicsRemaining = -> Math.max(0, $scope.MIN_NUM_TOPICS_REQUIRED - numSelectedTopics())
