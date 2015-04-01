@@ -5,6 +5,7 @@ rvm:
 branches:
   only:
     - master
+    - /^iteration\d+$/
 
 script:
     - bundle exec rake assets:precompile
