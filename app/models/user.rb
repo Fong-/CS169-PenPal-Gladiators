@@ -1,6 +1,9 @@
 class User < ActiveRecord::Base
     has_many :user_survey_responses
     has_many :survey_responses, :through => :user_survey_responses
+
+    scope :arenas, -> { Arena.where("user1_id = ? OR user2_id = ?", self.id, self.id )  }
+
     attr_accessible :email, :password, :secret
     attr_accessible :username, :avatar, :political_blurb, :political_hero, :political_spectrum
 
@@ -12,6 +15,10 @@ class User < ActiveRecord::Base
     end
 
     @@sha256 = Digest::SHA256.new
+
+    def arenas
+        Arena.where "user1_id = ? OR user2_id = ?", self.id, self.id
+    end
 
     def password=(s)
         super @@sha256.base64digest(s)
