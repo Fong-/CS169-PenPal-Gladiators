@@ -57,6 +57,9 @@ module CS169PenpalGladiators
     config.assets.precompile += %w( *.js *.css )
     config.assets.enabled = true
 
+    # Don't include all helpers by default
+    config.action_controller.include_all_helpers = false
+
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
   end
