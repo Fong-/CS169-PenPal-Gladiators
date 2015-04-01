@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
     has_many :user_survey_responses
     has_many :survey_responses, :through => :user_survey_responses
+    has_many :posts
 
     scope :arenas, -> { Arena.where("user1_id = ? OR user2_id = ?", self.id, self.id )  }
 
