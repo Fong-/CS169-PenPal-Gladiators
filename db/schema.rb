@@ -11,7 +11,37 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150321223856) do
+ActiveRecord::Schema.define(:version => 20150401172355) do
+
+  create_table "arenas", :force => true do |t|
+    t.integer  "user1_id"
+    t.integer  "user2_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "arenas", ["user1_id"], :name => "index_arenas_on_user1_id"
+  add_index "arenas", ["user2_id"], :name => "index_arenas_on_user2_id"
+
+  create_table "conversations", :force => true do |t|
+    t.string   "title"
+    t.integer  "arena_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "conversations", ["arena_id"], :name => "index_conversations_on_arena_id"
+
+  create_table "posts", :force => true do |t|
+    t.string   "text"
+    t.integer  "user_id"
+    t.integer  "conversation_id"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
+  add_index "posts", ["conversation_id"], :name => "index_posts_on_conversation_id"
+  add_index "posts", ["user_id"], :name => "index_posts_on_user_id"
 
   create_table "survey_questions", :force => true do |t|
     t.string   "text"
@@ -53,9 +83,14 @@ ActiveRecord::Schema.define(:version => 20150321223856) do
   create_table "users", :force => true do |t|
     t.string   "email"
     t.string   "password"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
     t.string   "secret"
+    t.string   "username"
+    t.string   "avatar"
+    t.text     "political_blurb"
+    t.string   "political_hero"
+    t.integer  "political_spectrum"
   end
 
 end
