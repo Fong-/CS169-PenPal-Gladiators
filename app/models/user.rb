@@ -2,10 +2,13 @@ class User < ActiveRecord::Base
     has_many :user_survey_responses
     has_many :survey_responses, :through => :user_survey_responses
     attr_accessible :email, :password, :secret
+    attr_accessible :username, :avatar, :political_blurb, :political_hero, :political_spectrum
+
     include AccessTokenHelper
 
-    after_initialize do |user|
-        user.secret ||= SecureRandom.base64(24)
+    after_initialize do
+        self.secret ||= SecureRandom.base64(24)
+        self.username ||= UsernameGenerator.new
     end
 
     @@sha256 = Digest::SHA256.new
