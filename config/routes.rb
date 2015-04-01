@@ -12,6 +12,8 @@ CS169PenpalGladiators::Application.routes.draw do
     get "/api/v1/survey_question/:id/survey_responses" => "survey_questions#get_responses_by_id"
     get "/api/v1/survey_responses" => "survey_responses#get_all"
     get "/api/v1/survey_response/:id" => "survey_responses#get_by_id"
+    get "/api/v1/user/:id/profile" => "users#get_profile_info_by_id"
+    post "/api/v1/user/:id/profile" => "users#post_profile_info_by_id"
 
     # The priority is based upon order of creation:
     # first created -> highest priority.
