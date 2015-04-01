@@ -14,4 +14,30 @@ describe User do
             expect(User.new.secret).to eq("1234")
         end
     end
+
+    context "when accessing the profile information" do
+        before :each do
+            @profile_info = {
+                :username => "Butterfly",
+                :avatar => "image.png",
+                :political_blurb => "I am cool",
+                :political_hero => "Leo",
+                :political_spectrum => 3
+            }
+
+            @user = User.create!(@profile_info)
+        end
+
+        it "should return the appropriate profile information" do
+            response = @user.profile_response_object
+            expect(response).to eq(@profile_info)
+        end
+
+        it "should update the profile information appropriately" do
+            @profile_info[:username] = "Mad man"
+            @profile_info[:political_spectrum] = 2
+            @user.update_profile(@profile_info)
+            expect(@user.profile_response_object).to eq(@profile_info)
+        end
+    end
 end
