@@ -2,10 +2,13 @@ class User < ActiveRecord::Base
     has_many :user_survey_responses
     has_many :survey_responses, :through => :user_survey_responses
     attr_accessible :email, :password, :secret
+    attr_accessible :username, :avatar, :political_blurb, :political_hero, :political_spectrum
+
     include AccessTokenHelper
 
-    after_initialize do |user|
-        user.secret ||= SecureRandom.base64(24)
+    after_initialize do
+        self.secret ||= SecureRandom.base64(24)
+        self.username ||= UsernameGenerator.new
     end
 
     @@sha256 = Digest::SHA256.new
@@ -24,5 +27,22 @@ class User < ActiveRecord::Base
 
     def self.find_by_credentials(email, password)
         return User.find_by_email_and_password(email, @@sha256.base64digest(password))
+    end
+
+    def profile_response_object
+        return {
+            :username => username,
+            :avatar => avatar,
+            :political_blurb => political_blurb,
+            :political_hero => political_hero,
+            :political_spectrum => political_spectrum
+        }
+    end
+
+    def update_profile(params)
+        user.username = params[:username]
+        user.political_blurb = params[:political_blurb]
+        user.political_hero = params[:political_hero]
+        user.political_spectrum = params[:political_spectrum]
     end
 end

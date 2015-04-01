@@ -71,4 +71,13 @@ class UsersController < ActionController::Base
         end
         return false
     end
+
+    def get_profile_info_by_id
+        render :json => User.find(params[:id]).profile_response_object
+    end
+
+    def post_profile_info_by_id
+        User.find(params[:id]).update_profile(params)
+        render :json => { :success => "true" }
+    end
 end
