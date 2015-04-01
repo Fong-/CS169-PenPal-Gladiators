@@ -13,7 +13,7 @@ describe Conversation do
         end
 
         it "should return the appropriate update time" do
-            expect(@conversation.timestamp).to eq(@conversation.updated_atc)
+            expect(@conversation.timestamp).to eq(@conversation.updated_at)
         end
     end
 end
