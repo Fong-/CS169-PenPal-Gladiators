@@ -48,7 +48,7 @@ surveyQuestions.config(["$routeProvider", ($routeProvider) ->
         questionsLeft = $scope.numUnansweredQuestions()
         numQuestions = $scope.questions.length
         if !isFirstVisit && questionsLeft == 0
-            return "Edit and press Next button to save changes"
+            return "Edit responses and press Next to continue"
         else
             return "Answer the following #{numQuestions} questions to proceed"
 
