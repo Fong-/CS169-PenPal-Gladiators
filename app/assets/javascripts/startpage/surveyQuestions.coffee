@@ -7,6 +7,10 @@ surveyQuestions.config(["$routeProvider", ($routeProvider) ->
         templateUrl: "/assets/survey_questions.html",
         controller: "SurveyQuestionsController"
     })
+    .when("/questions/:id/edit", {
+        templateUrl: "/assets/survey_questions_edit.html",
+        controller: "SurveyQuestionsController"
+    })
 ]).controller("SurveyQuestionsController", ["$scope", "$http", "$location", "$routeParams", "SharedRequests", "StartPageData", ($scope, $http, $location, $routeParams, SharedRequests, StartPageData) ->
     $scope.allTopics = StartPageData.getAllTopics()                 # all the topics
     $scope.selectedTopicIds = StartPageData.getSelectedTopicIds()   # the ids of the topics the user selected
@@ -48,7 +52,7 @@ surveyQuestions.config(["$routeProvider", ($routeProvider) ->
             return "#{questionsLeft} Unanswered Questions"
 
     # Helper function to advance to the summary page
-    handleAdvanceToSummary = ->
+    $scope.handleAdvanceToSummary = ->
         tmp = {}
         for topicId in $scope.selectedTopicIds
             tmp[topicId] = StartPageData.getResponseIdsByTopicId(topicId)
@@ -68,7 +72,7 @@ surveyQuestions.config(["$routeProvider", ($routeProvider) ->
             nextTopicId = $scope.selectedTopicIds[nextIndex]
             handleAdvanceToQuestions(nextTopicId)
         else
-            handleAdvanceToSummary()
+            $scope.handleAdvanceToSummary()
 
     # Helper function to move back to the topic selection page
     handleBackToTopics = ->
