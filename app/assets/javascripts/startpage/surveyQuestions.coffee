@@ -13,12 +13,8 @@ surveyQuestions.config(["$routeProvider", ($routeProvider) ->
     $scope.currentTopicId = $routeParams.id
     $scope.currentTopic = $scope.allTopics[$scope.currentTopicId].name # the topic we're doing now
 
-    $scope.questions = []
+    $scope.questions = StartPageData.getTopicQuestions($scope.currentTopicId)
     $scope.questionCheckModel = StartPageData.getResponseIdsByTopicId($scope.currentTopicId)
-    #if Object.keys($scope.questionCheckModel).length == 0
-    #    $scope.test2 = "Answerse not saved"
-    #else
-    #    $scope.test2 = "Answeres saved!"
     $scope.numQuestions = 0             # the number of questions for this topic
 
 
@@ -96,13 +92,15 @@ surveyQuestions.config(["$routeProvider", ($routeProvider) ->
 
     # Asynchronously load the list of questions for a topic
     load_questions = (topicId) ->
-        SharedRequests.requestQuestionsByTopic(topicId).success( (allQuestions) ->
-            $scope.questions = []
-            allQuestions = allQuestions.sort((u, v) -> u.index - v.index)
-            for question in allQuestions
-                $scope.questions.push(question)
-            $scope.numQuestions = $scope.questions.length
-        )
+        if $scope.questions.length == 0
+            SharedRequests.requestQuestionsByTopic(topicId).success( (allQuestions) ->
+                $scope.questions = []
+                allQuestions = allQuestions.sort((u, v) -> u.index - v.index)
+                for question in allQuestions
+                    $scope.questions.push(question)
+                StartPageData.addTopicQuestions($scope.currentTopicId, $scope.questions)
+            )
+        $scope.numQuestions = $scope.questions.length
         $scope.currentTopic = $scope.allTopics[topicId].name
         if Object.keys($scope.questionCheckModel).length == 0
             for question in $scope.questions

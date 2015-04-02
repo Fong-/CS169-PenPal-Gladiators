@@ -5,6 +5,7 @@ startPageServices.service("StartPageData", () ->
     topicsById = {}
     selectedTopicIds = {}
     responseIdsByTopicIds = {}
+    questionsByTopicIds = {}
     # Email interface.
     this.getEmail = -> email
     this.setEmail = (e) -> email = e
@@ -37,5 +38,8 @@ startPageServices.service("StartPageData", () ->
         else
             return {}
     this.getResponseIdsByTopicIds = -> responseIdsByTopicIds
+    this.addTopicQuestions = (topicId, questions) -> questionsByTopicIds[topicId] = questions
+    this.getTopicQuestions = (topicId) -> 
+        if topicId of questionsByTopicIds then questionsByTopicIds[topicId] else []
     return # Required to prevent returning the last object.
 )
