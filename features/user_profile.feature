@@ -7,17 +7,20 @@ Background: I am on my user profile page
     Given I am on my user profile page
 
 # Consider using identicons and uploaded photo (a la GitHub)
-Scenario: Choose a profile photo
-    When I press "Choose Profile Picture"
-    Then I should see profile pictures to choose from
-    And I should be able to select a profile picture
+Scenario: Choose an avatar
+    When I press "Choose an Avatar"
+    Then I should see avatars to choose from
+    And I should be able to select an avatar
 
 Scenario: Select a political hero
-    When I fill in "Political-Hero" with "Foo Bar"
+    When I click "Edit Profile"
+    And I fill in "Political-Hero" with "Foo Bar"
+    And I click "Update Profile"
     Then I should see "Foo Bar"
 
 Scenario: Select a position from liberal to conservative
     Given there is a series of five radio buttons ranging from "liberal" to "moderate" to "conservative"
+    And I click "Edit Profile"
     Then I should be able to select that I am "liberal"
     And I should be able to select that I am "moderately-liberal"
     And I should be able to select that I am "moderate"
@@ -25,7 +28,9 @@ Scenario: Select a position from liberal to conservative
     And I should be able to select that I am "conservative"
 
 Scenario: Write a political blurb
-    When I fill in "Political-Blurb" with "I appreciate Foo Bar's dedication to Widgets"
+    When I click "Edit Profile"
+    And I fill in "Political-Blurb" with "I appreciate Foo Bar's dedication to Widgets"
+    And I click "Update Profile"
     Then I should see "I appreciate Foo Bar's dedication to Widgets"
 
 Scenario: Decline to complete profile
@@ -36,4 +41,4 @@ Scenario: View other Gladiator's profile
     Given "Garply" has a political hero of "Widget"
     And I navigate to the profile page of "Garply"
     Then I should see "Widget" in the "Political-Hero" text box
-    And I cannot fill in "Political-Hero" with "Foo Bar"
+    And I should not see a button to "Update Profile"
