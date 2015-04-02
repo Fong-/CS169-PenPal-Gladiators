@@ -24,6 +24,9 @@ Given /^I am on (?:the|a|my) (.*?) page$/ do |page_name|
     visit case(page_name)
         when "Login/Register" then "/#/"
         when "Survey Topic Checkboxes" then "/#topics"
+        when "user profile" then pending "No route here!"
+        when "survey" then pending "No route here!"
+        when "home" then pending "No route here!"
         else raise "Could not navigate to the #{page_name} page."
         end
 end
@@ -36,7 +39,8 @@ end
 
 Then /I should be on the (.*?) page/ do |page_name|
     case page_name
-    when "profile"
+    when "profile" then pending "no check for profile!"
+    when "survey" then pending "no check for survey!"
     else raise "No check for the #{page_name} page."
     end
 end
