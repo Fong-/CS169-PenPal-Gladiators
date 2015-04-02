@@ -3,9 +3,14 @@ sidebar = angular.module("Sidebar", ["SharedServices"])
 sidebar.controller("SidebarController", ["$scope", "$http", "$location", "SharedRequests", "TimeUtil", ($scope, $http, $location, SharedRequests, TimeUtil) ->
 
     MAX_PREVIEW_TEXT_LENGTH = 100;
-    authorTextForId = (id) -> if id == currentUserId then "You" else $scope.gladiatorNameById[conversation.recent_post.author_id]
+    authorTextForId = (id) -> if id == currentUserId then "You" else $scope.gladiatorNameById[id]
     previewTextFromPost = (text) -> if text.length > MAX_PREVIEW_TEXT_LENGTH then text.substr(0, MAX_PREVIEW_TEXT_LENGTH) + "..." else text
-    currentUserId = 1
+    postPreviewTextForConversation = (conversation) ->
+        if conversation.recent_post
+            "#{authorTextForId(conversation.recent_post.author_id)} said: \"#{previewTextFromPost(conversation.recent_post.text)}\""
+        else
+            "Looks like no one has made any posts. Be the first to write something!"
+    currentUserId = 1 # Change when hooking into authentication route.
 
     $scope.conversationsByUserId = {}
     $scope.gladiatorIds = []
@@ -14,7 +19,7 @@ sidebar.controller("SidebarController", ["$scope", "$http", "$location", "Shared
     $scope.toggleGladiatorPanel = (id) -> $scope.arenaStateByUserId[id] = !$scope.arenaStateByUserId[id]
     $scope.expandButtonClass = (id) -> if $scope.arenaStateByUserId[id] then "glyphicon glyphicon-chevron-up" else "glyphicon glyphicon-chevron-down"
 
-    SharedRequests.requestArenaByUser(currentUserId).success (arenas) ->
+    SharedRequests.requestArenasByUser(currentUserId).success (arenas) ->
         $scope.conversationsByUserId = {}
         $scope.gladiatorIds = []
         for arena in arenas
@@ -27,8 +32,7 @@ sidebar.controller("SidebarController", ["$scope", "$http", "$location", "Shared
                 conversationPreviewData = {
                     title: conversation.title,
                     time: TimeUtil.timeIntervalAsString(secondsSinceUpdateTime) + " ago",
-                    latest_author_name: authorTextForId(conversation.recent_post.author_id),
-                    post_preview_text: previewTextFromPost(conversation.recent_post.text)
+                    post_preview_text: postPreviewTextForConversation(conversation)
                 }
                 $scope.conversationsByUserId[otherGladiatorId].push(conversationPreviewData)
             $scope.arenaStateByUserId[otherGladiatorId] = false if otherGladiatorId not of $scope.arenaStateByUserId

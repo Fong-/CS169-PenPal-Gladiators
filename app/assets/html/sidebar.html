@@ -1,4 +1,4 @@
-<div class="nav-side-menu">
+<div class="nav-side-menu" ng-controller="SidebarController">
     <div class="menu-list">
         <ul class="menu-content">
             <li ng-repeat="gladiatorId in gladiatorIds">
@@ -9,7 +9,7 @@
                 <div class="conversation-preview" ng-repeat="conversation in conversationsByUserId[gladiatorId]" ng-show="arenaStateByUserId[gladiatorId]">
                     <p class="conversation-title">{{conversation.title}}</p>
                     <p class="conversation-time">{{conversation.time}}</p>
-                    <p class="conversation-text">{{conversation.latest_author_name}} said: "{{conversation.post_preview_text}}"</p>
+                    <p class="conversation-text">{{conversation.post_preview_text}}</p>
                     <div class="conversation-actions">
                         <a class="conversation-delete">Delete</a><a class="conversation-reply">Reply</a>
                     </div>
