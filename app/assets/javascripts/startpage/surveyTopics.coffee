@@ -9,13 +9,11 @@ surveyTopics.config(["$routeProvider", ($routeProvider) ->
 ]).controller("SurveyTopicsController", ["$scope", "$http", "$location", "SharedRequests", "StartPageData", ($scope, $http, $location, SharedRequests, StartPageData) ->
     $scope.MIN_NUM_TOPICS_REQUIRED = 5
     $scope.allTopics = []
-    $scope.topicSelectionModel = StartPageData.getAllTopics()
-
-    # whether this is the first time the user visits the page
-    isFirstVisit = if Object.keys($scope.topicSelectionModel).length == 0 then true else false
+    $scope.topicSelectionModel = {}
+    
     # Get the description for the page
     $scope.pageDescription = ->
-        if !isFirstVisit
+        if StartPageData.isTopicSelectionDone()
             res =  "Edit selections and press Next to continue"
         else
             res = "Pick at least #{$scope.MIN_NUM_TOPICS_REQUIRED} topics."
@@ -34,6 +32,7 @@ surveyTopics.config(["$routeProvider", ($routeProvider) ->
 
     # Advances to the next view.
     $scope.handleAdvanceToQuestions = ->
+        StartPageData.finishedTopicSelection()
         StartPageData.clearSelectedTopicIds()
         StartPageData.addSelectedTopicId(id) for id of $scope.topicSelectionModel when $scope.topicSelectionModel[id]
         sortedTopicIds = Object.keys($scope.topicSelectionModel).sort()
