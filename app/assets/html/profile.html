@@ -1,1 +1,18 @@
-<!-- TODO Implement profile view here -->
+<div id="profile-container">
+    <h1>{{ username }}'s Profile</h1>
+
+    <div class="container">
+        <h2>Political Blurb</h2>
+        <p>{{ blurb }}</p>
+
+        <h2>Political Hero</h2>
+        <p>{{ hero }}</p>
+
+        <h2>Position on the Political Spectrum</h2>
+        <p>Placeholder: {{ spectrum }}
+
+        <div ng-if="can_edit()">
+            <input class="input" type="button" ng-click="edit()" value="Edit Your Profile"/>)))
+        </div>
+    </div>
+</div>
