@@ -120,3 +120,17 @@ conversation = arena.conversations.create :title => "Why does is the US educatio
 conversation.posts.create :text => "It all starts in the home. If the parents don't care, no one will.", :author => ben
 conversation.posts.create :text => "No, it's actually because the unions have too much power.", :author => bob
 conversation.posts.create :text => "You, sir, are an idiot. This is really why the education system sucks. Because people like you go on and on about unions and never do anything to address the real problems at hand. Damnit Bob, get it together.", :author => ben
+
+arena = ben.arenas.create :user1 => ben, :user2 => wenson
+conversation = arena.conversations.create :title => "What is our role in mitigating climate change?"
+Timecop.freeze 10.years.ago
+conversation.posts.create :text => "I believe everyone should go back to living in caves.", :author => ben
+conversation.posts.create :text => "No you.", :author => wenson
+Timecop.return
+Timecop.freeze 10.days.ago
+conversation = arena.conversations.create :title => "Is technology to blame for the housing crisis in SF?"
+conversation.posts.create :text => "What housing crisis?", :author => wenson
+Timecop.return
+
+arena = ben.arenas.create :user1 => ben, :user2 => rosenthal
+conversation = arena.conversations.create :title => "This conversation should be blank!"

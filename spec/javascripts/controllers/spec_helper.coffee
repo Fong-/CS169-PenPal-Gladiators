@@ -1,9 +1,11 @@
 #= require startPage
+#= require homePage
 #= require angular-mocks
 #= require angular-route
 #= require sinon
 #= require jasmine-sinon
-beforeEach(module('StartPage'))
+beforeEach module("StartPage")
+beforeEach module("HomePage")
 
 beforeEach inject (_$httpBackend_, _$compile_, $rootScope, $controller, $location, $injector, $timeout) ->
   @scope = $rootScope.$new()

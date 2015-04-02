@@ -17,7 +17,7 @@ shares.service("SharedRequests", ["$http", ($http) ->
         $http.get("#{SERVER_API_PREFIX}user/#{id}/profile")
     this.updateProfileByUID = (id, username, avatar, blurb, hero, spectrum) ->
         $http.post("#{SERVER_API_PREFIX}user/#{id}/profile", { username: username, avatar: avatar, political_blurb: blurb, political_hero: hero, political_spectrum: spectrum})
-    this.requestArenaByUser = (id) ->
+    this.requestArenasByUser = (id) ->
         $http.get("#{SERVER_API_PREFIX}arenas/#{id}")
     return # Required to prevent returning the last object.
 
