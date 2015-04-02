@@ -41,5 +41,6 @@ startPageServices.service("StartPageData", () ->
     this.addTopicQuestions = (topicId, questions) -> questionsByTopicIds[topicId] = questions
     this.getTopicQuestions = (topicId) -> 
         if topicId of questionsByTopicIds then questionsByTopicIds[topicId] else []
+    this.getAllQuestions = -> return questionsByTopicIds
     return # Required to prevent returning the last object.
 )
