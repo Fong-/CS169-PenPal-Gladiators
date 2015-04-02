@@ -5,7 +5,7 @@ login.config(["$routeProvider", ($routeProvider) ->
         templateUrl: "/assets/login.html",
         controller: "LoginController"
     })
-]).controller("LoginController", ["$http", "$location", "$scope", "SharedRequests", "StartPageData", ($http, $location, $scope, SharedRequests, StartPageData) ->
+]).controller("LoginController", ["$http", "$location", "$window", "$scope", "SharedRequests", "StartPageData", ($http, $location, $window, $scope, SharedRequests, StartPageData) ->
     $scope.email = ""
     $scope.password = ""
     $scope.description = ""
@@ -15,7 +15,8 @@ login.config(["$routeProvider", ($routeProvider) ->
             if data && data["success"]
                 document.cookie = "email=" + $scope.email
                 document.cookie = "password=" + $scope.password
-                alert "Logged in"
+                # TODO Redirect only if the user has not yet submitted a profile.
+                $window.location.href = "/home/#/profile"
             else
                 $scope.status = if data then data["error"] else "Oops, an error occurred."
         )
