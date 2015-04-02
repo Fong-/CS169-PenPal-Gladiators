@@ -46,7 +46,7 @@ topics.each do |t|
 
     responses.each do |r|
         verb1 = r[:text] == "Yes" ? "hate" : "don't hate"
-        verb2 = r[:text] == "No" ? "care" : "don't care"
+        verb2 = r[:text] == "Yes" ? "care" : "don't care"
         actual_response1 = r.clone
         actual_response2 = r.clone
         actual_response1[:summary_text] = "I #{verb1} #{topic.name}."
