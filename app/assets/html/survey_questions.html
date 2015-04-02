@@ -2,11 +2,11 @@
     <h1>{{ currentTopic }}</h1>
     <p id="description">Answer the following {{ numQuestions }} questions to proceed</p>
     <div id="topic-questions-container">
-        <div class="question-container" ng-repeat="question in questions">
+        <div id="question{{$index+1}}" class="question-container" ng-repeat="question in questions">
             <div class="question-text">{{ question.text }}</div>
             <div class="question-responses-container">
                 <div class="response" ng-repeat="response in question.survey_responses">
-                    <input type="checkbox" ng-model="questionCheckModel[response.id]" ng-change="handleResponseSelected(question,response)"/>
+                    <input id="response{{$parent.$index+1}}-{{$index+1}}" type="checkbox" ng-model="questionCheckModel[response.id]" ng-change="handleResponseSelected(question,response)"/>
                     <label><span/></label><span class="response-label">{{ response.text }}</span>
                 </div>
                 <br>
