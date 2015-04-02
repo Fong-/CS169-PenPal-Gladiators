@@ -39,15 +39,11 @@ surveyQuestions.config(["$routeProvider", ($routeProvider) ->
                     break
         return questionsLeft
 
-    # whether this is the first time the user visits the page
-    isFirstVisit = if Object.keys($scope.questionCheckModel).length == 0 then true else false
-
     # Get the description for the page, which changes depending on whether the user is visiting
     # a page with ALL questions answered already
     $scope.pageDescription = ->
-        questionsLeft = $scope.numUnansweredQuestions()
         numQuestions = $scope.questions.length
-        if !isFirstVisit && questionsLeft == 0
+        if StartPageData.isTopicQuestionsDone($scope.currentTopicId)
             return "Edit responses and press Next to continue"
         else
             return "Answer the following #{numQuestions} questions to proceed"
@@ -79,6 +75,7 @@ surveyQuestions.config(["$routeProvider", ($routeProvider) ->
     # Call either handleAdvanceToQuestions or handleAdvanceToSummary depending on
     # if there are more topics to answer questions for
     $scope.handleAdvance = ->
+        StartPageData.finishedTopicQuestions($scope.currentTopicId)
         nextIndex = $scope.selectedTopicIds.indexOf($scope.currentTopicId) + 1
         if nextIndex < $scope.selectedTopicIds.length
             nextTopicId = $scope.selectedTopicIds[nextIndex]
