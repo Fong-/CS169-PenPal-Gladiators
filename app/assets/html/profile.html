@@ -1,15 +1,20 @@
 <div id="profile-container">
     <h1>{{ username }}'s Profile</h1>
+    <!-- TODO: This will eventually be an <img>, but for now just display the
+        path to the image -->
+    <p>{{ avatar }}</p>
 
     <div class="container">
-        <h2>Political Blurb</h2>
+        <h2>About Me</h2>
         <p>{{ blurb }}</p>
 
-        <h2>Political Hero</h2>
+        <h2>My Political Hero</h2>
         <p>{{ hero }}</p>
 
-        <h2>Position on the Political Spectrum</h2>
-        <p>Placeholder: {{ spectrum }}
+        <!-- TODO: This will have to be more graphical, but for now just display
+             the value of the selected radio button -->
+        <h2>My Position on the Political Spectrum</h2>
+        <p>{{ spectrum }}
 
         <div ng-if="can_edit()">
             <input class="input" type="button" ng-click="edit()" value="Edit Your Profile"/>)))
