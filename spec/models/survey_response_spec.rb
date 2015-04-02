@@ -38,4 +38,15 @@ describe SurveyResponse do
            expect(@no2.survey_question.text).to eq("Do you like Java?")
         end
     end
+
+    context "when using the SurveyResponses API " do
+        before :each do
+            @survey_response = SurveyResponse.create! :text => "yes", :summary_text => "yea", :index => 1
+        end
+
+        it "should return the appropriate response object" do
+            response = @survey_response.response_object
+            expect(response).to eq(:id => @survey_response.id, :text => "yes", :summary_text => "yea", :index => 1)
+        end
+    end
 end
