@@ -31,10 +31,11 @@ Then /I(?: should)?( not)? see "(.*)"/ do |should_not_see, content|
 end
 
 Then /I(?: should)?( not)? see a button with "(.*)"/ do |should_not_see, content|
-    if should_not_see
-        expect { page.find_button(content) }.to raise_error(Capybara::ElementNotFound)
-    else
-        expect { page.find_button(content) }.not_to raise_error(Capybara::ElementNotFound)
+    begin
+        page.find_button(content)
+        if should_not_see then expect { }.to raise_error(Capybara::ElementNotFound) end
+    rescue Capybara::ElementNotFound
+        unless should_not_see then expect { raise Capybara::ElementNotFound }.to raise_error(Capybara::ElementNotFound) end
     end
 end
 
