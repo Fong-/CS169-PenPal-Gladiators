@@ -40,9 +40,10 @@ class User < ActiveRecord::Base
     end
 
     def update_profile(params)
-        user.username = params[:username]
-        user.political_blurb = params[:political_blurb]
-        user.political_hero = params[:political_hero]
-        user.political_spectrum = params[:political_spectrum]
+        self.username = params[:username]
+        self.political_blurb = params[:political_blurb]
+        self.political_hero = params[:political_hero]
+        self.political_spectrum = params[:political_spectrum]
+        save
     end
 end
