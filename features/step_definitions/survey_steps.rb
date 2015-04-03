@@ -9,11 +9,22 @@ end
 Given /the following responses exist/ do |responses_table|
     responses_table.hashes.each do |row|
         question = SurveyQuestion.find_by_text(row[:question_text])
-        question.survey_responses.create!(:text => row[:response_text], :index => row[:index])
+        if !row.key?(:summary_text)
+            row[:summary_text] = "N/A"
+        question.survey_responses.create!(:text => row[:response_text], :index => row[:index], :summary_text => row[:summary_text])
     end
 end
 
 # Topic selection page
+When /I click topics (.*)/ do |topics|
+    topics.split(", ").each do |topic_string|
+        topic = topic_string[1..-2]
+        topic.gsub!("\"", "")
+        topic.gsub!(" ", "_")
+        page.find("##{topic.downcase}").click()
+    end
+end
+
 And /I have selected the topics (.*)/ do |topics|
     step "I am on the Survey Topic Checkboxes page"
     topics.split(", ").each do |topic_string|
