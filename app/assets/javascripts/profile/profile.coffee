@@ -47,7 +47,12 @@ profile.config(["$routeProvider", ($routeProvider) ->
             $scope.moduleState = "edit"
 
     $scope.save = () ->
-        SharedRequests.updateProfileByUID($scope.loggedInUID, $scope.profile.username, $scope.profile.avatar, $scope.profile.blurb, $scope.profile.hero, $scope.profile.spectrum.id)
+        # TODO for "better" security, change profileUID to loggedInUID once
+        # tracking who's logged in actually works
+        SharedRequests.updateProfileByUID($scope.profileUID, $scope.profile.username, $scope.profile.avatar, $scope.profile.blurb, $scope.profile.hero, $scope.profile.spectrum.id)
+        for k, v of $scope.spectrumOptions
+            if $scope.profile.spectrum.id == v.id
+                $scope.profile.spectrum = v.value
         $scope.moduleState = "view"
 
     load_profile = (userId) ->
@@ -57,7 +62,6 @@ profile.config(["$routeProvider", ($routeProvider) ->
             $scope.profile.blurb = profile.political_blurb
             $scope.profile.hero = profile.political_hero
             $scope.profile.email = profile.email
-            console.log($scope.spectrumOptions)
             for k, v of $scope.spectrumOptions
                 if profile.political_spectrum == v.id
                     $scope.profile.spectrum = v.value
