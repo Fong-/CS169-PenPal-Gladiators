@@ -86,7 +86,7 @@ end
 Then /I should be on the (.*?) page/ do |page_name|
     case page_name
     when "survey" then pending "no check for survey!"
-    when "profile" then pending "Check that I am on the profile page."
+    when "profile" then page.should have_content "My Position on the Political Spectrum"
     when "home" then pending "Check that I am on the home page."
     else raise "No check for the #{page_name} page."
     end
