@@ -7,10 +7,14 @@ Background: I am on my user profile page
     Given I am on my user profile page
 
 # Consider using identicons and uploaded photo (a la GitHub)
-Scenario: Choose an avatar
-    When I press "Choose an Avatar"
-    Then I should see avatars to choose from
-    And I should be able to select an avatar
+#
+# TODO Commented out 2015-04-02 because stretch goal of having avatars working
+# is not going to be met for iteration 2
+#
+#Scenario: Choose an avatar
+#    When I press "Choose an Avatar"
+#    Then I should see avatars to choose from
+#    And I should be able to select an avatar
 
 Scenario: Select a political hero
     When I click "Edit Profile"
@@ -21,11 +25,11 @@ Scenario: Select a political hero
 Scenario: Select a position from liberal to conservative
     Given there is a series of five radio buttons ranging from "liberal" to "moderate" to "conservative"
     And I click "Edit Profile"
-    Then I should be able to select that I am "liberal"
-    And I should be able to select that I am "moderately-liberal"
-    And I should be able to select that I am "moderate"
-    And I should be able to select that I am "moderately-conservative"
-    And I should be able to select that I am "conservative"
+    Then I should be able to select that I am "Liberal"
+    And I should be able to select that I am "Moderately Liberal"
+    And I should be able to select that I am "Moderate"
+    And I should be able to select that I am "Moderately Conservative"
+    And I should be able to select that I am "Conservative"
 
 Scenario: Write a political blurb
     When I click "Edit Profile"
