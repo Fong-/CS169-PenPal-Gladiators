@@ -2,16 +2,8 @@ When /I (.*) a response/ do |status|
     pending "unimplemented"
 end
 
-Then /the progress bar should be (.*)/ do |progress|
-    step "Then I should see '0 questions left'"
-end
-
-Then /the progress bar should move (.*)/ do |progress|
-    step "Then I should see '1' questions left"
-end
-
-And /the progress bar should not move (.*)/ do |progress|
-    step "Then I should not see '2' questions left"
+Then /the progress bar should be at (.*)/ do |progress|
+    page.has_xpath?("//div[@style='width:#{progress}' and @id='progress-bar-percent']")
 end
 
 # Temporary steps

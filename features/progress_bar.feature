@@ -4,26 +4,24 @@ Feature: Allow user to keep track of their survey completion status by using a p
     I want to see my progress
 
 Background: I am a new user
-    Given the database is setup
-    Given I have selected the topics "Education"
+    Given I have selected the topics "Education", "Climate", "Philosophy", "Technology", "Religion"
 
-Scenario: Progress on the current topic tab advances when a question is filled
+Scenario: Progress advances when a question is filled
     Given I am on the survey questions page
+    And I am on topic ID 1
     When I check a response
-    Then the progress bar should move forward
-    And the progress bar should not move backward
-
-Scenario: Progress on the current topic tab goes back when a box is unchecked
-    Given I am on the survey questions page
-    When I uncheck a response
-    Then the progress bar should move backward
+    Then the progress bar should be at 10%
+    And I check a response
+    Then the progress bar should be at 20%
 
 Scenario: Check current progress
     Given I am on the survey questions page
+    And I am on topic ID 2
     And I answer all the questions
-    Then the progress bar should be full
+    Then the progress bar should be at 40%
 
 Scenario: All questions answered
     Given I am on the survey questions page
-    And I have finished 1 topics
-    Then the progress bar should be full
+    And I am on topic ID 9
+    And I answer all the questions
+    Then the progress bar should be at 100%
