@@ -16,7 +16,7 @@ profile.config(["$routeProvider", ($routeProvider) ->
 
     # For eventual use with radio buttons
     # See https://docs.angularjs.org/api/ng/input/input%5Bradio%5D
-    $scope.spectrumOptions = [
+    $scope.spectrumOptions = {
         conservative = {
             "id": 1
             "value": "Conservative"
@@ -37,7 +37,7 @@ profile.config(["$routeProvider", ($routeProvider) ->
             "id": 5
             "value": "Liberal"
         }
-    ]
+    }
 
     $scope.can_edit = () ->
         return $scope.loggedInUID == $scope.profileUID
