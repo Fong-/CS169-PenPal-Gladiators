@@ -4,7 +4,9 @@ Feature: Edit and display a user profile
     I want to create a Gladiator-public user profile for myself
 
 Background: I am on my user profile page
-    Given I am on the profile page
+    Given I am a user with email "rob@null.net" and password "CorrectHorseBatteryStaple"
+    And I am on the profile page
+
 
 # Consider using identicons and uploaded photo (a la GitHub)
 #
