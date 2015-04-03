@@ -12,7 +12,8 @@ startPageServices.service("StartPageData", () ->
     numQuestions = 0 # number of all questions in every topic
     numTopics = 0
     questionsLeft = 0
-    currentTopic = 0 #current topic ID, used for determining if a topic is done for progress
+    currentTopic = 0 # current topic ID, used for determining if a topic is done for progress
+    topicsComplete = 0 # number of topics that have been completed
 
     # Email interface.
     this.getEmail = -> email
@@ -22,8 +23,7 @@ startPageServices.service("StartPageData", () ->
     this.setPassword = (p) -> password = p
     # Topics by topic id.
     this.getAllTopics = -> topicsById
-    this.addTopic = (topic) ->
-        topicsById[topic.id] = topic
+    this.addTopic = (topic) -> topicsById[topic.id] = topic
     this.clearAllTopics = -> topicsById = {}
     # Selected topics interface.
     this.getSelectedTopicIds = -> Object.keys(selectedTopicIds).sort() # Note: does NOT sort numerically.
@@ -56,6 +56,7 @@ startPageServices.service("StartPageData", () ->
     this.getAllQuestions = -> return questionsByTopicIds
     this.finishedTopicQuestions = (topicId) -> topicQuestionsDone[topicId] = true
     this.isTopicQuestionsDone = (topicId) -> return topicId of topicQuestionsDone
+    this.getTopicQuestionsDone = -> return topicQuestionsDone
     # Progress bar interface
     this.setNumQuestions = (questions) -> numQuestions = questions # sets the number of questions on current topic
     this.getNumQuestions = -> numQuestions
@@ -66,5 +67,8 @@ startPageServices.service("StartPageData", () ->
     this.decNumTopics = -> numTopics -= 1
     this.setCurrentTopic = (topicID) -> currentTopic = topicID # sets the id of the current topic
     this.getCurrentTopic = -> currentTopic
+    this.incTopicsComplete = -> topicsComplete += 1
+    this.getTopicsComplete = -> topicsComplete
+    this.clearTopicsComplete = -> topicsComplete = 0
     return # Required to prevent returning the last object.
 )
