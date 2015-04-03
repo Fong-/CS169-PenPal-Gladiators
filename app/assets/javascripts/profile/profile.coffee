@@ -46,7 +46,7 @@ profile.config(["$routeProvider", ($routeProvider) ->
             $scope.moduleState = "edit"
 
     $scope.save = () ->
-        SharedRequests.updateProfileByUID($scope.loggedInUID, $scope.username, $scope.avatar, $scope.blurb, $scope.hero, $scope.spectrum.id)
+        SharedRequests.updateProfileByUID($scope.loggedInUID, $scope.profile.username, $scope.profile.avatar, $scope.profile.blurb, $scope.profile.hero, $scope.profile.spectrum.id)
         $scope.moduleState = "view"
 
     load_profile = (userId) ->
