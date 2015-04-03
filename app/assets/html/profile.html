@@ -1,23 +1,61 @@
 <div id="profile-container">
-    <h1>{{ username }}'s Profile</h1>
-    <!-- TODO: This will eventually be an <img>, but for now just display the
-        path to the image -->
-    <p>{{ avatar }}</p>
+    <! --
+    Reference:
+    http://stackoverflow.com/questions/16649617/angularjs-change-partial-in-controller-on-click
+    -->
+    <div ng-switch="moduleState">
+        <div ng-switch-when="view">
+            <h1>{{ username }}'s Profile</h1>
+            <!-- TODO: This will eventually be an <img>, but for now just display the
+                path to the image -->
+            <p>{{ avatar }}</p>
 
-    <div class="container">
-        <h2>About Me</h2>
-        <p>{{ blurb }}</p>
+            <div class="container">
+                <h2>About Me</h2>
+                <p>{{ blurb }}</p>
 
-        <h2>My Political Hero</h2>
-        <p>{{ hero }}</p>
+                <h2>My Political Hero</h2>
+                <p>{{ hero }}</p>
 
-        <!-- TODO: This will have to be more graphical, but for now just display
-             the value of the selected radio button -->
-        <h2>My Position on the Political Spectrum</h2>
-        <p>{{ spectrum }}
+                <!-- TODO: This will have to be more graphical, but for now just display
+                     the value of the selected radio button -->
+                <h2>My Position on the Political Spectrum</h2>
+                <p>{{ spectrum }}
 
-        <div ng-if="can_edit()">
-            <input class="input" type="button" ng-click="edit()" value="Edit Your Profile"/>)))
+                <div ng-if="can_edit()">
+                    <input class="input" type="button" ng-click="edit()" value="Edit Your Profile"/>)))
+                </div>
+            </div>
+        </div>
+        <div ng-switch-when="edit">
+            <h1>Edit Your Profile</h1>
+            <p>Make changes to your public user profile here.  Your user profile will be
+            viewed by other Gladiators to allow them to get a better sense of who you
+            are, so you are encouraged to provide as much information as you are
+            comfortable with providing.</p>
+
+            <input type="text" name="username" ng-model="username" >
+            <input type="text" name="avatar" ng-model="avatar" >
+            <input type="text" name="blurb" ng-model="blurb" >
+            <input type="text" name="hero" ng-model="hero" >
+            <input type="radio" name="spectrum" ng-model="spectrum" id="conservative" value="Conservative">
+                <label for="conservative">Conservative</label>
+            <input type="radio" name="spectrum" ng-model="spectrum" id="moderately-conservative" value="Moderately-Conservative">
+                <label for="moderately-conservative">Moderately Conservative</label>
+            <input type="radio" name="spectrum" ng-model="spectrum" id="moderate" value="Moderate">
+                <label for="moderate">Moderate</label>
+            <input type="radio" name="spectrum" ng-model="spectrum" id="liberally-conservative" value="Liberally-Conservative">
+                <label for="moderately-liberal">Moderately Liberal</label>
+            <input type="radio" name="spectrum" ng-model="spectrum" id="liberal" value="Liberal">
+                <label for="liberal">Liberal</label>
+
+            <p>You can also change your email and password, both of which are
+            private.</p>
+            <input type="text" name="email" ng-model="email" >
+            <!-- Throw password in eventually when better framework is established
+            <input type="password" name="password" ng-model="password" >
+            -->
+            <input class="input" type="button" ng-click="save()" value="Save Changes"/>)))
         </div>
     </div>
 </div>
