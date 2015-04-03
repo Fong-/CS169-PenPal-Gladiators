@@ -11,6 +11,8 @@ Then /^I should be able to select that I am "(.*?)"$/ do |position|
 end
 
 Given /^there is a series of five radio buttons ranging from "(.*?)" to "(.*?)" to "(.*?)"$/ do |liberal, moderate, conservative|
+    puts page.html
+    puts page
     page.should have_content liberal
     page.should have_content moderate
     page.should have_content conservative
@@ -21,5 +23,5 @@ Given /^"(.*?)" has a political hero of "(.*?)"$/ do |user, hero|
 end
 
 Given /^I navigate to the profile page of "(.*?)"$/ do |user|
-    visit "/home#profile/#{User.find(user)}"
+    visit "/home#profile/#{(User.find_by(username: user)).id}"
 end

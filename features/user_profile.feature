@@ -5,6 +5,7 @@ Feature: Edit and display a user profile
 
 Background: I am on my user profile page
     And I am on the profile page
+    Then I should be on the profile page
 
 
 # Consider using identicons and uploaded photo (a la GitHub)
@@ -18,14 +19,14 @@ Background: I am on my user profile page
 #    And I should be able to select an avatar
 
 Scenario: Select a political hero
-    When I press "Edit Your Profile"
+    When I press "edit-profile"
     And I fill in "Political-Hero" with "Foo Bar"
-    And I press "Update Profile"
+    And I press "save"
     Then I should see "Foo Bar"
 
 Scenario: Select a position from liberal to conservative
     Given there is a series of five radio buttons ranging from "liberal" to "moderate" to "conservative"
-    And I press "Edit Your Profile"
+    And I press "edit-profile"
     Then I should be able to select that I am "liberal"
     And I should be able to select that I am "moderately-liberal"
     And I should be able to select that I am "moderate"
@@ -33,13 +34,13 @@ Scenario: Select a position from liberal to conservative
     And I should be able to select that I am "conservative"
 
 Scenario: Write a political blurb
-    When I press "Edit Your Profile"
+    When I press "edit-profile"
     And I fill in "Political-Blurb" with "I appreciate Foo Bar's dedication to Widgets"
-    And I press "Update Profile"
+    And I press "save"
     Then I should see "I appreciate Foo Bar's dedication to Widgets"
 
 Scenario: View other Gladiator's profile
     Given "Garply" has a political hero of "Widget"
     And I navigate to the profile page of "Garply"
     Then I should see "Widget" in the "Political-Hero" text box
-    And I should not see "Update Profile"
+#    And I should not see "update-profile"

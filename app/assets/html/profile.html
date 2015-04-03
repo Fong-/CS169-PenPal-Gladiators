@@ -23,7 +23,7 @@
                 <p>{{ profile.spectrum }}
 
                 <div ng-if="can_edit()">
-                    <input class="input" type="button" ng-click="edit()" value="Edit Your Profile"/>
+                    <input class="input" id="edit-profile" type="button" ng-click="edit()" value="Edit Your Profile"/>
                 </div>
             </div>
         </div>
@@ -57,17 +57,18 @@
             </span>
 
             <span>
-            <p>You can also change your email and password, both of which are
-            private.</p>
-            <h4>Email</h4>
-            <input type="text" name="email" ng-model="profile.email" >
-            <!-- Throw password in eventually when better framework is established
-            <h4>Password</h4>
-            <input type="password" name="password" ng-model="password">
-            -->
+                <p>You can also change your email and password, both of which are
+                private.</p>
+                <h4>Email</h4>
+                <input type="text" name="email" ng-model="profile.email" >
+                <!-- Throw password in eventually when better framework is established
+                <h4>Password</h4>
+                <input type="password" name="password" ng-model="password">
+                -->
             </span>
+
             <span>
-            <input class="input" type="button" ng-click="save()" value="Save Changes">
+                <input class="input" type="button" id="save" ng-click="save()" value="Save Changes">
             </span>
         </div>
     </div>
