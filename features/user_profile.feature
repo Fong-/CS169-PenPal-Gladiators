@@ -8,7 +8,7 @@ Background: I am on my user profile page
 
 # Consider using identicons and uploaded photo (a la GitHub)
 #
-# TODO Commented out 2015-04-02 because stretch goal of having avatars working
+# TODO: Commented out 2015-04-02 because stretch goal of having avatars working
 # is not going to be met for iteration 2
 #
 #Scenario: Choose an avatar
@@ -24,7 +24,7 @@ Scenario: Select a political hero
 
 Scenario: Select a position from liberal to conservative
     Given there is a series of five radio buttons ranging from "liberal" to "moderate" to "conservative"
-    And I press "Edit Profile"
+    And I press "Edit Your Profile"
     Then I should be able to select that I am "liberal"
     And I should be able to select that I am "moderately-liberal"
     And I should be able to select that I am "moderate"
@@ -32,14 +32,10 @@ Scenario: Select a position from liberal to conservative
     And I should be able to select that I am "conservative"
 
 Scenario: Write a political blurb
-    When I press "Edit Profile"
+    When I press "Edit Your Profile"
     And I fill in "Political-Blurb" with "I appreciate Foo Bar's dedication to Widgets"
     And I press "Update Profile"
     Then I should see "I appreciate Foo Bar's dedication to Widgets"
-
-Scenario: Decline to complete profile
-    When I press "Complete Profile Later"
-    Then I should be on the home page
 
 Scenario: View other Gladiator's profile
     Given "Garply" has a political hero of "Widget"
