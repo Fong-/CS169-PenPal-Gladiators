@@ -45,23 +45,45 @@ topics.each do |t|
     survey_question2 = topic.survey_questions.create(:text => "Do you care about #{topic.name}?", :index => 3)
 
     responses.each do |r|
-        survey_question1.survey_responses.create(r)
-        survey_question2.survey_responses.create(r)
+        verb1 = r[:text] == "Yes" ? "hate" : "don't hate"
+        verb2 = r[:text] == "Yes" ? "care" : "don't care"
+        actual_response1 = r.clone
+        actual_response2 = r.clone
+        actual_response1[:summary_text] = "I #{verb1} #{topic.name}."
+        actual_response2[:summary_text] = "I #{verb2} about #{topic.name}."
+        survey_question1.survey_responses.create(actual_response1)
+        survey_question2.survey_responses.create(actual_response2)
     end
 end
 
 #More complicated responses
 responses = [
- {:text => "Education in the US is the best", :index => 2},
- {:text => "Need to fund education less", :index => 1},
- {:text => "Need more focus on STEM", :index => 0},
- {:text => "Too many college grads, need to raise tuition fee", :index => 3}
+    {
+        :text => "Education in the US is the best",
+        :summary_text => "I believe that education in the US is the best.",
+        :index => 2
+    },
+    {
+        :text => "Need to fund education less",
+        :summary_text => "I believe that we need to fund education less.",
+        :index => 1
+    },
+    {
+        :text => "Need more focus on STEM",
+        :summary_text => "I believe that there needs to be more focus on STEM.",
+        :index => 0
+    },
+    {
+        :text => "Too many college grads, need to raise tuition fee",
+        :summary_text => "I believe that there are too many college gradudates, therefore, we need to raise the tuition fees.",
+        :index => 3
+    }
 ]
 
 education = Topic.find_by_name("Education")
 survey_question = education.survey_questions.create(:text => "What's your view on US higher education?", :index => 2)
 responses.each do |r|
- survey_question.survey_responses.create(r)
+    survey_question.survey_responses.create(r)
 end
 
 ############################################################

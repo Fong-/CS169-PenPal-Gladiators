@@ -7,19 +7,19 @@ surveyQuestions.config(["$routeProvider", ($routeProvider) ->
         templateUrl: "/assets/survey_questions.html",
         controller: "SurveyQuestionsController"
     })
+    .when("/questions/:id/edit", {
+        templateUrl: "/assets/survey_questions_edit.html",
+        controller: "SurveyQuestionsController"
+    })
 ]).controller("SurveyQuestionsController", ["$scope", "$http", "$location", "$routeParams", "SharedRequests", "StartPageData", ($scope, $http, $location, $routeParams, SharedRequests, StartPageData) ->
     $scope.allTopics = StartPageData.getAllTopics()                 # all the topics
     $scope.selectedTopicIds = StartPageData.getSelectedTopicIds()   # the ids of the topics the user selected
     $scope.currentTopicId = $routeParams.id
     $scope.currentTopic = $scope.allTopics[$scope.currentTopicId].name # the topic we're doing now
 
-    $scope.questions = []
+    $scope.questions = StartPageData.getTopicQuestions($scope.currentTopicId)
     $scope.questionCheckModel = StartPageData.getResponseIdsByTopicId($scope.currentTopicId)
-    #if Object.keys($scope.questionCheckModel).length == 0
-    #    $scope.test2 = "Answerse not saved"
-    #else
-    #    $scope.test2 = "Answeres saved!"
-    $scope.numQuestions = 0             # the number of questions for this topic
+    $scope.numQuestions = $scope.questions.length                   # the number of questions for this topic
 
 
     # Call this when a response is selected to toggle -- only allows one
@@ -52,7 +52,7 @@ surveyQuestions.config(["$routeProvider", ($routeProvider) ->
             return "#{questionsLeft} Unanswered Questions"
 
     # Helper function to advance to the summary page
-    handleAdvanceToSummary = ->
+    $scope.handleAdvanceToSummary = ->
         tmp = {}
         for topicId in $scope.selectedTopicIds
             tmp[topicId] = StartPageData.getResponseIdsByTopicId(topicId)
@@ -72,7 +72,7 @@ surveyQuestions.config(["$routeProvider", ($routeProvider) ->
             nextTopicId = $scope.selectedTopicIds[nextIndex]
             handleAdvanceToQuestions(nextTopicId)
         else
-            handleAdvanceToSummary()
+            $scope.handleAdvanceToSummary()
 
     # Helper function to move back to the topic selection page
     handleBackToTopics = ->
@@ -96,13 +96,15 @@ surveyQuestions.config(["$routeProvider", ($routeProvider) ->
 
     # Asynchronously load the list of questions for a topic
     load_questions = (topicId) ->
-        SharedRequests.requestQuestionsByTopic(topicId).success( (allQuestions) ->
-            $scope.questions = []
-            allQuestions = allQuestions.sort((u, v) -> u.index - v.index)
-            for question in allQuestions
-                $scope.questions.push(question)
-            $scope.numQuestions = $scope.questions.length
-        )
+        if $scope.questions.length == 0
+            SharedRequests.requestQuestionsByTopic(topicId).success( (allQuestions) ->
+                $scope.questions = []
+                allQuestions = allQuestions.sort((u, v) -> u.index - v.index)
+                for question in allQuestions
+                    $scope.questions.push(question)
+                StartPageData.addTopicQuestions($scope.currentTopicId, $scope.questions)
+                $scope.numQuestions = $scope.questions.length
+            )
         $scope.currentTopic = $scope.allTopics[topicId].name
         if Object.keys($scope.questionCheckModel).length == 0
             for question in $scope.questions
