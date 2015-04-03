@@ -35,6 +35,8 @@ surveyQuestions.controller("SurveyQuestionsController", ["$scope", "$http", "$st
         else
             return "Edit responses and press Next to continue"
 
+    $scope.testvar = StartPageData.getNumQuestions()
+
     # Call this when a response is selected to toggle -- only allows one
     # response to be selected at once
     $scope.handleResponseSelected = (question, selectedResponse) ->
@@ -137,6 +139,8 @@ surveyQuestions.controller("SurveyQuestionsController", ["$scope", "$http", "$st
             for question in $scope.questions
                 for response in question.survey_responses
                     $scope.questionCheckModel[response.id] = false
+        StartPageData.setNumQuestions($scope.questions.length)
+
 
 
     load_questions($scope.currentTopicId)
