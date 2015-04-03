@@ -101,8 +101,6 @@ surveyQuestions.config(["$routeProvider", ($routeProvider) ->
         else
             handleBackToTopics()
 
-
-
     # Asynchronously load the list of questions for a topic
     load_questions = (topicId) ->
         if $scope.questions.length == 0
@@ -111,11 +109,9 @@ surveyQuestions.config(["$routeProvider", ($routeProvider) ->
                 allQuestions = allQuestions.sort((u, v) -> u.index - v.index)
                 for question in allQuestions
                     $scope.questions.push(question)
-                    # StartPageData.incrementNumQuestions() # ??????????????????????????
                 StartPageData.addTopicQuestions($scope.currentTopicId, $scope.questions)
                 $scope.numQuestions = $scope.questions.length
-                #StartPageData.incrementNumQuestions($scope.questions.length) # ??????????????????????????
-
+                StartPageData.setNumQuestions($scope.numQuestions)
             )
         $scope.currentTopic = $scope.allTopics[topicId].name
         if Object.keys($scope.questionCheckModel).length == 0
@@ -125,5 +121,4 @@ surveyQuestions.config(["$routeProvider", ($routeProvider) ->
 
 
     load_questions($scope.currentTopicId)
-    StartPageData.setNumQuestions($scope.numQuestions)
 ])

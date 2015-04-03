@@ -9,13 +9,11 @@ progressBar.config(["$routeProvider", ($routeProvider) ->
 
 progressBar.controller("ProgressBarController", ["$scope", "$http", "$location", "$routeParams", "SharedRequests", "StartPageData", ($scope, $http, $location, $routeParams, SharedRequests, StartPageData) ->
 
-    $scope.somevariable = 5
-
-    $scope.numQuestions = StartPageData.getNumQuestions() # get total number of all questions
-    $scope.answeredQuestions = StartPageData.getAnsweredQuestions() # get number of answered questions
+    $scope.numQuestions = () -> StartPageData.getNumQuestions()
+    $scope.answeredQuestions = () -> StartPageData.getAnsweredQuestions()
 
     $scope.percentComplete = ->
-        return $scope.answeredQuestions / $scope.numQuestions
+        return $scope.answeredQuestions() / $scope.numQuestions()
 
 
 
