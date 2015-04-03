@@ -16,26 +16,28 @@ profile.config(["$routeProvider", ($routeProvider) ->
 
     # For eventual use with radio buttons
     # See https://docs.angularjs.org/api/ng/input/input%5Bradio%5D
-    $scope.conservative = {
-        "id": 1
-        "value": "conservative"
-    }
-    $scope.moderately-conservative = {
-        "id": 2
-        "value": "moderately-conservative"
-    }
-    $scope.moderate = {
-        "id": 3
-        "value": "moderate"
-    }
-    $scope.moderately-liberal = {
-        "id": 4
-        "value": "moderately-liberal"
-    }
-    $scope.liberal = {
-        "id": 5
-        "value": "liberal"
-    }
+    $scope.spectrumOptions = [
+        conservative = {
+            "id": 1
+            "value": "Conservative"
+        },
+        moderately_conservative = {
+            "id": 2
+            "value": "Moderately Conservative"
+        },
+        moderate = {
+            "id": 3
+            "value": "Moderate"
+        },
+        moderately_liberal = {
+            "id": 4
+            "value": "Moderately Liberal"
+        },
+        liberal = {
+            "id": 5
+            "value": "Liberal"
+        }
+    ]
 
     $scope.can_edit = () ->
         return $scope.loggedInUID == $scope.profileUID
@@ -45,7 +47,7 @@ profile.config(["$routeProvider", ($routeProvider) ->
             $scope.moduleState = "edit"
 
     $scope.save = () ->
-        SharedRequests.updateProfileByUID($scope.loggedInUID, $scope.username, $scope.avatar, $scope.blurb, $scope.hero, $scope.spectrum)
+        SharedRequests.updateProfileByUID($scope.loggedInUID, $scope.username, $scope.avatar, $scope.blurb, $scope.hero, $scope.spectrum.id)
         $scope.moduleState = "view"
 
     load_profile = (userId) ->
@@ -54,7 +56,10 @@ profile.config(["$routeProvider", ($routeProvider) ->
             $scope.profile.avatar = profile.avatar
             $scope.profile.blurb = profile.political_blurb
             $scope.profile.hero = profile.political_hero
-            $scope.profile.spectrum = profile.political_spectrum
+            $scope.profile.email = profile.email
+            for position in $scope.spectrumOptions
+                if $scope.spectrumOptions.position.id == profile.political_spectrum
+                    $scope.profile.spectrum = $scope.spectrumOptions.position.value
         )
     load_profile($scope.profileUID)
 ])
