@@ -1,6 +1,6 @@
 <div class="container" id="topic-select-container">
     <div class="header">Which topics interest you?</div>
-    <p id="description">Pick at least {{MIN_NUM_TOPICS_REQUIRED}} topics.</p>
+    <p id="description">{{ pageDescription() }}</p>
     <div class="spacing"></div>
     <div class="container-fluid" id="topic-check-container">
         <div id="{{topic.name.toLowerCase().replace(' ', '_')}}" class="topic-container col-md-1" ng-click="handleTopicToggled(topic.id)" ng-repeat="topic in allTopics">

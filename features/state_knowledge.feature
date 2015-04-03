@@ -12,7 +12,7 @@ Scenario: Correct message is displayed when going back to topic selection page
     Then I should see "Select five topics"
     When I press "next"
     And I press "back"
-    Then I should see "Edit and press Next button to save changes"
+    Then I should see "Edit selections and press Next to continue"
 
 Scenario: Correct message is displayed when going back to survey question page
     Given I selected five topics
@@ -21,4 +21,4 @@ Scenario: Correct message is displayed when going back to survey question page
     When I select the first response for each question
     And I press "next"
     And I press "back"
-    Then I should see "Edit and press Next button to save changes"
+    Then I should see "Edit responses and press Next to continue"

@@ -10,6 +10,14 @@ surveyTopics.config(["$routeProvider", ($routeProvider) ->
     $scope.MIN_NUM_TOPICS_REQUIRED = 5
     $scope.allTopics = []
     $scope.topicSelectionModel = {}
+    
+    # Get the description for the page
+    $scope.pageDescription = ->
+        if StartPageData.isTopicSelectionDone()
+            res =  "Edit selections and press Next to continue"
+        else
+            res = "Pick at least #{$scope.MIN_NUM_TOPICS_REQUIRED} topics."
+        return res + " You may change or add topics later through 'settings.'"
 
     numSelectedTopics = -> ($scope.topicSelectionModel[id] for id of $scope.topicSelectionModel).reduce(((s, t) -> s + t), 0)
     numTopicsRemaining = -> Math.max(0, $scope.MIN_NUM_TOPICS_REQUIRED - numSelectedTopics())
@@ -24,6 +32,7 @@ surveyTopics.config(["$routeProvider", ($routeProvider) ->
 
     # Advances to the next view.
     $scope.handleAdvanceToQuestions = ->
+        StartPageData.finishedTopicSelection()
         StartPageData.clearSelectedTopicIds()
         StartPageData.addSelectedTopicId(id) for id of $scope.topicSelectionModel when $scope.topicSelectionModel[id]
         sortedTopicIds = Object.keys($scope.topicSelectionModel).sort()
