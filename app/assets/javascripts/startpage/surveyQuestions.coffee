@@ -17,11 +17,11 @@ surveyQuestions.config(["$routeProvider", ($routeProvider) ->
     $scope.currentTopicId = $routeParams.id
     $scope.currentTopic = $scope.allTopics[$scope.currentTopicId].name # the topic we're doing now
 
+    StartPageData.setCurrentTopic($routeParams.id) # sets the current topic in StartPageData
+
     $scope.questions = StartPageData.getTopicQuestions($scope.currentTopicId)
     $scope.questionCheckModel = StartPageData.getResponseIdsByTopicId($scope.currentTopicId)
     $scope.numQuestions = $scope.questions.length                   # the number of questions for this topic
-
-    $scope.testvar = StartPageData.getNumQuestions()
 
     # Call this when a response is selected to toggle -- only allows one
     # response to be selected at once
@@ -39,6 +39,7 @@ surveyQuestions.config(["$routeProvider", ($routeProvider) ->
                 if $scope.questionCheckModel[response.id]
                     questionsLeft -= 1
                     break
+        StartPageData.setQuestionsLeft(questionsLeft)
         return questionsLeft
 
     # Get the description for the page, which changes depending on whether the user is visiting
@@ -120,8 +121,6 @@ surveyQuestions.config(["$routeProvider", ($routeProvider) ->
             for question in $scope.questions
                 for response in question.survey_responses
                     $scope.questionCheckModel[response.id] = false
-        StartPageData.setNumQuestions($scope.questions.length)
-
 
 
     load_questions($scope.currentTopicId)

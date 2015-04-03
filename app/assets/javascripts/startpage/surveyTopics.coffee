@@ -10,7 +10,7 @@ surveyTopics.config(["$routeProvider", ($routeProvider) ->
     $scope.MIN_NUM_TOPICS_REQUIRED = 5
     $scope.allTopics = []
     $scope.topicSelectionModel = {}
-    
+
     # Get the description for the page
     $scope.pageDescription = ->
         if StartPageData.isTopicSelectionDone()
@@ -28,7 +28,14 @@ surveyTopics.config(["$routeProvider", ($routeProvider) ->
     $scope.disableNextButton = -> numTopicsRemaining() > 0
 
     # Called when a topic is toggled.
-    $scope.handleTopicToggled = (topicId) -> $scope.topicSelectionModel[topicId] = !$scope.topicSelectionModel[topicId]
+    $scope.handleTopicToggled = (topicId) ->
+        # -- For progress bar
+        if !$scope.topicSelectionModel[topicId]
+            StartPageData.incNumTopics()
+        if $scope.topicSelectionModel[topicId]
+            StartPageData.decNumTopics()
+        # --
+        $scope.topicSelectionModel[topicId] = !$scope.topicSelectionModel[topicId]
 
     # Advances to the next view.
     $scope.handleAdvanceToQuestions = ->
