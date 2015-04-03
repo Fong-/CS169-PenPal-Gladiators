@@ -21,5 +21,5 @@ Given /^"(.*?)" has a political hero of "(.*?)"$/ do |user, hero|
 end
 
 Given /^I navigate to the profile page of "(.*?)"$/ do |user|
-  pending "Unimplemented"
+    visit "/home#profile/#{User.find(user)}"
 end
