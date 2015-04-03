@@ -17,6 +17,8 @@ surveyQuestions.config(["$routeProvider", ($routeProvider) ->
     $scope.currentTopicId = $routeParams.id
     $scope.currentTopic = $scope.allTopics[$scope.currentTopicId].name # the topic we're doing now
 
+    StartPageData.setCurrentTopic($routeParams.id) # sets the current topic in StartPageData
+
     $scope.questions = StartPageData.getTopicQuestions($scope.currentTopicId)
     $scope.questionCheckModel = StartPageData.getResponseIdsByTopicId($scope.currentTopicId)
     $scope.numQuestions = $scope.questions.length                   # the number of questions for this topic
@@ -37,6 +39,7 @@ surveyQuestions.config(["$routeProvider", ($routeProvider) ->
                 if $scope.questionCheckModel[response.id]
                     questionsLeft -= 1
                     break
+        StartPageData.setQuestionsLeft(questionsLeft)
         return questionsLeft
 
     # Get the description for the page, which changes depending on whether the user is visiting
@@ -101,8 +104,6 @@ surveyQuestions.config(["$routeProvider", ($routeProvider) ->
         else
             handleBackToTopics()
 
-
-
     # Asynchronously load the list of questions for a topic
     load_questions = (topicId) ->
         if $scope.questions.length == 0
@@ -113,6 +114,7 @@ surveyQuestions.config(["$routeProvider", ($routeProvider) ->
                     $scope.questions.push(question)
                 StartPageData.addTopicQuestions($scope.currentTopicId, $scope.questions)
                 $scope.numQuestions = $scope.questions.length
+                StartPageData.setNumQuestions($scope.numQuestions)
             )
         $scope.currentTopic = $scope.allTopics[topicId].name
         if Object.keys($scope.questionCheckModel).length == 0
