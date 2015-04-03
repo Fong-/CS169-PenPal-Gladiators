@@ -6,6 +6,8 @@ profile.config(["$routeProvider", ($routeProvider) ->
         controller: "ProfileController"
     })
 ]).controller("ProfileController", ["$http", "$location", "$scope", "SharedRequests", "ProfilePageData" ($http, $location, $scope, SharedRequests, ProfilePageData) ->
+    $scope.loggedInUID = 1 # FIXME Hardcode UID as 1 for now
+    $scope.profileUID = $routeParams.id
     $scope.username = ""
     $scope.avatar = ""
     $scope.blurb = ""
@@ -16,7 +18,7 @@ profile.config(["$routeProvider", ($routeProvider) ->
     $scope.profileModel = ProfilePageData.getProfile[:id]
 
     $scope.can_edit () ->
-        return $scope.currentUser == $scope.username
+        return $scope.loggedInUID == $scope.profileUID
 
     $scope.edit () ->
         $location.path("/profile/:id/edit")
@@ -43,5 +45,5 @@ profile.config(["$routeProvider", ($routeProvider) ->
             $scope.hero= ProfilePageData.getHero
             $scope.spectrum= ProfilePageData.getSpectrum
         )
-    load_profile($scope.profileId)
+    load_profile($scope.profileUID)
 ])
