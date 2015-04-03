@@ -28,6 +28,7 @@ surveyQuestions.config(["$routeProvider", ($routeProvider) ->
             $scope.questionCheckModel[response.id] = false
         $scope.questionCheckModel[selectedResponse.id] = true
         StartPageData.addResponseIdsByTopicId($scope.currentTopicId, $scope.questionCheckModel)
+        StartPageData.incrementAnsweredQuestions # increments answered questions counter
 
     # Get the number of questions with no responses selected yet
     $scope.numUnansweredQuestions = ->
@@ -111,6 +112,7 @@ surveyQuestions.config(["$routeProvider", ($routeProvider) ->
                 allQuestions = allQuestions.sort((u, v) -> u.index - v.index)
                 for question in allQuestions
                     $scope.questions.push(question)
+                    StartPageData.incrementNumQuestions() # ??????????????????????????
                 StartPageData.addTopicQuestions($scope.currentTopicId, $scope.questions)
                 $scope.numQuestions = $scope.questions.length
             )

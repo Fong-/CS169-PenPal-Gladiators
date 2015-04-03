@@ -8,6 +8,10 @@ startPageServices.service("StartPageData", () ->
     questionsByTopicIds = {}
     topicSelectionDone = false
     topicQuestionsDone = {}           # Ids of the topics for which the questions have all been answered
+
+    numQuestions = 0 # number of all questions in every topic
+    answeredQuestions = 0 # number of answered questions
+
     # Email interface.
     this.getEmail = -> email
     this.setEmail = (e) -> email = e
@@ -35,6 +39,8 @@ startPageServices.service("StartPageData", () ->
         return responseIds
     this.addResponseIdsByTopicId = (topicId, responseIdsByTopicId) ->
         responseIdsByTopicIds[topicId] = responseIdsByTopicId
+        # answeredQuestions += 1 # increment answered questions counter by 1
+
     this.clearResponseIdsByTopics = -> responseIdsByTopicIds = {}
     this.getResponseIdsByTopicId = (topicId) ->
         if topicId of responseIdsByTopicIds
@@ -43,10 +49,17 @@ startPageServices.service("StartPageData", () ->
             return {}
     this.getResponseIdsByTopicIds = -> responseIdsByTopicIds
     this.addTopicQuestions = (topicId, questions) -> questionsByTopicIds[topicId] = questions
-    this.getTopicQuestions = (topicId) -> 
+    this.getTopicQuestions = (topicId) ->
         if topicId of questionsByTopicIds then questionsByTopicIds[topicId] else []
     this.getAllQuestions = -> return questionsByTopicIds
     this.finishedTopicQuestions = (topicId) -> topicQuestionsDone[topicId] = true
     this.isTopicQuestionsDone = (topicId) -> return topicId of topicQuestionsDone
+
+    this.incrementNumQuestions = -> numQuestions += 1 # increments number of total questions
+    this.getNumQuestions = -> numQuestions
+    this.incrementAnsweredQuestions = -> answeredQuestions += 1
+    this.getAnsweredQuestions = -> answeredQuestions
+
+
     return # Required to prevent returning the last object.
 )
