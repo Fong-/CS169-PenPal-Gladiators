@@ -5,7 +5,7 @@ profile.config(["$routeProvider", ($routeProvider) ->
         templateUrl: "/assets/profile.html",
         controller: "ProfileController"
     })
-]).controller("ProfileController", ["$http", "$location", "$scope", "SharedRequests", "ProfilePageData", ($http, $location, $scope, SharedRequests, ProfilePageData) ->
+]).controller("ProfileController", ["$http", "$location", "$scope", "$routeParams", "SharedRequests", "ProfilePageData", ($http, $location, $scope, $routeParams, SharedRequests, ProfilePageData) ->
     # moduleState can be either "view" or "edit"
     $scope.moduleState = "view"
 
