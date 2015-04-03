@@ -67,3 +67,19 @@ end
 And /^I click on the edit button for topic "(.*)"$/ do |topic|
     step "I press \"edit-#{topic}\""
 end
+
+Given /^I have navigated to the summary page$/ do
+    step "I am on the Survey Topic Checkboxes page"
+    step 'When I click topics "Climate", "Education", "Economy", "Technology", "LGBT Rights"'
+    step 'And I press "Continue to Survey Questions"'
+    step "I selected response 1 for every question"
+    step "I press 'Next'"
+    step "I selected response 1 for every question"
+    step "I press 'Next'"
+    step "I selected response 1 for every question"
+    step "I press 'Next'"
+    step "I selected response 1 for every question"
+    step "I press 'Next'"
+    step "I selected response 1 for every question"
+    step "I press 'Next'"
+end
