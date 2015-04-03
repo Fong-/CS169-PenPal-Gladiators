@@ -34,28 +34,35 @@
             are, so you are encouraged to provide as much information as you are
             comfortable with providing.</p>
 
+            <h2>My Username</h2>
             <input type="text" name="username" ng-model="profile.username" >
+            <h2>My Avatar</h2>
             <input type="text" name="avatar" ng-model="profile.avatar" >
+            <h2>About Me</h2>
             <input type="text" name="blurb" ng-model="profile.blurb" >
+            <h2>My Political Hero</h2>
             <input type="text" name="hero" ng-model="profile.hero" >
-            <input type="radio" name="spectrum" ng-model="profile.spectrum" id="conservative" value="Conservative">
-                <label for="conservative">Conservative</label>
-            <input type="radio" name="spectrum" ng-model="profile.spectrum" id="moderately-conservative" value="Moderately-Conservative">
-                <label for="moderately-conservative">Moderately Conservative</label>
-            <input type="radio" name="spectrum" ng-model="profile.spectrum" id="moderate" value="Moderate">
-                <label for="moderate">Moderate</label>
-            <input type="radio" name="spectrum" ng-model="profile.spectrum" id="liberally-conservative" value="Liberally-Conservative">
-                <label for="moderately-liberal">Moderately Liberal</label>
-            <input type="radio" name="spectrum" ng-model="profile.spectrum" id="liberal" value="Liberal">
-                <label for="liberal">Liberal</label>
+            <h2>My Position on the Political Spectrum</h2>
+            <input type="radio" name="spectrum" ng-model="profile.spectrum" id="conservative" ng-value="spectrumOptions.conservative">
+                <label for="conservative">{{ conservative.value }}</label>
+            <input type="radio" name="spectrum" ng-model="profile.spectrum" id="moderately-conservative" ng-value="spectrumOptions.moderately_conservative">
+                <label for="moderately-conservative">{{ moderately_conservative.value </label>
+            <input type="radio" name="spectrum" ng-model="profile.spectrum" id="moderate" ng-value="spectrumOptions.moderate">
+                <label for="moderate"> {{ moderate.value }} </label>
+            <input type="radio" name="spectrum" ng-model="profile.spectrum" id="liberally-conservative" ng-value="spectrumOptions.moderately_liberal">
+                <label for="moderately-liberal">{{ moderately_liberal.value }}</label>
+            <input type="radio" name="spectrum" ng-model="profile.spectrum" id="liberal" ng-value="spectrumOptions.liberal">
+                <label for="liberal">{{ liberal.value }}</label>
 
             <p>You can also change your email and password, both of which are
             private.</p>
+            <h2>Email</h2>
             <input type="text" name="email" ng-model="profile.email" >
             <!-- Throw password in eventually when better framework is established
-            <input type="password" name="password" ng-model="password" >
+            <h2>Password</h2>
+            <input type="password" name="password" ng-model="password">
             -->
-            <input class="input" type="button" ng-click="save()" value="Save Changes"/>)))
+            <input class="input" type="button" ng-click="save()" value="Save Changes">)))
         </div>
     </div>
 </div>
