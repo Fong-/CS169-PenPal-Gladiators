@@ -17,11 +17,9 @@ surveySummary.config(["$routeProvider", ($routeProvider) ->
         questions = StartPageData.getTopicQuestions(topic.id)
         responseIds = StartPageData.getResponseIdsByTopicId(topic.id)
         $scope.responseTexts[topic.id] = ""
-        console.log(responseIds)
         for question in questions
             for response in question.survey_responses
                 if responseIds[response.id]
-                    console.log(response)
                     $scope.responseTexts[topic.id] += response.summary_text + " "
 
     # Move to the edit page for questions of a topic
