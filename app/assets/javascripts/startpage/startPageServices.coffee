@@ -30,6 +30,9 @@ startPageServices.service("StartPageStateData", () ->
     selectedTopics = {}
     responsesForSelectedTopics = {}
 
+    numQuestions = 0 # number of all questions in every topic
+    answeredQuestions = 0 # number of answered questions
+
     # Email interface
     Object.defineProperty(this, "email", {
         get: () -> email
@@ -65,6 +68,11 @@ startPageServices.service("StartPageStateData", () ->
         responsesForSelectedTopics = {}
     this.getResponsesForTopic = (topicId) ->
         if topicId of responsesForSelectedTopics then responsesForSelectedTopics[topicId] else {}
+
+    this.incrementNumQuestions = -> numQuestions += 1 # increments number of total questions
+    this.getNumQuestions = -> numQuestions
+    this.incrementAnsweredQuestions = -> answeredQuestions += 1
+    this.getAnsweredQuestions = -> answeredQuestions
 
     return
 )
