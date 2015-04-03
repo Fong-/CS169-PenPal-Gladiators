@@ -11,9 +11,9 @@ Then /^I should be able to select that I am "(.*?)"$/ do |position|
 end
 
 Given /^there is a series of five radio buttons ranging from "(.*?)" to "(.*?)" to "(.*?)"$/ do |liberal, moderate, conservative|
-    page.should have_selector(liberal)
-    page.should have_selector(moderate)
-    page.should have_selector(conservative)
+    page.should have_content liberal
+    page.should have_content moderate
+    page.should have_content conservative
 end
 
 Given /^"(.*?)" has a political hero of "(.*?)"$/ do |user, hero|
