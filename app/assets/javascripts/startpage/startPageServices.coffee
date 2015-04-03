@@ -11,6 +11,7 @@ startPageServices.service("StartPageData", () ->
 
     numQuestions = 0 # number of all questions in every topic
     answeredQuestions = 0 # number of answered questions
+    numTopics = 0
 
     # Email interface.
     this.getEmail = -> email
@@ -39,7 +40,7 @@ startPageServices.service("StartPageData", () ->
         return responseIds
     this.addResponseIdsByTopicId = (topicId, responseIdsByTopicId) ->
         responseIdsByTopicIds[topicId] = responseIdsByTopicId
-        # answeredQuestions += 1 # increment answered questions counter by 1
+        answeredQuestions += 1 # increment answered questions counter by 1
 
     this.clearResponseIdsByTopics = -> responseIdsByTopicIds = {}
     this.getResponseIdsByTopicId = (topicId) ->
@@ -48,17 +49,22 @@ startPageServices.service("StartPageData", () ->
         else
             return {}
     this.getResponseIdsByTopicIds = -> responseIdsByTopicIds
-    this.addTopicQuestions = (topicId, questions) -> questionsByTopicIds[topicId] = questions
+    this.addTopicQuestions = (topicId, questions) ->
+        questionsByTopicIds[topicId] = questions
+        numTopics += 1
     this.getTopicQuestions = (topicId) ->
         if topicId of questionsByTopicIds then questionsByTopicIds[topicId] else []
     this.getAllQuestions = -> return questionsByTopicIds
     this.finishedTopicQuestions = (topicId) -> topicQuestionsDone[topicId] = true
     this.isTopicQuestionsDone = (topicId) -> return topicId of topicQuestionsDone
 
-    this.incrementNumQuestions = -> numQuestions += 1 # increments number of total questions
+    # Progress bar interface
+    this.setNumQuestions = (questions) -> numQuestions = questions # sets the number of questions on current topic
     this.getNumQuestions = -> numQuestions
     this.incrementAnsweredQuestions = -> answeredQuestions += 1
     this.getAnsweredQuestions = -> answeredQuestions
+    # this.incrementNumTopics = -> numTopics += 1
+    this.getNumTopics = -> numTopics
 
 
     return # Required to prevent returning the last object.
