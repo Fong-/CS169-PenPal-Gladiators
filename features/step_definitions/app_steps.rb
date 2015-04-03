@@ -32,6 +32,10 @@ Given /^I am on (?:the|a|my) (.*?) page$/ do |page_name|
         end
 end
 
+Given /^I am on topic ID (.*)/ do |topic_ID|
+    visit "/#/questions/#{topic_ID}"
+end
+
 Given /^I am signed in with "(.*)"$/ do |email|
 
 end
