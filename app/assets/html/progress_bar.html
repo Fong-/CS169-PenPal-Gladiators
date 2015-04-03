@@ -1,6 +1,7 @@
 <!-- TODO Implement progress bar view here, to be included into other html views -->
-<div id="progress-bar-container">
+<div id="progress-bar-container" ng-controller="ProgressBarController">
     <div class="header">current progress</div>
+    <p>testing scope {{ somevariable }}</p>
     <p id="num-questions">Number of total questions is {{ numQuestions }}</p>
     <p id="answered-questions">Number of answered questions is {{ answeredQuestions }}</p>
     <p id="percentage-complete">Percent complete is {{ percentComplete() }}</p>
