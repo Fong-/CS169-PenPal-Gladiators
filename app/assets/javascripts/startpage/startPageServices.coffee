@@ -33,7 +33,8 @@ startPageServices.service("StartPageStateData", () ->
     numQuestions = 0 # number of all questions in every topic
     numTopics = 0
     questionsLeft = 0
-    currentTopic = 0 #current topic ID, used for determining if a topic is done for progress
+    currentTopic = 0 # current topic ID, used for determining if a topic is done for progress
+    topicsComplete = 0 # number of topics that have been completed
 
     # Email interface
     Object.defineProperty(this, "email", {
@@ -81,5 +82,8 @@ startPageServices.service("StartPageStateData", () ->
     this.decNumTopics = -> numTopics -= 1
     this.setCurrentTopic = (topicID) -> currentTopic = topicID # sets the id of the current topic
     this.getCurrentTopic = -> currentTopic
-    return # Required to prevent returning the last object.
+    this.incTopicsComplete = -> topicsComplete += 1
+    this.getTopicsComplete = -> topicsComplete
+    this.clearTopicsComplete = -> topicsComplete = 0
+    return
 )
