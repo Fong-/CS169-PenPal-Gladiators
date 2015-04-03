@@ -2,6 +2,7 @@
 <div id="progress-bar-container" ng-controller="ProgressBarController">
     <div class="header">current progress</div>
     <p id="num-questions">Number of total questions is {{ numQuestions() }}</p>
-    <p id="answered-questions">Number of answered questions is {{ answeredQuestions() }}</p>
-    <p id="percentage-complete">Percent complete is {{ percentComplete() }}</p>
+    <p id="answered-questions">Questions left is  {{ questionsLeft() }}</p>
+    <p id="num-topics">Number of topics is {{ numTopics() }}</p>
+    <p id="is-topic-done">Is current topic done? {{ isTopicDone() }}
 </div>
