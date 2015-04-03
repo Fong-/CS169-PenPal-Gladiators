@@ -39,6 +39,7 @@ profile.config(["$routeProvider", ($routeProvider) ->
     }
 
     $scope.can_edit = () ->
+        return 1==1
         return $scope.loggedInUID == $scope.profileUID
 
     $scope.edit = () ->
@@ -56,9 +57,10 @@ profile.config(["$routeProvider", ($routeProvider) ->
             $scope.profile.blurb = profile.political_blurb
             $scope.profile.hero = profile.political_hero
             $scope.profile.email = profile.email
-            for position in $scope.spectrumOptions
-                if $scope.spectrumOptions.position.id == profile.political_spectrum
-                    $scope.profile.spectrum = $scope.spectrumOptions.position.value
+            console.log($scope.spectrumOptions)
+            for k, v of $scope.spectrumOptions
+                if profile.political_spectrum == v.id
+                    $scope.profile.spectrum = v.value
         )
     load_profile($scope.profileUID)
 ])
