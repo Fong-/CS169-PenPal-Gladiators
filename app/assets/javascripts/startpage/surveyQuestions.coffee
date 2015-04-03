@@ -21,7 +21,6 @@ surveyQuestions.config(["$routeProvider", ($routeProvider) ->
     $scope.questionCheckModel = StartPageData.getResponseIdsByTopicId($scope.currentTopicId)
     $scope.numQuestions = $scope.questions.length                   # the number of questions for this topic
 
-
     # Call this when a response is selected to toggle -- only allows one
     # response to be selected at once
     $scope.handleResponseSelected = (question, selectedResponse) ->
@@ -39,6 +38,15 @@ surveyQuestions.config(["$routeProvider", ($routeProvider) ->
                     questionsLeft -= 1
                     break
         return questionsLeft
+
+    # Get the description for the page, which changes depending on whether the user is visiting
+    # a page with ALL questions answered already
+    $scope.pageDescription = ->
+        numQuestions = $scope.questions.length
+        if StartPageData.isTopicQuestionsDone($scope.currentTopicId)
+            return "Edit responses and press Next to continue"
+        else
+            return "Answer the following #{numQuestions} questions to proceed"
 
     $scope.disableNextButton = ->
         return $scope.numUnansweredQuestions() > 0
@@ -67,6 +75,7 @@ surveyQuestions.config(["$routeProvider", ($routeProvider) ->
     # Call either handleAdvanceToQuestions or handleAdvanceToSummary depending on
     # if there are more topics to answer questions for
     $scope.handleAdvance = ->
+        StartPageData.finishedTopicQuestions($scope.currentTopicId)
         nextIndex = $scope.selectedTopicIds.indexOf($scope.currentTopicId) + 1
         if nextIndex < $scope.selectedTopicIds.length
             nextTopicId = $scope.selectedTopicIds[nextIndex]

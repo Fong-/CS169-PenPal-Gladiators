@@ -6,6 +6,8 @@ startPageServices.service("StartPageData", () ->
     selectedTopicIds = {}
     responseIdsByTopicIds = {}
     questionsByTopicIds = {}
+    topicSelectionDone = false
+    topicQuestionsDone = {}           # Ids of the topics for which the questions have all been answered
     # Email interface.
     this.getEmail = -> email
     this.setEmail = (e) -> email = e
@@ -20,6 +22,8 @@ startPageServices.service("StartPageData", () ->
     this.getSelectedTopicIds = -> Object.keys(selectedTopicIds).sort() # Note: does NOT sort numerically.
     this.addSelectedTopicId = (topicId) -> selectedTopicIds[topicId] = true
     this.clearSelectedTopicIds = (topicId) -> selectedTopicIds = {}
+    this.finishedTopicSelection = -> topicSelectionDone = true
+    this.isTopicSelectionDone = -> return topicSelectionDone
     # User responses interface.
     # Get ids of responses selected by user
     this.getResponseIds = ->
@@ -42,5 +46,7 @@ startPageServices.service("StartPageData", () ->
     this.getTopicQuestions = (topicId) -> 
         if topicId of questionsByTopicIds then questionsByTopicIds[topicId] else []
     this.getAllQuestions = -> return questionsByTopicIds
+    this.finishedTopicQuestions = (topicId) -> topicQuestionsDone[topicId] = true
+    this.isTopicQuestionsDone = (topicId) -> return topicId of topicQuestionsDone
     return # Required to prevent returning the last object.
 )
