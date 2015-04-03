@@ -26,7 +26,14 @@ surveyTopics.controller("SurveyTopicsController", ["$scope", "$http", "$state", 
     $scope.disableNextButton = -> numTopicsRemaining() > 0
 
     # Called when a topic is toggled.
-    $scope.handleTopicToggled = (topicId) -> $scope.topicSelectionModel[topicId] = !$scope.topicSelectionModel[topicId]
+    $scope.handleTopicToggled = (topicId) ->
+        # -- For progress bar
+        if !$scope.topicSelectionModel[topicId]
+            StartPageData.incNumTopics()
+        if $scope.topicSelectionModel[topicId]
+            StartPageData.decNumTopics()
+        # --
+        $scope.topicSelectionModel[topicId] = !$scope.topicSelectionModel[topicId]
 
     # Advances to the next view.
     $scope.handleAdvanceToQuestions = ->
