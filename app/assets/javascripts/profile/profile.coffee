@@ -46,7 +46,8 @@ profile.config(["$routeProvider", ($routeProvider) ->
         return $scope.loggedInUID == $scope.profileUID
 
     $scope.edit () ->
-        $scope.moduleState = "edit"
+        if $scope.can_edit()
+            $scope.moduleState = "edit"
 
     $scope.save () ->
         ProfilePageData.setUsername($scope.username)
