@@ -42,6 +42,7 @@ surveyQuestions.controller("SurveyQuestionsController", ["$scope", "$http", "$st
             $scope.questionCheckModel[response.id] = false
         $scope.questionCheckModel[selectedResponse.id] = true
         StartPageStateData.addResponsesForTopic($scope.currentTopicId, $scope.questionCheckModel)
+        StartPageData.incrementAnsweredQuestions # increments answered questions counter
 
     # Get the number of questions with no responses selected yet
     $scope.numUnansweredQuestions = ->
