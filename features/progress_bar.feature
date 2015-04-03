@@ -4,6 +4,7 @@ Feature: Allow user to keep track of their survey completion status by using a p
     I want to see my progress
 
 Background: I am a new user
+    Given the database is setup
     Given I have selected the topics "Education", "Climate", "Philosophy", "Technology", "Religion"
 
 Scenario: Progress advances when a question is filled
