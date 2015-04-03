@@ -40,7 +40,7 @@ Scenario: A summary of the user responses is displayed
 
 Scenario: Separate page for editing responses to survey questions
     Given I have navigated to the summary page
-    And I click on the edit button for "Education"
+    And I click on the edit button for topic "Education"
     Then I should see "Opinion on education?"
     And I should see "Education should follow no child left behind."
     And I should see "Education should not follow no child left behind."
@@ -49,7 +49,7 @@ Scenario: Separate page for editing responses to survey questions
 
 Scenario: Edit responses to survey questions
     Given I have navigated to the summary page
-    And I click on the edit button for "Education"
+    And I click on the edit button for topic "Education"
     And I select response 2 for question 1
     And I press "Save changes and return to Summary"
     Then I should see "I believe education should not follow no child left behind."
