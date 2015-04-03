@@ -75,6 +75,7 @@ startPageServices.service("StartPageStateData", () ->
     this.getNumQuestions = -> numQuestions
     this.incrementAnsweredQuestions = -> answeredQuestions += 1
     this.getAnsweredQuestions = -> answeredQuestions
+
     # this.incrementNumTopics = -> numTopics += 1
     this.getNumTopics = -> numTopics
 
