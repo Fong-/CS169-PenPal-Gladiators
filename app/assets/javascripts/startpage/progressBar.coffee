@@ -32,6 +32,9 @@ progressBar.controller("ProgressBarController", ["$scope", "$http", "$location",
 
         percentComplete = pastPercent + currentPercent
 
+        if percentComplete > 100 # might need to change this later because it might break stuff
+            percentComplete = 100
+
         return percentComplete
 
     $scope.percentCompleteString = () -> # for ng-style
