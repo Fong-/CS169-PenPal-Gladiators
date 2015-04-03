@@ -1,4 +1,4 @@
-profile = angular.module("Profile",[])
+profile = angular.module("Profile",["SharedServices", "ProfilePageServices"])
 
 profile.config(["$routeProvider", ($routeProvider) ->
     $routeProvider.when("/profile/:id", {
