@@ -1,3 +1,4 @@
+@javascript @seed_topics
 Feature: Display summary for user responses and user to edit their responses
     As a new user who just finished the survey
     So that I can check my answers

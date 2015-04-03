@@ -1,3 +1,4 @@
+@javascript @seed_topics
 Feature: User inputs should persist throughout the survey, and user should be able to go back and edit them
     As a new user to Penpal Gladiators
     So that I don't have to worry about making mistakes on the survey
