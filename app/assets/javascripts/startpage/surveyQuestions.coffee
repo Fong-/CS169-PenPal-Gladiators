@@ -140,5 +140,4 @@ surveyQuestions.controller("SurveyQuestionsController", ["$scope", "$http", "$st
 
 
     load_questions($scope.currentTopicId)
-    StartPageData.setNumQuestions($scope.numQuestions)
 ])
