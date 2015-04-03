@@ -11,6 +11,7 @@ Given /the following responses exist/ do |responses_table|
         question = SurveyQuestion.find_by_text(row[:question_text])
         if !row.key?(:summary_text)
             row[:summary_text] = "N/A"
+        end
         question.survey_responses.create!(:text => row[:response_text], :index => row[:index], :summary_text => row[:summary_text])
     end
 end
@@ -57,7 +58,7 @@ end
 
 And /^I select response (\d+) for every question$/ do |response_num|
     questions = page.all("question-container")
-    for question_num in 1..questions.length
+    (1..questions.length).each do |question_num|
         step "I select response #{response_num} for question #{question_num}"
     end
 end
@@ -66,4 +67,3 @@ end
 And /^I click on the edit button for topic "(.*)"$/ do |topic|
     step "I press \"edit-#{topic}\""
 end
-
