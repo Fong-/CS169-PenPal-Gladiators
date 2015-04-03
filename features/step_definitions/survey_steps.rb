@@ -9,9 +9,6 @@ end
 Given /the following responses exist/ do |responses_table|
     responses_table.hashes.each do |row|
         question = SurveyQuestion.find_by_text(row[:question_text])
-        if !row.key?(:summary_text)
-            row[:summary_text] = "N/A"
-        end
         question.survey_responses.create!(:text => row[:response_text], :index => row[:index], :summary_text => row[:summary_text])
     end
 end
@@ -57,7 +54,9 @@ And /^I select response (\d+) for question (\d+)$/ do |response_num, question_nu
 end
 
 And /^I select response (\d+) for every question$/ do |response_num|
-    questions = page.all("question-container")
+    # Use find so Capybara will wait for site to load questions
+    find(".question-container")
+    questions = all(".question-container")
     (1..questions.length).each do |question_num|
         step "I select response #{response_num} for question #{question_num}"
     end
@@ -70,16 +69,16 @@ end
 
 Given /^I have navigated to the summary page$/ do
     step "I am on the Survey Topic Checkboxes page"
-    step 'When I click topics "Climate", "Education", "Economy", "Technology", "LGBT Rights"'
-    step 'And I press "Continue to Survey Questions"'
-    step "I selected response 1 for every question"
-    step "I press 'Next'"
-    step "I selected response 1 for every question"
-    step "I press 'Next'"
-    step "I selected response 1 for every question"
-    step "I press 'Next'"
-    step "I selected response 1 for every question"
-    step "I press 'Next'"
-    step "I selected response 1 for every question"
-    step "I press 'Next'"
+    step 'I click topics "Climate", "Education", "Economy", "Technology", "LGBT Rights"'
+    step 'I press "Continue to Survey Questions"'
+    step "I select response 1 for every question"
+    step 'I press "Next"'
+    step "I select response 1 for every question"
+    step 'I press "Next"'
+    step "I select response 1 for every question"
+    step 'I press "Next"'
+    step "I select response 1 for every question"
+    step 'I press "Next"'
+    step "I select response 1 for every question"
+    step 'I press "Next"'
 end
