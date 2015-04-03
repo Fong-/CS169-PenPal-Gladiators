@@ -31,8 +31,9 @@ startPageServices.service("StartPageStateData", () ->
     responsesForSelectedTopics = {}
 
     numQuestions = 0 # number of all questions in every topic
-    answeredQuestions = 0 # number of answered questions
     numTopics = 0
+    questionsLeft = 0
+    currentTopic = 0 #current topic ID, used for determining if a topic is done for progress
 
     # Email interface
     Object.defineProperty(this, "email", {
@@ -73,11 +74,12 @@ startPageServices.service("StartPageStateData", () ->
     # Progress bar interface
     this.setNumQuestions = (questions) -> numQuestions = questions # sets the number of questions on current topic
     this.getNumQuestions = -> numQuestions
-    this.incrementAnsweredQuestions = -> answeredQuestions += 1
-    this.getAnsweredQuestions = -> answeredQuestions
-
-    # this.incrementNumTopics = -> numTopics += 1
+    this.setQuestionsLeft = (questions) -> questionsLeft = questions
+    this.getQuestionsLeft = -> questionsLeft
     this.getNumTopics = -> numTopics
-
-    return
+    this.incNumTopics = -> numTopics += 1
+    this.decNumTopics = -> numTopics -= 1
+    this.setCurrentTopic = (topicID) -> currentTopic = topicID # sets the id of the current topic
+    this.getCurrentTopic = -> currentTopic
+    return # Required to prevent returning the last object.
 )
