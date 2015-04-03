@@ -27,7 +27,7 @@ Background: Questions have been added to database.
 
 Scenario: Correct message is displayed when going back to topic selection page
     Given I am on the Survey Topic Checkboxes page
-    Then I should see "Pick at least five topics"
+    Then I should see "Pick at least 5 topics"
     When I click topics "Climate", "Education", "Economy", "Technology", "LGBT Rights"
     And I press "Continue to Survey Questions"
     And I press "Back"
