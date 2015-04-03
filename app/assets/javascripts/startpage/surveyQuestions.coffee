@@ -21,6 +21,8 @@ surveyQuestions.config(["$routeProvider", ($routeProvider) ->
     $scope.questionCheckModel = StartPageData.getResponseIdsByTopicId($scope.currentTopicId)
     $scope.numQuestions = $scope.questions.length                   # the number of questions for this topic
 
+    $scope.testvar = StartPageData.getNumQuestions()
+
     # Call this when a response is selected to toggle -- only allows one
     # response to be selected at once
     $scope.handleResponseSelected = (question, selectedResponse) ->
@@ -118,6 +120,8 @@ surveyQuestions.config(["$routeProvider", ($routeProvider) ->
             for question in $scope.questions
                 for response in question.survey_responses
                     $scope.questionCheckModel[response.id] = false
+        StartPageData.setNumQuestions($scope.questions.length)
+
 
 
     load_questions($scope.currentTopicId)
