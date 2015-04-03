@@ -5,7 +5,7 @@ profile.config(["$routeProvider", ($routeProvider) ->
         templateUrl: "/assets/profile.html",
         controller: "ProfileController"
     })
-]).controller("ProfileController", ["$http", "$location", "$scope", "SharedRequests", "ProfilePageData" ($http, $location, $scope, SharedRequests, ProfilePageData) ->
+]).controller("ProfileController", ["$http", "$location", "$scope", "SharedRequests", "ProfilePageData", ($http, $location, $scope, SharedRequests, ProfilePageData) ->
     # moduleState can be either "view" or "edit"
     $scope.moduleState = "view"
 
@@ -14,26 +14,25 @@ profile.config(["$routeProvider", ($routeProvider) ->
 
     $scope.profile = ProfilePageData
 
-    # For eventual use with radio buttons
-    # See https://docs.angularjs.org/api/ng/input/input%5Bradio%5D
+    # For radio buttons
     $scope.spectrumOptions = {
-        conservative = {
+        conservative: {
             "id": 1
             "value": "Conservative"
         },
-        moderately_conservative = {
+        moderately_conservative: {
             "id": 2
             "value": "Moderately Conservative"
         },
-        moderate = {
+        moderate: {
             "id": 3
             "value": "Moderate"
         },
-        moderately_liberal = {
+        moderately_liberal: {
             "id": 4
             "value": "Moderately Liberal"
         },
-        liberal = {
+        liberal: {
             "id": 5
             "value": "Liberal"
         }
