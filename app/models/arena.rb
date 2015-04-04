@@ -7,13 +7,16 @@ class Arena < ActiveRecord::Base
     def response_object
         conversations_response = []
         conversations.each do |conversation|
+            if conversation.has_posts
+                recent_post_data = { :author_id => conversation.recent_post.author.id, :text => conversation.recent_post.text }
+            else
+                recent_post_data = nil
+            end
             conversations_response.push({
                 :id => conversation.id,
                 :timestamp => conversation.timestamp,
-                :recent_post => {
-                    :author_id => conversation.recent_post.author.id,
-                    :text => conversation.recent_post.text
-                }
+                :title => conversation.title,
+                :recent_post => recent_post_data
             })
         end
 

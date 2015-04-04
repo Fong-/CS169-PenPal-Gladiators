@@ -13,7 +13,7 @@ describe Conversation do
         end
 
         it "should return the appropriate update time" do
-            expect(@conversation.timestamp).to eq(@conversation.updated_at)
+            expect(String(@conversation.timestamp)).to eq(String(@post2.updated_at))
         end
     end
 end
