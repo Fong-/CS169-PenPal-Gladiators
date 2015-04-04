@@ -44,7 +44,7 @@ Scenario: Write a political blurb
 Scenario: View other Gladiator's profile
     Given "Garply" has a political hero of "Widget"
     And I navigate to the profile page of "Garply"
-    Then I should see "Widget" in the "Political-Hero" text box
+    Then I should see the text "Widget"
 #    Uncomment when return 1==1 is removed from profile.coffee and logic exists
 #    to figure out who's logged in
 #    And I should not see "update-profile"
