@@ -36,13 +36,13 @@
 
             <span>
                 <h4>My Username</h4>
-                <input type="text" name="username" ng-model="profile.username" >
+                <input type="text" name="username" id="username" ng-model="profile.username" >
                 <h4>My Avatar</h4>
-                <input type="text" name="avatar" ng-model="profile.avatar" >
+                <input type="text" name="avatar" id="avatar" ng-model="profile.avatar" >
                 <h4>About Me</h4>
-                <input type="text" name="blurb" ng-model="profile.blurb" >
+                <input type="text" name="blurb" id="blurb" ng-model="profile.blurb" >
                 <h4>My Political Hero</h4>
-                <input type="text" name="hero" ng-model="profile.hero" >
+                <input type="text" name="hero" id="hero" ng-model="profile.hero" >
                 <h4>My Position on the Political Spectrum</h4>
                 <input type="radio" name="spectrum" ng-model="profile.spectrum" id="conservative" ng-value="spectrumOptions.conservative">
                     <label for="conservative">{{ spectrumOptions.conservative.value }}</label>

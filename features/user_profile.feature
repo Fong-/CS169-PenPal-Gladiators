@@ -22,12 +22,12 @@ Background: I am on my user profile page
 
 Scenario: Select a political hero
     When I press "edit-profile"
-    And I fill in "Political-Hero" with "Foo Bar"
+    And I fill in "hero" with "Foo Bar"
     And I press "save"
-    Then I should see "Foo Bar"
+    Then I should see the text "Foo Bar"
 
 Scenario: Select a position from liberal to conservative
-    Given there is a series of five radio buttons ranging from "liberal" to "moderate" to "conservative"
+    Given there is a series of radio buttons corresponding to a political "spectrum"
     And I press "edit-profile"
     Then I should be able to select that I am "liberal"
     And I should be able to select that I am "moderately-liberal"
@@ -37,9 +37,9 @@ Scenario: Select a position from liberal to conservative
 
 Scenario: Write a political blurb
     When I press "edit-profile"
-    And I fill in "Political-Blurb" with "I appreciate Foo Bar's dedication to Widgets"
+    And I fill in "blurb" with "I appreciate Foo Bar's dedication to Widgets"
     And I press "save"
-    Then I should see "I appreciate Foo Bar's dedication to Widgets"
+    Then I should see the text "I appreciate Foo Bar's dedication to Widgets"
 
 Scenario: View other Gladiator's profile
     Given "Garply" has a political hero of "Widget"
