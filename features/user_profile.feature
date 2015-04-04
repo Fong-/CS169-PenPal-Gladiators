@@ -1,10 +1,11 @@
+@javascript
 Feature: Edit and display a user profile
     As a pseudo-anonymous Gladiator
     So that other Gladiators can learn more about my political ideologies
     I want to create a Gladiator-public user profile for myself
 
 Background: I am on my user profile page
-    And I am on the profile page
+    Given I am on the profile page
     Then I should be on the profile page
 
 
