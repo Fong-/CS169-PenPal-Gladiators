@@ -66,12 +66,11 @@ Given /^I am on (?:the|a|my) (.*?) page$/ do |page_name|
         when "Login/Register" then "/#/"
         when "Survey Topic Checkboxes" then "/#topics"
         when "survey" then pending "No route here!"
-        when "user profile" then pending "no check for user profile!"
         when "home" then "/home"
         when "profile" then "/home/#/profile/1"
         when "conversation" then pending "Check that I am on the conversation page."
         else raise "Could not navigate to the #{page_name} page."
-        end
+    end
 end
 
 When /^I expand all names in the sidebar$/ do
@@ -89,7 +88,6 @@ Then /I should be on the (.*?) page/ do |page_name|
     when "survey"
         pending "no check for survey!"
     when "profile"
-        puts page.html
         page.should have_content "My Position on the Political Spectrum"
     when "home"
         pending "Check that I am on the home page."
