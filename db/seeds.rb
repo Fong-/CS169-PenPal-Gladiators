@@ -12,7 +12,7 @@ users = [
         :avatar => "/path/to/ben.png",
         :political_blurb => "I like Ron Bitdiddle",
         :political_hero => "Ron Bitdiddle",
-        :political_spectrum => "2" },
+        :political_spectrum => 2 },
     {
         :email => "generic@email.com",
         :password => "asdfasdf",
@@ -20,7 +20,7 @@ users = [
         :avatar => "/path/to/generic.png",
         :political_blurb => "Go generic party!",
         :political_hero => "Generic George",
-        :political_spectrum => "1" },
+        :political_spectrum => 1 },
     {
         :email => "bob@schmitt.com",
         :password => "imboring",
@@ -28,7 +28,7 @@ users = [
         :avatar => "/path/to/bob.png",
         :political_blurb => "Bob for county clerk!",
         :political_hero => "ME!",
-        :political_spectrum => "3" },
+        :political_spectrum => 3 },
     {
         :email => "genericasiankid@gmail.com",
         :password => "password",
@@ -36,7 +36,7 @@ users = [
         :avatar => "/path/to/generickid.png",
         :political_blurb => "Bob embezzles from widget farmers!",
         :political_hero => "Not Bob!",
-        :political_spectrum => "1" },
+        :political_spectrum => 1 },
     {
         :email => "rosenthal@policy.com",
         :password => "publicpolicy",
@@ -44,7 +44,7 @@ users = [
         :avatar => "/path/to/rosenthal.png",
         :political_blurb => "Discuss your view on PenPal Gladiators!",
         :political_hero => "Thomas Jefferson",
-        :political_spectrum => "2" }
+        :political_spectrum => 2 }
 ]
 
 users.each do |u|
