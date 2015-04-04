@@ -19,7 +19,8 @@ shares.service("SharedRequests", ["$http", ($http) ->
         $http.post("#{SERVER_API_PREFIX}user/#{id}/profile", { username: username, avatar: avatar, political_blurb: blurb, political_hero: hero, political_spectrum: spectrum})
     this.requestArenasByUser = (id) ->
         $http.get("#{SERVER_API_PREFIX}arenas/#{id}")
-    ]).service("TimeUtil", [->
+    return
+]).service("TimeUtil", [->
     this.timeSince1970InSeconds = -> new Date().getTime() / 1000.0
     this.timeFromTimestampInSeconds = (timestamp) -> Date.parse(timestamp) / 1000.0
     this.timeIntervalAsString = (timeIntervalMs) ->
