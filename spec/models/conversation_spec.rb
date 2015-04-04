@@ -5,7 +5,9 @@ describe Conversation do
         before :each do
             @conversation = Conversation.create! :title => "Happy feet"
             @post1 = @conversation.posts.create! :text => "Lalalala"
+            Timecop.freeze Time.now
             @post2 = @conversation.posts.create! :text => "Good conversation"
+            Timecop.return
         end
 
         it "should return the most recent post" do
