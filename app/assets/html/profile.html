@@ -12,15 +12,15 @@
 
             <div class="container">
                 <h4>About Me</h4>
-                <p>Random text {{ profile.blurb }}</p>
+                <p id="blurb">{{ profile.blurb }}</p>
 
                 <h4>My Political Hero</h4>
-                <p>{{ profile.hero }}</p>
+                <p id="hero">{{ profile.hero }}</p>
 
                 <!-- TODO: This will have to be more graphical, but for now just display
                      the value of the selected radio button -->
                 <h4>My Position on the Political Spectrum</h4>
-                <p>{{ profile.spectrum.value }}</p>
+                <p id="spectrum">{{ profile.spectrum.value }}</p>
 
                 <div ng-if="can_edit()">
                     <input class="input" id="edit-profile" type="button" ng-click="edit()" value="Edit Your Profile"/>
