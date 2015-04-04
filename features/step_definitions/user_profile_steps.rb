@@ -10,8 +10,9 @@ Then /^I should be able to select that I am "(.*?)"$/ do |position|
     choose(position)
 end
 
-Then /^I should see the text "(.*?)"$/ do |text|
-    expect(page.html).to have_text(text)
+Then /^I should see the text "(.*?)" for "(.*?)"$/ do |text, id|
+    page.find("##{id}").should have_text(text)
+#    expect(page.html).to have_text(text)
 end
 
 #Given /^there is a series of five radio buttons ranging from "(.*?)" to "(.*?)" to "(.*?)"$/ do |liberal, moderate, conservative|
