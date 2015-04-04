@@ -7,7 +7,11 @@ class Conversation < ActiveRecord::Base
         return posts.first
     end
 
+    def has_posts
+        return !posts.empty?
+    end
+
     def timestamp
-        return self.updated_at
+        return has_posts ? recent_post.updated_at : updated_at
     end
 end
