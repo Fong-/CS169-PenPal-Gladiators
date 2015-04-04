@@ -12,7 +12,7 @@
 
             <div class="container">
                 <h4>About Me</h4>
-                <p>{{ profile.blurb }}</p>
+                <p>Random text {{ profile.blurb }}</p>
 
                 <h4>My Political Hero</h4>
                 <p>{{ profile.hero }}</p>
@@ -20,7 +20,7 @@
                 <!-- TODO: This will have to be more graphical, but for now just display
                      the value of the selected radio button -->
                 <h4>My Position on the Political Spectrum</h4>
-                <p>{{ profile.spectrum }}
+                <p>{{ profile.spectrum }}</p>
 
                 <div ng-if="can_edit()">
                     <input class="input" id="edit-profile" type="button" ng-click="edit()" value="Edit Your Profile"/>
@@ -36,13 +36,13 @@
 
             <span>
                 <h4>My Username</h4>
-                <input type="text" name="username" ng-model="profile.username" >
+                <input type="text" name="username" id="username" ng-model="profile.username" >
                 <h4>My Avatar</h4>
-                <input type="text" name="avatar" ng-model="profile.avatar" >
+                <input type="text" name="avatar" id="avatar" ng-model="profile.avatar" >
                 <h4>About Me</h4>
-                <input type="text" name="blurb" ng-model="profile.blurb" >
+                <input type="text" name="blurb" id="blurb" ng-model="profile.blurb" >
                 <h4>My Political Hero</h4>
-                <input type="text" name="hero" ng-model="profile.hero" >
+                <input type="text" name="hero" id="hero" ng-model="profile.hero" >
                 <h4>My Position on the Political Spectrum</h4>
                 <input type="radio" name="spectrum" ng-model="profile.spectrum" id="conservative" ng-value="spectrumOptions.conservative">
                     <label for="conservative">{{ spectrumOptions.conservative.value }}</label>
