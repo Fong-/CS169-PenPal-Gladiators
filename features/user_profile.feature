@@ -5,7 +5,8 @@ Feature: Edit and display a user profile
     I want to create a Gladiator-public user profile for myself
 
 Background: I am on my user profile page
-    Given I am on the profile page
+    Given I am a user with email "hello@world.net" and password "helloWorld"
+    And I am on the profile page
     Then I should be on the profile page
 
 
@@ -44,4 +45,6 @@ Scenario: View other Gladiator's profile
     Given "Garply" has a political hero of "Widget"
     And I navigate to the profile page of "Garply"
     Then I should see "Widget" in the "Political-Hero" text box
+#    Uncomment when return 1==1 is removed from profile.coffee and logic exists
+#    to figure out who's logged in
 #    And I should not see "update-profile"
