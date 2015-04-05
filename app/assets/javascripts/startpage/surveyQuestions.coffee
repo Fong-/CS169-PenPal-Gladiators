@@ -19,7 +19,7 @@ surveyQuestions.config(["$routeProvider", ($routeProvider) ->
 
     $scope.questions = StartPageData.getTopicQuestions($scope.currentTopicId)
     $scope.questionCheckModel = StartPageData.getResponseIdsByTopicId($scope.currentTopicId)
-    $scope.numQuestions = $scope.questions.length                   # the number of questions for this topic
+    $scope.numQuestions = if $scope.questions.length == 0 then -1 else $scope.questions.length  # the number of questions for this topic
 
     # Call this when a response is selected to toggle -- only allows one
     # response to be selected at once
@@ -57,7 +57,7 @@ surveyQuestions.config(["$routeProvider", ($routeProvider) ->
         if questionsLeft == 0
             return "Next"
         else
-            return "#{questionsLeft} Unanswered Questions"
+            return "#{questionsLeft} Unanswered Question#{if $scope.numUnansweredQuestions() == 1 then '' else 's'}"
 
     # Helper function to advance to the summary page
     $scope.handleAdvanceToSummary = ->
@@ -109,8 +109,7 @@ surveyQuestions.config(["$routeProvider", ($routeProvider) ->
             SharedRequests.requestQuestionsByTopic(topicId).success( (allQuestions) ->
                 $scope.questions = []
                 allQuestions = allQuestions.sort((u, v) -> u.index - v.index)
-                for question in allQuestions
-                    $scope.questions.push(question)
+                $scope.questions = allQuestions
                 StartPageData.addTopicQuestions($scope.currentTopicId, $scope.questions)
                 $scope.numQuestions = $scope.questions.length
             )
