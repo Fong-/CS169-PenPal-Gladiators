@@ -24,7 +24,7 @@ surveySummary.config(["$routeProvider", ($routeProvider) ->
 
     # Move to the edit page for questions of a topic
     $scope.editResponses = (topicId) ->
-        $location.path("questions/#{topicId}/edit")
+        $location.path("questions/#{topicId}")
 
     # Register the user into the database and move to the homepage
     $scope.handleRegister = ->
