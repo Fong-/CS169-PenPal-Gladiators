@@ -39,6 +39,8 @@ surveyQuestions.config(["$routeProvider", ($routeProvider) ->
         numQuestions = $scope.questions.length
         if isCurrentState()
             return "Answer the following #{numQuestions} questions to proceed"
+        else if currentState == "summary"
+            return "Edit responses and return to summary to complete registration"
         else
             return "Edit responses and press Next to continue"
 
@@ -60,13 +62,18 @@ surveyQuestions.config(["$routeProvider", ($routeProvider) ->
                     break
         return questionsLeft
 
+    $scope.hideBackButton = ->
+        return currentState == "summary"
+
     $scope.disableNextButton = ->
         return $scope.numUnansweredQuestions() > 0
 
     # Get the text that should be displayed on the Next button
     $scope.nextButtonValue = ->
         questionsLeft = $scope.numUnansweredQuestions()
-        if questionsLeft == 0
+        if currentState == "summary"
+            return "Save changes and return to Summary"
+        else if questionsLeft == 0
             return "Next"
         else
             return "#{questionsLeft} Unanswered Question#{if $scope.numUnansweredQuestions() == 1 then '' else 's'}"
@@ -93,7 +100,7 @@ surveyQuestions.config(["$routeProvider", ($routeProvider) ->
     # if there are more topics to answer questions for
     $scope.handleAdvance = ->
         nextIndex = $scope.selectedTopicIds.indexOf($scope.currentTopicId) + 1
-        if nextIndex < $scope.selectedTopicIds.length
+        if currentState != "summary" && nextIndex < $scope.selectedTopicIds.length
             nextTopicId = $scope.selectedTopicIds[nextIndex]
             handleAdvanceToQuestions(nextTopicId)
         else
