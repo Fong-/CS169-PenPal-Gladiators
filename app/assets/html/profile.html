@@ -1,1 +1,75 @@
-<!-- TODO Implement profile view here -->
+<div id="profile-container">
+    <! --
+    Reference:
+    http://stackoverflow.com/questions/16649617/angularjs-change-partial-in-controller-on-click
+    -->
+    <div ng-switch="moduleState">
+        <div ng-switch-when="view">
+            <h1>{{ profile.username }}'s Profile</h1>
+            <!-- TODO: This will eventually be an <img>, but for now just display the
+                path to the image -->
+            <p>{{ profile.avatar }}</p>
+
+            <div class="container">
+                <h4>About Me</h4>
+                <p id="blurb">{{ profile.blurb }}</p>
+
+                <h4>My Political Hero</h4>
+                <p id="hero">{{ profile.hero }}</p>
+
+                <!-- TODO: This will have to be more graphical, but for now just display
+                     the value of the selected radio button -->
+                <h4>My Position on the Political Spectrum</h4>
+                <p id="spectrum">{{ profile.spectrum.value }}</p>
+
+                <div ng-if="can_edit()">
+                    <input class="input" id="edit-profile" type="button" ng-click="edit()" value="Edit Your Profile"/>
+                </div>
+            </div>
+        </div>
+        <div ng-switch-when="edit">
+            <h1>Edit Your Profile</h1>
+            <p>Make changes to your public user profile here.  Your user profile will be
+            viewed by other Gladiators to allow them to get a better sense of who you
+            are, so you are encouraged to provide as much information as you are
+            comfortable with providing.</p>
+
+            <span>
+                <h4>My Username</h4>
+                <input type="text" name="username" id="username" ng-model="profile.username" >
+                <h4>My Avatar</h4>
+                <input type="text" name="avatar" id="avatar" ng-model="profile.avatar" >
+                <h4>About Me</h4>
+                <input type="text" name="blurb" id="blurb" ng-model="profile.blurb" >
+                <h4>My Political Hero</h4>
+                <input type="text" name="hero" id="hero" ng-model="profile.hero" >
+                <h4>My Position on the Political Spectrum</h4>
+                <input type="radio" name="spectrum" ng-model="profile.spectrum" id="conservative" ng-value="spectrumOptions.conservative">
+                    <label for="conservative">{{ spectrumOptions.conservative.value }}</label>
+                <input type="radio" name="spectrum" ng-model="profile.spectrum" id="moderately-conservative" ng-value="spectrumOptions.moderately_conservative">
+                    <label for="moderately-conservative">{{ spectrumOptions.moderately_conservative.value }}</label>
+                <input type="radio" name="spectrum" ng-model="profile.spectrum" id="moderate" ng-value="spectrumOptions.moderate">
+                    <label for="moderate"> {{ spectrumOptions.moderate.value }} </label>
+                <input type="radio" name="spectrum" ng-model="profile.spectrum" id="moderately-liberal" ng-value="spectrumOptions.moderately_liberal">
+                    <label for="moderately-liberal">{{ spectrumOptions.moderately_liberal.value }}</label>
+                <input type="radio" name="spectrum" ng-model="profile.spectrum" id="liberal" ng-value="spectrumOptions.liberal">
+                    <label for="liberal">{{ spectrumOptions.liberal.value }}</label>
+            </span>
+
+            <span>
+                <p>You can also change your email and password, both of which are
+                private.</p>
+                <h4>Email</h4>
+                <input type="text" name="email" ng-model="profile.email" >
+                <!-- Throw password in eventually when better framework is established
+                <h4>Password</h4>
+                <input type="password" name="password" ng-model="password">
+                -->
+            </span>
+
+            <span>
+                <input class="input" type="button" id="save" ng-click="save()" value="Save Changes">
+            </span>
+        </div>
+    </div>
+</div>

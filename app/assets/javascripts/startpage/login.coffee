@@ -16,7 +16,8 @@ login.config(["$routeProvider", ($routeProvider) ->
                 document.cookie = "email=" + $scope.email
                 document.cookie = "password=" + $scope.password
                 # TODO Redirect only if the user has not yet submitted a profile.
-                $window.location.href = "/home/#/profile"
+                # TODO un-hardcode UID 1
+                $window.location.href = "/home/#/profile/1"
             else
                 $scope.status = if data then data["error"] else "Oops, an error occurred."
         )
