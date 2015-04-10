@@ -39,3 +39,16 @@ Scenario: the user should not see conversation previews in an empty arena
     And I expand all names in the sidebar
     Then I should see "Looks like no one has made any posts. Be the first to write something!"
     Then I should not see " said: "
+
+Scenario: the user should be alerted to unread posts
+    Given an arena is set up with posts containing "Hello world this is the first post"
+    And I am on the home page
+    And I expand all names in the sidebar
+    Then I should see an unread post
+
+Scenario: read posts should not be marked as unread
+    Given an arena is set up with posts containing "Hello world this is the first post"
+    And I am on the home page
+    And I click on an unread post
+    And I am on the home page
+    Then I should not see an unread post
