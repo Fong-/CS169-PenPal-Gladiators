@@ -69,6 +69,7 @@ Given /^I am on (?:the|a|my) (.*?) page$/ do |page_name|
         when "user profile" then pending "no check for user profile!"
         when "home" then "/home"
         when "profile" then "/home/#/profile"
+        when "conversation" then pending "Check that I am on the conversation page."
         else raise "Could not navigate to the #{page_name} page."
         end
 end
