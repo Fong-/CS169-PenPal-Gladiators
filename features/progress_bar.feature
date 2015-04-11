@@ -4,16 +4,13 @@ Feature: Allow user to keep track of their survey completion status by using a p
     I want to see my progress
 
 Background: I am a new user
-    Given the database is setup
     Given I have selected the topics "Education", "Climate", "Philosophy", "Technology", "Religion"
 
-Scenario: Progress advances when a question is filled
+Scenario: Progress advances when a question is completed
     Given I am on the survey questions page
     And I am on topic ID 1
-    When I check a response
+    When I answer a question
     Then the progress bar should be at 10%
-    And I check a response
-    Then the progress bar should be at 20%
 
 Scenario: Check current progress
     Given I am on the survey questions page
