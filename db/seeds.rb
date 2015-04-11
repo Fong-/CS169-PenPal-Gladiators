@@ -83,7 +83,8 @@ topics.each do |t|
 
     survey_question1 = topic.survey_questions.create(:text => "Do you hate #{topic.name}?", :index => 1)
     survey_question2 = topic.survey_questions.create(:text => "Do you care about #{topic.name}?", :index => 3)
-
+    created_responses = []
+    
     responses.each do |r|
         verb1 = r[:text] == "Yes" ? "hate" : "don't hate"
         verb2 = r[:text] == "Yes" ? "care" : "don't care"
@@ -91,9 +92,17 @@ topics.each do |t|
         actual_response2 = r.clone
         actual_response1[:summary_text] = "I #{verb1} #{topic.name}."
         actual_response2[:summary_text] = "I #{verb2} about #{topic.name}."
-        survey_question1.survey_responses.create(actual_response1)
-        survey_question2.survey_responses.create(actual_response2)
+        created_responses.push(survey_question1.survey_responses.create(actual_response1))
+        created_responses.push(survey_question2.survey_responses.create(actual_response2))
     end
+    
+    ResponseWeight.create({:response1_id => created_responses[0].id, :response2_id => created_responses[1].id, :weight => 5})
+    ResponseWeight.create({:response1_id => created_responses[0].id, :response2_id => created_responses[2].id, :weight => 1})
+    ResponseWeight.create({:response1_id => created_responses[0].id, :response2_id => created_responses[3].id, :weight => 1})
+    ResponseWeight.create({:response1_id => created_responses[1].id, :response2_id => created_responses[2].id, :weight => 1})
+    ResponseWeight.create({:response1_id => created_responses[1].id, :response2_id => created_responses[3].id, :weight => 1})
+    ResponseWeight.create({:response1_id => created_responses[2].id, :response2_id => created_responses[3].id, :weight => 1})
+
 end
 
 #More complicated responses
@@ -140,7 +149,7 @@ response = Topic.find_by_name("Philosophy").survey_questions.find_by_index(1).su
 UserSurveyResponse.create(:user => nick, :survey_response => response)
 
 bob = User.find_by_email("bob@schmitt.com")
-response = Topic.find_by_name("LGBT Rights").survey_questions.find_by_index(1).survey_responses.find_by_index(0)
+response = Topic.find_by_name("Philosophy").survey_questions.find_by_index(1).survey_responses.find_by_index(0)
 UserSurveyResponse.create(:user => bob, :survey_response => response)
 
 wenson = User.find_by_email("genericasiankid@gmail.com")
@@ -148,7 +157,7 @@ response = Topic.find_by_name("Education").survey_questions.find_by_index(1).sur
 UserSurveyResponse.create(:user => wenson, :survey_response => response)
 
 rosenthal = User.find_by_email("rosenthal@policy.com")
-response = Topic.find_by_name("Foreign Policy").survey_questions.find_by_index(1).survey_responses.find_by_index(1)
+response = Topic.find_by_name("Climate").survey_questions.find_by_index(1).survey_responses.find_by_index(1)
 UserSurveyResponse.create(:user => rosenthal, :survey_response => response)
 
 ####################################################
