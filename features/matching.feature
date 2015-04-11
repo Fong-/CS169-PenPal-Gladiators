@@ -5,10 +5,11 @@ Feature: Provide a Gladiator a list of "compatible" Gladiators so Gladiators can
     I want to be able to match myself with a compatible Gladiator
 
 Background: I am a Gladiator that has completed the on-boarding process
+    Given the database is setup
 
 Scenario: Request a list of compatible Gladiators to pair with
     Given I am on the home page
-    Then I should see a button to "Match Me with Another Gladiator"
+    Then I should see a button with "Match Me with Another Gladiator"
 
 Scenario: Initiate Gladiation
     Given that I press the "Match Me with Another Gladiator" button
