@@ -32,13 +32,3 @@ Scenario: Correct message is displayed when going back to topic selection page
     And I press "Continue to Survey Questions"
     And I press "Back"
     Then I should see "Edit selections and press Next to continue"
-
-Scenario: Correct message is displayed when going back to survey question page
-    Given I am on the Survey Topic Checkboxes page
-    When I click topics "Climate", "Education", "Economy", "Technology", "LGBT Rights"
-    And I press "Continue to Survey Questions"
-    Then I should see "Answer the following"
-    When I select response 1 for every question
-    And I press "Next"
-    And I press "Back"
-    Then I should see "Edit responses and press Next to continue"
