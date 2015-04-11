@@ -17,12 +17,10 @@ progressBar.controller("ProgressBarController", ["$scope", "$http", "$location",
     $scope.numTopics = () -> StartPageData.getNumTopics()
     $scope.isTopicDone = () -> StartPageData.isTopicQuestionsDone(currentID)
 
-    $scope.testvar = () -> return "50%"
-
     # %complete = (numCompleteTopics * 100/numTopics) + (numAnsweredQuestions * 100/totalQuestions * 100/numTopics)
     # calling $scope vs calling StartPageData ???
     $scope.percentComplete = () ->
-        $scope.updateCompleteTopics() # update complete topics first
+        updateCompleteTopics() # update complete topics first
 
         numAnsweredQuestions = $scope.numQuestions() - $scope.questionsLeft()
         numCompleteTopics = StartPageData.getTopicsComplete()
@@ -35,14 +33,11 @@ progressBar.controller("ProgressBarController", ["$scope", "$http", "$location",
         if percentComplete > 100 # might need to change this later because it might break stuff
             percentComplete = 100
 
-        return percentComplete
-
-    $scope.percentCompleteString = () -> # for ng-style
-        n = percentComplete.toString()
+        n = percentComplete.toString() # ng-style needs a string
         return n + "%"
 
     # Updates the # of complete topics variable
-    $scope.updateCompleteTopics = () ->
+    updateCompleteTopics = () ->
         StartPageData.clearTopicsComplete()
         for k,v of StartPageData.getTopicQuestionsDone()
             if v
