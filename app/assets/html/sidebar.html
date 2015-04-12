@@ -6,7 +6,7 @@
                     <a class="gladiator-heading">{{gladiatorNameById[gladiatorId]}}</a>
                     <span class="{{expandButtonClass(gladiatorId)}} click-to-expand"></span>
                 </div>
-                <div class="conversation-preview" ng-click="conversationPreviewClicked(conversation.id)" ng-repeat="conversation in conversationsByUserId[gladiatorId]" ng-show="arenaStateByUserId[gladiatorId]">
+                <div class="conversation-preview" ng-repeat="conversation in conversationsByUserId[gladiatorId]" ng-show="arenaStateByUserId[gladiatorId]" ng-click="conversationPreviewClicked(conversation.id)">
                     <p class="conversation-title">{{conversation.title}}</p>
                     <p class="conversation-time">{{conversation.time}}</p>
                     <p class="conversation-text">{{conversation.post_preview_text}}</p>

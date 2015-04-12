@@ -19,17 +19,30 @@
         <a id="posts-bottom-anchor"></a>
     </div>
 
-    <div class="post-editor {{postEditorClass()}}">
-        <textarea name="post-textarea" class="form-control" ng-escape="escapeTextEditor()" ng-disabled="shouldDisableEditor()" ng-model="editPostText" maxlength="1000" spellcheck="false"></textarea>
-        <div class="post-editor-actions">
-            <a id="submit-post-button" class="post-submit btn btn-info" ng-disabled="shouldDisableSubmitPost()" ng-click="submitPostClicked()">{{submitPostText()}}</a>
-            <a id="cancel-post-button" class="post-cancel btn" ng-click="cancelPostClicked()">Cancel</a>
+    <div ng-hide="shouldHidePostEditor()" class="editor-popup-container">
+        <div ng-hide="shouldHideConsensus()" id="consensus-container">
+            <div>
+                <p>Bob summarized your views</p>
+                <p>4 hours ago<p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut eleifend molestie felis. Proin sapien leo, imperdiet sit amet lobortis et, mattis ac erat. Duis eu orci augue.</p>
+                <p>Maecenas tellus quam, dictum eget mauris a, aliquam lobortis metus. Donec volutpat velit non venenatis elementum. Vestibulum tincidunt a odio sit amet pharetra. Donec sed odio vitae lacus aliquam scelerisque.</p>
+                <p>Aenean nec eros ut dolor maximus euismod vitae eu mi. Sed at velit ultricies, suscipit dolor et, rhoncus lorem. Praesent semper turpis eu lorem interdum, vel volutpat est consequat.Etiam ornare volutpat maximus.</p>
+            </div>
+            <a class="btn btn-primary" id="approve-consensus" ng-disabled="shouldDisableApproveConsensus()">Approve</a>
+        </div>
+        <div class="post-editor {{postEditorWidthClass()}}">
+            <textarea name="post-textarea" class="form-control" on-escape="escapeTextEditor()" ng-disabled="shouldDisableEditor()" ng-model="editPostText" maxlength="100000" spellcheck="false"></textarea>
+            <div class="post-editor-actions">
+                <span class="post-submit-error">{{postSubmitError}}</span>
+                <a id="submit-post-button" class="post-submit btn btn-primary" ng-disabled="shouldDisableSubmitPost()" ng-click="submitPostClicked()">{{submitPostText()}}</a>
+                <a id="cancel-post-button" class="post-cancel btn" ng-click="cancelPostClicked()">Cancel</a>
+            </div>
         </div>
     </div>
 
     <div class="post-actions">
-        <a id="add-post-button" class="post-action btn btn-info" ng-disabled="shouldDisableAddPost()" ng-click="addPostClicked()">Add a post</a>
+        <a id="add-post-button" class="post-action btn btn-primary" ng-disabled="shouldDisableAddPost()" ng-click="addPostClicked()">Add a post</a>
         <span class="hspace"></span>
-        <a id="propose-consensus-button" class="post-action btn" disabled="true">Propose a consensus</a>
+        <a id="propose-consensus-button" class="post-action btn btn-primary" ng-disabled="shouldDisableProposeConsensus()" ng-click="proposeConsensusClicked()">Propose a consensus</a>
     </div>
 </div>

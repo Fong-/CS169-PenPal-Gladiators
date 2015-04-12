@@ -28,7 +28,7 @@ describe "SidebarController", ->
         conversations = @scope.conversationsByUserId[3]
         expect(conversations.length).toEqual 1
         conversation = conversations[0]
-        expect(conversation.title).toEqual "Why does is the US education system terrible?"
+        expect(conversation.title).toEqual "Why is the US education system terrible?"
         expect(conversation.post_preview_text.length).toBeLessThan 150
         expect(conversation.post_preview_text).toMatch /^You said: "You, sir, are an idiot.*\.\.\."$/
 

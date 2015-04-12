@@ -5,11 +5,10 @@ Feature: allow the user to make and read posts in a conversation
     I want to use the conversation page
 
 Background: I am a registered gladiator
-    # TODO Authenticate the user?
     Given an arena is set up with posts containing "First post", "Second post", "Third post", "(and a huge post)", "(and a huge post)"
+    And I sign in as "alice@example.com" with password "12345678"
 
 Scenario: the user can see the latest post upon entering the conversation page
-    Given I am on the home page
     And I expand all names in the sidebar
     And I click "What messages are you posting?" in the sidebar
     Then I should see "What messages are you posting?"

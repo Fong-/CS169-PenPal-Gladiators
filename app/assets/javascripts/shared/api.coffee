@@ -51,5 +51,18 @@ angular.module("SharedServices").service("API", ["$http", "$cookieStore", ($http
         params = { token: getToken() }
         $http.get(request, { params: params })
 
+    this.requestConversationById = (id) ->
+        request = generateRequest("conversation/#{id}")
+        $http.get(request, { params: { token: getToken() } })
+
+    this.createPostByConversationId = (id, text) ->
+        request = generateRequest("post/create/#{id}")
+        $http.post(request, { text: text, token: getToken() })
+
+    this.editPostById = (id, text) ->
+        request = generateRequest("post/edit/#{id}")
+        $http.post(request, { text: text, token: getToken() })
+
+
     return
 ])

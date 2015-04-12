@@ -7,6 +7,7 @@ describe PostsController do
         User.stub(:find_by_id).and_return(user)
         @posts = double "posts", :create => nil
         @conversation = double "conversation", :posts => @posts
+        controller.stub(:check_access_token).and_return(true)
     end
 
     context "when adding posts" do

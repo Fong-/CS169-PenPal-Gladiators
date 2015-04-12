@@ -5,6 +5,7 @@ describe ConversationsController do
     context "#get_by_id" do
         before :each do
             @conversation = double "Conversation", :response_object => { :data => 1 }
+            controller.stub(:check_access_token).and_return(true)
         end
 
         it "should construct a response for the correct conversation" do

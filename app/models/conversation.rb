@@ -3,6 +3,7 @@ class Conversation < ActiveRecord::Base
     has_many :posts
     attr_accessible :title
 
+
     def recent_post
         return posts.first
     end
