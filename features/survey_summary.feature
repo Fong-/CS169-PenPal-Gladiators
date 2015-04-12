@@ -44,14 +44,15 @@ Scenario: Separate page for editing responses to survey questions
     Then I should see "Opinion on education?"
     And I should see "Education should follow no child left behind."
     And I should see "Education should not follow no child left behind."
-    And I should see "Edit responses and return to summary to complete registration"
     And I should see a button with "Save changes and return to Summary"
     And I should not see a button with "Back"
 
 Scenario: Edit responses to survey questions
     Given I have navigated to the summary page
     And I click on the edit button for topic "Education"
+    And I should see "Edit responses and return to summary to complete registration"
     And I select response 2 for question 1
     And I press "Save changes and return to Summary"
     Then I should see "I believe education should not follow no child left behind."
     And I should not see "I believe education should follow no child left behind."
+
