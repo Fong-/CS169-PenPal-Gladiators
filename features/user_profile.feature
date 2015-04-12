@@ -24,7 +24,8 @@ Scenario: Select a political hero
     When I press "edit-profile"
     And I fill in "hero" with "Foo Bar"
     And I press "Save Changes"
-    Then I should see the text "Foo Bar" for "hero"
+    Then I should see "Foo Bar"
+    #    Then I should see the text "Foo Bar" for "hero"
 
 Scenario: Select a position from liberal to conservative
     Given there is a series of radio buttons corresponding to a political "spectrum"
