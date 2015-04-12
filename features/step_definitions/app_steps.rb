@@ -103,7 +103,7 @@ end
 
 And /^I am on the conversation page for "(.*)"$/ do |title|
     conversation = Conversation.find_by_title(title)
-    visit "/home/#/conversation/#{conversation.id}"
+    visit "/#/conversation/#{conversation.id}"
 end
 
 When /^I click "(.*)" in the conversation page$/ do |element_name|

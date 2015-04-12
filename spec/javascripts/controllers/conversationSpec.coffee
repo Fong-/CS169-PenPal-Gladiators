@@ -39,7 +39,7 @@ describe "ConversationController", ->
             ]
         }
         @http.expectGET("/api/v1/conversation/1")
-        @controller("ConversationController", { $scope: @scope, $routeParams: {id: 1} })
+        @controller("ConversationController", { $scope: @scope, $stateParams: {id: 1} })
         @http.flush()
 
     it "should have the correct title and posts", ->
@@ -50,14 +50,14 @@ describe "ConversationController", ->
         expect(@scope.posts[0].text).toEqual "Hello world (first post)"
 
     it "should allow the user to toggle the post editor", ->
-        expect(@scope.postEditorClass()).toEqual "hidden"
+        expect(@scope.shouldHidePostEditor()).toEqual true
         expect(@scope.postLengthClass()).toEqual "posts-full-length"
         @scope.addPostClicked()
         expect(@scope.shouldDisableAddPost()).toEqual true
-        expect(@scope.postEditorClass()).toEqual ""
+        expect(@scope.shouldHidePostEditor()).toEqual false
         expect(@scope.postLengthClass()).toEqual "posts-shortened"
         @scope.cancelPostClicked()
-        expect(@scope.postEditorClass()).toEqual "hidden"
+        expect(@scope.shouldHidePostEditor()).toEqual true
         expect(@scope.postLengthClass()).toEqual "posts-full-length"
         expect(@scope.shouldDisableAddPost()).toEqual false
 
@@ -88,7 +88,7 @@ describe "ConversationController", ->
         @scope.editPostText = "Hello world (fourth post)"
         @scope.submitPostClicked()
         @http.flush()
-        expect(@scope.postEditorClass()).toEqual "hidden"
+        expect(@scope.shouldHidePostEditor()).toEqual true
 
     it "should be edit an existing post", ->
         @http.expectPOST("/api/v1/post/edit/1").respond { "success": "Successfully saved post!" }
@@ -96,4 +96,4 @@ describe "ConversationController", ->
         @scope.editPostText = "Hello world (1st post)"
         @scope.submitPostClicked()
         @http.flush()
-        expect(@scope.postEditorClass()).toEqual "hidden"
+        expect(@scope.shouldHidePostEditor()).toEqual true
