@@ -93,6 +93,7 @@ surveyQuestions.controller("SurveyQuestionsController", ["$scope", "$http", "$st
     # Call either handleAdvanceToQuestions or handleAdvanceToSummary depending on
     # if there are more topics to answer questions for
     $scope.handleAdvance = ->
+        StartPageData.finishedTopicQuestions($scope.currentTopicId) # added this back because it's necessary for progress bar
         nextIndex = $scope.selectedTopicIds.indexOf($scope.currentTopicId) + 1
         if currentState != "summary" && nextIndex < $scope.selectedTopicIds.length
             nextTopicId = $scope.selectedTopicIds[nextIndex]
