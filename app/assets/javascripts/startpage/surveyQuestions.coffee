@@ -3,7 +3,8 @@
 surveyQuestions = angular.module("SurveyQuestions", ["StartPageServices"])
 
 surveyQuestions.config(["$routeProvider", ($routeProvider) ->
-    $routeProvider.when("/questions/:id", {
+    $routeProvider
+    .when("/questions/:id", {
         templateUrl: "/assets/survey_questions.html",
         controller: "SurveyQuestionsController"
     })
@@ -11,17 +12,19 @@ surveyQuestions.config(["$routeProvider", ($routeProvider) ->
         templateUrl: "/assets/survey_questions_edit.html",
         controller: "SurveyQuestionsController"
     })
-]).controller("SurveyQuestionsController", ["$scope", "$http", "$location", "$routeParams", "SharedRequests", "StartPageData", ($scope, $http, $location, $routeParams, SharedRequests, StartPageData) ->
-    $scope.allTopics = StartPageData.getAllTopics()                 # all the topics
-    $scope.selectedTopicIds = StartPageData.getSelectedTopicIds()   # the ids of the topics the user selected
+])
+
+surveyQuestions.controller("SurveyQuestionsController", ["$scope", "$http", "$location", "$routeParams", "API", "StartPageStaticData", "StartPageStateData", ($scope, $http, $location, $routeParams, API, StartPageStaticData, StartPageStateData) ->
+    $scope.allTopics = StartPageStaticData.topics                 # all the topics
+    $scope.selectedTopics = StartPageStateData.selectedTopics     # the ids of the topics the user selected
     $scope.currentTopicId = $routeParams.id
     $scope.currentTopic = $scope.allTopics[$scope.currentTopicId].name # the topic we're doing now
 
-    $scope.questions = StartPageData.getTopicQuestions($scope.currentTopicId)
-    $scope.questionCheckModel = StartPageData.getResponseIdsByTopicId($scope.currentTopicId)
+    $scope.questions = StartPageStaticData.getQuestionsForTopic($scope.currentTopicId)
+    $scope.questionCheckModel = StartPageStateData.getResponsesForTopic($scope.currentTopicId)
     $scope.numQuestions = if $scope.questions.length == 0 then -1 else $scope.questions.length  # the number of questions for this topic
 
-    currentState = StartPageData.getCurrentState()
+    currentState = StartPageStateData.currentState
 
     # Regex pattern to match states of the form "questions-X" where X is a 0-index
     statePattern = /^questions-(\d+)$/
@@ -50,7 +53,7 @@ surveyQuestions.config(["$routeProvider", ($routeProvider) ->
         for response in question.survey_responses
             $scope.questionCheckModel[response.id] = false
         $scope.questionCheckModel[selectedResponse.id] = true
-        StartPageData.addResponseIdsByTopicId($scope.currentTopicId, $scope.questionCheckModel)
+        StartPageStateData.addResponsesForTopic($scope.currentTopicId, $scope.questionCheckModel)
 
     # Get the number of questions with no responses selected yet
     $scope.numUnansweredQuestions = ->
@@ -80,12 +83,12 @@ surveyQuestions.config(["$routeProvider", ($routeProvider) ->
 
     # Helper function to advance to the summary page
     $scope.handleAdvanceToSummary = ->
-        StartPageData.updateState("summary")
+        StartPageStateData.state = "summary"
         tmp = {}
         for topicId in $scope.selectedTopicIds
-            tmp[topicId] = StartPageData.getResponseIdsByTopicId(topicId)
-        StartPageData.clearResponseIdsByTopics()
-        StartPageData.addResponseIdsByTopicId(topicId, checkModel) for topicId, checkModel of tmp
+            tmp[topicId] = StartPageStaticData.getResponsesForTopic(topicId)
+        StartPageStateData.clearResponses()
+        StartPageStateData.addResponsesForTopic(topicId, checkModel) for topicId, checkModel of tmp
         $location.path("summary")
 
     # Helper function to advance to the question for the next topic
@@ -93,7 +96,7 @@ surveyQuestions.config(["$routeProvider", ($routeProvider) ->
         if isCurrentState()
             match = currentState.match(statePattern)
             i = parseInt(match[1])
-            StartPageData.updateState("questions-#{i+1}")
+            StartPageStateData.state = "questions-#{i+1}"
         $location.path("questions/#{topicId}")
 
     # Call either handleAdvanceToQuestions or handleAdvanceToSummary depending on
@@ -124,16 +127,14 @@ surveyQuestions.config(["$routeProvider", ($routeProvider) ->
         else
             handleBackToTopics()
 
-
-
     # Asynchronously load the list of questions for a topic
     load_questions = (topicId) ->
         if $scope.questions.length == 0
-            SharedRequests.requestQuestionsByTopic(topicId).success( (allQuestions) ->
+            API.requestQuestionsByTopic(topicId).success( (allQuestions) ->
                 $scope.questions = []
                 allQuestions = allQuestions.sort((u, v) -> u.index - v.index)
                 $scope.questions = allQuestions
-                StartPageData.addTopicQuestions($scope.currentTopicId, $scope.questions)
+                StartPageStaticData.addQuestionsForTopic($scope.currentTopicId, $scope.questions)
                 $scope.numQuestions = $scope.questions.length
             )
         $scope.currentTopic = $scope.allTopics[topicId].name
