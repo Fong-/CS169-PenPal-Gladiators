@@ -1,0 +1,35 @@
+<div id="conversation-container">
+    <p class="title">{{title}}</p>
+    <div id="posts-container" class="posts {{postLengthClass()}}">
+        <p ng-if="posts.length == 0" class="empty-conversation-message">It looks like there are no posts yet. Be the first to write something!</p>
+        <div ng-repeat="post in posts" class="post-content">
+            <div class="post-author-avatar-container">
+                <img class="post-author-avatar" src="/assets/default_avatar.png"></img>
+            </div>
+            <div class="post-content-panel">
+                <p class="post-author-name">{{post.author.username}}
+                    <span class="post-time">{{timeElapsedMessage(post.timestamp)}}</span>
+                </p>
+                <p class="post-text">{{post.text}}</p>
+                <a ng-if="shouldDisplayPostEdit(post.id)" class="post-edit" ng-click="editPostClicked(post.id)">Edit</a>
+            </div>
+        </div>
+        <div class="fade-top"></div>
+        <div class="fade-bottom"></div>
+        <a id="posts-bottom-anchor"></a>
+    </div>
+
+    <div class="post-editor {{postEditorClass()}}">
+        <textarea class="form-control" ng-escape="escapeTextEditor()" ng-disabled="shouldDisableEditor()" ng-model="editPostText" maxlength="1000" spellcheck="false"></textarea>
+        <div class="post-editor-actions">
+            <a class="post-submit btn btn-info" ng-disabled="shouldDisablePostActions()" ng-click="submitPostClicked()">{{submitPostText()}}</a>
+            <a class="post-cancel btn" ng-click="cancelPostClicked()">Cancel</a>
+        </div>
+    </div>
+
+    <div class="post-actions">
+        <a class="post-action btn btn-info" ng-disabled="shouldDisableAddPost()" ng-click="addPostClicked()">Add a post</a>
+        <span class="hspace"></span>
+        <a class="post-action btn" disabled="true">Propose a consensus</a>
+    </div>
+</div>

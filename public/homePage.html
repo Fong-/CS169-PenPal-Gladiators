@@ -7,10 +7,11 @@
         <link rel="stylesheet" type="text/css" href="/assets/homePage.css"/>
     </head>
     <body>
-        <div class="container" ng-app="HomePage">
+        <div id="homepage-container" class="container" ng-app="HomePage">
             <div ui-view="navbar"></div>
             <div ui-view="sidebar"></div>
             <div ui-view="content"></div>
+            <div id="main-view-container" class="container" ui-view></div>
         </div>
         <script src="/assets/homePage.js"></script>
     </body>
