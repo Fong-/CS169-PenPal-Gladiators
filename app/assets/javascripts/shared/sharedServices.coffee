@@ -19,6 +19,12 @@ shares.service("SharedRequests", ["$http", ($http) ->
         $http.post("#{SERVER_API_PREFIX}user/#{id}/profile", { username: username, avatar: avatar, political_blurb: blurb, political_hero: hero, political_spectrum: spectrum})
     this.requestArenasByUser = (id) ->
         $http.get("#{SERVER_API_PREFIX}arenas/#{id}")
+    this.requestConversationById = (id) ->
+        $http.get("#{SERVER_API_PREFIX}conversation/#{id}")
+    this.createPostByConversationId = (id, text) ->
+        $http.post("#{SERVER_API_PREFIX}post/create/#{id}", {text: text})
+    this.editPostById = (id, text) ->
+        $http.post("#{SERVER_API_PREFIX}post/edit/#{id}", {text: text})
     return # Required to prevent returning the last object.
 
 ]).service("TimeUtil", [->

@@ -18,6 +18,7 @@ sidebar.controller("SidebarController", ["$scope", "$http", "$location", "Shared
     $scope.arenaStateByUserId = {}
     $scope.toggleGladiatorPanel = (id) -> $scope.arenaStateByUserId[id] = !$scope.arenaStateByUserId[id]
     $scope.expandButtonClass = (id) -> if $scope.arenaStateByUserId[id] then "glyphicon glyphicon-chevron-up" else "glyphicon glyphicon-chevron-down"
+    $scope.conversationPreviewClicked = (id) -> $location.path("conversation/#{id}")
 
     SharedRequests.requestArenasByUser(currentUserId).success (arenas) ->
         $scope.conversationsByUserId = {}
@@ -30,6 +31,7 @@ sidebar.controller("SidebarController", ["$scope", "$http", "$location", "Shared
             for conversation in arena.conversations
                 secondsSinceUpdateTime = TimeUtil.timeSince1970InSeconds() - TimeUtil.timeFromTimestampInSeconds(conversation.timestamp)
                 conversationPreviewData = {
+                    id: conversation.id,
                     title: conversation.title,
                     time: TimeUtil.timeIntervalAsString(secondsSinceUpdateTime) + " ago",
                     post_preview_text: postPreviewTextForConversation(conversation)

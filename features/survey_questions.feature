@@ -35,7 +35,7 @@ Scenario: Display the correct survey questions.
 
 Scenario: Cannot move on without answering all questions.
     Given I have navigated to the first survey questions page
-    Then I should see a button with "1 Unanswered Questions"
+    Then I should see a button with "1 Unanswered Question"
     But I should not see a button with "Next"
 
 Scenario: Can move on after answering all questions.

@@ -15,7 +15,9 @@ CS169PenpalGladiators::Application.routes.draw do
     get "/api/v1/user/:id/profile" => "users#get_profile_info_by_id"
     post "/api/v1/user/:id/profile" => "users#post_profile_info_by_id"
     get "/api/v1/arenas/:user_id" => "arenas#get_by_user_id"
-
+    get "/api/v1/conversation/:id" => "conversations#get_by_id"
+    post "/api/v1/post/create/:conversation_id" => "posts#create"
+    post "/api/v1/post/edit/:post_id" => "posts#edit"
     # Public routes
     get "/home" => "application#homepage"
 

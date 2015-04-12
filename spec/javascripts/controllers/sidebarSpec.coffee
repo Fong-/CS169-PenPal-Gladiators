@@ -7,7 +7,7 @@ describe "SidebarController", ->
             user2: {id: 3, name: "bob@schmitt.com"},
             conversations: [{
                 id: 1,
-                title: "Why does is the US education system terrible?",
+                title: "Why is the US education system terrible?",
                 timestamp: "2015-04-01T18:50:22Z",
                 recent_post: {
                     author_id: 1,
@@ -27,7 +27,7 @@ describe "SidebarController", ->
         conversations = @scope.conversationsByUserId[3]
         expect(conversations.length).toEqual 1
         conversation = conversations[0]
-        expect(conversation.title).toEqual "Why does is the US education system terrible?"
+        expect(conversation.title).toEqual "Why is the US education system terrible?"
         expect(conversation.post_preview_text.length).toBeLessThan 150
         expect(conversation.post_preview_text).toMatch /^You said: "You, sir, are an idiot.*\.\.\."$/
 
