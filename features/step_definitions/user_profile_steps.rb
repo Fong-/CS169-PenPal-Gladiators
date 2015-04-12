@@ -11,12 +11,9 @@ Then /^I should be able to select that I am "(.*?)"$/ do |position|
 end
 
 Then /^I should see the text "(.*?)" for "(.*?)"$/ do |text, id|
-    page.find("##{id}").should have_text(text)
-    puts page.find("##{id}")
-#    expect(page.html).to have_text(text)
+    page.find_by_id(id).should have_text(text)
 end
 
-#Given /^there is a series of five radio buttons ranging from "(.*?)" to "(.*?)" to "(.*?)"$/ do |liberal, moderate, conservative|
 Given /^there is a series of radio buttons corresponding to a political "(.*?)"$/ do |spectrum|
     page.has_content?(spectrum)
 end

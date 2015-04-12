@@ -49,10 +49,10 @@ profile.config(["$routeProvider", ($routeProvider) ->
     $scope.save = () ->
         # TODO for "better" security, change profileUID to loggedInUID once
         # tracking who's logged in actually works
-        SharedRequests.updateProfileByUID($scope.profileUID, $scope.profile.username, $scope.profile.avatar, $scope.profile.blurb, $scope.profile.hero, $scope.profile.spectrum.id)
         for k, v of $scope.spectrumOptions
-            if $scope.profile.spectrum.id == v.id
-                $scope.profile.spectrum = v.value
+            if $scope.profile.spectrum == v.value
+                spectrum_id = v.id
+        SharedRequests.updateProfileByUID($scope.profileUID, $scope.profile.username, $scope.profile.avatar, $scope.profile.blurb, $scope.profile.hero, spectrum_id)
         $scope.moduleState = "view"
 
     load_profile = (userId) ->

@@ -44,4 +44,4 @@ bower.json
 .DS_Store
 
 # VIM
-.swp
+*.swp
