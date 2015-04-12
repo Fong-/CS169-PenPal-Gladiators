@@ -1,9 +1,12 @@
 @topic-icon-display-size: 120px;
 @topic-icon-margin: 15px;
 @num-topics-per-row: 4;
+@primary-color: #5bcffa;
+@background-color: #efefef;
+@border-color: #cccccc;
 
 body {
-    background-color: #EFEFEF;
+    background-color: @background-color;
     font-family: "Avenir Next";
     font-weight: 300;
     color: #555;
@@ -22,13 +25,13 @@ h1, h2, h3, p, div {
 }
 
 input[type=text], input[type=password] {
-    background: #EFEFEF;
+    background: @background-color;
     border-radius: 15px;
     padding-left: 10px;
     padding-right: 10px;
     padding-top: 4px;
     padding-bottom: 4px;
-    border: 1px solid #CCC;
+    border: 1px solid @border-color;
     outline: none
 }
 
@@ -52,7 +55,7 @@ input[type=text], input[type=password] {
 }
 
 .btn {
-    border: 1px solid #ccc;
+    border: 1px solid @border-color;
     border-radius: 20px;
 }
 
@@ -69,7 +72,7 @@ input[type=text], input[type=password] {
     padding-bottom: 30px;
     padding-left: 30px;
     padding-right: 30px;
-    border: 1px solid #ccc;
+    border: 1px solid @border-color;
     border-radius: 2px;
 
     #status {
@@ -89,7 +92,7 @@ input[type=text], input[type=password] {
 }
 
 .btn-primary {
-    background: #5bcffa;
+    background: @primary-color;
 }
 
 #topic-select-container {
@@ -107,7 +110,7 @@ input[type=text], input[type=password] {
     padding-bottom: 30px;
     padding-left: 30px;
     padding-right: 30px;
-    border: 1px solid #ccc;
+    border: 1px solid @border-color;
     border-radius: 2px;
 
     /* Child view attributes */
@@ -125,7 +128,7 @@ input[type=text], input[type=password] {
         padding: 0px;
 
         div {
-            border: 1px solid #ccc;
+            border: 1px solid @border-color;
             border-radius: 4px;
             overflow: hidden;
             padding: 0px;
@@ -178,7 +181,7 @@ input[type=text], input[type=password] {
                 &:checked + label span {
                     .check_sprite;
                     border: none;
-                    background-color: #5bcffa;
+                    background-color: @primary-color;
                     opacity: 1;
                     cursor: pointer;
                     z-index: 999;
@@ -241,7 +244,7 @@ input[type=text], input[type=password] {
     padding-bottom: 30px;
     padding-left: 30px;
     padding-right: 30px;
-    border: 1px solid #ccc;
+    border: 1px solid @border-color;
     border-radius: 2px;
 
     h1 {

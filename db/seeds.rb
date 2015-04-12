@@ -5,11 +5,51 @@ require "digest"
 ############################################################
 
 users = [
-    { :email => "ben@bitdiddle.com", :password => "bitsrocks" },
-    { :email => "generic@email.com", :password => "asdfasdf" },
-    { :email => "bob@schmitt.com", :password => "imboring" },
-    { :email => "genericasiankid@gmail.com", :password => "password" },
-    { :email => "rosenthal@policy.com", :password => "publicpolicy" }
+    {
+    :email => "ben@bitdiddle.com",
+    :password => "bitsrocks",
+    :username => "ben",
+    :avatar => "/path/to/ben.png",
+    :political_blurb => "I like Ron Bitdiddle",
+    :political_hero => "Ron Bitdiddle",
+    :political_spectrum => 2
+    },
+    {
+    :email => "generic@email.com",
+    :password => "asdfasdf",
+    :username => "generic",
+    :avatar => "/path/to/generic.png",
+    :political_blurb => "Go generic party!",
+    :political_hero => "Generic George",
+    :political_spectrum => 1
+    },
+    {
+    :email => "bob@schmitt.com",
+    :password => "imboring",
+    :username => "bob",
+    :avatar => "/path/to/bob.png",
+    :political_blurb => "Bob for county clerk!",
+    :political_hero => "ME!",
+    :political_spectrum => 3
+    },
+    {
+    :email => "genericasiankid@gmail.com",
+    :password => "password",
+    :username => "generickid",
+    :avatar => "/path/to/generickid.png",
+    :political_blurb => "Bob embezzles from widget farmers!",
+    :political_hero => "Not Bob!",
+    :political_spectrum => 1
+    },
+    {
+    :email => "rosenthal@policy.com",
+    :password => "publicpolicy",
+    :username => "rosenthal",
+    :avatar => "/path/to/rosenthal.png",
+    :political_blurb => "Discuss your view on PenPal Gladiators!",
+    :political_hero => "Thomas Jefferson",
+    :political_spectrum => 2
+    }
 ]
 
 users.each do |u|

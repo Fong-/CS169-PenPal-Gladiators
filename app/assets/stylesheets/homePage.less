@@ -1,31 +1,179 @@
+@primary-color: #5bcffa;
+@background-color: #efefef;
+@border-color: #cccccc;
+
+body {
+    background-color: @background-color;
+    font-family: "Avenir Next";
+    font-weight: 300;
+    color: #555;
+    margin-top: 80px;
+}
+
+h1, h2, h3, p, div {
+    font-weight: 400;
+    color: #aaa;
+}
+
+.vertical-center {
+    min-height: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+}
+
+input[type=text], input[type=password] {
+    background: #ffffff;
+    border-radius: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    border: 1px solid @border-color;
+    margin-bottom: 10px;
+    outline: none
+}
+
+.label {
+    background: none;
+    padding: 0px 0px 0px 0px;
+    margin: none;
+    font-family: "Avenir Next";
+    font-weight: 400;
+    font-size: 14px;
+    color: #777;
+}
+
+p {
+    margin-bottom: 20px;
+}
+
+.title {
+    font-size: 20px;
+    margin-bottom: 5px;
+}
+
+.header {
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+.spacing {
+    height: 20px;
+    width: 100%;
+}
+
+.btn {
+    border: 1px solid @border-color;
+    border-radius: 20px;
+}
+
+.btn-primary {
+    background: @primary-color;
+}
+
+.center {
+    width: 100%;
+    text-align: center;
+}
+
+#profile-container {
+    margin-bottom: 20px;
+
+    @media(min-width: 768px) {
+        width: ~"calc(100% - 300px)";
+    }
+
+    @media(max-width: 768px) {
+        width: 100%;
+    }
+
+    #save {
+        margin-top: 15px;
+    }
+}
+
+.navbar-default {
+    background: #aab2bd;
+    color: #ffffff;
+    border-color: #aaa;
+
+    .navbar-toggle, .navbar-toggle:hover, .navbar-toggle:active, .navbar-toggle:focus {
+        background: none;
+        color: #ffffff;
+        border: none;
+    }
+
+    .navbar-collapse, .navbar-default .navbar-form {
+        border-color: #ffffff;
+    }
+    
+    .navbar-toggle .icon-bar {
+        background-color: #ffffff;
+    }
+
+    .navbar-nav>li>a:hover {
+        background: #cad2dd;
+    }
+
+    .navbar-nav>li>a, .navbar-text {
+        color: #ffffff;
+        border-color: #ffffff;
+    }
+
+    .btn-link, .navbar-brand {
+        color: #ffffff;
+        font-size: 18px;
+    }
+
+    .btn-link:focus, .btn-link:hover, .navbar-default .navbar-brand:focus, .navbar-brand:hover, .navbar-default .navbar-link:hover {
+        color: #ffffff;
+        background: #cad2dd;
+    }
+}
+
 .nav-side-menu {
-    padding-top: 50px;
-    overflow: auto;
-    font-family: verdana;
-    font-size: 12px;
-    font-weight: 200;
-    background-color: #EFEFEF;
-    position: fixed;
-    top: 0px;
-    width: 300px;
-    height: 100%;
-    color: black;
-    right: 0px;
-    border-left: 1px solid #D4D4D4;
+    @media(min-width: 768px) {
+        padding-top: 50px;
+        overflow: auto;
+        font-size: 12px;
+        font-weight: 300;
+        background-color: #ffffff;
+        position: fixed;
+        top: 0px;
+        width: 300px;
+        height: 100%;
+        color: black;
+        right: 0px;
+        border-left: 1px solid @border-color;
+    }
+
+    @media(max-width: 768px) {
+        margin-bottom: 20px;
+        overflow: auto;
+        font-size: 12px;
+        font-weight: 300;
+        background-color: #ffffff;
+        position: relative;
+        width: 100%;
+        color: black;
+    }
 
     .menu-list .menu-content {
         display: block;
     }
 
     .gladiator-heading-container {
-        background-color: #DFDFDF;
+        padding-top: 10px;
+        padding-bottom: 10px;
 
         &:hover {
-            background-color: #CFCFCF;
+            background-color: #f9f9f9;
         }
 
         .gladiator-heading {
             font-size: 16px;
+            color: #888;
         }
 
         .click-to-expand {
@@ -44,7 +192,7 @@
         .conversation-preview {
             padding-left: 10px;
             font-size: 13px;
-            background-color: white;
+            background-color: #ffffff;
 
             &:hover {
                 background-color: #F8F8F8;
@@ -73,17 +221,7 @@
                 width: 100%;
                 padding-left: 10px;
                 padding-bottom: 10px;
-
-                .conversation-delete, .conversation-reply {
-                    padding: 5px 5px 5px 5px;
-                    background-color: #D4D4D4;
-                    border-radius: 5px;
-                    font-size: 12px;
-
-                    &:hover {
-                        background-color: #C8C8C8;
-                    }
-                }
+                color: #ffffff;
                 .conversation-reply {
                     margin-left: 10px;
                 }
@@ -92,7 +230,6 @@
 
         a {
             text-decoration: none;
-            color: #222222;
             font-size: 13px;
             padding-left: 10px;
         }
@@ -105,9 +242,4 @@
         line-height: 35px;
         cursor: pointer;
     }
-}
-
-body {
-    background-color: #EFEFEF;
-    font-family: "Avenir";
 }
