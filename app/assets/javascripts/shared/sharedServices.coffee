@@ -1,32 +1,56 @@
-shares = angular.module("SharedServices", [])
-shares.service("SharedRequests", ["$http", ($http) ->
-    SERVER_API_PREFIX = "/api/v1/"
-    this.requestTopics = -> $http.get("#{SERVER_API_PREFIX}topics")
+shared = angular.module("SharedServices", [])
+
+shared.service("API", ["$http", ($http) ->
+    generateRequest = (requestString) ->
+        "/api/v1/#{requestString}"
+
+    this.requestTopics = () ->
+        request = generateRequest("topics")
+        $http.get(request)
+
     this.login = (email, password) ->
-        $http.post("#{SERVER_API_PREFIX}login", { email: email, password: password })
-    this.register = (email, password) ->
-        $http.post("#{SERVER_API_PREFIX}register", { email: email, password: password })
-    this.can_register = (email, password) ->
+        request = generateRequest("login")
+        $http.post(request, { email: email, password: password })
+
+    this.canRegister = (email, password) ->
+        request = generateRequest("register")
         params = { email: email, password: password }
-        $http.get("#{SERVER_API_PREFIX}register", { params: params })
-    this.requestQuestionsByTopic = (id) ->
-        $http.get("#{SERVER_API_PREFIX}topic/#{id}/survey_questions")
-    this.requestResponsesByQuestion = (id) ->
-        $http.get("#{SERVER_API_PREFIX}survey_question/#{id}/survey_responses")
-    this.requestProfileByUID = (id) ->
-        $http.get("#{SERVER_API_PREFIX}user/#{id}/profile")
-    this.updateProfileByUID = (id, username, avatar, blurb, hero, spectrum) ->
-        $http.post("#{SERVER_API_PREFIX}user/#{id}/profile", { username: username, avatar: avatar, political_blurb: blurb, political_hero: hero, political_spectrum: spectrum})
-    this.requestArenasByUser = (id) ->
-        $http.get("#{SERVER_API_PREFIX}arenas/#{id}")
+        $http.get(request, { params: params })
+
+    this.requestQuestionsByTopic = (topicId) ->
+        request = generateRequest("topic/#{topicId}/survey_questions")
+        $http.get(request)
+
+    this.requestResponsesByQuestion = (questionId) ->
+        request = generateRequest("survey_question/#{questionId}/survey_responses")
+        $http.get(request)
+
+    this.requestProfileByUID = (userId) ->
+        request = generateRequest("user/#{userId}/profile")
+        $http.get(request)
+
+    this.updateProfileByUID = (userId, username, avatar, blurb, hero, spectrum) ->
+        request = generateRequest("user/#{userId}/profile")
+        params = { username: username, avatar: avatar, political_blurb: blurb, political_hero: hero, political_spectrum: spectrum}
+        $http.post(request, { params: params })
+
+    this.requestArenasByUser = (userId) ->
+        request = generateRequest("arenas/#{userId}")
+        $http.get(request)
+
     return
-]).service("TimeUtil", [->
-    this.timeSince1970InSeconds = -> new Date().getTime() / 1000.0
-    this.timeFromTimestampInSeconds = (timestamp) -> Date.parse(timestamp) / 1000.0
+])
+
+shared.service("TimeUtil", [() ->
+    this.timeSince1970InSeconds = () ->
+        new Date().getTime() / 1000.0
+
+    this.timeFromTimestampInSeconds = (timestamp) ->
+        Date.parse(timestamp) / 1000.0
+
     this.timeIntervalAsString = (timeIntervalMs) ->
         if timeIntervalMs < 60
             return "A moment"
-
         if timeIntervalMs >= 31536000
             return "An eternity"
 
@@ -44,6 +68,8 @@ shares.service("SharedRequests", ["$http", ($http) ->
         else
             value = Math.round(timeIntervalMs / 2592000.0)
             unit = "month"
+
         return if value == 1 then "1 #{unit}" else "#{value} #{unit}s"
-    return # Required to prevent returning the last object.
+
+    return
 ])
