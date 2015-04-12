@@ -36,7 +36,7 @@ conversation.config(["$routeProvider", ($routeProvider) ->
     $scope.cancelPostClicked = -> currentlyEditingPost = false
     $scope.escapeTextEditor = -> currentlyEditingPost = false
     $scope.submitPostText = -> if postSubmissionInProgress then "Sending..." else "Submit"
-    $scope.shouldDisablePostActions = -> postSubmissionInProgress or $scope.editPostText == ""
+    $scope.shouldDisableSubmitPost = -> postSubmissionInProgress or $scope.editPostText == ""
     $scope.shouldDisableEditor = -> postSubmissionInProgress
     $scope.submitPostClicked = ->
         postSubmissionInProgress = true
@@ -62,7 +62,7 @@ conversation.config(["$routeProvider", ($routeProvider) ->
     dispatchScrollElementToBottom = (elementId) ->
         setTimeout ->
             postsContainer = document.getElementById(elementId)
-            postsContainer.scrollTop = postsContainer.scrollHeight
+            postsContainer.scrollTop = postsContainer.scrollHeight if postsContainer
 
     handlePostEditResponse = (response) ->
         postSubmissionInProgress = false
@@ -71,7 +71,10 @@ conversation.config(["$routeProvider", ($routeProvider) ->
             currentlyEditingPost = false
         currentPostEditId = null
 
-    dispatchFocusTextarea = -> setTimeout(-> document.getElementsByTagName("textarea")[0].focus())
+    dispatchFocusTextarea = ->
+        setTimeout ->
+            textareas = document.getElementsByTagName("textarea")
+            textareas[0].focus() if textareas.length > 0
 
     updateConversationData = (scrollToEnd) ->
         SharedRequests.requestConversationById(conversationId).success (response) ->
