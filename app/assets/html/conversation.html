@@ -22,7 +22,7 @@
     <div class="post-editor {{postEditorClass()}}">
         <textarea name="post-textarea" class="form-control" ng-escape="escapeTextEditor()" ng-disabled="shouldDisableEditor()" ng-model="editPostText" maxlength="1000" spellcheck="false"></textarea>
         <div class="post-editor-actions">
-            <a id="submit-post-button" class="post-submit btn btn-info" ng-disabled="shouldDisablePostActions()" ng-click="submitPostClicked()">{{submitPostText()}}</a>
+            <a id="submit-post-button" class="post-submit btn btn-info" ng-disabled="shouldDisableSubmitPost()" ng-click="submitPostClicked()">{{submitPostText()}}</a>
             <a id="cancel-post-button" class="post-cancel btn" ng-click="cancelPostClicked()">Cancel</a>
         </div>
     </div>
