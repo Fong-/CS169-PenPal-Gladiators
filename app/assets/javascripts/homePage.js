@@ -5,4 +5,4 @@
 //= require_tree ./sidebar
 //= require_tree ./homepage
 
-app = angular.module("HomePage", ["ui.bootstrap", "ngRoute", "SharedServices", "Sidebar"])
+app = angular.module("HomePage", ["ui.bootstrap", "ngRoute", "SharedServices", "Sidebar", "Conversation"])
