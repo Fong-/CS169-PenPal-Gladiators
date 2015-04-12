@@ -46,4 +46,13 @@ sidebar.controller("SidebarController", ["$scope", "$http", "$state", "API", "Ti
             else
                 reason = "status code #{status}"
             console.log "sidebar failed: #{reason}"
+
+    # Matching
+    $scope.matchedGladiators = {}
+
+    $scope.request_match = () ->
+        SharedRequests.requestMatches(currentUserId).success (matches) ->
+            for match in matches
+                # Assume (naively) that the API gives us an 'id' and 'username'
+                $scope.matchedGladiators[match.id] = match.username
 ])
