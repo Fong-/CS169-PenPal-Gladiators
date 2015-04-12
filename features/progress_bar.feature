@@ -1,3 +1,4 @@
+@javascript @seed_topics
 Feature: Allow user to keep track of their survey completion status by using a progress bar
     As a new user filling out the survey
     So that I can know how close I am to finishing
