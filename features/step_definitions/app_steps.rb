@@ -21,6 +21,9 @@ Given /^an arena is set up with posts containing (.*)$/ do |messages|
     arena = users[0].arenas.create :user1 => users[0], :user2 => users[1]
     conversation = arena.conversations.create :title => "What messages are you posting?"
     messages.each_with_index do |message, index|
+        if message == "(and a huge post)"
+            message = "bacon strips & " * 40
+        end
         conversation.posts.create :text => message, :author => users[index % 2]
     end
 end
@@ -84,4 +87,50 @@ Then /I should be on the (.*?) page/ do |page_name|
     else
         raise "No check for the #{page_name} page."
     end
+end
+
+# HACK This is probably worthy of some award. Not the good kind.
+And /^I should see the latest post$/ do
+    sleep 2
+    page.execute_script [
+        "test_container = document.getElementById('posts-container');",
+        "test_oldScrollTop = test_container.scrollTop;",
+        "test_container.scrollTop += 1;",
+        "if (test_oldScrollTop < test_container.scrollTop) document.body.appendChild(document.createTextNode('Test failed.'));",
+    ].join(" ")
+    expect(page).to_not have_content("Test failed.")
+end
+
+And /^I am on the conversation page for "(.*)"$/ do |title|
+    conversation = Conversation.find_by_title(title)
+    visit "/home/#/conversation/#{conversation.id}"
+end
+
+When /^I click "(.*)" in the conversation page$/ do |element_name|
+    case element_name
+    when "Add a post" then
+        find("#add-post-button").click
+    when "Submit" then
+        find("#submit-post-button").click
+    else raise "No check for clicking the #{element_name} element in the conversation page."
+    end
+end
+
+When /^I click "(.*)" in the sidebar$/ do |element_name|
+    find(".conversation-preview", :text => element_name, :exact => true).click
+end
+
+Then /^I should( not)? be able to edit "(.*)"$/ do |should_not, post_text|
+    element = find(".post-content-panel", :text => post_text, :exact => true)
+    if should_not
+        element.should_not have_content("Edit")
+    else
+        element.should have_content("Edit")
+    end
+end
+
+When /^I edit the post "(.*)"$/ do |post_text|
+    element = find(".post-content-panel", :text => post_text, :exact => true)
+    element.should have_content("Edit")
+    element.find("a", :text => "Edit", :exact => true).click
 end

@@ -18,6 +18,7 @@ sidebar.controller("SidebarController", ["$scope", "$http", "$location", "API", 
     $scope.arenaStateByUserId = {}
     $scope.toggleGladiatorPanel = (id) -> $scope.arenaStateByUserId[id] = !$scope.arenaStateByUserId[id]
     $scope.expandButtonClass = (id) -> if $scope.arenaStateByUserId[id] then "glyphicon glyphicon-chevron-up" else "glyphicon glyphicon-chevron-down"
+    $scope.conversationPreviewClicked = (id) -> $location.path("conversation/#{id}")
 
     API.requestArenasByUser(currentUserId)
         .success (arenas) ->

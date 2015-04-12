@@ -59,4 +59,17 @@ describe User do
             expect(@user.profile_response_object).to eq(@profile_info)
         end
     end
+
+    context "when requesting the author of a post" do
+        before :each do
+            @user = User.create! :username => "ben bitdiddle", :avatar => "image.png", :email => "fu@bar.com"
+        end
+
+        it "should return relevant data for the author" do
+            result = @user.post_author_response_object
+            expect(result[:username]).to eq(@user.username)
+            expect(result[:avatar]).to eq(@user.avatar)
+            expect(result[:id]).to eq(@user.id)
+        end
+    end
 end

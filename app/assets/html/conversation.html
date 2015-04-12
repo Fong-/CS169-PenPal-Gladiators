@@ -20,16 +20,16 @@
     </div>
 
     <div class="post-editor {{postEditorClass()}}">
-        <textarea class="form-control" ng-escape="escapeTextEditor()" ng-disabled="shouldDisableEditor()" ng-model="editPostText" maxlength="1000" spellcheck="false"></textarea>
+        <textarea name="post-textarea" class="form-control" ng-escape="escapeTextEditor()" ng-disabled="shouldDisableEditor()" ng-model="editPostText" maxlength="1000" spellcheck="false"></textarea>
         <div class="post-editor-actions">
-            <a class="post-submit btn btn-info" ng-disabled="shouldDisablePostActions()" ng-click="submitPostClicked()">{{submitPostText()}}</a>
-            <a class="post-cancel btn" ng-click="cancelPostClicked()">Cancel</a>
+            <a id="submit-post-button" class="post-submit btn btn-info" ng-disabled="shouldDisablePostActions()" ng-click="submitPostClicked()">{{submitPostText()}}</a>
+            <a id="cancel-post-button" class="post-cancel btn" ng-click="cancelPostClicked()">Cancel</a>
         </div>
     </div>
 
     <div class="post-actions">
-        <a class="post-action btn btn-info" ng-disabled="shouldDisableAddPost()" ng-click="addPostClicked()">Add a post</a>
+        <a id="add-post-button" class="post-action btn btn-info" ng-disabled="shouldDisableAddPost()" ng-click="addPostClicked()">Add a post</a>
         <span class="hspace"></span>
-        <a class="post-action btn" disabled="true">Propose a consensus</a>
+        <a id="propose-consensus-button" class="post-action btn" disabled="true">Propose a consensus</a>
     </div>
 </div>
