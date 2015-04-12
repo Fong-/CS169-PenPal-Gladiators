@@ -10,8 +10,13 @@
         <div class="container" ng-app="HomePage">
             <div ng-include src="'/assets/navigation_bar.html'"></div>
             <div ng-controller="SidebarController" ng-include src="'/assets/sidebar.html'"></div>
-            <div class="container" ng-view></div>
+            <div ng-view></div>
         </div>
         <script src="/assets/homePage.js"></script>
+        <!-- Lucas added this but it breaks CI
+        <script src="/assets/jquery.min.js"></script>
+        <script src="/assets/bootstrap.min.js"></script>
+        -->
     </body>
 </html>
+
