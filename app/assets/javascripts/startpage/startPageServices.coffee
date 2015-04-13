@@ -33,7 +33,9 @@ startPageServices.service("StartPageStateData", () ->
     numQuestions = 0 # number of all questions in every topic
     numTopics = 0
     questionsLeft = 0
+    questionsLeft_static = 0
     currentTopic = 0 # current topic ID, used for determining if a topic is done for progress
+    latestTopic = 0
     topicsComplete = 0 # number of topics that have been completed
 
     # Email interface
@@ -75,8 +77,11 @@ startPageServices.service("StartPageStateData", () ->
     # Progress bar interface
     this.setNumQuestions = (questions) -> numQuestions = questions # sets the number of questions on current topic
     this.getNumQuestions = -> numQuestions
-    this.setQuestionsLeft = (questions) -> questionsLeft = questions
+    this.setQuestionsLeft = (questions) ->
+        questionsLeft = questions
     this.getQuestionsLeft = -> questionsLeft
+    this.setQuestionsLeft_static = (questions) -> questionsLeft_static = questions
+    this.getQuestionsLeft_static = -> questionsLeft_static
     this.getNumTopics = -> numTopics
     this.incNumTopics = -> numTopics += 1
     this.decNumTopics = -> numTopics -= 1
@@ -85,5 +90,7 @@ startPageServices.service("StartPageStateData", () ->
     this.incTopicsComplete = -> topicsComplete += 1
     this.getTopicsComplete = -> topicsComplete
     this.clearTopicsComplete = -> topicsComplete = 0
+    this.setLatestTopic = (topicID) -> latestTopic = topicID
+    this.getLatestTopic = -> latestTopic
     return
 )

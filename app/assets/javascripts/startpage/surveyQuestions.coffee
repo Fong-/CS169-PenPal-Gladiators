@@ -8,7 +8,10 @@ surveyQuestions.controller("SurveyQuestionsController", ["$scope", "$http", "$st
     $scope.currentTopicId = $stateParams.id
     $scope.currentTopic = $scope.allTopics[$scope.currentTopicId].name # the topic we're doing now
 
+    # For progress bar
     StartPageData.setCurrentTopic($routeParams.id) # sets the current topic in StartPageData
+    if ($routeParams.id > StartPageData.getLatestTopic())
+        StartPageData.setLatestTopic($routeParams.id)
 
     $scope.questions = StartPageStaticData.getQuestionsForTopic($scope.currentTopicId)
     $scope.questionCheckModel = StartPageStateData.getResponsesForTopic($scope.currentTopicId)
@@ -54,6 +57,8 @@ surveyQuestions.controller("SurveyQuestionsController", ["$scope", "$http", "$st
                     questionsLeft -= 1
                     break
         StartPageData.setQuestionsLeft(questionsLeft)
+        if (StartPageData.getCurrentTopic() == StartPageData.getLatestTopic())
+            StartPageData.setQuestionsLeft_static(questionsLeft)
         return questionsLeft
 
     $scope.hideBackButton = ->
