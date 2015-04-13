@@ -9,7 +9,7 @@ group :assets do
   gem 'less-rails'
   gem 'coffee-rails', '~> 3.2.1'
   gem 'angularjs-rails'
-  gem 'angular-ui-router-rails', :git => 'git@github.com:iven/angular-ui-router-rails.git'
+  gem 'angular-ui-router-rails', :git => 'https://github.com/iven/angular-ui-router-rails.git'
   gem 'angular-ui-bootstrap-rails'
   gem 'uglifier', '>= 1.0.3'
 end
