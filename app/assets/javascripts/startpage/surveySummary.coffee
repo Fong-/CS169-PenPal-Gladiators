@@ -1,21 +1,24 @@
 surveySummary = angular.module("SurveySummary", ["StartPageServices"])
 
 surveySummary.config(["$routeProvider", ($routeProvider) ->
-    $routeProvider.when("/summary", {
+    $routeProvider
+    .when("/summary", {
         templateUrl: "/assets/survey_summary.html",
         controller: "SurveySummaryController"
     })
-]).controller("SurveySummaryController", ["$scope", "$http", "$location", "SharedRequests", "StartPageData", ($scope, $http, $location, SharedRequests, StartPageData) ->
-    allTopics = StartPageData.getAllTopics()
+])
+
+surveySummary.controller("SurveySummaryController", ["$scope", "$http", "$location", "StartPageStaticData", "StartPageStateData", ($scope, $http, $location, StartPageStaticData, StartPageStateData) ->
+    allTopics = StartPageStaticData.topics
     $scope.selectedTopics = {}
-    for topicId in StartPageData.getSelectedTopicIds()
+    for topicId in StartPageStateData.selectedTopics
         $scope.selectedTopics[topicId] = allTopics[topicId]
 
     # The summary text for each responses chosen by the user, grouped by topic id
     $scope.responseTexts = {}
     for _id, topic of $scope.selectedTopics
-        questions = StartPageData.getTopicQuestions(topic.id)
-        responseIds = StartPageData.getResponseIdsByTopicId(topic.id)
+        questions = StartPageStaticData.getQuestionsForTopic(topic.id)
+        responseIds = StartPageStateData.getResponsesForTopic(topic.id)
         $scope.responseTexts[topic.id] = ""
         for question in questions
             for response in question.survey_responses
