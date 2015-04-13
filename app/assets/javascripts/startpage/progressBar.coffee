@@ -14,21 +14,22 @@ progressBar.controller("ProgressBarController", ["$scope", "StartPageStateData",
 
     $scope.numQuestions = () -> StartPageStateData.numQuestions
     $scope.questionsLeft = () -> StartPageStateData.questionsLeft
-    $scope.numTopics = () -> StartPageStateData.numTopics
+    $scope.numTopics = () -> StartPageStateData.numTopics()
     $scope.isTopicDone = () -> StartPageStateData.isTopicQuestionsDone(currentID)
+    $scope.topicsCompleted = () -> StartPageStateData.topicsCompleted
 
     # %complete = (numCompleteTopics * 100/numTopics) + (numAnsweredQuestions * 100/totalQuestions * 100/numTopics)
     $scope.percentComplete = () ->
-        updateCompleteTopics()
+        updateCompletedTopics()
 
         if (currentID == StartPageStateData.latestTopic)
             numAnsweredQuestions = $scope.numQuestions() - StartPageStateData.questionsLeft
         else
             numAnsweredQuestions = $scope.numQuestions() - StartPageStateData.questionsLeft_static
 
-        numCompleteTopics = StartPageStateData.topicsComplete
+        numCompletedTopics = StartPageStateData.topicsCompleted
 
-        pastPercent = numCompleteTopics * 100 / $scope.numTopics()
+        pastPercent = numCompletedTopics * 100 / $scope.numTopics()
         currentPercent = numAnsweredQuestions * 100 / $scope.numQuestions() / $scope.numTopics()
 
         percentComplete = pastPercent + currentPercent
@@ -39,9 +40,9 @@ progressBar.controller("ProgressBarController", ["$scope", "StartPageStateData",
         return "#{percentComplete}%" # return as a string for ng-style
 
     # Updates the # of complete topics
-    updateCompleteTopics = () ->
-        StartPageStateData.clearTopicsComplete()
+    updateCompletedTopics = () ->
+        StartPageStateData.clearTopicsCompleted()
         for k,v of StartPageStateData.topicQuestionsDone
             if v
-                StartPageStateData.incTopicsComplete()
+                StartPageStateData.incTopicsCompleted()
 ])

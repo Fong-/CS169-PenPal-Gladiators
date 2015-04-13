@@ -30,10 +30,9 @@ startPageServices.service("StartPageStateData", () ->
     selectedTopics = {}
     responsesForSelectedTopics = {}
     topicQuestionsDone = {} # Ids of the topics for which the questions have all been answered
-    numTopics = 0
     currentTopic = 0 # current topic ID, used for determining if a topic is done for progress
     latestTopic = 0 # latest topic ID
-    topicsComplete = 0 # number of topics that have been completed
+    topicsCompleted = 0 # number of topics that have been completed
     numQuestions = 0
     questionsLeft = 0
     questionsLeft_static = 0 # used for when not on the most forward topic page
@@ -62,6 +61,8 @@ startPageServices.service("StartPageStateData", () ->
     })
     this.selectTopic = (topicId) -> selectedTopics[topicId] = true
     this.clearSelectedTopics = () -> selectedTopics = {}
+    this.numTopics = () -> Object.keys(selectedTopics).length
+
 
     # User responses interface
     Object.defineProperty(this, "responsesForSelectedTopics", {
@@ -90,23 +91,16 @@ startPageServices.service("StartPageStateData", () ->
         set: (q) -> questionsLeft_static = q
     })
 
-    Object.defineProperty(this, "numTopics", {
-        get: () -> numTopics
-
-    })
-    this.incNumTopics = -> numTopics += 1
-    this.decNumTopics = -> numTopics -= 1
-
     Object.defineProperty(this, "currentTopic", {
         get: () -> currentTopic
         set: (topicID) -> currentTopic = topicID
     })
 
-    Object.defineProperty(this, "topicsComplete", {
-        get: () -> topicsComplete
+    Object.defineProperty(this, "topicsCompleted", {
+        get: () -> topicsCompleted
     })
-    this.incTopicsComplete = -> topicsComplete += 1
-    this.clearTopicsComplete = -> topicsComplete = 0
+    this.incTopicsCompleted = -> topicsCompleted += 1
+    this.clearTopicsCompleted = -> topicsCompleted = 0
 
     Object.defineProperty(this, "latestTopic", {
         get: () -> latestTopic
