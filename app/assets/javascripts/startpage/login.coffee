@@ -14,7 +14,7 @@ login.controller("LoginController", ["$state", "$window", "$scope", "API", "Star
                 document.cookie = "password=" + $scope.password
                 # TODO Redirect only if the user has not yet submitted a profile.
                 # TODO un-hardcode UID 1
-                $window.location.href = "/home/#/profile/1"
+                $window.location.href = "/#/profile/1"
             else
                 $scope.status = if data then data["error"] else "Oops, an error occurred."
         )
