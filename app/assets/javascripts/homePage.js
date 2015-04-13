@@ -2,7 +2,6 @@
 //= require angular-ui-bootstrap
 //= require angular-ui-router
 //= require_tree ./shared
-//= require_tree ./sidebar
-//= require_tree ./profile
+//= require_tree ./homepage
 
 app = angular.module("HomePage", ["ui.bootstrap", "ui.router", "Profile", "Sidebar"])
