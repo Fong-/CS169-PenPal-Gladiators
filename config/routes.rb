@@ -17,7 +17,8 @@ CS169PenpalGladiators::Application.routes.draw do
     get "/api/v1/arenas/:user_id" => "arenas#get_by_user_id"
 
     # Public routes
-    get "/home" => "application#homepage"
+    get "/" => "pages#homepage"
+    get "/login" => "pages#startpage"
 
     # The priority is based upon order of creation:
     # first created -> highest priority.
