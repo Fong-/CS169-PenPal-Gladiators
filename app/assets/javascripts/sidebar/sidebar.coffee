@@ -1,6 +1,6 @@
 sidebar = angular.module("Sidebar", ["SharedServices"])
 
-sidebar.controller("SidebarController", ["$scope", "$http", "$location", "SharedRequests", "TimeUtil", ($scope, $http, $location, SharedRequests, TimeUtil) ->
+sidebar.controller("SidebarController", ["$scope", "$http", "$location", "API", "TimeUtil", ($scope, $http, $location, API, TimeUtil) ->
 
     MAX_PREVIEW_TEXT_LENGTH = 100;
     authorTextForId = (id) -> if id == currentUserId then "You" else $scope.gladiatorNameById[id]
@@ -19,7 +19,7 @@ sidebar.controller("SidebarController", ["$scope", "$http", "$location", "Shared
     $scope.toggleGladiatorPanel = (id) -> $scope.arenaStateByUserId[id] = !$scope.arenaStateByUserId[id]
     $scope.expandButtonClass = (id) -> if $scope.arenaStateByUserId[id] then "glyphicon glyphicon-chevron-up" else "glyphicon glyphicon-chevron-down"
 
-    SharedRequests.requestArenasByUser(currentUserId).success (arenas) ->
+    API.requestArenasByUser(currentUserId).success (arenas) ->
         $scope.conversationsByUserId = {}
         $scope.gladiatorIds = []
         for arena in arenas

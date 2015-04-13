@@ -16,7 +16,7 @@ surveyQuestions.config(["$routeProvider", ($routeProvider) ->
 
 surveyQuestions.controller("SurveyQuestionsController", ["$scope", "$http", "$location", "$routeParams", "API", "StartPageStaticData", "StartPageStateData", ($scope, $http, $location, $routeParams, API, StartPageStaticData, StartPageStateData) ->
     $scope.allTopics = StartPageStaticData.topics                 # all the topics
-    $scope.selectedTopics = StartPageStateData.selectedTopics     # the ids of the topics the user selected
+    $scope.selectedTopicIds = StartPageStateData.selectedTopics     # the ids of the topics the user selected
     $scope.currentTopicId = $routeParams.id
     $scope.currentTopic = $scope.allTopics[$scope.currentTopicId].name # the topic we're doing now
 
@@ -83,10 +83,10 @@ surveyQuestions.controller("SurveyQuestionsController", ["$scope", "$http", "$lo
 
     # Helper function to advance to the summary page
     $scope.handleAdvanceToSummary = ->
-        StartPageStateData.state = "summary"
+        StartPageStateData.currentState = "summary"
         tmp = {}
         for topicId in $scope.selectedTopicIds
-            tmp[topicId] = StartPageStaticData.getResponsesForTopic(topicId)
+            tmp[topicId] = StartPageStateData.getResponsesForTopic(topicId)
         StartPageStateData.clearResponses()
         StartPageStateData.addResponsesForTopic(topicId, checkModel) for topicId, checkModel of tmp
         $location.path("summary")
@@ -96,7 +96,7 @@ surveyQuestions.controller("SurveyQuestionsController", ["$scope", "$http", "$lo
         if isCurrentState()
             match = currentState.match(statePattern)
             i = parseInt(match[1])
-            StartPageStateData.state = "questions-#{i+1}"
+            StartPageStateData.currentState = "questions-#{i+1}"
         $location.path("questions/#{topicId}")
 
     # Call either handleAdvanceToQuestions or handleAdvanceToSummary depending on

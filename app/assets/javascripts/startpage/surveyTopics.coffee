@@ -6,12 +6,12 @@ surveyTopics.config(["$routeProvider", ($routeProvider) ->
         controller: "SurveyTopicsController"
     })
 
-]).controller("SurveyTopicsController", ["$scope", "$http", "$location", "API", "StartPageStaticData", "StartPageStateData" ($scope, $http, $location, API, StartPageStaticData, StartPageStateData) ->
+]).controller("SurveyTopicsController", ["$scope", "$http", "$location", "API", "StartPageStaticData", "StartPageStateData", ($scope, $http, $location, API, StartPageStaticData, StartPageStateData) ->
     $scope.MIN_NUM_TOPICS_REQUIRED = 5
     $scope.allTopics = []
     $scope.topicSelectionModel = {}
 
-    currentState = StartPageStateData.state
+    currentState = StartPageStateData.currentState
     if currentState == ""
         currentState = "topics"
 
@@ -37,7 +37,7 @@ surveyTopics.config(["$routeProvider", ($routeProvider) ->
     # Advances to the next view.
     $scope.handleAdvanceToQuestions = ->
         if currentState == "topics"
-            StartPageStateData.state = "questions-0"
+            StartPageStateData.currentState = "questions-0"
         StartPageStateData.clearSelectedTopics()
         StartPageStateData.selectTopic(id) for id of $scope.topicSelectionModel when $scope.topicSelectionModel[id]
         sortedTopicIds = Object.keys($scope.topicSelectionModel).sort()

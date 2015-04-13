@@ -13,12 +13,12 @@ startPageServices.service("StartPageStaticData", () ->
 
     # Topic questions data
     Object.defineProperty(this, "questions", {
-        return questionsForTopics
+        get: () -> questionsForTopics
     })
     this.addQuestionsForTopic = (topicId, questions) ->
         questionsForTopics[topicId] = questions
     this.getQuestionsForTopic = (topicId) ->
-        if topicId of questionsForTopics then questionsByTopicIds[topicId] else []
+        if topicId of questionsForTopics then questionsForTopics[topicId] else []
 
     return
 )
@@ -64,7 +64,7 @@ startPageServices.service("StartPageStateData", () ->
     this.clearResponses = () ->
         responsesForSelectedTopics = {}
     this.getResponsesForTopic = (topicId) ->
-        if topicId of responsesForSelectedTopics then responseForTopic[topicId] else {}
+        if topicId of responsesForSelectedTopics then responsesForSelectedTopics[topicId] else {}
 
     return
 )
