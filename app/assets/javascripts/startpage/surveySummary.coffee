@@ -1,14 +1,6 @@
 surveySummary = angular.module("SurveySummary", ["StartPageServices"])
 
-surveySummary.config(["$routeProvider", ($routeProvider) ->
-    $routeProvider
-    .when("/summary", {
-        templateUrl: "/assets/survey_summary.html",
-        controller: "SurveySummaryController"
-    })
-])
-
-surveySummary.controller("SurveySummaryController", ["$scope", "$http", "$location", "StartPageStaticData", "StartPageStateData", ($scope, $http, $location, StartPageStaticData, StartPageStateData) ->
+surveySummary.controller("SurveySummaryController", ["$scope", "$http", "$state", "StartPageStaticData", "StartPageStateData", ($scope, $http, $state, StartPageStaticData, StartPageStateData) ->
     allTopics = StartPageStaticData.topics
     $scope.selectedTopics = {}
     for topicId in StartPageStateData.selectedTopics
@@ -27,7 +19,7 @@ surveySummary.controller("SurveySummaryController", ["$scope", "$http", "$locati
 
     # Move to the edit page for questions of a topic
     $scope.editResponses = (topicId) ->
-        $location.path("questions/#{topicId}")
+        $state.go("questions", { id: topicId })
 
     # Register the user into the database and move to the homepage
     $scope.handleRegister = ->

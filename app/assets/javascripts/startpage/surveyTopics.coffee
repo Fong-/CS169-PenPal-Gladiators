@@ -1,12 +1,6 @@
 surveyTopics = angular.module("SurveyTopics", ["SharedServices", "StartPageServices"])
 
-surveyTopics.config(["$routeProvider", ($routeProvider) ->
-    $routeProvider.when("/topics", {
-        templateUrl: "/assets/survey_topics.html",
-        controller: "SurveyTopicsController"
-    })
-
-]).controller("SurveyTopicsController", ["$scope", "$http", "$location", "API", "StartPageStaticData", "StartPageStateData", ($scope, $http, $location, API, StartPageStaticData, StartPageStateData) ->
+surveyTopics.controller("SurveyTopicsController", ["$scope", "$http", "$state", "API", "StartPageStaticData", "StartPageStateData", ($scope, $http, $state, API, StartPageStaticData, StartPageStateData) ->
     $scope.MIN_NUM_TOPICS_REQUIRED = 5
     $scope.allTopics = []
     $scope.topicSelectionModel = {}
@@ -41,7 +35,7 @@ surveyTopics.config(["$routeProvider", ($routeProvider) ->
         StartPageStateData.clearSelectedTopics()
         StartPageStateData.selectTopic(id) for id of $scope.topicSelectionModel when $scope.topicSelectionModel[id]
         sortedTopicIds = Object.keys($scope.topicSelectionModel).sort()
-        $location.path("questions/#{sortedTopicIds[0]}")
+        $state.go("questions", { id: sortedTopicIds[0] })
 
     # Asynchronously load the list of topics.
     # TODO Cache the results, so we only rerun the query if necessary.
