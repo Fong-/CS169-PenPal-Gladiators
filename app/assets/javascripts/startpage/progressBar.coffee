@@ -7,7 +7,7 @@ progressBar.config(["$routeProvider", ($routeProvider) ->
     })
 ])
 
-progressBar.controller("ProgressBarController", ["$scope", "$http", "$location", "$routeParams", "SharedRequests", "StartPageData", ($scope, $http, $location, $routeParams, SharedRequests, StartPageData) ->
+progressBar.controller("ProgressBarController", ["$scope", "SharedRequests", "StartPageData", ($scope, SharedRequests, StartPageData) ->
 
     currentID = StartPageData.getCurrentTopic()
     percentComplete = 0
@@ -20,7 +20,7 @@ progressBar.controller("ProgressBarController", ["$scope", "$http", "$location",
     # %complete = (numCompleteTopics * 100/numTopics) + (numAnsweredQuestions * 100/totalQuestions * 100/numTopics)
     # calling $scope vs calling StartPageData ???
     $scope.percentComplete = () ->
-        updateCompleteTopics() # update complete topics first
+        updateCompleteTopics()
 
         if (currentID == StartPageData.getLatestTopic())
             numAnsweredQuestions = $scope.numQuestions() - StartPageData.getQuestionsLeft()
@@ -34,11 +34,10 @@ progressBar.controller("ProgressBarController", ["$scope", "$http", "$location",
 
         percentComplete = pastPercent + currentPercent
 
-        if percentComplete > 100 # might need to change this later because it might break stuff
+        if percentComplete > 100
             percentComplete = 100
 
-        n = percentComplete.toString() # ng-style needs a string
-        return n + "%"
+        return "#{percentComplete}%" # return as a string for ng-style
 
     # Updates the # of complete topics variable
     updateCompleteTopics = () ->
@@ -46,6 +45,4 @@ progressBar.controller("ProgressBarController", ["$scope", "$http", "$location",
         for k,v of StartPageData.getTopicQuestionsDone()
             if v
                 StartPageData.incTopicsComplete()
-
-    #TODO maybe - update flag when last question is answered instead of on next page
 ])
