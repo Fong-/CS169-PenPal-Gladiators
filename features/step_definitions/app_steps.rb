@@ -62,14 +62,24 @@ end
 # Navigating to page
 
 Given /^I am on (?:the|a|my) (.*?) page$/ do |page_name|
-    visit case(page_name)
-        when "Login/Register" then "/#/"
-        when "Survey Topic Checkboxes" then "/#topics"
-        when "survey" then pending "No route here!"
-        when "home" then "/home"
-        when "profile" then "/home/#/profile/1"
-        when "conversation" then pending "Check that I am on the conversation page."
-        else raise "Could not navigate to the #{page_name} page."
+    case (page_name)
+        when "Login/Register"
+            visit "/login"
+        when "Survey Topic Checkboxes"
+            visit "/login"
+            step 'I fill in "email" with "foo@bar.com"'
+            step 'I fill in "password" with "fizzbuzz"'
+            step 'I press "Start Registration"'
+        when "survey"
+            pending "No survey route."
+        when "home"
+            visit "/"
+        when "profile"
+            visit "/#/profile/1"
+        when "conversation"
+            pending "No conversation route."
+        else
+            raise "Could not navigate to the #{page_name} page."
     end
 end
 
