@@ -1,3 +1,9 @@
+GIT
+  remote: git@github.com:iven/angular-ui-router-rails.git
+  revision: 51e28792634ba9229684758c78273cfcd3966299
+  specs:
+    angular-ui-router-rails (0.2.12.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -184,6 +190,7 @@ PLATFORMS
 
 DEPENDENCIES
   angular-ui-bootstrap-rails
+  angular-ui-router-rails!
   angularjs-rails
   capybara
   capybara-angular
