@@ -1,50 +1,70 @@
 startPageServices = angular.module("StartPageServices", [])
-startPageServices.service("StartPageData", () ->
+
+startPageServices.service("StartPageStaticData", () ->
+    topics = {}
+    questionsForTopics = {}
+
+    # Topic data
+    Object.defineProperty(this, "topics", {
+        get: () -> topics
+    })
+    this.addTopic = (topic) -> topics[topic.id] = topic
+    this.clearTopics = () -> topics = {}
+
+    # Topic questions data
+    Object.defineProperty(this, "questions", {
+        get: () -> questionsForTopics
+    })
+    this.addQuestionsForTopic = (topicId, questions) ->
+        questionsForTopics[topicId] = questions
+    this.getQuestionsForTopic = (topicId) ->
+        if topicId of questionsForTopics then questionsForTopics[topicId] else []
+
+    return
+)
+
+startPageServices.service("StartPageStateData", () ->
     email = ""
     password = ""
-    topicsById = {}
-    selectedTopicIds = {}
-    responseIdsByTopicIds = {}
-    questionsByTopicIds = {}
-    currentState = ""                 # states: topics, questions-0, ..., questions-(N-1), summary
-    # Email interface.
-    this.getEmail = -> email
-    this.setEmail = (e) -> email = e
-    # Password interface.
-    this.getPassword = -> password
-    this.setPassword = (p) -> password = p
-    # Topics by topic id.
-    this.getAllTopics = -> topicsById
-    this.addTopic = (topic) -> topicsById[topic.id] = topic
-    this.clearAllTopics = -> topicsById = {}
-    # Selected topics interface.
-    this.getSelectedTopicIds = -> Object.keys(selectedTopicIds).sort() # Note: does NOT sort numerically.
-    this.addSelectedTopicId = (topicId) -> selectedTopicIds[topicId] = true
-    this.clearSelectedTopicIds = (topicId) -> selectedTopicIds = {}
-    # User responses interface.
-    # Get ids of responses selected by user
-    this.getResponseIds = ->
-        responseIds = []
-        for _topicId, responseIds in responseIdsByTopicIds
-            for id, selected in responseIds
-                if selected
-                    resposneIds.push(id)
-        return responseIds
-    this.addResponseIdsByTopicId = (topicId, responseIdsByTopicId) ->
-        responseIdsByTopicIds[topicId] = responseIdsByTopicId
-    this.clearResponseIdsByTopics = -> responseIdsByTopicIds = {}
-    this.getResponseIdsByTopicId = (topicId) ->
-        if topicId of responseIdsByTopicIds
-            return responseIdsByTopicIds[topicId]
-        else
-            return {}
-    this.getResponseIdsByTopicIds = -> responseIdsByTopicIds
-    this.addTopicQuestions = (topicId, questions) -> questionsByTopicIds[topicId] = questions
-    this.getTopicQuestions = (topicId) -> 
-        if topicId of questionsByTopicIds then questionsByTopicIds[topicId] else []
-    this.getAllQuestions = -> return questionsByTopicIds
-    # Overall survey interface
-    this.updateState = (newState) -> currentState = newState
-    this.getCurrentState = -> return currentState
-    return # Required to prevent returning the last object.
+    currentState = ""
+    selectedTopics = {}
+    responsesForSelectedTopics = {}
+
+    # Email interface
+    Object.defineProperty(this, "email", {
+        get: () -> email
+        set: (e) -> email = e
+    })
+
+    # Password interface
+    Object.defineProperty(this, "password", {
+        get: () -> password
+        set: (p) -> password = p
+    })
+
+    # Global state interface
+    Object.defineProperty(this, "currentState", {
+        get: () -> currentState
+        set: (s) -> currentState = s
+    })
+
+    # Selected topics interface
+    Object.defineProperty(this, "selectedTopics", {
+        get: () -> Object.keys(selectedTopics).sort() # Note: does NOT sort numerically.
+    })
+    this.selectTopic = (topicId) -> selectedTopics[topicId] = true
+    this.clearSelectedTopics = () -> selectedTopics = {}
+
+    # User responses interface
+    Object.defineProperty(this, "responsesForSelectedTopics", {
+        get: () -> return responsesForSelectedTopics
+    })
+    this.addResponsesForTopic = (topicId, responseIds) ->
+        responsesForSelectedTopics[topicId] = responseIds
+    this.clearResponses = () ->
+        responsesForSelectedTopics = {}
+    this.getResponsesForTopic = (topicId) ->
+        if topicId of responsesForSelectedTopics then responsesForSelectedTopics[topicId] else {}
+
+    return
 )

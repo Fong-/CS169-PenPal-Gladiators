@@ -1,18 +1,23 @@
 login = angular.module("Login", ["SharedServices", "StartPageServices"])
 
 login.config(["$routeProvider", ($routeProvider) ->
-    $routeProvider.when("/", {
+    $routeProvider
+    .when("/", {
         templateUrl: "/assets/login.html",
         controller: "LoginController"
     })
-]).controller("LoginController", ["$http", "$location", "$window", "$scope", "SharedRequests", "StartPageData", ($http, $location, $window, $scope, SharedRequests, StartPageData) ->
+])
+
+login.controller("LoginController", ["$location", "$window", "$scope", "API", "StartPageStateData", ($location, $window, $scope, API, StartPageStateData) ->
     $scope.email = ""
     $scope.password = ""
     $scope.description = ""
     $scope.status = ""
+
     $scope.login = () ->
-        SharedRequests.login($scope.email, $scope.password).success((data) ->
+        API.login($scope.email, $scope.password).success((data) ->
             if data && data["success"]
+                # TODO Authentication Handling
                 document.cookie = "email=" + $scope.email
                 document.cookie = "password=" + $scope.password
                 # TODO Redirect only if the user has not yet submitted a profile.
@@ -21,13 +26,15 @@ login.config(["$routeProvider", ($routeProvider) ->
             else
                 $scope.status = if data then data["error"] else "Oops, an error occurred."
         )
+
     $scope.can_register = () ->
-        SharedRequests.can_register($scope.email, $scope.password).success((data) ->
+        API.canRegister($scope.email, $scope.password).success((data) ->
             if data && data["success"]
+                # TODO Authentication Handling
                 document.cookie = "email=" + $scope.email
                 document.cookie = "password=" + $scope.password
-                StartPageData.setEmail($scope.email)
-                StartPageData.setPassword($scope.password)
+                StartPageStateData.email = $scope.email
+                StartPageStateData.password = $scope.password
                 $location.path("topics")
             else
                 $scope.status = if data then data["error"] else "Oops, an error occurred."

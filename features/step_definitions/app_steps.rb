@@ -85,8 +85,8 @@ end
 
 Then /I should be on the (.*?) page/ do |page_name|
     case page_name
-    when "survey"
-        pending "no check for survey!"
+    when "topics"
+        page.should have_content "Which topics interest you?"
     when "profile"
         page.should have_content "My Position on the Political Spectrum"
     when "home"

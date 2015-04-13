@@ -1,11 +1,14 @@
 profile = angular.module("Profile",["SharedServices", "ProfilePageServices"])
 
 profile.config(["$routeProvider", ($routeProvider) ->
-    $routeProvider.when("/profile/:id", {
+    $routeProvider
+    .when("/profile/:id", {
         templateUrl: "/assets/profile.html",
         controller: "ProfileController"
     })
-]).controller("ProfileController", ["$http", "$location", "$scope", "$routeParams", "SharedRequests", "ProfilePageData", ($http, $location, $scope, $routeParams, SharedRequests, ProfilePageData) ->
+])
+
+profile.controller("ProfileController", ["$http", "$location", "$scope", "$routeParams", "API", "ProfilePageData", ($http, $location, $scope, $routeParams, API, ProfilePageData) ->
     # moduleState can be either "view" or "edit"
     $scope.moduleState = "view"
 
@@ -52,11 +55,11 @@ profile.config(["$routeProvider", ($routeProvider) ->
         for k, v of $scope.spectrumOptions
             if $scope.profile.spectrum == v.value
                 spectrum_id = v.id
-        SharedRequests.updateProfileByUID($scope.profileUID, $scope.profile.username, $scope.profile.avatar, $scope.profile.blurb, $scope.profile.hero, spectrum_id)
+        API.updateProfileByUID($scope.profileUID, $scope.profile.username, $scope.profile.avatar, $scope.profile.blurb, $scope.profile.hero, spectrum_id)
         $scope.moduleState = "view"
 
     load_profile = (userId) ->
-        SharedRequests.requestProfileByUID(userId).success( (profile) ->
+        API.requestProfileByUID(userId).success( (profile) ->
             $scope.profile.username = profile.username
             $scope.profile.avatar = profile.avatar
             $scope.profile.blurb = profile.political_blurb
