@@ -2,6 +2,7 @@
 //= require angular-ui-bootstrap
 //= require angular-ui-router
 //= require angular-route
+//= require ./sharedServices
 //= require_tree ./shared
 //= require_tree ./startpage
 
