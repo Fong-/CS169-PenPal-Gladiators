@@ -18,12 +18,20 @@ progressBar.controller("ProgressBarController", ["$scope", "$http", "$location",
     $scope.isTopicDone = () -> StartPageData.isTopicQuestionsDone(currentID)
     $scope.topicsComplete = () -> StartPageData.getTopicsComplete()
 
+    #debugging
+    $scope.currentID = () -> currentID
+    $scope.latestID = () -> StartPageData.getLatestTopic()
+
     # %complete = (numCompleteTopics * 100/numTopics) + (numAnsweredQuestions * 100/totalQuestions * 100/numTopics)
     # calling $scope vs calling StartPageData ???
     $scope.percentComplete = () ->
         updateCompleteTopics() # update complete topics first
 
-        numAnsweredQuestions = $scope.numQuestions() - $scope.questionsLeft()
+        if (currentID == StartPageData.getLatestTopic())
+            numAnsweredQuestions = $scope.numQuestions() - StartPageData.getQuestionsLeft()
+        else
+            numAnsweredQuestions = $scope.numQuestions() - StartPageData.getQuestionsLeft_static()
+
         numCompleteTopics = StartPageData.getTopicsComplete()
 
         pastPercent = numCompleteTopics * 100 / $scope.numTopics()
