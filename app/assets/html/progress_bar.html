@@ -1,11 +1,4 @@
 <div id="progress-bar-container" ng-controller="ProgressBarController">
-   <div class="header">current progress for debugging purposes</div>
-   <p id="num-questions">{{ numQuestions() }} total number of questions</p>
-   <p id="questions-left">{{ questionsLeft() }} quesions left</p>
-   <p id="num-topics">{{ numTopics() }} total number of topics </p>
-   <p id="is-topic-done">Is current topic done? {{ isTopicDone() }}</p>
-   <p >Number of complete topics: {{ topicsComplete() }}</p>
-   <p id="progress-bar-width">{{ percentComplete() }}% completed</p>
     <div id="progress-bar">
         <div id="progress-bar-percent" ng-style="{ 'width': percentComplete() }"></div>
     </div>
