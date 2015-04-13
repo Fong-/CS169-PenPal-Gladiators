@@ -1,5 +1,5 @@
 GIT
-  remote: git@github.com:iven/angular-ui-router-rails.git
+  remote: https://github.com/iven/angular-ui-router-rails.git
   revision: 51e28792634ba9229684758c78273cfcd3966299
   specs:
     angular-ui-router-rails (0.2.12.0)
