@@ -28,10 +28,7 @@ surveyTopics.controller("SurveyTopicsController", ["$scope", "$http", "$state", 
     # Called when a topic is toggled.
     $scope.handleTopicToggled = (topicId) ->
         # -- For progress bar
-        if !$scope.topicSelectionModel[topicId]
-            StartPageData.incNumTopics()
-        if $scope.topicSelectionModel[topicId]
-            StartPageData.decNumTopics()
+        if $scope.topicSelectionModel[topicId] then StartPageData.decNumTopics() else StartPageData.incNumTopics()
         # --
         $scope.topicSelectionModel[topicId] = !$scope.topicSelectionModel[topicId]
 
