@@ -18,4 +18,4 @@ Scenario: The user registers with a non-existant username.
     Given I fill in "email" with "user@bar.com"
     And I fill in "password" with "fizzbuzz"
     And I press "Start Registration"
-    Then I should be on the survey page
+    Then I should be on the topics page

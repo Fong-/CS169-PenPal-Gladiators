@@ -8,7 +8,7 @@ surveySummary.config(["$routeProvider", ($routeProvider) ->
     })
 ])
 
-surveySummary.controller("SurveySummaryController", ["$scope", "$http", "$location", "StartPageStaticData", "StartPageStateData" ($scope, $http, $location, StartPageStaticData, StartPageStateData) ->
+surveySummary.controller("SurveySummaryController", ["$scope", "$http", "$location", "StartPageStaticData", "StartPageStateData", ($scope, $http, $location, StartPageStaticData, StartPageStateData) ->
     allTopics = StartPageStaticData.topics
     $scope.selectedTopics = {}
     for topicId in StartPageStateData.selectedTopics

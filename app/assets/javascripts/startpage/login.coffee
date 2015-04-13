@@ -28,7 +28,7 @@ login.controller("LoginController", ["$location", "$window", "$scope", "API", "S
         )
 
     $scope.can_register = () ->
-        API.can_register($scope.email, $scope.password).success((data) ->
+        API.canRegister($scope.email, $scope.password).success((data) ->
             if data && data["success"]
                 # TODO Authentication Handling
                 document.cookie = "email=" + $scope.email
