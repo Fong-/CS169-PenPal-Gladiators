@@ -49,10 +49,28 @@ sidebar.controller("SidebarController", ["$scope", "$http", "$state", "API", "Ti
 
     # Matching
     $scope.matchedGladiators = {}
+    $scope.outboundRequests = {}
+    $scope.inboundRequests = {}
 
-    $scope.request_match = () ->
-        SharedRequests.requestMatches(currentUserId).success (matches) ->
+    # Request matches from the matching algorithm
+    $scope.request_matches = () ->
+        API.requestMatches(currentUserId).success (matches) ->
             for match in matches
                 # Assume (naively) that the API gives us an 'id' and 'username'
                 $scope.matchedGladiators[match.id] = match.username
+
+    # Request to be matched with another Gladiator
+    $scope.request_match = (otherUserId) ->
+        API.requestMatch(otherUserId).success (request) ->
+            $scope.outboundRequests.push(request)
+
+    # Accept a match request
+    $scope.accept_match = (otherUserId) ->
+        API.acceptMatch(otherUserId).success (accept) ->
+            # Do something
+
+    # Decline a match request
+    $scope.decline_match = (otherUserId) ->
+        API.declineMatch(otherUserId).success (decline)
+            # Do something
 ])
