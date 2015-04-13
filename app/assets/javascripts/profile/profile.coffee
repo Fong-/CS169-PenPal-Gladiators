@@ -1,11 +1,14 @@
 profile = angular.module("Profile",["SharedServices", "ProfilePageServices"])
 
 profile.config(["$routeProvider", ($routeProvider) ->
-    $routeProvider.when("/profile/:id", {
+    $routeProvider
+    .when("/profile/:id", {
         templateUrl: "/assets/profile.html",
         controller: "ProfileController"
     })
-]).controller("ProfileController", ["$http", "$location", "$scope", "$routeParams", "API", "ProfilePageData", ($http, $location, $scope, $routeParams, API, ProfilePageData) ->
+])
+
+profile.controller("ProfileController", ["$http", "$location", "$scope", "$routeParams", "API", "ProfilePageData", ($http, $location, $scope, $routeParams, API, ProfilePageData) ->
     # moduleState can be either "view" or "edit"
     $scope.moduleState = "view"
 
