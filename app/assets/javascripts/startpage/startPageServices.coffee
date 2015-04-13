@@ -29,14 +29,14 @@ startPageServices.service("StartPageStateData", () ->
     currentState = ""
     selectedTopics = {}
     responsesForSelectedTopics = {}
-
-    numQuestions = 0 # number of all questions in every topic
+    topicQuestionsDone = {} # Ids of the topics for which the questions have all been answered
     numTopics = 0
-    questionsLeft = 0
-    questionsLeft_static = 0
     currentTopic = 0 # current topic ID, used for determining if a topic is done for progress
-    latestTopic = 0
+    latestTopic = 0 # latest topic ID
     topicsComplete = 0 # number of topics that have been completed
+    numQuestions = 0
+    questionsLeft = 0
+    questionsLeft_static = 0 # used for when not on the most forward topic page
 
     # Email interface
     Object.defineProperty(this, "email", {
@@ -75,22 +75,49 @@ startPageServices.service("StartPageStateData", () ->
         if topicId of responsesForSelectedTopics then responsesForSelectedTopics[topicId] else {}
 
     # Progress bar interface
-    this.setNumQuestions = (questions) -> numQuestions = questions # sets the number of questions on current topic
-    this.getNumQuestions = -> numQuestions
-    this.setQuestionsLeft = (questions) ->
-        questionsLeft = questions
-    this.getQuestionsLeft = -> questionsLeft
-    this.setQuestionsLeft_static = (questions) -> questionsLeft_static = questions
-    this.getQuestionsLeft_static = -> questionsLeft_static
-    this.getNumTopics = -> numTopics
+    Object.defineProperty(this, "numQuestions", {
+        get: () -> numQuestions
+        set: (q) -> numQuestions = q
+    })
+
+    Object.defineProperty(this, "questionsLeft", {
+        get: () -> questionsLeft
+        set: (q) -> questionsLeft = q
+    })
+
+    Object.defineProperty(this, "questionsLeft_static", {
+        get: () -> questionsLeft_static
+        set: (q) -> questionsLeft_static = q
+    })
+
+    Object.defineProperty(this, "numTopics", {
+        get: () -> numTopics
+
+    })
     this.incNumTopics = -> numTopics += 1
     this.decNumTopics = -> numTopics -= 1
-    this.setCurrentTopic = (topicID) -> currentTopic = topicID # sets the id of the current topic
-    this.getCurrentTopic = -> currentTopic
+
+    Object.defineProperty(this, "currentTopic", {
+        get: () -> currentTopic
+        set: (topicID) -> currentTopic = topicID
+    })
+
+    Object.defineProperty(this, "topicsComplete", {
+        get: () -> topicsComplete
+    })
     this.incTopicsComplete = -> topicsComplete += 1
-    this.getTopicsComplete = -> topicsComplete
     this.clearTopicsComplete = -> topicsComplete = 0
-    this.setLatestTopic = (topicID) -> latestTopic = topicID
-    this.getLatestTopic = -> latestTopic
+
+    Object.defineProperty(this, "latestTopic", {
+        get: () -> latestTopic
+        set: (topicID) -> latestTopic = topicID
+    })
+
+    Object.defineProperty(this, "topicQuestionsDone", {
+        get: () -> topicQuestionsDone
+        })
+    this.finishedTopicQuestions = (topicId) -> topicQuestionsDone[topicId] = true
+    this.isTopicQuestionsDone = (topicId) -> return topicId of topicQuestionsDone
+
     return
 )

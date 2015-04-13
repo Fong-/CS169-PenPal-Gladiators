@@ -9,9 +9,8 @@ surveyQuestions.controller("SurveyQuestionsController", ["$scope", "$http", "$st
     $scope.currentTopic = $scope.allTopics[$scope.currentTopicId].name # the topic we're doing now
 
     # For progress bar
-    StartPageData.setCurrentTopic($routeParams.id) # sets the current topic in StartPageData
-    if ($routeParams.id > StartPageData.getLatestTopic())
-        StartPageData.setLatestTopic($routeParams.id)
+    StartPageStateData.currentTopic = $routeParams.id # sets the current topic in StartPageStateData
+    if ($routeParams.id > StartPageStateData.latestTopic) then StartPageStateData.latestTopic = $routeParams.id
 
     $scope.questions = StartPageStaticData.getQuestionsForTopic($scope.currentTopicId)
     $scope.questionCheckModel = StartPageStateData.getResponsesForTopic($scope.currentTopicId)
@@ -56,9 +55,12 @@ surveyQuestions.controller("SurveyQuestionsController", ["$scope", "$http", "$st
                 if $scope.questionCheckModel[response.id]
                     questionsLeft -= 1
                     break
-        StartPageData.setQuestionsLeft(questionsLeft)
-        if (StartPageData.getCurrentTopic() == StartPageData.getLatestTopic())
-            StartPageData.setQuestionsLeft_static(questionsLeft)
+
+        # For progress bar
+        StartPageStateData.questionsLeft = questionsLeft
+        if (StartPageStateData.currentTopic == StartPageStateData.latestTopic)
+            StartPageStateData.questionsLeft_static = questionsLeft
+
         return questionsLeft
 
     $scope.hideBackButton = ->
@@ -98,7 +100,7 @@ surveyQuestions.controller("SurveyQuestionsController", ["$scope", "$http", "$st
     # Call either handleAdvanceToQuestions or handleAdvanceToSummary depending on
     # if there are more topics to answer questions for
     $scope.handleAdvance = ->
-        StartPageData.finishedTopicQuestions($scope.currentTopicId) # added this back because it's necessary for progress bar
+        StartPageStateData.finishedTopicQuestions($scope.currentTopicId) # added this back because it's necessary for progress bar
         nextIndex = $scope.selectedTopicIds.indexOf($scope.currentTopicId) + 1
         if currentState != "summary" && nextIndex < $scope.selectedTopicIds.length
             nextTopicId = $scope.selectedTopicIds[nextIndex]
@@ -127,6 +129,7 @@ surveyQuestions.controller("SurveyQuestionsController", ["$scope", "$http", "$st
     # Asynchronously load the list of questions for a topic
     load_questions = (topicId) ->
         if $scope.questions.length == 0
+
             API.requestQuestionsByTopic(topicId)
                 .success (allQuestions) ->
                     $scope.questions = []
@@ -134,6 +137,8 @@ surveyQuestions.controller("SurveyQuestionsController", ["$scope", "$http", "$st
                     $scope.questions = allQuestions
                     StartPageStaticData.addQuestionsForTopic($scope.currentTopicId, $scope.questions)
                     $scope.numQuestions = $scope.questions.length
+
+                    StartPageStateData.numQuestions = $scope.numQuestions
                 .error (result, status) ->
                     if result?
                         reason = result.error
