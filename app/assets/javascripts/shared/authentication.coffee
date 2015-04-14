@@ -8,7 +8,7 @@ angular.module("SharedServices").service("Authentication", ["$cookieStore", "$q"
         if user? and user.accessToken?
             return API.authenticate(user.accessToken).then(
                 (result) ->
-                    if error of result
+                    if "error" of result
                         return handleFailure()
                     return result
                 (reason) ->
