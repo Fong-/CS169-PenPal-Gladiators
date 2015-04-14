@@ -23,6 +23,6 @@ Given /^"(.*?)" has a political hero of "(.*?)"$/ do |user, hero|
 end
 
 Given /^I navigate to the profile page of "(.*?)"$/ do |user|
-    visit "/home#profile/#{User.find_by_username(user).id}"
+    visit "/#/profile/#{User.find_by_username(user).id}"
 end
 

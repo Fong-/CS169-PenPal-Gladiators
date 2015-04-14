@@ -1,14 +1,6 @@
 login = angular.module("Login", ["SharedServices", "StartPageServices"])
 
-login.config(["$routeProvider", ($routeProvider) ->
-    $routeProvider
-    .when("/", {
-        templateUrl: "/assets/login.html",
-        controller: "LoginController"
-    })
-])
-
-login.controller("LoginController", ["$location", "$window", "$scope", "API", "StartPageStateData", ($location, $window, $scope, API, StartPageStateData) ->
+login.controller("LoginController", ["$state", "$window", "$scope", "API", "StartPageStateData", ($state, $window, $scope, API, StartPageStateData) ->
     $scope.email = ""
     $scope.password = ""
     $scope.description = ""
@@ -22,7 +14,7 @@ login.controller("LoginController", ["$location", "$window", "$scope", "API", "S
                 document.cookie = "password=" + $scope.password
                 # TODO Redirect only if the user has not yet submitted a profile.
                 # TODO un-hardcode UID 1
-                $window.location.href = "/home/#/profile/1"
+                $window.location.href = "/#/profile/1"
             else
                 $scope.status = if data then data["error"] else "Oops, an error occurred."
         )
@@ -35,7 +27,7 @@ login.controller("LoginController", ["$location", "$window", "$scope", "API", "S
                 document.cookie = "password=" + $scope.password
                 StartPageStateData.email = $scope.email
                 StartPageStateData.password = $scope.password
-                $location.path("topics")
+                $state.go("topics")
             else
                 $scope.status = if data then data["error"] else "Oops, an error occurred."
         )

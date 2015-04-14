@@ -2,22 +2,10 @@
 
 surveyQuestions = angular.module("SurveyQuestions", ["StartPageServices"])
 
-surveyQuestions.config(["$routeProvider", ($routeProvider) ->
-    $routeProvider
-    .when("/questions/:id", {
-        templateUrl: "/assets/survey_questions.html",
-        controller: "SurveyQuestionsController"
-    })
-    .when("/questions/:id/edit", {
-        templateUrl: "/assets/survey_questions_edit.html",
-        controller: "SurveyQuestionsController"
-    })
-])
-
-surveyQuestions.controller("SurveyQuestionsController", ["$scope", "$http", "$location", "$routeParams", "API", "StartPageStaticData", "StartPageStateData", ($scope, $http, $location, $routeParams, API, StartPageStaticData, StartPageStateData) ->
+surveyQuestions.controller("SurveyQuestionsController", ["$scope", "$http", "$state", "$stateParams", "API", "StartPageStaticData", "StartPageStateData", ($scope, $http, $state, $stateParams, API, StartPageStaticData, StartPageStateData) ->
     $scope.allTopics = StartPageStaticData.topics                 # all the topics
     $scope.selectedTopicIds = StartPageStateData.selectedTopics     # the ids of the topics the user selected
-    $scope.currentTopicId = $routeParams.id
+    $scope.currentTopicId = $stateParams.id
     $scope.currentTopic = $scope.allTopics[$scope.currentTopicId].name # the topic we're doing now
 
     $scope.questions = StartPageStaticData.getQuestionsForTopic($scope.currentTopicId)
@@ -89,7 +77,7 @@ surveyQuestions.controller("SurveyQuestionsController", ["$scope", "$http", "$lo
             tmp[topicId] = StartPageStateData.getResponsesForTopic(topicId)
         StartPageStateData.clearResponses()
         StartPageStateData.addResponsesForTopic(topicId, checkModel) for topicId, checkModel of tmp
-        $location.path("summary")
+        $state.go("summary")
 
     # Helper function to advance to the question for the next topic
     handleAdvanceToQuestions = (topicId) ->
@@ -97,7 +85,7 @@ surveyQuestions.controller("SurveyQuestionsController", ["$scope", "$http", "$lo
             match = currentState.match(statePattern)
             i = parseInt(match[1])
             StartPageStateData.currentState = "questions-#{i+1}"
-        $location.path("questions/#{topicId}")
+        $state.go("questions", { id: topicId })
 
     # Call either handleAdvanceToQuestions or handleAdvanceToSummary depending on
     # if there are more topics to answer questions for
@@ -111,11 +99,11 @@ surveyQuestions.controller("SurveyQuestionsController", ["$scope", "$http", "$lo
 
     # Helper function to move back to the topic selection page
     handleBackToTopics = ->
-        $location.path("topics")
+        $state.go("topics")
 
     # Helper function to move back to another question page
     handleBackToQuestions = (topicId) ->
-        $location.path("questions/#{topicId}")
+        $state.go("questions", { id: topicId })
 
     # Call either handleBackToTopics or handleBackToQuestions depending on
     # if the previous page is the topic selection page or not
