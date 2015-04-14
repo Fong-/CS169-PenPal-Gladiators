@@ -6,6 +6,10 @@ angular.module("SharedServices").service("API", ["$http", ($http) ->
         request = generateRequest("topics")
         $http.get(request)
 
+    this.authenticate = (token) ->
+        request = generateRequest("authenticate")
+        $http.get(request, { access_token: token })
+
     this.login = (email, password) ->
         request = generateRequest("login")
         $http.post(request, { email: email, password: password })

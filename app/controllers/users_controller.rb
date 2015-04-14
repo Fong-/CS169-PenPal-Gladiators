@@ -1,26 +1,19 @@
-include AccessTokenHelper
-
 class UsersController < ActionController::Base
     ERROR_MESSAGES = {
         :invalid_login => "incorrect credentials",
         :invalid_email => "invalid email",
         :invalid_password => "invalid password",
-        :email_exists => "email already exists"
+        :email_exists => "email already exists",
     }
 
     def authenticate
-        if params_are_invalid(params)
-            return
-        end
+        token = params[:access_token]
+        token_results = User.parse_access_token(token)
 
-        email = params[:email]
-        password = params[:password]
-
-        user = User.find_by_credentials(email, password)
-        if user.present?
-            render :json => {:success => "true", :token => user.access_token}
+        if token_results.has_key?(:error)
+            render :json => { :error => :failed }
         else
-            render :json => {:error => ERROR_MESSAGES[:invalid_login]}
+            render :json => {}
         end
     end
 
@@ -32,8 +25,9 @@ class UsersController < ActionController::Base
         email = params[:email]
         password = params[:password]
 
-        if User.exists_with_password(email, password)
-            render :json => {:success => "true"}
+        user = User.find_by_credentials(email, password)
+        if user.present?
+            render :json => {:token => user.access_token}
         else
             render :json => {:error => ERROR_MESSAGES[:invalid_login]}
         end
@@ -57,7 +51,7 @@ class UsersController < ActionController::Base
             return false
         end
 
-        render :json => {:success => "true"}
+        render :json => {}
         return true
     end
 
@@ -78,6 +72,6 @@ class UsersController < ActionController::Base
 
     def post_profile_info_by_id
         User.find(params[:id]).update_profile(params)
-        render :json => { :success => "true" }
+        render :json => {}
     end
 end
