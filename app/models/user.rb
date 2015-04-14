@@ -29,7 +29,7 @@ class User < ActiveRecord::Base
         return User.find_by_email(email).present?
     end
 
-    def self.exists_with_password(email, password)
+    def self.exists_with_credentials(email, password)
         return User.find_by_credentials(email, password).present?
     end
 
