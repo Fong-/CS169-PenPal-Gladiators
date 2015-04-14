@@ -8,6 +8,7 @@ class UsersController < ActionController::Base
 
     def authenticate
         token = params[:access_token]
+
         token_results = User.parse_access_token(token)
 
         if token_results.has_key?(:error)
