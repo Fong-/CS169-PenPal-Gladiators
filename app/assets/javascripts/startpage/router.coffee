@@ -11,10 +11,8 @@ router.config(["$stateProvider", "$urlRouterProvider", ($stateProvider, $urlRout
         resolve: {
             loggedIn: ["Authentication", (Authentication) ->
                 return Authentication.isLoggedIn(false).then(
-                    (result) ->
-                        return true
-                    (reason) ->
-                        return false
+                    (result) -> true
+                    (reason) -> false
                 )
             ]
         }
