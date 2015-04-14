@@ -19,19 +19,22 @@ router.config(["$stateProvider", "$urlRouterProvider", ($stateProvider, $urlRout
                 controller: "SidebarController"
             }
         }
-        resolve: {
-            loggedIn: ["Authentication", (Authentication) -> Authentication.isLoggedIn()]
-        }
     })
     .state("home", {
         parent: "root"
         url: "/"
         templateUrl: "/assets/home.html"
+        resolve: {
+            loggedIn: ["Authentication", (Authentication) -> Authentication.isLoggedIn()]
+        }
     })
     .state("profile", {
         parent: "root"
         url: "/profile/{id:int}"
         templateUrl: "/assets/profile.html"
         controller: "ProfileController"
+        resolve: {
+            loggedIn: ["Authentication", (Authentication) -> Authentication.isLoggedIn()]
+        }
     })
 ])
