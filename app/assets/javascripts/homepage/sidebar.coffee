@@ -54,6 +54,11 @@ sidebar.controller("SidebarController", ["$scope", "$http", "$state", "API", "Ti
     $scope.inboundRequests = {}
     at_least_one_match = false
 
+    $scope.requestsMenuState = false
+    $scope.toggleRequestsMenu = () -> $scope.requestsMenuState = !$scope.requestsMenuState
+    $scope.expandRequestsMenu = () -> if $scope.requestsMenuState then "glyphicon glyphicon-chevron-up" else "glyphicon glyphicon-chevron-down"
+
+
     # Request matches from the matching algorithm
     $scope.request_matches = () ->
         API.requestMatches(currentUserId).success (matches) ->

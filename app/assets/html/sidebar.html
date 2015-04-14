@@ -1,16 +1,31 @@
 <div class="nav-side-menu" ng-controller="SidebarController">
+
     <div class="matching-bar-container">
-        <a class="btn btn-primary toggle-matching-menu">Request matches</a>
-        <div class="request-matching-menu">
-            <a class="btn btn-primary fetch-profiles">Match me!</a>
+
+        <!-- Temporary solution for opening requests menu
+             Possible implementation: use bootstrap popover directives to open a menu to the left size
+             for now, using expanding -->
+        <div class="requests-heading-container" ng-click="toggleRequestsMenu()">
+            <a class="requests-heading">Find gladiators</a>
+            <span class="{{ expandRequestsMenu() }} click-to-expand-requests"></span>
         </div>
+
+        <div class="requests-menu" ng-show="requestsMenuState">
+            <a class="btn btn-primary request-matches">Match me!</a>
+        </div>
+
         <div class="sent-requests">
-            <p> sent requests </p>
+            <p> Sent requests </p>
+            <!-- TODO: call the API and populate this list with ng-repeat -->
         </div>
+
         <div class="received-requests">
-            <p> received requests </p>
+            <p> Requests from other gladiators </p>
+            <!-- TODO: call the API and populate this list with ng-repeat -->
         </div>
+
     </div>
+
     <div class="menu-list">
         <ul class="menu-content">
             <li ng-repeat="gladiatorId in gladiatorIds">
