@@ -8,7 +8,7 @@ angular.module("SharedServices").service("API", ["$http", ($http) ->
 
     this.authenticate = (token) ->
         request = generateRequest("authenticate")
-        params = { access_token: token }
+        params = { token: token }
         $http.get(request, { params: params })
 
     this.login = (email, password) ->

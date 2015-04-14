@@ -7,7 +7,7 @@ class UsersController < ActionController::Base
     }
 
     def authenticate
-        token = params[:access_token]
+        token = params[:token]
 
         token_results = User.parse_access_token(token)
 
@@ -36,12 +36,15 @@ class UsersController < ActionController::Base
 
     def register
         if can_user_register(params)
-            User.create :email => params[:email], :password => params[:password]
+            user = User.create :email => params[:email], :password => params[:password]
+            render :json => {:token => user.access_token}
         end
     end
 
     def can_register
-        can_user_register(params)
+        if can_user_register(params)
+            render :json => {}
+        end
     end
 
     def can_user_register(params)
@@ -52,7 +55,6 @@ class UsersController < ActionController::Base
             return false
         end
 
-        render :json => {}
         return true
     end
 
