@@ -14,14 +14,9 @@ login.controller("LoginController", ["$state", "$window", "$scope", "$cookieStor
             (result) ->
                 data = result.data
                 if data? and "error" not of data and "token" of data
-                    token = data["token"]
-                    user = $cookieStore.get("user")
-                    if user?
-                        user.accessToken = token
-                    else
-                        user = { accessToken: token }
+                    user = { accessToken: data["token"] }
                     $cookieStore.put("user", user)
-                    $window.location.href = "/#/blah"
+                    $window.location.href = "/#/"
                 else
                     $scope.status = if data then data["error"] else "Oops, an error occurred."
             (reason) ->
