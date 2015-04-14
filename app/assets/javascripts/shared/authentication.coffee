@@ -2,7 +2,13 @@ angular.module("SharedServices").service("Authentication", ["$cookieStore", "$q"
     rejectPromise = $q.reject("Invalid authentication")
 
     this.isLoggedIn = (redirectToLogin = true) ->
-        handleFailure = if redirectToLogin then () -> $window.location.href = "/login" else () -> rejectPromise
+        if redirectToLogin
+            handleFailure = () ->
+                $window.location.href = "/login"
+                return rejectPromise
+        else
+            handleFailure = () ->
+                return rejectPromise
 
         user = $cookieStore.get("user")
         if user? and user.accessToken?
