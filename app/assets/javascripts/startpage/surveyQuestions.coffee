@@ -174,9 +174,6 @@ surveyQuestions.controller("SurveyQuestionsController", ["$scope", "$http", "$st
             $scope.firstUnansweredQuestionId = question.id
             return true
 
-    #$scope.questionHighlightClass = (question) ->
-    #    return if shouldBeHighlighted(question) then "highlighter" else ""
-
     # Asynchronously load the list of questions for a topic
     load_questions = (topicId) ->
         if $scope.questions.length == 0
