@@ -42,11 +42,21 @@ And /^I answer all the questions$/ do
 end
 
 Then /^I should( not)? see question (\d+) highlighted$/ do |should_not_see, question_num|
-    pending "Unimplemented"
+    selector = "#question#{question_num}.highlighter"
+    if should_not_see
+        expect(page).not_to have_css(selector)
+    else
+        expect(page).to have_css(selector)
+    end
 end
 
 Then /^I should not see any question highlighted$/ do
-    pending "Unimplemented"
+    # Use find so Capybara will wait for site to load questions
+    find("#question1")
+    questions = all(".question-container")
+    (1..questions.length).each do |question_num|
+        step "I should not see question #{question_num} highlighted"
+    end
 end
 
 And /^I select response (\d+) for question (\d+)$/ do |response_num, question_num|
@@ -55,7 +65,7 @@ end
 
 And /^I select response (\d+) for every question$/ do |response_num|
     # Use find so Capybara will wait for site to load questions
-    find(".question-container")
+    find("#question1")
     questions = all(".question-container")
     (1..questions.length).each do |question_num|
         step "I select response #{response_num} for question #{question_num}"
