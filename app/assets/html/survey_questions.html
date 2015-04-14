@@ -3,7 +3,7 @@
     <p id="description">{{ pageDescription() }}</p>
     <div class="spacing"></div>
     <div id="topic-questions-container">
-        <div id="question{{$index+1}}" class="question-container" ng-repeat="question in questions">
+        <div id="question{{$index+1}}" class="question-container" ng-repeat="question in questions" highlighter="firstUnansweredQuestionId" question="{{question}}">
             <div class="question-text">{{ question.text }}</div>
             <div class="question-responses-container">
                 <div class="response" ng-repeat="response in question.survey_responses">
