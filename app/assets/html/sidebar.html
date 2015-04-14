@@ -1,6 +1,10 @@
 <div class="nav-side-menu" ng-controller="SidebarController">
-
     <div class="matching-bar-container">
+        <!-- TODO:
+        - Figure out better verbiage for matching (both frontend HTML
+        and angular/API calls)
+        - Hide divs when there's no applicable content
+        -->
 
         <!-- Temporary solution for opening requests menu
              Possible implementation: use bootstrap popover directives to open a menu to the left size
@@ -11,19 +15,20 @@
         </div>
 
         <div class="requests-menu" ng-show="requestsMenuState">
-            <a class="btn btn-primary request-matches">Match me!</a>
+            <a class="btn btn-primary request-matches">Match Me!</a>
         </div>
 
         <div class="sent-requests">
             <p> Sent requests </p>
-            <!-- TODO: call the API and populate this list with ng-repeat -->
+            <!-- TODO: Populate this list with ng-repeat on $scope.outboundRequests -->
         </div>
 
         <div class="received-requests">
-            <p> Requests from other gladiators </p>
-            <!-- TODO: call the API and populate this list with ng-repeat -->
+            <p> Match Requests from other Gladiators </p>
+            <!-- TODO: Populate this list with ng-repeat on $scope.inboundRequests
+                    Call decline_match(userID) to decline and accept_match(userID) to accept
+            -->
         </div>
-
     </div>
 
     <div class="menu-list">
