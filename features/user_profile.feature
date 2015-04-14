@@ -5,10 +5,9 @@ Feature: Edit and display a user profile
     I want to create a Gladiator-public user profile for myself
 
 Background: I am on my user profile page
-    Given I am a user with email "hello@world.net" and password "helloWorld"
+    Given I sign in as "hello@world.net" with password "helloWorld"
     And I am on the profile page
     Then I should be on the profile page
-
 
 # Consider using identicons and uploaded photo (a la GitHub)
 #
@@ -40,6 +39,14 @@ Scenario: Write a political blurb
     And I fill in "blurb" with "I appreciate Foo Bar's dedication to Widgets"
     And I press "Save Changes"
     Then I should see the text "I appreciate Foo Bar's dedication to Widgets" for "blurb"
+
+Scenario: Save changes
+    When I press "Edit Your Profile"
+    And I fill in "blurb" with "I hate everyone"
+    And I press "Save Changes"
+    And I follow "Home"
+    And I follow "Profile"
+    Then I should see the text "I hate everyone" for "blurb"
 
 Scenario: View other Gladiator's profile
     Given "Garply" has a political hero of "Widget"

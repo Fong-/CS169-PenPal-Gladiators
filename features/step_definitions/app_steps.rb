@@ -9,20 +9,11 @@ Given /^the database is setup$/ do
     pending "Unimplemented"
 end
 
-Given /^I selected (.*?) topics$/ do |num_topics|
-    pending "Unimplemented"
-end
-
-Given /^I am a new user$/ do
-    # What is this...I am a new user doing what...?
-    pending "Unimplemented"
-end
-
 Given /^an arena is set up with posts from (.*) ago$/ do |age_strings|
     age_strings = age_strings.split(",").map {|c| c.strip}
     users = [
-        User.create(:email => "a@b.com", :password => "asdfasdf"),
-        User.create(:email => "u@v.com", :password => "qwerqwer")
+        User.create(:email => "alice@example.com", :password => "12345678"),
+        User.create(:email => "bob@example.com", :password => "12345678")
     ]
     arena = users[0].arenas.create :user1 => users[0], :user2 => users[1]
     conversation = arena.conversations.create :title => "From how long ago are you posting?"
@@ -42,8 +33,8 @@ Given /^an arena is set up with posts containing (.*)$/ do |messages|
         c[1...c.length - 1]
     end
     users = [
-        User.create(:email => "w@x.com", :password => "tyuityui"),
-        User.create(:email => "y@z.com", :password => "zxcvzxcv")
+        User.create(:email => "alice@example.com", :password => "12345678"),
+        User.create(:email => "bob@example.com", :password => "12345678")
     ]
     arena = users[0].arenas.create :user1 => users[0], :user2 => users[1]
     conversation = arena.conversations.create :title => "What messages are you posting?"
@@ -53,8 +44,8 @@ Given /^an arena is set up with posts containing (.*)$/ do |messages|
 end
 
 Given /^an empty arena is set up$/ do
-    first = User.create(:email => "p@q.com", :password => "tyuityui")
-    second = User.create(:email => "m@n.com", :password => "uiopuiop")
+    first = User.create(:email => "alice@example.com", :password => "password")
+    second = User.create(:email => "bob@example.com", :password => "password")
     arena = first.arenas.create :user1 => first, :user2 => second
     conversation = arena.conversations.create :title => "Why do you never post in here?"
 end
@@ -67,8 +58,8 @@ Given /^I am on (?:the|a|my) (.*?) page$/ do |page_name|
             visit "/login"
         when "Survey Topic Checkboxes"
             visit "/login"
-            step 'I fill in "email" with "foo@bar.com"'
-            step 'I fill in "password" with "fizzbuzz"'
+            step 'I fill in "email" with "alice@example.com"'
+            step 'I fill in "password" with "12345678"'
             step 'I press "Start Registration"'
         when "survey"
             pending "No survey route."
@@ -87,8 +78,19 @@ When /^I expand all names in the sidebar$/ do
     find(".gladiator-heading-container").click
 end
 
-Given /^I am signed in with "(.*)"$/ do |email|
+Given /^I sign in$/ do
+    step 'I sign in as "alice@example.com" with password "12345678"'
+end
 
+Given /^I sign in as "(.*)" with password "(.*)"$/ do |email, password|
+    unless User.exists_with_credentials(email, password)
+        User.create({:email => email, :password => password})
+    end
+    visit "/"
+    step "I fill in \"email\" with \"#{email}\""
+    step "I fill in \"password\" with \"#{password}\""
+    step 'I press "Login"'
+    step "I should be on the home page"
 end
 
 # Checking page identity
@@ -100,7 +102,7 @@ Then /I should be on the (.*?) page/ do |page_name|
     when "profile"
         page.should have_content "My Position on the Political Spectrum"
     when "home"
-        pending "Check that I am on the home page."
+        page.should have_content "News"
     else
         raise "No check for the #{page_name} page."
     end
