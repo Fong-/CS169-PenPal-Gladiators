@@ -48,7 +48,7 @@ sidebar.controller("SidebarController", ["$scope", "$http", "$state", "API", "Ti
             console.log "sidebar failed: #{reason}"
 
     # Matching
-    # TODO: API endpoints and add calls to API service
+    # TODO: API endpoints and add calls to API service, better verbiage
     $scope.matchedGladiators = {}
     $scope.outboundRequests = {}
     $scope.inboundRequests = {}
@@ -57,7 +57,6 @@ sidebar.controller("SidebarController", ["$scope", "$http", "$state", "API", "Ti
     $scope.requestsMenuState = false
     $scope.toggleRequestsMenu = () -> $scope.requestsMenuState = !$scope.requestsMenuState
     $scope.expandRequestsMenu = () -> if $scope.requestsMenuState then "glyphicon glyphicon-chevron-up" else "glyphicon glyphicon-chevron-down"
-
 
     # Request matches from the matching algorithm
     $scope.request_matches = () ->
