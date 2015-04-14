@@ -1,6 +1,9 @@
 login = angular.module("Login", ["SharedServices", "StartPageServices"])
 
-login.controller("LoginController", ["$state", "$window", "$scope", "API", "StartPageStateData", ($state, $window, $scope, API, StartPageStateData) ->
+login.controller("LoginController", ["$state", "$window", "$scope", "API", "StartPageStateData", "loggedIn", ($state, $window, $scope, API, StartPageStateData, loggedIn) ->
+    if loggedIn
+        $window.location.href = "/"
+
     $scope.email = ""
     $scope.password = ""
     $scope.description = ""
@@ -21,14 +24,11 @@ login.controller("LoginController", ["$state", "$window", "$scope", "API", "Star
 
     $scope.can_register = () ->
         API.canRegister($scope.email, $scope.password).success((data) ->
-            if data && data["success"]
-                # TODO Authentication Handling
-                document.cookie = "email=" + $scope.email
-                document.cookie = "password=" + $scope.password
+            if "error" of data
+                $scope.status = if data then data["error"] else "Oops, an error occurred."
+            else
                 StartPageStateData.email = $scope.email
                 StartPageStateData.password = $scope.password
                 $state.go("topics")
-            else
-                $scope.status = if data then data["error"] else "Oops, an error occurred."
         )
 ])
