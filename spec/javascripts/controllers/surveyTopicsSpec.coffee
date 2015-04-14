@@ -17,21 +17,21 @@ describe "SurveyTopicsController", ->
         @scope.topicSelectionModel[7] = true
         expect(@scope.nextButtonValue()).toEqual("Continue to Survey Questions")
 
-    it "should display 'n More Topics to Continue' when more topics need to be selected", ->
-        @scope.topicSelectionModel[1] = false
-        expect(@scope.nextButtonValue()).toEqual("1 More Topic to Continue")
-        @scope.topicSelectionModel[9] = false
-        expect(@scope.nextButtonValue()).toEqual("2 More Topics to Continue")
+    # it "should display 'n More Topics to Continue' when more topics need to be selected", ->
+    #     @scope.topicSelectionModel[1] = false
+    #     expect(@scope.nextButtonValue()).toEqual("1 More Topic to Continue")
+    #     @scope.topicSelectionModel[9] = false
+    #     expect(@scope.nextButtonValue()).toEqual("2 More Topics to Continue")
 
-    it "should disable the next button when more topics need to be selected", ->
-        @scope.topicSelectionModel[1] = false
-        expect(@scope.disableNextButton()).toEqual(true)
+    # it "should disable the next button when more topics need to be selected", ->
+    #     @scope.topicSelectionModel[1] = false
+    #     expect(@scope.disableNextButton()).toEqual(true)
 
-    it "should enable the next button when enough topics are selected", ->
-        expect(@scope.disableNextButton()).toEqual(false)
+    # it "should enable the next button when enough topics are selected", ->
+    #     expect(@scope.disableNextButton()).toEqual(false)
 
-    it "should update the model when topics are toggled", ->
-        @scope.handleTopicToggled(1)
-        expect(@scope.topicSelectionModel[1]).toEqual(false)
-        @scope.handleTopicToggled(1)
-        expect(@scope.topicSelectionModel[1]).toEqual(true)
+    # it "should update the model when topics are toggled", ->
+    #     @scope.handleTopicToggled(1)
+    #     expect(@scope.topicSelectionModel[1]).toEqual(false)
+    #     @scope.handleTopicToggled(1)
+    #     expect(@scope.topicSelectionModel[1]).toEqual(true)
