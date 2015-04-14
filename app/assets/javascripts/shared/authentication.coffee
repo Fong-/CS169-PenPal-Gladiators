@@ -1,4 +1,4 @@
-angular.module("SharedServices").service("Authentication", ["$cookieStore", "$q", "$window", "API", ($cookieStore, $q, $window, API) ->
+angular.module("SharedServices").service("Authentication", ["$cookieStore", "$q", "$window", "API", "AppState", ($cookieStore, $q, $window, API, AppState) ->
     rejectPromise = $q.reject("Invalid authentication")
 
     this.isLoggedIn = (redirectToLogin = true) ->
