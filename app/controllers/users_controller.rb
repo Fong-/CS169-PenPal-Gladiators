@@ -4,6 +4,7 @@ class UsersController < ActionController::Base
         :invalid_email => "invalid email",
         :invalid_password => "invalid password",
         :email_exists => "email already exists",
+        :user_not_found => "user not found"
     }
 
     def authenticate
@@ -70,11 +71,21 @@ class UsersController < ActionController::Base
     end
 
     def get_profile_info_by_id
-        render :json => User.find(params[:id]).profile_response_object
+        user = User.find_by_id(params[:id])
+        if user.present?
+            render :json => user.profile_response_object
+        else
+            render :json => { :error => ERROR_MESSAGES[:user_not_found] }
+        end
     end
 
     def post_profile_info_by_id
-        User.find(params[:id]).update_profile(params)
-        render :json => {}
+        user = User.find_by_id(params[:id])
+        if user.present?
+            User.find(params[:id]).update_profile(params)
+            render :json => {}
+        else
+            render :json => { :error => ERROR_MESSAGES[:user_not_found] }
+        end
     end
 end
