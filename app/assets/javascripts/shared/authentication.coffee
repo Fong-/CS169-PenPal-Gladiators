@@ -7,8 +7,7 @@ angular.module("SharedServices").service("Authentication", ["$cookieStore", "$q"
                 $window.location.href = "/login"
                 return rejectPromise
         else
-            handleFailure = () ->
-                return rejectPromise
+            handleFailure = () -> rejectPromise
 
         user = $cookieStore.get("user")
         if user? and user.accessToken?
@@ -17,8 +16,7 @@ angular.module("SharedServices").service("Authentication", ["$cookieStore", "$q"
                     if "error" of result
                         return handleFailure()
                     return result
-                (reason) ->
-                    return handleFailure()
+                (reason) -> handleFailure()
             )
         else
             return handleFailure()

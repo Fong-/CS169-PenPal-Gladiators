@@ -7,6 +7,7 @@ describe "SurveyTopicsController", ->
             icon: "/fake/path",
             id: 1
         }]);
+        @http.expectGET("/api/v1/topics")
         @controller("SurveyTopicsController", { $scope: @scope })
         @scope.topicSelectionModel = { 1: true, 2: false, 3: true, 4: true, 5: false, 6: true, 7: false, 8: false, 9: true, 10: false }
         @http.flush();
