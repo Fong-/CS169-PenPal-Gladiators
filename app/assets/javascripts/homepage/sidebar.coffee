@@ -48,6 +48,7 @@ sidebar.controller("SidebarController", ["$scope", "$http", "$state", "API", "Ti
             console.log "sidebar failed: #{reason}"
 
     # Matching
+    # TODO: API endpoints and add calls to API service
     $scope.matchedGladiators = {}
     $scope.outboundRequests = {}
     $scope.inboundRequests = {}
@@ -67,10 +68,22 @@ sidebar.controller("SidebarController", ["$scope", "$http", "$state", "API", "Ti
     # Accept a match request
     $scope.accept_match = (otherUserId) ->
         API.acceptMatch(otherUserId).success (accept) ->
-            # Do something
+            # Do something?
 
     # Decline a match request
     $scope.decline_match = (otherUserId) ->
-        API.declineMatch(otherUserId).success (decline)
-            # Do something
+        API.declineMatch(otherUserId).success (decline) ->
+            # Do something?
+
+    # Query the server for new inbound matching requests
+    $scope.inbound_requests = () ->
+        API.inboundRequests().success (requests) ->
+            for request in requests
+                $scope.inboundRequests[request.id] = request.username
+
+    # Query the server for new responses to requests that were sent out before
+    $scope.outbound_requests = () ->
+        API.outboundRequests().success (requests) ->
+            for request in requests
+                $scope.outboundRequests[request.id] = {username: request.username, status: request.status}
 ])
