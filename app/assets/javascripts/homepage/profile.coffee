@@ -1,7 +1,6 @@
 profile = angular.module("Profile",["SharedServices", "ProfilePageServices"])
 
 profile.controller("ProfileController", ["$http", "$location", "$scope", "$stateParams", "API", "ProfilePageData", ($http, $location, $scope, $stateParams, API, ProfilePageData) ->
-    console.log "hi"
     # moduleState can be either "view" or "edit"
     $scope.moduleState = "view"
 
