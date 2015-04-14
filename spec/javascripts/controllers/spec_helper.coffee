@@ -22,6 +22,10 @@ beforeEach inject (_$httpBackend_, _$compile_, $rootScope, $controller, $locatio
       @scope.$digest()
   @sandbox = sinon.sandbox.create()
 
+# HACK Terrible workaround assets loading
+beforeEach ->
+  @http.when("GET", /\/assets\/.*/).respond("<div></div>")
+
 afterEach ->
   @http.resetExpectations()
   @http.verifyNoOutstandingExpectation()
