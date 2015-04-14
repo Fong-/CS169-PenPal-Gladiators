@@ -5,8 +5,7 @@ Feature: allow the user to navigate the site using the navigation bar
     I want to use the navigation bar
 
 Background: I am a registered gladiator who is navigating the site
-    Given I am a user with email "foo@bar.com" and password "fizzbuzz"
-    And I am on the home page
+    Given I sign in as "foo@bar.com" with password "fizzbuzz"
 
 Scenario: can navigate to the profile page and back
     Given I am on the home page

@@ -1,16 +1,11 @@
 surveySummary = angular.module("SurveySummary", ["StartPageServices"])
 
-surveySummary.config(["$routeProvider", ($routeProvider) ->
-    $routeProvider
-    .when("/summary", {
-        templateUrl: "/assets/survey_summary.html",
-        controller: "SurveySummaryController"
-    })
-])
+surveySummary.controller("SurveySummaryController", ["$scope", "$http", "$state", "$cookieStore", "$window", "StartPageStaticData", "StartPageStateData", "API", ($scope, $http, $state, $cookieStore, $window, StartPageStaticData, StartPageStateData, API) ->
+    $scope.submitRegistrationText = "Finish Registration"
 
-surveySummary.controller("SurveySummaryController", ["$scope", "$http", "$location", "StartPageStaticData", "StartPageStateData", ($scope, $http, $location, StartPageStaticData, StartPageStateData) ->
-    allTopics = StartPageStaticData.topics
+    # Save user selected topics
     $scope.selectedTopics = {}
+    allTopics = StartPageStaticData.topics
     for topicId in StartPageStateData.selectedTopics
         $scope.selectedTopics[topicId] = allTopics[topicId]
 
@@ -27,10 +22,25 @@ surveySummary.controller("SurveySummaryController", ["$scope", "$http", "$locati
 
     # Move to the edit page for questions of a topic
     $scope.editResponses = (topicId) ->
-        $location.path("questions/#{topicId}")
+        $state.go("questions", { id: topicId })
 
     # Register the user into the database and move to the homepage
     $scope.handleRegister = ->
-        # TODO
+        $scope.submitRegistrationText = "Registering..."
+        API.register(StartPageStateData.email, StartPageStateData.password).then(
+            (result) ->
+                data = result.data
+                if data? and "error" not of data and "token" of data
+                    user = { accessToken: data["token"] }
+                    $cookieStore.put("user", user)
+                    $window.location.href = "/#/"
+                else
+                    $scope.status = if data then data["error"] else "Oops, an error occurred."
+            (reason) ->
+                $scope.status = "Oops, an error occurred. Try again!"
+        ).finally(() ->
+            $scope.submitRegistrationText = "Try Again"
+        )
+
         return
 ])
