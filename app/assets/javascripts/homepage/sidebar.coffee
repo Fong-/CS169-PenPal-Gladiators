@@ -52,6 +52,7 @@ sidebar.controller("SidebarController", ["$scope", "$http", "$state", "API", "Ti
     $scope.matchedGladiators = {}
     $scope.outboundRequests = {}
     $scope.inboundRequests = {}
+    at_least_one_match = false
 
     # Request matches from the matching algorithm
     $scope.request_matches = () ->
@@ -59,6 +60,7 @@ sidebar.controller("SidebarController", ["$scope", "$http", "$state", "API", "Ti
             for match in matches
                 # Assume (naively) that the API gives us an 'id' and 'username'
                 $scope.matchedGladiators[match.id] = match.username
+                at_least_one_match = true
 
     # Request to be matched with another Gladiator
     $scope.request_match = (otherUserId) ->
@@ -86,4 +88,10 @@ sidebar.controller("SidebarController", ["$scope", "$http", "$state", "API", "Ti
         API.outboundRequests().success (requests) ->
             for request in requests
                 $scope.outboundRequests[request.id] = {username: request.username, status: request.status}
+
+    # This is hacky because it calls request_matches, so it's not really necessary to call it again from the view
+    # Clean this up later
+    $scope.can_match = () ->
+        $scope.request_matches
+        return at_least_one_match
 ])
