@@ -1,9 +1,9 @@
 <div class="nav-side-menu" ng-controller="SidebarController">
     <div class="matching-bar-container">
         <!-- TODO:
-        - Figure out better verbiage for matching (both frontend HTML
-        and angular/API calls)
+        - Figure out better verbiage for matching (both frontend HTML and angular/API calls)
         - Hide divs when there's no applicable content
+        - Fix other TODOs
         -->
 
         <!-- Temporary solution for opening requests menu
@@ -18,16 +18,23 @@
             <a class="btn btn-primary request-matches">Match Me!</a>
         </div>
 
-        <div class="sent-requests">
+        <div class="sent-requests-continer">
             <p> Sent requests </p>
-            <!-- TODO: Populate this list with ng-repeat on $scope.outboundRequests -->
+            <div class="sent-requests" ng-repeat="request in outboundRequests">
+                <!-- TODO: Refactor this - consider a table or better verbiage -->
+                <span class="request-text">{{ request.username }}: {{ request.status }}</span>
+            </div>
         </div>
 
-        <div class="received-requests">
+        <div class="received-requests-container">
             <p> Match Requests from other Gladiators </p>
-            <!-- TODO: Populate this list with ng-repeat on $scope.inboundRequests
-                    Call decline_match(userID) to decline and accept_match(userID) to accept
-            -->
+            <div class="received-requests" ng-repeat="request in inboundRequests">
+                <!-- TODO:
+                        - Add a button that calls decline_match(userID)
+                        - Add a button that calls accept_match(userID)
+                -->
+                <span class="request-text">{{ request.username }}</span>
+            </div>
         </div>
     </div>
 
