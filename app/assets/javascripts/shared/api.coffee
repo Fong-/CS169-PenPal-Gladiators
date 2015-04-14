@@ -15,6 +15,10 @@ angular.module("SharedServices").service("API", ["$http", ($http) ->
         request = generateRequest("login")
         $http.post(request, { email: email, password: password })
 
+    this.register = (email, password) ->
+        request = generateRequest("register")
+        $http.post(request, { email: email, password: password })
+
     this.canRegister = (email, password) ->
         request = generateRequest("register")
         params = { email: email, password: password }
@@ -35,7 +39,7 @@ angular.module("SharedServices").service("API", ["$http", ($http) ->
     this.updateProfileByUID = (userId, username, avatar, blurb, hero, spectrum) ->
         request = generateRequest("user/#{userId}/profile")
         params = { username: username, avatar: avatar, political_blurb: blurb, political_hero: hero, political_spectrum: spectrum}
-        $http.post(request, { params: params })
+        $http.post(request, params)
 
     this.requestArenasByUser = (userId) ->
         request = generateRequest("arenas/#{userId}")
