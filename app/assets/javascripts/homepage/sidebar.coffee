@@ -80,13 +80,15 @@ sidebar.controller("SidebarController", ["$scope", "$http", "$state", "API", "Ti
     # This should be triggered by a button press in the view
     $scope.accept_match = (otherUserId) ->
         API.acceptMatch(otherUserId).success (accept) ->
-            # Do something?
+            # Remove the user from inboundRequests
+            delete inboundRequests[otherUserId]
 
     # Decline a match request
     # This should be triggered by a button press in the view
     $scope.decline_match = (otherUserId) ->
         API.declineMatch(otherUserId).success (decline) ->
-            # Do something?
+            # Remove the user from inboundRequests
+            delete inboundRequests[otherUserId]
 
     # Query the server for new inbound matching requests
     # Assume that the API gives us objects with an 'id' and 'username'
