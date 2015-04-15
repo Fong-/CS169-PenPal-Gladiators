@@ -19,7 +19,7 @@ require 'capybara/poltergeist'
 
 # Set the Capybara javascript driver to use poltergeist
 Capybara.javascript_driver = :poltergeist
-Capybara.default_wait_time = 5
+Capybara.default_wait_time = 10
 
 # By default, any exception happening in your Rails application will bubble up
 # to Cucumber so that your scenario will fail. This is a different from how
