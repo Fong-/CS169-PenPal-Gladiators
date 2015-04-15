@@ -1,4 +1,6 @@
 class SurveyQuestionsController < ApplicationController
+    skip_filter :check_access_token
+
     def get_all
         render :json => SurveyQuestion.all.map { |question| question.response_object }
     end
