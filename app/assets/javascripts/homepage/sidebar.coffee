@@ -1,5 +1,24 @@
 sidebar = angular.module("Sidebar", ["SharedServices"])
 
+sidebar.directive("requestsPopover", ["$compile", "$templateCache", ($compile, $templateCache) ->
+    getTemplate = () -> $templateCache.get("requests_content.html")
+
+    obj =
+        restrict: "A"
+        link: (scope, element, attrs) ->
+            #scope.request_matches()
+
+            popOverContent = getTemplate()
+            options =
+                html: true
+                content:  popOverContent
+                placement: "left"
+            $(element).popover options
+
+
+    return obj
+])
+
 sidebar.controller("SidebarController", ["$scope", "$http", "$state", "API", "TimeUtil", "AppState", ($scope, $http, $state, API, TimeUtil, AppState) ->
 
     MAX_PREVIEW_TEXT_LENGTH = 100;
@@ -55,10 +74,6 @@ sidebar.controller("SidebarController", ["$scope", "$http", "$state", "API", "Ti
     at_least_one_match = false
 
     SIDEBAR_POLL_PERIOD = 10000
-
-    $scope.requestsMenuState = false
-    $scope.toggleRequestsMenu = () -> $scope.requestsMenuState = !$scope.requestsMenuState
-    $scope.expandRequestsMenu = () -> if $scope.requestsMenuState then "glyphicon glyphicon-chevron-up" else "glyphicon glyphicon-chevron-down"
 
     # Request matches from the matching algorithm
     # Assume that the API gives us an 'id' and 'username'

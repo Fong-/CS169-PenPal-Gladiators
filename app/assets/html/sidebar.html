@@ -1,3 +1,17 @@
+<script type="text/ng-template" id="requests_content.html">
+    <div class="fetched-users-container">
+        <li ng-repeat="matchedGladiator in matchedGladiators">
+            <div class="fetched-user">
+                <a class="fetched-user-name">{{ matchedGladiator }}</a>
+            </div>
+        </li>
+    </div>
+</script>
+
+<div class="requests-menu">
+    <a requests-popover>Find gladiators!</a>
+</div>
+
 <div class="nav-side-menu" ng-controller="SidebarController">
     <div class="matching-bar-container">
         <!-- TODO:
@@ -6,19 +20,7 @@
         - Fix other TODOs
         -->
 
-        <!-- Temporary solution for opening requests menu
-             Possible implementation: use bootstrap popover directives to open a menu to the left size
-             for now, using expanding -->
-        <div class="requests-heading-container" ng-click="toggleRequestsMenu()">
-            <a class="requests-heading">Find gladiators</a>
-            <span class="{{ expandRequestsMenu() }} click-to-expand-requests"></span>
-        </div>
-
-        <div class="requests-menu" ng-show="requestsMenuState">
-            <a class="btn btn-primary request-matches">Match Me!</a>
-        </div>
-
-        <div class="sent-requests-continer">
+        <div class="sent-requests-container">
             <p> Sent requests </p>
             <div class="sent-requests" ng-repeat="request in outboundRequests">
                 <!-- TODO: Refactor this - consider a table or better verbiage -->
