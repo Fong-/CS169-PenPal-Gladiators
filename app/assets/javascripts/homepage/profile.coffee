@@ -1,13 +1,13 @@
-profile = angular.module("Profile",["SharedServices", "ProfilePageServices"])
+profile = angular.module("Profile",["SharedServices"])
 
-profile.controller("ProfileController", ["$http", "$location", "$scope", "$stateParams", "API", "ProfilePageData", ($http, $location, $scope, $stateParams, API, ProfilePageData) ->
+profile.controller("ProfileController", ["$http", "$location", "$scope", "$stateParams", "API", ($http, $location, $scope, $stateParams, API) ->
     # moduleState can be either "view" or "edit"
     $scope.moduleState = "view"
 
     $scope.loggedInUID = 1 # FIXME Hardcode UID as 1 for now
     $scope.profileUID = $stateParams.id
 
-    $scope.profile = ProfilePageData
+    $scope.profile = {}
 
     # For radio buttons
     $scope.spectrumOptions = {

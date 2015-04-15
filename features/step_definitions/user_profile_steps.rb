@@ -1,3 +1,8 @@
+When /^I am editing my profile$/ do
+    step "I press \"Edit Your Profile\""
+    step "I wait 3 seconds"
+end
+
 Then /^I should see profile pictures to choose from$/ do
     pending "Unimplemented"
 end
@@ -7,15 +12,11 @@ Then /^I should be able to select a profile picture$/ do
 end
 
 Then /^I should be able to select that I am "(.*?)"$/ do |position|
-    choose(position)
+    expect(page).to have_selector("input[type=radio][value='#{position}']")
 end
 
 Then /^I should see the text "(.*?)" for "(.*?)"$/ do |text, id|
     page.find("##{id}").should have_text(text)
-end
-
-Given /^there is a series of radio buttons corresponding to a political "(.*?)"$/ do |spectrum|
-    page.has_content?(spectrum)
 end
 
 Given /^"(.*?)" has a political hero of "(.*?)"$/ do |user, hero|
