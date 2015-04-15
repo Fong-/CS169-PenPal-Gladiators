@@ -1,6 +1,6 @@
 sidebar = angular.module("Sidebar", ["SharedServices"])
 
-sidebar.controller("SidebarController", ["$scope", "$http", "$location", "API", "TimeUtil", ($scope, $http, $location, API, TimeUtil) ->
+sidebar.controller("SidebarController", ["$scope", "$http", "$location", "API", "TimeUtil", "AppState", ($scope, $http, $location, API, TimeUtil, AppState) ->
 
     MAX_PREVIEW_TEXT_LENGTH = 100;
     authorTextForId = (id) -> if id == currentUserId then "You" else $scope.gladiatorNameById[id]
@@ -10,7 +10,7 @@ sidebar.controller("SidebarController", ["$scope", "$http", "$location", "API", 
             "#{authorTextForId(conversation.recent_post.author_id)} said: \"#{previewTextFromPost(conversation.recent_post.text)}\""
         else
             "Looks like no one has made any posts. Be the first to write something!"
-    currentUserId = 1 # Change when hooking into authentication route.
+    currentUserId = AppState.user.id
 
     $scope.conversationsByUserId = {}
     $scope.gladiatorIds = []

@@ -31,6 +31,13 @@ describe UsersController, :type => :controller do
             expect(responseObject["user"]).not_to be(nil)
         end
 
+        it "should return the user response object" do
+            user = double(user, :response_object => {})
+            User.stub(:parse_access_token).and_return({ :user => user })
+            expect(user).to receive(:response_object)
+            post "authenticate", { :token => @access_token }
+        end
+
         it "should complain if authenticated with an invalid access token" do
             prev_secret = @user.secret
             @user.secret = "random string"
