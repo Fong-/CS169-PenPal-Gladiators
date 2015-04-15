@@ -21,6 +21,7 @@ Then /^I should see the text "(.*?)" for "(.*?)"$/ do |text, id|
     puts text
     puts page.find("##{id}")
     puts page.find("##{id}").text
+    puts page.text
     page.find("##{id}").should have_text(text)
 end
 
