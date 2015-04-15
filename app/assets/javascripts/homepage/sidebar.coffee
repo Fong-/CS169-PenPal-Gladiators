@@ -54,12 +54,15 @@ sidebar.controller("SidebarController", ["$scope", "$http", "$state", "API", "Ti
     $scope.inboundRequests = {}
     at_least_one_match = false
 
+    SIDEBAR_POLL_PERIOD = 10000
+
     $scope.requestsMenuState = false
     $scope.toggleRequestsMenu = () -> $scope.requestsMenuState = !$scope.requestsMenuState
     $scope.expandRequestsMenu = () -> if $scope.requestsMenuState then "glyphicon glyphicon-chevron-up" else "glyphicon glyphicon-chevron-down"
 
     # Request matches from the matching algorithm
     # Assume that the API gives us an 'id' and 'username'
+    # This should be triggered by a button press in the view
     $scope.request_matches = () ->
         API.requestMatches(currentUserId).success (matches) ->
             for match in matches
@@ -68,22 +71,26 @@ sidebar.controller("SidebarController", ["$scope", "$http", "$state", "API", "Ti
 
     # Request to be matched with another Gladiator
     # Assume that the API gives us an 'id' and 'username'
+    # This should be triggered by a button press in the view
     $scope.request_match = (otherUserId) ->
         API.requestMatch(otherUserId).success (request) ->
             $scope.outboundRequests.push(request)
 
     # Accept a match request
+    # This should be triggered by a button press in the view
     $scope.accept_match = (otherUserId) ->
         API.acceptMatch(otherUserId).success (accept) ->
             # Do something?
 
     # Decline a match request
+    # This should be triggered by a button press in the view
     $scope.decline_match = (otherUserId) ->
         API.declineMatch(otherUserId).success (decline) ->
             # Do something?
 
     # Query the server for new inbound matching requests
     # Assume that the API gives us objects with an 'id' and 'username'
+    # This is called automatically in setInterval
     $scope.inbound_requests = () ->
         API.inboundRequests().success (requests) ->
             for request in requests
@@ -91,6 +98,7 @@ sidebar.controller("SidebarController", ["$scope", "$http", "$state", "API", "Ti
 
     # Query the server for new responses to requests that were sent out before
     # Assume that the API gives us objects with an 'id', 'username', and 'status' of request
+    # This is called automatically in setInterval
     $scope.outbound_requests = () ->
         API.outboundRequests().success (requests) ->
             for request in requests
@@ -101,4 +109,10 @@ sidebar.controller("SidebarController", ["$scope", "$http", "$state", "API", "Ti
     $scope.can_match = () ->
         $scope.request_matches
         return at_least_one_match
+
+    # Poll the server at a regular interval
+    setInterval(() ->
+        $scope.outbound_requests()
+        $scope.inbound_requests()
+    , SIDEBAR_POLL_PERIOD)
 ])
