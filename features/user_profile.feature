@@ -20,14 +20,14 @@ Background: I am on my user profile page
 #    And I should be able to select an avatar
 
 Scenario: Select a political hero
-    When I press "edit-profile"
+    When I press "Edit Your Profile"
     And I fill in "hero" with "Foo Bar"
     And I press "Save Changes"
     Then I should see the text "Foo Bar" for "hero"
 
 Scenario: Select a position from liberal to conservative
     Given there is a series of radio buttons corresponding to a political "spectrum"
-    And I press "edit-profile"
+    And I press "Edit Your Profile"
     Then I should be able to select that I am "liberal"
     And I should be able to select that I am "moderately-liberal"
     And I should be able to select that I am "moderate"
@@ -35,13 +35,13 @@ Scenario: Select a position from liberal to conservative
     And I should be able to select that I am "conservative"
 
 Scenario: Write a political blurb
-    When I press "edit-profile"
+    When I press "Edit Your Profile"
     And I fill in "blurb" with "I appreciate Foo Bar's dedication to Widgets"
     And I press "Save Changes"
     Then I should see the text "I appreciate Foo Bar's dedication to Widgets" for "blurb"
 
 Scenario: Save changes
-    When I press "edit-profile"
+    When I press "Edit Your Profile"
     And I fill in "blurb" with "I hate everyone"
     And I press "Save Changes"
     And I follow "Home"
