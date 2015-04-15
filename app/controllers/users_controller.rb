@@ -21,7 +21,7 @@ class UsersController < ActionController::Base
             render :json => { :error => :failed }
         else
             user = token_results[:user]
-            render :json => { :user => user.profile_response_object }
+            render :json => { :user => user.response_object }
         end
     end
 
