@@ -6,20 +6,10 @@ describe User do
             users = [
                 {
                     :email => "ben@bitdiddle.com",
-                    :password => "bitsrocks",
-                    :username => "ben",
-                    :avatar => "/path/to/ben.png",
-                    :political_blurb => "I like Ron Bitdiddle",
-                    :political_hero => "Ron Bitdiddle",
-                    :political_spectrum => 2 },
+                },
                 {
-                    :email => "generic@email.com",
-                    :password => "asdfasdf",
-                    :username => "generic",
-                    :avatar => "/path/to/generic.png",
-                    :political_blurb => "Go generic party!",
-                    :political_hero => "Generic George",
-                    :political_spectrum => 1 },
+                    :email => "generic@email.com"
+                },
                 {
                     :email => "bob@schmitt.com",
                     :password => "imboring",
@@ -38,12 +28,7 @@ describe User do
                     :political_spectrum => 1 },
                 {
                     :email => "rosenthal@policy.com",
-                    :password => "publicpolicy",
-                    :username => "rosenthal",
-                    :avatar => "/path/to/rosenthal.png",
-                    :political_blurb => "Discuss your view on PenPal Gladiators!",
-                    :political_hero => "Thomas Jefferson",
-                    :political_spectrum => 2 }
+                }
             ]
 
             users.each do |u|
@@ -60,16 +45,8 @@ describe User do
             ]
 
             topics = [
-                { :name => "Climate", :icon => "/assets/topic_icons/climate.png"},
-                { :name => "Education", :icon => "/assets/topic_icons/education.png"},
-                { :name => "Economy", :icon => "/assets/topic_icons/money.png"},
-                { :name => "Technology", :icon => "/assets/topic_icons/technology.png"},
-                { :name => "LGBT Rights", :icon => "/assets/topic_icons/lgbt.png"},
-                { :name => "Immigration", :icon => "/assets/topic_icons/immigration.png"},
-                { :name => "Foreign Policy", :icon => "/assets/topic_icons/international.png"},
-                { :name => "Religion", :icon => "/assets/topic_icons/religion.png"},
-                { :name => "Philosophy", :icon => "/assets/topic_icons/philosophy.png"},
-                { :name => "Criminal Law", :icon => "/assets/topic_icons/justice.png"},
+                { :name => "Climate" },
+                { :name => "Philosophy" }
             ]
 
             topics.each do |t|
@@ -161,7 +138,7 @@ describe User do
         
         it "should return the correct topic score" do
             expect(User.find_by_email("ben@bitdiddle.com").find_topic_score(User.find_by_email("rosenthal@policy.com"), Topic.find_by_name("Climate").id)).to eq(1)
-            expect(User.find_by_email("generic@email.com").find_topic_score(User.find_by_email("rosenthal@policy.com"), Topic.find_by_name("Climate").id)).to eq(0)
+            expect(User.find_by_email("rosenthal@policy.com").find_topic_score(User.find_by_email("ben@bitdiddle.com"), Topic.find_by_name("Climate").id)).to eq(1)
         end
     
         it "should know the topics it answered" do
