@@ -1,4 +1,6 @@
 class TopicsController < ApplicationController
+    skip_filter :check_access_token
+
     def get_all
         render :json => Topic.all.map { |topic| topic.response_object }
     end

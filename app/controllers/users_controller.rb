@@ -1,4 +1,6 @@
-class UsersController < ActionController::Base
+class UsersController < ApplicationController
+    skip_filter :check_access_token, :only => [:can_register, :register, :login]
+
     ERROR_MESSAGES = {
         :invalid_login => "incorrect credentials",
         :invalid_email => "invalid email",
@@ -8,21 +10,8 @@ class UsersController < ActionController::Base
     }
 
     def authenticate
-        token = params[:token]
-
-        begin
-            token_results = User.parse_access_token(token)
-        rescue
-            render :json => { :error => :failed }
-            return
-        end
-
-        if token_results.has_key?(:error)
-            render :json => { :error => :failed }
-        else
-            user = token_results[:user]
-            render :json => { :user => user.response_object }
-        end
+        user = @token_results[:user]
+        render :json => { :user => user.response_object }
     end
 
     def login
