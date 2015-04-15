@@ -61,12 +61,15 @@ Given /^I am on (?:the|a|my) (.*?) page$/ do |page_name|
             step 'I fill in "email" with "alice@example.com"'
             step 'I fill in "password" with "12345678"'
             step 'I press "Start Registration"'
+            step "And I wait 2 seconds"
         when "survey"
             pending "No survey route."
         when "home"
             visit "/"
+            step "And I wait 2 seconds"
         when "profile"
             visit "/#/profile/1"
+            step "And I wait 2 seconds"
         when "conversation"
             pending "No conversation route."
         else
