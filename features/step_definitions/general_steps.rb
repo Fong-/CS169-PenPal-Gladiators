@@ -5,6 +5,7 @@ When /^I( cannot)? fill in "(.*)" with "(.*)"$/ do |cannot_fill, field, value|
         pending "Unimplemented"
     else
         fill_in(field, :with => value)
+        expect(page).to have_field(field, :with => value)
     end
 end
 
@@ -18,6 +19,10 @@ end
 
 When /^I follow "(.*)"$/ do |link|
     click_link(link)
+end
+
+When /^I wait (\d+) seconds?$/ do |seconds|
+  sleep seconds.to_i
 end
 
 # Checking page content
