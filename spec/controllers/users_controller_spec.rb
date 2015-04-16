@@ -6,20 +6,60 @@ describe UsersController, :type => :controller do
     context "when accessing a user's profile information" do
         it "should return the appropriate response object" do
             user = double(user, :profile_response_object => {:a => 1})
-            User.stub(:find).and_return(user)
+            User.stub(:find_by_id).and_return(user)
             expect(user).to receive(:profile_response_object).once
             get "get_profile_info_by_id", :id => 1
         end
 
         it "should update the user profile" do
             user = double(user, :update_profile => nil)
-            User.stub(:find).and_return(user)
+            User.stub(:find_by_id).and_return(user)
             expect(user).to receive(:update_profile).once
             post "post_profile_info_by_id",  :id => 1
         end
     end
 
     context "when authenticating a user" do
+        before :each do
+            @user = User.create :email => "alice@example.com", :password => "12345678"
+            @access_token = @user.access_token
+        end
+
+        it "should accept a valid access token" do
+            post "authenticate", { :token => @access_token }
+            responseObject = JSON.parse(response.body)
+            expect(responseObject["user"]).not_to be(nil)
+        end
+
+        it "should return the user response object" do
+            user = double(user, :response_object => {})
+            User.stub(:parse_access_token).and_return({ :user => user })
+            expect(user).to receive(:response_object)
+            post "authenticate", { :token => @access_token }
+        end
+
+        it "should complain if authenticated with an invalid access token" do
+            prev_secret = @user.secret
+            @user.secret = "random string"
+            bad_access_token = @user.access_token
+            @user.secret = prev_secret
+
+            post "authenticate", { :token => bad_access_token }
+            responseObject = JSON.parse(response.body)
+            expect(responseObject["error"]).not_to eq(nil)
+            expect(responseObject["error"]).to eq("failed")
+        end
+
+        it "should complain if authenticated with a malformed access token" do
+           post "authenticate", { :token => "abcd" }
+            responseObject = JSON.parse(response.body)
+            expect(responseObject["error"]).not_to eq(nil)
+            expect(responseObject["error"]).to eq("failed")
+        end
+
+    end
+
+    context "when logging in or registering a user" do
         before :each do
             @sha256 = Digest::SHA256.new
             User.create :email => "alice@example.com", :password => "12345678"

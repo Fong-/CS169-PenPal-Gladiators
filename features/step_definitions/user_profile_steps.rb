@@ -16,6 +16,12 @@ Then /^I should be able to select that I am "(.*?)"$/ do |position|
 end
 
 Then /^I should see the text "(.*?)" for "(.*?)"$/ do |text, id|
+    sleep(2)
+    puts id
+    puts text
+    puts page.find("##{id}")
+    puts page.find("##{id}").text
+    puts page.text
     page.find("##{id}").should have_text(text)
 end
 

@@ -1,10 +1,10 @@
 profile = angular.module("Profile",["SharedServices"])
 
-profile.controller("ProfileController", ["$http", "$location", "$scope", "$stateParams", "API", ($http, $location, $scope, $stateParams, API) ->
+profile.controller("ProfileController", ["$http", "$location", "$scope", "$stateParams", "API", "AppState", ($http, $location, $scope, $stateParams, API, AppState) ->
     # moduleState can be either "view" or "edit"
     $scope.moduleState = "view"
 
-    $scope.loggedInUID = 1 # FIXME Hardcode UID as 1 for now
+    $scope.loggedInUID = AppState.user.id
     $scope.profileUID = $stateParams.id
 
     $scope.profile = {}
@@ -34,7 +34,6 @@ profile.controller("ProfileController", ["$http", "$location", "$scope", "$state
     }
 
     $scope.can_edit = () ->
-        return 1==1
         return $scope.loggedInUID == $scope.profileUID
 
     $scope.edit = () ->
@@ -42,12 +41,10 @@ profile.controller("ProfileController", ["$http", "$location", "$scope", "$state
             $scope.moduleState = "edit"
 
     $scope.save = () ->
-        # TODO for "better" security, change profileUID to loggedInUID once
-        # tracking who's logged in actually works
         for k, v of $scope.spectrumOptions
             if $scope.profile.spectrum == v.value
                 spectrum_id = v.id
-        API.updateProfileByUID($scope.profileUID, $scope.profile.username, $scope.profile.avatar, $scope.profile.blurb, $scope.profile.hero, spectrum_id)
+        API.updateProfileByUID($scope.loggedInUID, $scope.profile.username, $scope.profile.avatar, $scope.profile.blurb, $scope.profile.hero, spectrum_id)
         $scope.moduleState = "view"
 
     load_profile = (userId) ->
