@@ -64,7 +64,7 @@ Given /^I sign in as "(.*)" with password "(.*)"$/ do |email, password|
     unless User.exists_with_credentials(email, password)
         User.create({:email => email, :password => password})
     end
-    visit "/"
+    visit "/login"
     step "I fill in \"email\" with \"#{email}\""
     step "I fill in \"password\" with \"#{password}\""
     step 'I press "Login"'
