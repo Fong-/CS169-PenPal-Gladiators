@@ -19,22 +19,26 @@ sidebar.controller("SidebarController", ["$scope", "$http", "$location", "API", 
     $scope.toggleGladiatorPanel = (id) -> $scope.arenaStateByUserId[id] = !$scope.arenaStateByUserId[id]
     $scope.expandButtonClass = (id) -> if $scope.arenaStateByUserId[id] then "glyphicon glyphicon-chevron-up" else "glyphicon glyphicon-chevron-down"
 
-    API.requestArenasByUser(currentUserId).success (arenas) ->
-        $scope.conversationsByUserId = {}
-        $scope.gladiatorIds = []
-        for arena in arenas
-            $scope.gladiatorNameById[arena.user1.id] = arena.user1.name
-            $scope.gladiatorNameById[arena.user2.id] = arena.user2.name
-            otherGladiatorId = if currentUserId is arena.user1.id then arena.user2.id else arena.user1.id
-            $scope.conversationsByUserId[otherGladiatorId] = []
-            for conversation in arena.conversations
-                secondsSinceUpdateTime = TimeUtil.timeSince1970InSeconds() - TimeUtil.timeFromTimestampInSeconds(conversation.timestamp)
-                conversationPreviewData = {
-                    title: conversation.title,
-                    time: TimeUtil.timeIntervalAsString(secondsSinceUpdateTime) + " ago",
-                    post_preview_text: postPreviewTextForConversation(conversation)
-                }
-                $scope.conversationsByUserId[otherGladiatorId].push(conversationPreviewData)
-            $scope.arenaStateByUserId[otherGladiatorId] = false if otherGladiatorId not of $scope.arenaStateByUserId
-            $scope.gladiatorIds.push(otherGladiatorId)
+    API.requestArenasByUser(currentUserId)
+        .success (arenas) ->
+            $scope.conversationsByUserId = {}
+            $scope.gladiatorIds = []
+            for arena in arenas
+                $scope.gladiatorNameById[arena.user1.id] = arena.user1.name
+                $scope.gladiatorNameById[arena.user2.id] = arena.user2.name
+                otherGladiatorId = if currentUserId is arena.user1.id then arena.user2.id else arena.user1.id
+                $scope.conversationsByUserId[otherGladiatorId] = []
+                for conversation in arena.conversations
+                    secondsSinceUpdateTime = TimeUtil.timeSince1970InSeconds() - TimeUtil.timeFromTimestampInSeconds(conversation.timestamp)
+                    conversationPreviewData = {
+                        title: conversation.title,
+                        time: TimeUtil.timeIntervalAsString(secondsSinceUpdateTime) + " ago",
+                        post_preview_text: postPreviewTextForConversation(conversation)
+                    }
+                    $scope.conversationsByUserId[otherGladiatorId].push(conversationPreviewData)
+                $scope.arenaStateByUserId[otherGladiatorId] = false if otherGladiatorId not of $scope.arenaStateByUserId
+                $scope.gladiatorIds.push(otherGladiatorId)
+        .error (result) ->
+            reason = result.error
+            console.log "sidebar loading failed: #{reason}"
 ])

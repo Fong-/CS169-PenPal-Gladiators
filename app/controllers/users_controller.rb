@@ -3,7 +3,6 @@ class UsersController < ApplicationController
     skip_filter :check_access_token, :only => [:can_register, :register, :login]
 
     def authenticate
-        debugger
         user = @token_results[:user]
         render :json => { :user => user.response_object }
     end
