@@ -33,8 +33,7 @@ surveySummary.controller("SurveySummaryController", ["$scope", "$http", "$state"
             (result) ->
                 data = result.data
                 if data? and "error" not of data and "token" of data
-                    user = { accessToken: data["token"] }
-                    $cookieStore.put("user", user)
+                    $cookieStore.put("accessToken", data["token"])
                     $window.location.href = "/#/"
                 else
                     $scope.status = if data then data["error"] else "Oops, an error occurred."

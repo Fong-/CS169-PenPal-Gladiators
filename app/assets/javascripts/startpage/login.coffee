@@ -1,9 +1,6 @@
 login = angular.module("Login", ["SharedServices", "StartPageServices"])
 
 login.controller("LoginController", ["$state", "$window", "$scope", "$cookieStore", "API", "StartPageStateData", "loggedIn", ($state, $window, $scope, $cookieStore, API, StartPageStateData, loggedIn) ->
-    if loggedIn
-        $window.location.href = "/"
-
     $scope.email = ""
     $scope.password = ""
     $scope.description = ""
@@ -14,8 +11,7 @@ login.controller("LoginController", ["$state", "$window", "$scope", "$cookieStor
             (result) ->
                 data = result.data
                 if data? and "error" not of data and "token" of data
-                    user = { accessToken: data["token"] }
-                    $cookieStore.put("user", user)
+                    $cookieStore.put("accessToken", data["token"])
                     $window.location.href = "/#/"
                 else
                     $scope.status = if data then data["error"] else "Oops, an error occurred."
