@@ -7,7 +7,7 @@ angular.module("SharedServices").service("Authentication", ["$cookieStore", "$q"
             return $q.when(true)
 
         accessToken = $cookieStore.get("accessToken")
-        if accessToken?
+        if not accessToken?
             return API.authenticate(accessToken).then(
                 (result) ->
                     data = result.data

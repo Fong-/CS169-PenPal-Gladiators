@@ -6,17 +6,22 @@ class SurveyQuestionsController < ApplicationController
     end
 
     def get_by_id
-        question = SurveyQuestion.find_by_id params[:id]
-        render :json => question.nil? ? {"error" => true} : question.response_object
+        question = SurveyQuestion.find_by_id(params[:id])
+        if question.nil?
+            render_error(:resource_not_found) and return
+            return
+        end
+
+        render :json => question.response_object
     end
 
     def get_responses_by_id
-        question = SurveyQuestion.find_by_id params[:id]
+        question = SurveyQuestion.find_by_id(params[:id])
         if question.nil?
-            render :json => {"error" => true}
-        else
-            responses = question.survey_responses
-            render :json => responses.map { |r| r.response_object }
+            render_error(:resource_not_found) and return
         end
+
+        responses = question.survey_responses
+        render :json => responses.map { |r| r.response_object }
     end
 end
