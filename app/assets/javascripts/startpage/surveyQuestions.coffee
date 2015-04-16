@@ -9,8 +9,8 @@ surveyQuestions.controller("SurveyQuestionsController", ["$scope", "$http", "$st
     $scope.currentTopic = $scope.allTopics[$scope.currentTopicId].name # the topic we're doing now
 
     # For progress bar
-    StartPageStateData.currentTopic = $scope.currentTopicId
-    if ($routeParams.id > StartPageStateData.latestTopic) then StartPageStateData.latestTopic = $routeParams.id
+    StartPageStateData.setCurrentTopic($scope.currentTopicId)
+    if ($routeParams.id > StartPageStateData.getLatestTopic()) then StartPageStateData.setLatestTopic($routeParams.id)
 
     $scope.questions = StartPageStaticData.getQuestionsForTopic($scope.currentTopicId)
     $scope.questionCheckModel = StartPageStateData.getResponsesForTopic($scope.currentTopicId)
@@ -57,9 +57,9 @@ surveyQuestions.controller("SurveyQuestionsController", ["$scope", "$http", "$st
                     break
 
         # For progress bar
-        StartPageStateData.questionsLeft = questionsLeft
-        if (StartPageStateData.currentTopic == StartPageStateData.latestTopic)
-            StartPageStateData.questionsLeft_static = questionsLeft
+        StartPageStateData.setQuestionsLeft(questionsLeft)
+        if (StartPageStateData.getCurrentTopic() == StartPageStateData.getLatestTopic())
+            StartPageStateData.setQuestionsLeft_static(questionsLeft)
 
         return questionsLeft
 
@@ -129,7 +129,6 @@ surveyQuestions.controller("SurveyQuestionsController", ["$scope", "$http", "$st
     # Asynchronously load the list of questions for a topic
     load_questions = (topicId) ->
         if $scope.questions.length == 0
-
             API.requestQuestionsByTopic(topicId)
                 .success (allQuestions) ->
                     $scope.questions = []
@@ -138,7 +137,7 @@ surveyQuestions.controller("SurveyQuestionsController", ["$scope", "$http", "$st
                     StartPageStaticData.addQuestionsForTopic($scope.currentTopicId, $scope.questions)
                     $scope.numQuestions = $scope.questions.length
 
-                    StartPageStateData.numQuestions = $scope.numQuestions
+                    StartPageStateData.setNumQuestions($scope.numQuestions)
                 .error (result, status) ->
                     if result?
                         reason = result.error

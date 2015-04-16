@@ -29,13 +29,6 @@ startPageServices.service("StartPageStateData", () ->
     currentState = ""
     selectedTopics = {}
     responsesForSelectedTopics = {}
-    topicQuestionsDone = {} # Ids of the topics for which the questions have all been answered
-    currentTopic = 0 # current topic ID, used for determining if a topic is done for progress
-    latestTopic = 0 # latest topic ID
-    topicsCompleted = 0 # number of topics that have been completed
-    numQuestions = 0
-    questionsLeft = 0
-    questionsLeft_static = 0 # used for when not on the most forward topic page
 
     # Email interface
     Object.defineProperty(this, "email", {
@@ -63,7 +56,6 @@ startPageServices.service("StartPageStateData", () ->
     this.clearSelectedTopics = () -> selectedTopics = {}
     this.numTopics = () -> Object.keys(selectedTopics).length
 
-
     # User responses interface
     Object.defineProperty(this, "responsesForSelectedTopics", {
         get: () -> return responsesForSelectedTopics
@@ -76,40 +68,31 @@ startPageServices.service("StartPageStateData", () ->
         if topicId of responsesForSelectedTopics then responsesForSelectedTopics[topicId] else {}
 
     # Progress bar interface
-    Object.defineProperty(this, "numQuestions", {
-        get: () -> numQuestions
-        set: (q) -> numQuestions = q
-    })
+    progressBar = {
+        latestTopic: 0
+        topicsCompleted: 0
+    }
 
-    Object.defineProperty(this, "questionsLeft", {
-        get: () -> questionsLeft
-        set: (q) -> questionsLeft = q
-    })
-
-    Object.defineProperty(this, "questionsLeft_static", {
-        get: () -> questionsLeft_static
-        set: (q) -> questionsLeft_static = q
-    })
-
-    Object.defineProperty(this, "currentTopic", {
-        get: () -> currentTopic
-        set: (topicID) -> currentTopic = topicID
-    })
-
-    Object.defineProperty(this, "topicsCompleted", {
-        get: () -> topicsCompleted
-    })
-    this.incTopicsCompleted = -> topicsCompleted += 1
-    this.clearTopicsCompleted = -> topicsCompleted = 0
-
-    Object.defineProperty(this, "latestTopic", {
-        get: () -> latestTopic
-        set: (topicID) -> latestTopic = topicID
-    })
-
-    Object.defineProperty(this, "topicQuestionsDone", {
-        get: () -> topicQuestionsDone
+    # Progress bar state
+    Object.defineProperty(this, "progressBar", {
+        get: () -> progressBar
         })
+    this.getNumQuestions = -> progressBar.numQuestions
+    this.setNumQuestions = (q) -> progressBar.numQuestions = q
+    this.getQuestionsLeft = -> progressBar.questionsLeft
+    this.setQuestionsLeft = (q) -> progressBar.questionsLeft = q
+    this.getQuestionsLeft_static = -> progressBar.questionsLeft_static
+    this.setQuestionsLeft_static = (q) -> progressBar.questionsLeft_static = q
+    this.getCurrentTopic = -> progressBar.currentTopic
+    this.setCurrentTopic = (topicId) -> progressBar.currentTopic = topicId
+    this.getLatestTopic = -> progressBar.latestTopic
+    this.setLatestTopic = (topicId) -> progressBar.latestTopic = topicId
+    this.getTopicsCompleted = -> progressBar.topicsCompleted
+    this.incTopicsCompleted = -> progressBar.topicsCompleted += 1
+    this.clearTopicsCompleted = -> progressBar.topicsCompleted = 0
+
+    topicQuestionsDone = {}
+    this.getTopicQuestionsDone = () -> topicQuestionsDone
     this.finishedTopicQuestions = (topicId) -> topicQuestionsDone[topicId] = true
     this.isTopicQuestionsDone = (topicId) -> return topicId of topicQuestionsDone
 
