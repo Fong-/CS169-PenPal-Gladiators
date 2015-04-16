@@ -35,7 +35,8 @@ describe SurveyQuestionsController do
     it "should return an error if the given id has no corresponding question" do
         get "get_by_id", :id => "100"
         responseObject = JSON.parse(response.body)
-        expect(responseObject["error"]).to equal(true)
+        expect(responseObject).to include("error")
+        expect(response.status).to equal(404)
     end
 
     it "should return correct responses for a question" do
@@ -45,10 +46,11 @@ describe SurveyQuestionsController do
         expect(responseObject[0]["text"]).to eq("Yep")
         expect(responseObject[1]["text"]).to eq("Nope")
     end
-    
+
     it "should return an error if the given id has no corresponding question" do
         get "get_responses_by_id", :id => 100
         responseObject = JSON.parse(response.body)
-        expect(responseObject["error"]).to equal(true)
+        expect(responseObject).to include("error")
+        expect(response.status).to equal(404)
     end
 end

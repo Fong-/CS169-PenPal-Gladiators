@@ -36,7 +36,8 @@ describe TopicsController do
         it "should return an error if the given id has no corresponding topic" do
             get "get_by_id", :id => "100"
             responseObject = JSON.parse(response.body)
-            expect(responseObject["error"]).to equal(true)
+            expect(responseObject).to include("error")
+            expect(response.status).to equal(404)
         end
     end
 
@@ -52,10 +53,8 @@ describe TopicsController do
         it "should return an error if the given id has no corresponding topic" do
             get "get_questions_by_id", :id => "100"
             responseObject = JSON.parse(response.body)
-            expect(responseObject["error"]).to equal(true)
+            expect(responseObject).to include("error")
+            expect(response.status).to equal(404)
         end
     end
-
-
-
 end
