@@ -186,4 +186,8 @@ sidebar.controller("SidebarController", ["$scope", "$http", "$state", "API", "Ti
         $scope.outbound_requests()
         $scope.inbound_requests()
     , SIDEBAR_POLL_PERIOD)
+
+    # Get inbound and outbound requests at time of page load
+    $scope.outbound_requests()
+    $scope.inbound_requests()
 ])
