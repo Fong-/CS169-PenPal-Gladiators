@@ -15,6 +15,6 @@
 
     <div id="submit">
         <div id="status">{{ status }}</div>
-        <a class="btn btn-primary" id="continue-button" ng-click="handleRegister()">{{ submitRegistrationText }}</a>
+        <a class="btn btn-primary" id="continue-button" ng-click="handleRegister()" ng-disabled="disableRegistration">{{ submitRegistrationText }}</a>
     </div>
 </div>

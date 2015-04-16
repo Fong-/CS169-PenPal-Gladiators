@@ -2,6 +2,7 @@ surveySummary = angular.module("SurveySummary", ["StartPageServices"])
 
 surveySummary.controller("SurveySummaryController", ["$scope", "$http", "$state", "$cookieStore", "$window", "StartPageStaticData", "StartPageStateData", "API", ($scope, $http, $state, $cookieStore, $window, StartPageStaticData, StartPageStateData, API) ->
     $scope.submitRegistrationText = "Finish Registration"
+    $scope.disableRegistration = false
 
     # Save user selected topics
     $scope.selectedTopics = {}
@@ -27,6 +28,7 @@ surveySummary.controller("SurveySummaryController", ["$scope", "$http", "$state"
     # Register the user into the database and move to the homepage
     $scope.handleRegister = ->
         $scope.submitRegistrationText = "Registering..."
+        $scope.disableRegistration = true
         API.register(StartPageStateData.email, StartPageStateData.password).then(
             (result) ->
                 data = result.data
@@ -40,6 +42,7 @@ surveySummary.controller("SurveySummaryController", ["$scope", "$http", "$state"
                 $scope.status = "Oops, an error occurred. Try again!"
         ).finally(() ->
             $scope.submitRegistrationText = "Try Again"
+            $scope.disableRegistration = false
         )
 
         return
