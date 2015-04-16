@@ -10,7 +10,7 @@ surveyQuestions.controller("SurveyQuestionsController", ["$scope", "$http", "$st
 
     # For progress bar
     StartPageStateData.setCurrentTopic($scope.currentTopicId)
-    if ($routeParams.id > StartPageStateData.getLatestTopic()) then StartPageStateData.setLatestTopic($routeParams.id)
+    if ($scope.currentTopicId > StartPageStateData.getLatestTopic()) then StartPageStateData.setLatestTopic($scope.currentTopicId)
 
     $scope.questions = StartPageStaticData.getQuestionsForTopic($scope.currentTopicId)
     $scope.questionCheckModel = StartPageStateData.getResponsesForTopic($scope.currentTopicId)

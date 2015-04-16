@@ -1,12 +1,5 @@
 progressBar = angular.module("ProgressBar", ["StartPageServices"])
 
-progressBar.config(["$routeProvider", ($routeProvider) ->
-    $routeProvider.when("/progress_bar", {
-        templateUrl: "/assets/progress_bar.html",
-        controller: "ProgresBarController"
-    })
-])
-
 progressBar.controller("ProgressBarController", ["$scope", "StartPageStateData", ($scope, StartPageStateData) ->
 
     currentID = StartPageStateData.getCurrentTopic()
