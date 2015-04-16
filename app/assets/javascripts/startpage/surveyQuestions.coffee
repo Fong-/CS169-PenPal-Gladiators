@@ -10,7 +10,7 @@ surveyQuestions.controller("SurveyQuestionsController", ["$scope", "$http", "$st
 
     # For progress bar
     StartPageStateData.setCurrentTopic($scope.currentTopicId)
-    if ($scope.currentTopicId > StartPageStateData.getLatestTopic()) then StartPageStateData.setLatestTopic($scope.currentTopicId)
+    if ($scope.currentTopicId > StartPageStateData.progressBar.latestTopic) then StartPageStateData.setLatestTopic($scope.currentTopicId)
 
     $scope.questions = StartPageStaticData.getQuestionsForTopic($scope.currentTopicId)
     $scope.questionCheckModel = StartPageStateData.getResponsesForTopic($scope.currentTopicId)
@@ -58,7 +58,7 @@ surveyQuestions.controller("SurveyQuestionsController", ["$scope", "$http", "$st
 
         # For progress bar
         StartPageStateData.setQuestionsLeft(questionsLeft)
-        if (StartPageStateData.getCurrentTopic() == StartPageStateData.getLatestTopic())
+        if (StartPageStateData.progressBar.currentTopic == StartPageStateData.progressBar.latestTopic)
             StartPageStateData.setQuestionsLeft_static(questionsLeft)
 
         return questionsLeft
@@ -137,7 +137,7 @@ surveyQuestions.controller("SurveyQuestionsController", ["$scope", "$http", "$st
                     StartPageStaticData.addQuestionsForTopic($scope.currentTopicId, $scope.questions)
                     $scope.numQuestions = $scope.questions.length
 
-                    StartPageStateData.setNumQuestions($scope.numQuestions)
+                    StartPageStateData.setNumQuestions($scope.numQuestions) # For progress bar
                 .error (result, status) ->
                     if result?
                         reason = result.error
@@ -150,7 +150,5 @@ surveyQuestions.controller("SurveyQuestionsController", ["$scope", "$http", "$st
             for question in $scope.questions
                 for response in question.survey_responses
                     $scope.questionCheckModel[response.id] = false
-
-
     load_questions($scope.currentTopicId)
 ])
