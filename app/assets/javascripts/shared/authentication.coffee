@@ -1,37 +1,31 @@
 angular.module("SharedServices").service("Authentication", ["$cookieStore", "$q", "$window", "API", "AppState", ($cookieStore, $q, $window, API, AppState) ->
     rejectPromise = $q.reject("Invalid authentication")
+    loggedIn = false
 
-    this.isLoggedIn = (redirectToLogin = true) ->
-        if AppState.loggedIn
+    this.isLoggedIn = () ->
+        if loggedIn
             return $q.when(true)
 
-        if redirectToLogin
-            handleFailure = () ->
-                $window.location.href = "/login"
-                return rejectPromise
-        else
-            handleFailure = () -> rejectPromise
-
-        user = $cookieStore.get("user")
-        if user? and user.accessToken?
-            return API.authenticate(user.accessToken).then(
+        accessToken = $cookieStore.get("accessToken")
+        if accessToken?
+            return API.authenticate(accessToken).then(
                 (result) ->
                     data = result.data
                     if "error" of data
-                        return handleFailure()
+                        return rejectPromise
 
                     user = data.user
 
                     AppState.setUserId(user.id)
                     AppState.setUserName(user.username)
                     AppState.setUserAvatar(user.avatar)
-                    AppState.login()
 
-                    return true
-                (reason) -> handleFailure()
+                    loggedIn = true
+                    return loggedIn
+                (reason) -> rejectPromise
             )
         else
-            return handleFailure()
+            return rejectPromise
 
     return
 ])
