@@ -15,17 +15,12 @@ progressBar.controller("ProgressBarController", ["$scope", "StartPageStateData",
     $scope.numQuestions = () -> StartPageStateData.getNumQuestions()
     $scope.questionsLeft = () -> StartPageStateData.getQuestionsLeft()
     $scope.numTopics = () -> StartPageStateData.numTopics()
-    $scope.isTopicDone = () -> StartPageStateData.isTopicQuestionsDone(currentID)
-    $scope.topicsCompleted = () -> StartPageStateData.getTopicsCompleted()
-    $scope.currentTopic = () -> StartPageStateData.getCurrentTopic()
-    $scope.latestTopic = () -> StartPageStateData.getLatestTopic()
 
-    # %complete = (numCompleteTopics * 100/numTopics) + (numAnsweredQuestions * 100/totalQuestions * 100/numTopics)
     $scope.percentComplete = () ->
         updateCompletedTopics()
 
         if (currentID == StartPageStateData.getLatestTopic())
-            numAnsweredQuestions = $scope.numQuestions() - StartPageStateData.getQuestionsLeft()
+            numAnsweredQuestions = $scope.numQuestions() - $scope.questionsLeft()
         else
             numAnsweredQuestions = $scope.numQuestions() - StartPageStateData.getQuestionsLeft_static()
 
