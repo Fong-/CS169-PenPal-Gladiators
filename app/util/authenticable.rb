@@ -1,4 +1,4 @@
-module AccessTokenHelper
+module Authenticable
     TIME_CRYPT_BASE = 36
     USER_ID_SEPARATOR = ":"
 
@@ -35,7 +35,7 @@ module AccessTokenHelper
             user_id = user_id_string.to_i
             user = User.find_by_id(user_id)
             if user.nil?
-                return :error => :no_such_user
+                return :error => :resource_not_found
             end
             begin
                 expiration_time = user.decrypt_expiration_time(encrypted_expiration_time)
