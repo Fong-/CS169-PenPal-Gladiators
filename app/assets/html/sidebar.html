@@ -42,23 +42,29 @@
 
         <div class="sent-requests-container">
             <p class="requests-header"> Sent requests </p>
-            <div class="sent-requests" ng-repeat="request in outboundRequests">
-                <!-- TODO: Refactor this - consider a table or better verbiage
-                    - request.status?
-                    - Hook "Ok" button to some scope method to erase message
-                 -->
-                <span class="request-text">{{ request.username }}: {{ request.status }}</span>
-                <span class="btn btn-secondary" ng-show="requestStatusById[request.id]">Ok</span>
-            </div>
+            <!-- TODO: Refactor this - consider a table or better verbiage
+                - request.status?
+                - Hook "Ok" button to some scope method to erase message
+                - Add headers to table
+             -->
+            <table>
+                <tr class="sent-requets" ng-repeat="request in outboundRequests">
+                    <td class="request-text">{{ request.username }}</td>
+                    <td class="request-text">{{ request.status }}</td>
+                    <td><span class="btn btn-secondary" ng-show="requestStatusById[request.id]">OK</span></td>
+                </tr>
+            </table>
         </div>
 
         <div class="received-requests-container">
             <p class="requests-header"> Match Requests from other Gladiators </p>
-            <div class="received-requests" ng-repeat="request in inboundRequests">
-                <span class="request-text">{{ request.username }}</span>
-                <a class="btn btn-primary accept-request" ng-click="accept_match(request.id)">Accept</a>
-                <a class="btn btn-secondary decline-request" ng-click="decline_match(request.id)">Decline</a>
-            </div>
+            <table>
+                <tr class="received-requests" ng-repeat="request in inboundRequests">
+                    <td class="request-text">{{ request.username }}</td>
+                    <td><a class="btn btn-primary accept-request" ng-click="accept_match(request.id)">Accept</a></td>
+                    <td><a class="btn btn-secondary decline-request" ng-click="decline_match(request.id)">Decline</a></td>
+                </tr>
+            </table>
         </div>
     </div>
 
