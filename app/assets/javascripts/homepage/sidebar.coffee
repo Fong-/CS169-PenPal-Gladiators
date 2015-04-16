@@ -68,9 +68,9 @@ sidebar.controller("SidebarController", ["$scope", "$http", "$state", "API", "Ti
 
     # Matching
     # TODO: API endpoints and add calls to API service, better verbiage
-    $scope.matchedGladiators = {}
-    $scope.outboundRequests = {}
-    $scope.inboundRequests = {}
+    $scope.matchedGladiators = []
+    $scope.outboundRequests = []
+    $scope.inboundRequests = []
     at_least_one_match = false
 
     SIDEBAR_POLL_PERIOD = 10000
@@ -79,47 +79,74 @@ sidebar.controller("SidebarController", ["$scope", "$http", "$state", "API", "Ti
     # Assume that the API gives us an 'id' and 'username'
     # This should be triggered by a button press in the view
     $scope.request_matches = () ->
-        API.requestMatches(currentUserId).success (matches) ->
-            for match in matches
-                $scope.matchedGladiators[match.id] = match.username
-                at_least_one_match = true
+        # Stubbed API call, fix indentation of for loop when un-stubbing
+        #API.requestMatches(currentUserId).success (matches) ->
+        matches = [
+            {id:1, username:"Bob the Buffoon"},
+            {id:2, username:"William the Weasel"},
+            {id:3, username:"Larry the Llama"},
+            {id:4, username:"Olga the Ostrich"},
+            {id:5, username:"Anton the Armadillo"},
+        ]
+        for match in matches
+            $scope.matchedGladiators[match.id] = match.username
+            at_least_one_match = true
 
     # Request to be matched with another Gladiator
     # Assume that the API gives us an 'id' and 'username'
     # This should be triggered by a button press in the view
     $scope.request_match = (otherUserId) ->
-        API.requestMatch(otherUserId).success (request) ->
-            $scope.outboundRequests.push(request)
+        # Stubbed API call
+#        API.requestMatch(otherUserId).success (request) ->
+#            $scope.outboundRequests.push(request)
+        $scope.outboundRequests.push({id:otherUserId, inviteStatus: "Pending"})
 
     # Accept a match request
     # This should be triggered by a button press in the view
     $scope.accept_match = (otherUserId) ->
-        API.acceptMatch(otherUserId).success (accept) ->
-            # Remove the user from inboundRequests
-            delete inboundRequests[otherUserId]
+#        Stubbed API call
+#        API.acceptMatch(otherUserId).success (accept) ->
+#            # Remove the user from inboundRequests
+#            inboundRequests = (x for x in array when x.id != otherUserId))
 
     # Decline a match request
     # This should be triggered by a button press in the view
     $scope.decline_match = (otherUserId) ->
-        API.declineMatch(otherUserId).success (decline) ->
-            # Remove the user from inboundRequests
-            delete inboundRequests[otherUserId]
+#        Stubbed API call, fix indentation when un-stubbing
+#        API.declineMatch(otherUserId).success (decline) ->
+#            # Remove the user from inboundRequests
+#            inboundRequests = (x for x in array when x.id != otherUserId))
 
     # Query the server for new inbound matching requests
     # Assume that the API gives us objects with an 'id' and 'username'
     # This is called automatically in setInterval
     $scope.inbound_requests = () ->
-        API.inboundRequests().success (requests) ->
-            for request in requests
-                $scope.inboundRequests[request.id] = request.username
+#        Stubbed API call, fix indentation of for loop when un-stubbing
+#        API.inboundRequests().success (requests) ->
+#            for key, request in requests
+#                $scope.inboundRequests.push(request)
+        requests = [
+            {id:23, username:"Jack the Jeckyll"},
+            {id:42, username:"Ralph the Reptile"},
+            {id:18, username:"Kate the Kangaroo"}
+        ]
+        $scope.inboundRequests = requests
 
     # Query the server for new responses to requests that were sent out before
-    # Assume that the API gives us objects with an 'id', 'username', and 'status' of request
+    # Assume that the API gives us objects with an 'id', 'username', and 'inviteStatus' of request
     # This is called automatically in setInterval
     $scope.outbound_requests = () ->
-        API.outboundRequests().success (requests) ->
-            for request in requests
-                $scope.outboundRequests[request.id] = {username: request.username, status: request.status}
+#        Stubbed API call, fix indentation of for loop when un-stubbing
+#        API.outboundRequests().success (requests) ->
+#            for key, request in requests
+#                $scope.inboundRequests.push(request)
+        requests = [
+            {id:27, username:"Charlie the Cheetah"},
+            {id:49, username:"Dolph the Dingo"},
+            {id:11, username:"Edward the Eel"},
+            {id:16, username:"Henry the Hippo"}
+        ]
+        $scope.outboundRequests = requests
 
     # This is hacky because it calls request_matches, so it's not really necessary to call it again from the view
     # Clean this up later
