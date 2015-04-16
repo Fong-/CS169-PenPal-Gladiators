@@ -1,20 +1,33 @@
 sidebar = angular.module("Sidebar", ["SharedServices"])
 
 sidebar.directive("requestsPopover", ["$compile", "$templateCache", ($compile, $templateCache) ->
-    getTemplate = () -> $templateCache.get("requests_content.html")
+
+    template = "<li ng-repeat='matchedGladiator in matchedGladiators'>{{ matchedGladiator }}</li>"
+    template2 = "<a>{{ matchedGladiators }}</a>"
+    #getTemplate = () -> $templateCache.get("requests_content.html")
+
+    #itemsTemplate = "<ul class='unstyled'><li ng-repeat='item in items'>{{item}}</li></ul>"
 
     obj =
         restrict: "A"
+        transclude: true
+        template: "<span ng-transclude></span>"
         link: (scope, element, attrs) ->
-            #scope.request_matches()
+            element.bind("click", () ->
+                scope.$apply( () ->
+                    #scope.change()
+                    scope.request_matches()
+                )
+            )
 
-            popOverContent = getTemplate()
+            popOverContent = $compile(template2)(scope)
+            #$compile(popOverContent)(scope)
+
             options =
                 html: true
                 content:  popOverContent
                 placement: "left"
             $(element).popover options
-
 
     return obj
 ])
@@ -66,11 +79,19 @@ sidebar.controller("SidebarController", ["$scope", "$http", "$state", "API", "Ti
                 reason = "status code #{status}"
             console.log "sidebar failed: #{reason}"
 
+
+    $scope.testvar = "nothing"
+    $scope.change = () ->
+        $scope.testvar = "something!"
+
+    $scope.singleModel = 0
+
     # Matching
     # TODO: API endpoints and add calls to API service, better verbiage
     $scope.matchedGladiators = []
     $scope.outboundRequests = []
     $scope.inboundRequests = []
+    $scope.requestStatusById = {}
     at_least_one_match = false
 
     SIDEBAR_POLL_PERIOD = 10000
@@ -141,12 +162,18 @@ sidebar.controller("SidebarController", ["$scope", "$http", "$state", "API", "Ti
 #            for key, request in requests
 #                $scope.inboundRequests.push(request)
         requests = [
-            {id:27, username:"Charlie the Cheetah"},
-            {id:49, username:"Dolph the Dingo"},
-            {id:11, username:"Edward the Eel"},
-            {id:16, username:"Henry the Hippo"}
+            {id:27, username:"Charlie the Cheetah", status:"Pending"},
+            {id:49, username:"Dolph the Dingo", status:"Pending"},
+            {id:11, username:"Edward the Eel", status:"Accepted"},
+            {id:16, username:"Henry the Hippo", status:"Declined"}
         ]
         $scope.outboundRequests = requests
+        for request in requests
+            status = request.status
+            switch status
+                when "Accepted" then $scope.requestStatusById[request.id] = true
+                when "Declined" then $scope.requestStatusById[request.id] = true
+                else $scope.requestStatusById[request.id] = false
 
     # This is hacky because it calls request_matches, so it's not really necessary to call it again from the view
     # Clean this up later
