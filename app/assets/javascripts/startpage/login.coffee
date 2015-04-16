@@ -29,9 +29,11 @@ login.controller("LoginController", ["$state", "$window", "$scope", "$cookieStor
                 reason = result.error
                 console.log "register failed: #{reason}"
                 if reason is "invalid email"
-                    $scope.status = "Someone already has that email. Try another?"
+                    $scope.status = "Email is invalid."
                 else if reason is "invalid password"
                     $scope.status = "Password is invalid."
+                else if reason is "user exists"
+                    $scope.status = "Someone already has that email. Try another?"
                 else
                     $scope.status = "Oops, an error occurred. Try again!"
 ])
