@@ -1,4 +1,4 @@
-router = angular.module("Router", [])
+router = angular.module("Router", ["SharedServices"])
 
 router.config(["$stateProvider", "$urlRouterProvider", ($stateProvider, $urlRouterProvider) ->
     $urlRouterProvider.otherwise("/")
@@ -8,6 +8,14 @@ router.config(["$stateProvider", "$urlRouterProvider", ($stateProvider, $urlRout
         url: "/"
         templateUrl: "/assets/login.html"
         controller: "LoginController"
+        resolve: {
+            loggedIn: ["Authentication", (Authentication) ->
+                return Authentication.isLoggedIn(false).then(
+                    (result) -> true
+                    (reason) -> false
+                )
+            ]
+        }
     })
     .state("topics", {
         templateUrl: "/assets/survey_topics.html"

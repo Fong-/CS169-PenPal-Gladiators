@@ -12,7 +12,7 @@ Scenario: The user logs in with the correct username and password.
     Given I fill in "email" with "foo@bar.com"
     And I fill in "password" with "fizzbuzz"
     And I press "Login"
-    Then I should be on the profile page
+    Then I should be on the home page
 
 Scenario: The user logs in with the incorrect username and password.
     Given I fill in "email" with "foo@bar.com"
