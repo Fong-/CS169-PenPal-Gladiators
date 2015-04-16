@@ -7,13 +7,9 @@ angular.module("SharedServices").service("Authentication", ["$cookieStore", "$q"
             return $q.when(true)
 
         accessToken = $cookieStore.get("accessToken")
-        if not accessToken?
-            return API.authenticate(accessToken).then(
-                (result) ->
-                    data = result.data
-                    if "error" of data
-                        return rejectPromise
-
+        if accessToken?
+            return API.authenticate(accessToken)
+                .success (data) ->
                     user = data.user
 
                     AppState.setUserId(user.id)
@@ -22,8 +18,8 @@ angular.module("SharedServices").service("Authentication", ["$cookieStore", "$q"
 
                     loggedIn = true
                     return loggedIn
-                (reason) -> rejectPromise
-            )
+                .error (reason) ->
+                    rejectPromise
         else
             return rejectPromise
 

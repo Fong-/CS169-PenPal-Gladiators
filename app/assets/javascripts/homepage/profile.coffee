@@ -48,15 +48,18 @@ profile.controller("ProfileController", ["$http", "$location", "$scope", "$state
         $scope.moduleState = "view"
 
     load_profile = (userId) ->
-        API.requestProfileByUID(userId).success( (profile) ->
-            $scope.profile.username = profile.username
-            $scope.profile.avatar = profile.avatar
-            $scope.profile.blurb = profile.political_blurb
-            $scope.profile.hero = profile.political_hero
-            $scope.profile.email = profile.email
-            for k, v of $scope.spectrumOptions
-                if profile.political_spectrum == v.id
-                    $scope.profile.spectrum = v.value
-        )
+        API.requestProfileByUID(userId)
+            .success (profile) ->
+                $scope.profile.username = profile.username
+                $scope.profile.avatar = profile.avatar
+                $scope.profile.blurb = profile.political_blurb
+                $scope.profile.hero = profile.political_hero
+                $scope.profile.email = profile.email
+                for k, v of $scope.spectrumOptions
+                    if profile.political_spectrum == v.id
+                        $scope.profile.spectrum = v.value
+            .error (result) ->
+                reason = result.error
+                console.log "profile loading failed: #{reason}"
     load_profile($scope.profileUID)
 ])

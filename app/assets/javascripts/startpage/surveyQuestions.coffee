@@ -118,13 +118,16 @@ surveyQuestions.controller("SurveyQuestionsController", ["$scope", "$http", "$st
     # Asynchronously load the list of questions for a topic
     load_questions = (topicId) ->
         if $scope.questions.length == 0
-            API.requestQuestionsByTopic(topicId).success( (allQuestions) ->
-                $scope.questions = []
-                allQuestions = allQuestions.sort((u, v) -> u.index - v.index)
-                $scope.questions = allQuestions
-                StartPageStaticData.addQuestionsForTopic($scope.currentTopicId, $scope.questions)
-                $scope.numQuestions = $scope.questions.length
-            )
+            API.requestQuestionsByTopic(topicId)
+                .success (allQuestions) ->
+                    $scope.questions = []
+                    allQuestions = allQuestions.sort((u, v) -> u.index - v.index)
+                    $scope.questions = allQuestions
+                    StartPageStaticData.addQuestionsForTopic($scope.currentTopicId, $scope.questions)
+                    $scope.numQuestions = $scope.questions.length
+                .error (result) ->
+                    reason = result.reason
+                    console.log "topic question request failed: #{reason}"
         $scope.currentTopic = $scope.allTopics[topicId].name
         if Object.keys($scope.questionCheckModel).length == 0
             for question in $scope.questions
