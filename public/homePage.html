@@ -8,9 +8,9 @@
     </head>
     <body>
         <div class="container" ng-app="HomePage">
-            <div ng-include src="'/assets/navigation_bar.html'"></div>
-            <div ng-include src="'/assets/sidebar.html'"></div>
-            <div ui-view></div>
+            <div ui-view="navbar"></div>
+            <div ui-view="sidebar"></div>
+            <div ui-view="content"></div>
         </div>
         <script src="/assets/homePage.js"></script>
     </body>

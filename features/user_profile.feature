@@ -5,10 +5,8 @@ Feature: Edit and display a user profile
     I want to create a Gladiator-public user profile for myself
 
 Background: I am on my user profile page
-    Given I am a user with email "hello@world.net" and password "helloWorld"
+    Given I sign in as "alice@example.com" with password "123456789"
     And I am on the profile page
-    Then I should be on the profile page
-
 
 # Consider using identicons and uploaded photo (a la GitHub)
 #
@@ -21,25 +19,33 @@ Background: I am on my user profile page
 #    And I should be able to select an avatar
 
 Scenario: Select a political hero
-    When I press "edit-profile"
+    When I am editing my profile
     And I fill in "hero" with "Foo Bar"
     And I press "Save Changes"
     Then I should see the text "Foo Bar" for "hero"
 
 Scenario: Select a position from liberal to conservative
-    Given there is a series of radio buttons corresponding to a political "spectrum"
-    And I press "Edit Your Profile"
-    Then I should be able to select that I am "liberal"
-    And I should be able to select that I am "moderately-liberal"
-    And I should be able to select that I am "moderate"
-    And I should be able to select that I am "moderately-conservative"
-    And I should be able to select that I am "conservative"
+    When I am editing my profile
+    Then I should be able to select that I am "Liberal"
+    And I should be able to select that I am "Moderately Liberal"
+    And I should be able to select that I am "Moderate"
+    And I should be able to select that I am "Moderately Conservative"
+    And I should be able to select that I am "Conservative"
 
 Scenario: Write a political blurb
-    When I press "Edit Your Profile"
+    When I am editing my profile
     And I fill in "blurb" with "I appreciate Foo Bar's dedication to Widgets"
     And I press "Save Changes"
     Then I should see the text "I appreciate Foo Bar's dedication to Widgets" for "blurb"
+
+Scenario: Save changes
+    When I am editing my profile
+    And I fill in "blurb" with "I hate everyone"
+    And I press "Save Changes"
+    Then I should see the text "I hate everyone" for "blurb"
+    And I follow "Home"
+    And I follow "Profile"
+    Then I should see the text "I hate everyone" for "blurb"
 
 Scenario: View other Gladiator's profile
     Given "Garply" has a political hero of "Widget"
