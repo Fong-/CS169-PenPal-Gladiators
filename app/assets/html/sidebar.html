@@ -1,15 +1,34 @@
-<script type="text/ng-template" id="requests_content.html">
-    <div class="fetched-users-container">
-        <li ng-repeat="matchedGladiator in matchedGladiators">
-            <div class="fetched-user">
-                <a class="fetched-user-name">{{ matchedGladiator }}</a>
-            </div>
-        </li>
-    </div>
-</script>
+<!-- This template is deprecated for now but leave for debugging
+- <script type="text/ng-template" id="requests_content.html">
+-     <div class="fetched-users-container">
+-         <li ng-repeat="matchedGladiator in matchedGladiators">
+-             <div class="fetched-user">
+-                 <a class="fetched-user-name">{{ matchedGladiator }}</a>
+-                 <a>{{ testvar }}</a>
+-             </div>
+-         </li>
+-     </div>
+- </script>
+-->
+<!-- Add this later
+    <a class="btn btn-primary send-request" ng-click="request_match(request.id)">Request</a>
+-->
 
-<div class="requests-menu">
-    <a requests-popover>Find gladiators!</a>
+<!-- TODO: General
+    - CSS Makeover
+    - Hook up to API calls on backend
+-->
+
+<!-- TODO: Requests Popover
+    - Fix ng-repeat and make "matchedGladiator in matchedGladiators" work
+    - Add a "Request" button to every match
+    - Fix Popover clipping
+    - Make button press work
+    - Fix trigger to close when clicking outside
+-->
+<div class="requests-menu" ng-controller="SidebarController">
+    <button type="button" ng-model="singleModel" btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0" requests-popover title="Send requests to be matched with other gladiators">Find Gladiators!</button>
+    <!-- <a class="test-div">{{ testvar }}</a> -->
 </div>
 
 <div class="nav-side-menu" ng-controller="SidebarController">
@@ -17,25 +36,28 @@
         <!-- TODO:
         - Figure out better verbiage for matching (both frontend HTML and angular/API calls)
         - Hide divs when there's no applicable content
+        - Link to user's profile
         - Fix other TODOs
         -->
 
         <div class="sent-requests-container">
-            <p> Sent requests </p>
+            <p class="requests-header"> Sent requests </p>
             <div class="sent-requests" ng-repeat="request in outboundRequests">
-                <!-- TODO: Refactor this - consider a table or better verbiage -->
+                <!-- TODO: Refactor this - consider a table or better verbiage
+                    - request.status?
+                    - Hook "Ok" button to some scope method to erase message
+                 -->
                 <span class="request-text">{{ request.username }}: {{ request.status }}</span>
+                <span class="btn btn-secondary" ng-show="requestStatusById[request.id]">Ok</span>
             </div>
         </div>
 
         <div class="received-requests-container">
-            <p> Match Requests from other Gladiators </p>
+            <p class="requests-header"> Match Requests from other Gladiators </p>
             <div class="received-requests" ng-repeat="request in inboundRequests">
-                <!-- TODO:
-                        - Add a button that calls decline_match(userID)
-                        - Add a button that calls accept_match(userID)
-                -->
                 <span class="request-text">{{ request.username }}</span>
+                <a class="btn btn-primary accept-request" ng-click="accept_match(request.id)">Accept</a>
+                <a class="btn btn-secondary decline-request" ng-click="decline_match(request.id)">Decline</a>
             </div>
         </div>
     </div>
