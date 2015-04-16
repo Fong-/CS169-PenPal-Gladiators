@@ -2,28 +2,24 @@ progressBar = angular.module("ProgressBar", ["StartPageServices"])
 
 progressBar.controller("ProgressBarController", ["$scope", "StartPageStateData", ($scope, StartPageStateData) ->
 
-    currentID = StartPageStateData.getCurrentTopic()
+    currentID = StartPageStateData.progressBar.currentTopic
     percentComplete = 0
 
-    $scope.numQuestions = () -> StartPageStateData.getNumQuestions()
-    $scope.questionsLeft = () -> StartPageStateData.getQuestionsLeft()
+    $scope.numQuestions = () -> StartPageStateData.progressBar.numQuestions
+    $scope.questionsLeft = () -> StartPageStateData.progressBar.questionsLeft
     $scope.numTopics = () -> StartPageStateData.numTopics()
-
     $scope.percentComplete = () ->
         updateCompletedTopics()
 
-        if (currentID == StartPageStateData.getLatestTopic())
+        if (currentID == StartPageStateData.progressBar.latestTopic)
             numAnsweredQuestions = $scope.numQuestions() - $scope.questionsLeft()
         else
-            numAnsweredQuestions = $scope.numQuestions() - StartPageStateData.getQuestionsLeft_static()
-
-        numCompletedTopics = StartPageStateData.getTopicsCompleted()
+            numAnsweredQuestions = $scope.numQuestions() - StartPageStateData.progressBar.questionsLeft_static
+        numCompletedTopics = StartPageStateData.progressBar.topicsCompleted
 
         pastPercent = numCompletedTopics * 100 / $scope.numTopics()
         currentPercent = numAnsweredQuestions * 100 / $scope.numQuestions() / $scope.numTopics()
-
         percentComplete = pastPercent + currentPercent
-
         if percentComplete > 100
             percentComplete = 100
 
@@ -33,6 +29,5 @@ progressBar.controller("ProgressBarController", ["$scope", "StartPageStateData",
     updateCompletedTopics = () ->
         StartPageStateData.clearTopicsCompleted()
         for k,v of StartPageStateData.getTopicQuestionsDone()
-            if v
-                StartPageStateData.incTopicsCompleted()
+            if v then StartPageStateData.incTopicsCompleted()
 ])

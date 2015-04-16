@@ -76,18 +76,12 @@ startPageServices.service("StartPageStateData", () ->
     # Progress bar state
     Object.defineProperty(this, "progressBar", {
         get: () -> progressBar
-        })
-    this.getNumQuestions = -> progressBar.numQuestions
+    })
     this.setNumQuestions = (q) -> progressBar.numQuestions = q
-    this.getQuestionsLeft = -> progressBar.questionsLeft
     this.setQuestionsLeft = (q) -> progressBar.questionsLeft = q
-    this.getQuestionsLeft_static = -> progressBar.questionsLeft_static
     this.setQuestionsLeft_static = (q) -> progressBar.questionsLeft_static = q
-    this.getCurrentTopic = -> progressBar.currentTopic
     this.setCurrentTopic = (topicId) -> progressBar.currentTopic = topicId
-    this.getLatestTopic = -> progressBar.latestTopic
     this.setLatestTopic = (topicId) -> progressBar.latestTopic = topicId
-    this.getTopicsCompleted = -> progressBar.topicsCompleted
     this.incTopicsCompleted = -> progressBar.topicsCompleted += 1
     this.clearTopicsCompleted = -> progressBar.topicsCompleted = 0
 
