@@ -11,19 +11,18 @@ Background: I am a new user
     And the following responses exist:
         | question_text                 | response_text                                     | index |
         | Opinion on climate changes?   | Climate change is happening.                      | 1     |
-    And I have selected the topics "Education", "Climate", "Philosophy", "Technology", "Religion"
 
 Scenario: Progress advances when a question is completed
-    Given I am on topic ID 1
+    Given I am on the topic "Climate"
     When I answer a question
     Then the progress bar should be at 10%
 
 Scenario: Check current progress
-    Given I am on topic ID 2
+    Given I am on the topic "Education"
     And I answer all the questions
     Then the progress bar should be at 40%
 
 Scenario: All questions answered
-    Given I am on topic ID 9
+    Given I am on the topic "Philosophy"
     And I answer all the questions
     Then the progress bar should be at 100%

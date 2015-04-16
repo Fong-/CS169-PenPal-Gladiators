@@ -60,10 +60,6 @@ Given /^I sign in$/ do
     step 'I sign in as "alice@example.com" with password "12345678"'
 end
 
-Given /^I am on topic ID (.*)/ do |topic_ID|
-    visit "/#/questions/#{topic_ID}"
-end
-
 Given /^I sign in as "(.*)" with password "(.*)"$/ do |email, password|
     unless User.exists_with_credentials(email, password)
         User.create({:email => email, :password => password})
