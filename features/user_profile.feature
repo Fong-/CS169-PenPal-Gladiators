@@ -44,7 +44,9 @@ Scenario: Save changes
     And I press "Save Changes"
     Then I should see the text "I hate everyone" for "blurb"
     And I follow "Home"
+    And I wait 1 second
     And I follow "Profile"
+    And I wait 1 second
     Then I should see the text "I hate everyone" for "blurb"
 
 Scenario: View other Gladiator's profile
