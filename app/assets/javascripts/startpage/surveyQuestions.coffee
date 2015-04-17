@@ -147,12 +147,12 @@ surveyQuestions.controller("SurveyQuestionsController", ["$scope", "$http", "$st
                     $scope.questions = allQuestions
                     StartPageStaticData.addQuestionsForTopic($scope.currentTopicId, $scope.questions)
 
-                    StartPageStateData.setNumQuestions($scope.numQuestions) # For progress bar
-
                     if Object.keys($scope.questionCheckModel).length == 0
                         for question in $scope.questions
                             for response in question.survey_responses
                                 $scope.questionCheckModel[response.id] = false
+
+                    handleProgressQuestions()
                 .error (result, status) ->
                     if result?
                         reason = result.error
