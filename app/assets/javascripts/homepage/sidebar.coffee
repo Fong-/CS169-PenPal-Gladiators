@@ -1,6 +1,6 @@
 sidebar = angular.module("Sidebar", ["SharedServices"])
 
-sidebar.controller("SidebarController", ["$scope", "$http", "$location", "API", "TimeUtil", "AppState", ($scope, $http, $location, API, TimeUtil, AppState) ->
+sidebar.controller("SidebarController", ["$scope", "$http", "$state", "API", "TimeUtil", "AppState", ($scope, $http, $state, API, TimeUtil, AppState) ->
 
     MAX_PREVIEW_TEXT_LENGTH = 100;
     authorTextForId = (id) -> if id == currentUserId then "You" else $scope.gladiatorNameById[id]
@@ -18,6 +18,7 @@ sidebar.controller("SidebarController", ["$scope", "$http", "$location", "API", 
     $scope.arenaStateByUserId = {}
     $scope.toggleGladiatorPanel = (id) -> $scope.arenaStateByUserId[id] = !$scope.arenaStateByUserId[id]
     $scope.expandButtonClass = (id) -> if $scope.arenaStateByUserId[id] then "glyphicon glyphicon-chevron-up" else "glyphicon glyphicon-chevron-down"
+    $scope.conversationPreviewClicked = (id) -> $state.go("conversation", { id: id })
 
     API.requestArenasByUser(currentUserId)
         .success (arenas) ->
@@ -31,6 +32,7 @@ sidebar.controller("SidebarController", ["$scope", "$http", "$location", "API", 
                 for conversation in arena.conversations
                     secondsSinceUpdateTime = TimeUtil.timeSince1970InSeconds() - TimeUtil.timeFromTimestampInSeconds(conversation.timestamp)
                     conversationPreviewData = {
+                        id: conversation.id,
                         title: conversation.title,
                         time: TimeUtil.timeIntervalAsString(secondsSinceUpdateTime) + " ago",
                         post_preview_text: postPreviewTextForConversation(conversation)
