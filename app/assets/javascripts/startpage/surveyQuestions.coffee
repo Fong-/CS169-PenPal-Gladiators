@@ -48,11 +48,11 @@ surveyQuestions.controller("SurveyQuestionsController", ["$scope", "$http", "$st
 
     # Updates the progress bar when the user answers a question.
     handleProgressOnResponse = () ->
-        questionsLeft = numUnansweredQuestions()
-        StartPageStateData.setNumQuestionsCompleted($scope.questions.length - questionsLeft)
+        if isCurrentState()
+            questionsLeft = numUnansweredQuestions()
+            StartPageStateData.setNumQuestionsCompleted($scope.questions.length - questionsLeft)
 
-    if isCurrentState()
-        handleProgressOnResponse()
+    handleProgressOnResponse()
 
     # Updates the progress bar when moving on to a new topic.
     handleProgressOnAdvance = () ->
