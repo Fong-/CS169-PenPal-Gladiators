@@ -42,4 +42,10 @@ router.config(["$stateProvider", "$urlRouterProvider", ($stateProvider, $urlRout
         templateUrl: "/assets/profile.html"
         controller: "ProfileController"
     })
+    .state("conversation", {
+        parent: "root"
+        url: "/conversation/{id:int}"
+        templateUrl: "/assets/conversation.html"
+        controller: "ConversationController"
+    })
 ])

@@ -55,6 +55,14 @@ class User < ActiveRecord::Base
         }
     end
 
+    def post_author_response_object
+        return {
+            :username => username,
+            :avatar => avatar,
+            :id => id
+        }
+    end
+
     def update_profile(params)
         self.username = params[:username]
         self.political_blurb = params[:political_blurb]
