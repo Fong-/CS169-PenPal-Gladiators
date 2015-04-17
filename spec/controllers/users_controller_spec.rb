@@ -37,7 +37,7 @@ describe UsersController, :type => :controller do
                 survey_question1 = topic.survey_questions.create(:text => "Do you hate #{topic.name}?", :index => 1)
                 survey_question2 = topic.survey_questions.create(:text => "Do you care about #{topic.name}?", :index => 3)
                 created_responses = []
-                
+
                 responses.each do |r|
                     verb1 = r[:text] == "Yes" ? "hate" : "don't hate"
                     verb2 = r[:text] == "Yes" ? "care" : "don't care"
@@ -48,7 +48,7 @@ describe UsersController, :type => :controller do
                     created_responses.push(survey_question1.survey_responses.create(actual_response1))
                     created_responses.push(survey_question2.survey_responses.create(actual_response2))
                 end
-                
+
                 ResponseWeight.create({:response1_id => created_responses[0].id, :response2_id => created_responses[1].id, :weight => 5})
                 ResponseWeight.create({:response1_id => created_responses[0].id, :response2_id => created_responses[2].id, :weight => 1})
                 ResponseWeight.create({:response1_id => created_responses[0].id, :response2_id => created_responses[3].id, :weight => 1})
@@ -69,15 +69,17 @@ describe UsersController, :type => :controller do
             rosenthal = User.find_by_email("rosenthal@policy.com")
             response = Topic.find_by_name("Climate").survey_questions.find_by_index(1).survey_responses.find_by_index(1)
             UserSurveyResponse.create(:user => rosenthal, :survey_response => response)
+
+            controller.stub(:check_access_token).and_return(true)
         end
-        
+
         it "should return the correct matches" do
-            get "matches", :id => User.find_by_email("ben@bitdiddle.com").id
+            get "matches", :id => User.find_by_email("ben@bitdiddle.com").id, :token => ""
             responseObject = JSON.parse(response.body)
             expect(responseObject.first["user"]["id"]).to eq User.find_by_email("rosenthal@policy.com").id
         end
     end
-    
+
     context "when accessing a user's profile information" do
         before :each do
             controller.stub(:check_access_token).and_return(true)
