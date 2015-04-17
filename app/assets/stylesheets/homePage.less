@@ -191,6 +191,34 @@ p {
     height: 100%;
 }
 
+.requests-menu {
+    width: 250px;
+    height: 50px;
+    position: fixed;
+    top: 65px;
+    right: 30px;
+    cursor: default;
+    z-index: 1;
+}
+
+.sent-requests-container {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.received-requests-container {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.requests-header {
+    font-weight: bold;
+}
+
+.request-button{
+    border-radius: 7px;
+}
+
 .nav-side-menu {
     overflow: auto;
     font-family: verdana;
@@ -212,12 +240,30 @@ p {
         font-weight: 300;
         background-color: #ffffff;
         position: fixed;
-        top: 0px;
+        top: 50px;
         width: 300px;
         height: 100%;
         color: black;
         right: 0px;
         border-left: 1px solid @border-color;
+    }
+
+    .matching-bar-container {
+        display: block;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        padding-left: 10px;
+
+        .requests-heading {
+            font-size: 16px;
+        }
+    }
+    .click-to-expand-requests {
+            font-size: 16px;
+            color: black;
+            float: right;
+            padding-right: 5px;
+            padding-top: 8px;
     }
 
     @media(max-width: 768px) {
@@ -235,7 +281,7 @@ p {
         display: block;
     }
 
-    .gladiator-heading-container {
+    .match-requests-container, .gladiator-heading-container {
         padding-top: 10px;
         padding-bottom: 10px;
 

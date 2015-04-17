@@ -63,6 +63,30 @@ angular.module("SharedServices").service("API", ["$http", "$cookieStore", ($http
         request = generateRequest("post/edit/#{id}")
         $http.post(request, { text: text, token: getToken() })
 
+    this.requestMatches = (userId) ->
+        request = generateRequest("matches")
+        params = { token: getToken(), id: userId }
+        $http.get(request, { params: params })
+
+    this.requestMatch = (myUserId, otherUserId) ->
+        request = generateRequest("send_request")
+        params = { token: getToken(), my_id: myUserId, user_id: otherUserId }
+        $http.post(request, { params: params })
+
+    this.incomingReqests = (userId) ->
+        request = generateRequest("incoming_requests")
+        params = { token: getToken(), id: userId }
+        $http.get(request, { params: params })
+
+    this.respondToRequest = (userId, otherUserId, userResponse) ->
+        request = generateRequest("modify_request")
+        params = { token: getToken(), id: userId, user_id: otherUserId, response: userResponse }
+        $http.post(request, { params: params })
+
+    this.requestStatus = (userId) ->
+        request = generateRequest("my_requests")
+        params = { token: getToken(), id: userId }
+        $http.get(request, { params: params })
 
     return
 ])
