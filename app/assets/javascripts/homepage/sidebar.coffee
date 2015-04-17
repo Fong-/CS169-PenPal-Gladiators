@@ -38,7 +38,10 @@ sidebar.controller("SidebarController", ["$scope", "$http", "$location", "API", 
                     $scope.conversationsByUserId[otherGladiatorId].push(conversationPreviewData)
                 $scope.arenaStateByUserId[otherGladiatorId] = false if otherGladiatorId not of $scope.arenaStateByUserId
                 $scope.gladiatorIds.push(otherGladiatorId)
-        .error (result) ->
-            reason = result.error
-            console.log "sidebar loading failed: #{reason}"
+        .error (result, status) ->
+            if result?
+                reason = result.error
+            else
+                reason = "status code #{status}"
+            console.log "sidebar failed: #{reason}"
 ])

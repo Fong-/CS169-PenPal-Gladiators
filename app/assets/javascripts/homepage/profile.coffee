@@ -45,6 +45,12 @@ profile.controller("ProfileController", ["$http", "$location", "$scope", "$state
             if $scope.profile.spectrum == v.value
                 spectrum_id = v.id
         API.updateProfileByUID($scope.loggedInUID, $scope.profile.username, $scope.profile.avatar, $scope.profile.blurb, $scope.profile.hero, spectrum_id)
+            .error (result, status) ->
+                if result?
+                    reason = result.error
+                else
+                    reason = "status code #{status}"
+                console.log "profile updating failed: #{reason}"
         $scope.moduleState = "view"
 
     load_profile = (userId) ->
@@ -58,8 +64,11 @@ profile.controller("ProfileController", ["$http", "$location", "$scope", "$state
                 for k, v of $scope.spectrumOptions
                     if profile.political_spectrum == v.id
                         $scope.profile.spectrum = v.value
-            .error (result) ->
-                reason = result.error
+            .error (result, status) ->
+                if result?
+                    reason = result.error
+                else
+                    reason = "status code #{status}"
                 console.log "profile loading failed: #{reason}"
     load_profile($scope.profileUID)
 ])

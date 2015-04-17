@@ -45,7 +45,10 @@ surveyTopics.controller("SurveyTopicsController", ["$scope", "$http", "$state", 
             StartPageStaticData.addTopic(topic) for topic in allTopics
             $scope.allTopics = allTopics.sort((u, v) -> u.id - v.id)
             $scope.topicSelectionModel[id] = true for id in StartPageStateData.selectedTopics
-        .error (error) ->
-            reason = result.error
+        .error (result, status) ->
+            if result?
+                reason = result.error
+            else
+                reason = "status code #{status}"
             console.log "topic request failed: #{reason}"
 ])
