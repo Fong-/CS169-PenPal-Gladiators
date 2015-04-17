@@ -15,6 +15,25 @@ describe User do
         end
     end
 
+    context "when accessing user information" do
+        before :each do
+            @info = {
+                :username => "Butterfly",
+                :avatar => "image.png",
+                :political_blurb => "I am cool",
+                :political_hero => "Leo",
+                :political_spectrum => 3
+            }
+
+            @user = User.create!(@info)
+        end
+
+        it "should return the appropriate response object" do
+            response = @user.response_object
+            expect(response).to eq({ :username => "Butterfly", :avatar => "image.png", :id => @user.id })
+        end
+    end
+
     context "when accessing the profile information" do
         before :each do
             @profile_info = {

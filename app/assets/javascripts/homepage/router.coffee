@@ -10,6 +10,7 @@ router.config(["$stateProvider", "$urlRouterProvider", ($stateProvider, $urlRout
         views: {
             navbar: {
                 templateUrl: "/assets/navigation_bar.html"
+                controller: "NavigationBarController"
             }
             content: {
                 template: "<ui-view/>"
