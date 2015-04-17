@@ -130,7 +130,10 @@ sidebar.controller("SidebarController", ["$scope", "$http", "$state", "API", "Ti
                     at_least_one_match = true
                 $scope.hideUserRequest = {} # reset so everything will be visible again
             .error (result, status) ->
-                reason = result.error
+                if result?
+                    reason = result.error
+                else
+                    reason = "status code #{status}"
                 console.log "matches loading failed: #{reason}"
 
     # Request to be matched with another Gladiator
@@ -142,7 +145,10 @@ sidebar.controller("SidebarController", ["$scope", "$http", "$state", "API", "Ti
                 $scope.outboundRequests.push(request)
                 $scope.toggleHideRequest(otherUserId)
             .error (result, status) ->
-                reason = result.error
+                if result?
+                    reason = result.error
+                else
+                    reason = "status code #{status}"
                 console.log "matching with user failed: #{reason}"
 
     # Accept a match request
@@ -151,10 +157,13 @@ sidebar.controller("SidebarController", ["$scope", "$http", "$state", "API", "Ti
         API.respondToRequest(currentUserId, otherUserId, "accept")
             .success (accept) ->
                 # Remove the user from inboundRequests
-                inboundRequests = (x for x in array when x.id != otherUserId))
+                inboundRequests = (x for x in array when x.id != otherUserId)
                 $scope.toggleHideReceived(otherUserId)
             .error (result, status) ->
-                reason = result.error
+                if result?
+                    reason = result.error
+                else
+                    reason = "status code #{status}"
                 console.log "accepting match failed: #{reason}"
 
     # Decline a match request
@@ -163,10 +172,13 @@ sidebar.controller("SidebarController", ["$scope", "$http", "$state", "API", "Ti
         API.respondToRequest(currentUserId, otherUserId, "decline")
             .success (accept) ->
                 # Remove the user from inboundRequests
-                inboundRequests = (x for x in array when x.id != otherUserId))
+                inboundRequests = (x for x in array when x.id != otherUserId)
                 $scope.toggleHideReceived(otherUserId)
             .error (result, status) ->
-                reason = result.error
+                if result?
+                    reason = result.error
+                else
+                    reason = "status code #{status}"
                 console.log "declining match failed: #{reason}"
 
     # Query the server for new inbound matching requests
@@ -179,7 +191,10 @@ sidebar.controller("SidebarController", ["$scope", "$http", "$state", "API", "Ti
                     $scope.inboundRequests.push(request)
                 $scope.usersInbound = requests.length
             .error (result, status) ->
-                reason = result.error
+                if result?
+                    reason = result.error
+                else
+                    reason = "status code #{status}"
                 console.log "querying inbound requests failed: #{reason}"
 
     # Query the server for new responses to requests that were sent out before
@@ -198,8 +213,11 @@ sidebar.controller("SidebarController", ["$scope", "$http", "$state", "API", "Ti
                         when "Declined" then $scope.requestStatusById[request.id] = true
                         else $scope.requestStatusById[request.id] = false
             .error (result, status) ->
-                reason = result.error
-                console.log "querying outboundrequests failed: #{reason}"
+                if result?
+                    reason = result.error
+                else
+                    reason = "status code #{status}"
+                console.log "querying outbound_requests failed: #{reason}"
 
     # This is hacky because it calls request_matches, so it's not really necessary to call it again from the view
     # Clean this up later
