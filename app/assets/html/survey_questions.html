@@ -1,2 +1,19 @@
-<div ui-view="progressbar"></div>
-<div ui-view="content"></div>
+<div id="survey-questions-container">
+    <div class="header">{{ currentTopic }}</div>
+    <p id="description">{{ pageDescription() }}</p>
+    <div class="spacing"></div>
+    <div id="topic-questions-container">
+        <div id="question{{$index+1}}" class="question-container" ng-repeat="question in questions">
+            <div class="question-text">{{ question.text }}</div>
+            <div class="question-responses-container">
+                <div class="response" ng-repeat="response in question.survey_responses">
+                    <input id="response{{$parent.$index+1}}-{{$index+1}}" type="checkbox" ng-model="questionCheckModel[response.id]" ng-change="handleResponseSelected(question,response)"/>
+                    <label><span/></label><span class="response-text">{{ response.text }}</span>
+                </div>
+                <br>
+            </div>
+        </div>
+    </div>
+    <input class="btn btn-primary" id="continue-button" type="button" ng-disabled="disableNextButton()" ng-click="handleAdvance()" value="{{nextButtonValue()}}"/>
+    <input class="btn btn-secondary" type="button" value="Back", ng-click="handleBack()" ng-hide="hideBackButton()"/>
+</div>
