@@ -7,10 +7,10 @@ class UsersController < ApplicationController
         if user.present?
             render :json => user.matches
         else
-            render :json => []
+            render :json => {:error => ERROR_MESSAGES[:invalid_login]}
         end
     end
-    
+
     def authenticate
         user = @token_results[:user]
         render :json => { :user => user.response_object }
