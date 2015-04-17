@@ -1,7 +1,7 @@
 surveyTopics = angular.module("SurveyTopics", ["SharedServices", "StartPageServices"])
 
 surveyTopics.controller("SurveyTopicsController", ["$scope", "$http", "$state", "API", "StartPageStaticData", "StartPageStateData", ($scope, $http, $state, API, StartPageStaticData, StartPageStateData) ->
-    $scope.MIN_NUM_TOPICS_REQUIRED = 1
+    $scope.MIN_NUM_TOPICS_REQUIRED = 5
     $scope.allTopics = []
     $scope.topicSelectionModel = {}
 
