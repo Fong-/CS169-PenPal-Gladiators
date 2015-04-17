@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe AccessTokenHelper do
+describe Authenticable do
 
     before :each do
         @sha256 = Digest::SHA256.new
@@ -12,7 +12,7 @@ describe AccessTokenHelper do
         fake_user = User.new :email => "a@b.com", :password => @sha256.base64digest("foobar")
         token = fake_user.access_token(3.days)
         result = User.parse_access_token(token)
-        expect(result[:error]).to eq(:no_such_user)
+        expect(result[:error]).to eq(:resource_not_found)
         expect(result[:expiration_time]).to eq(nil)
     end
 

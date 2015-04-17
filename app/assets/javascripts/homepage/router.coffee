@@ -21,7 +21,14 @@ router.config(["$stateProvider", "$urlRouterProvider", ($stateProvider, $urlRout
             }
         }
         resolve: {
-            loggedIn: ["Authentication", (Authentication) -> Authentication.isLoggedIn()]
+            loggedIn: ["Authentication", "$window", "$q", (Authentication, $window, $q) ->
+                return Authentication.isLoggedIn().then(
+                    (result) -> true
+                    (reason) ->
+                        $window.location.href = "/login"
+                        return $q.reject()
+                )
+            ]
         }
     })
     .state("home", {

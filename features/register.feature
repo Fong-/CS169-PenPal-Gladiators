@@ -12,7 +12,7 @@ Scenario: The user registers with an existing username.
     Given I fill in "email" with "foo@bar.com"
     And I fill in "password" with "password"
     And I press "Start Registration"
-    Then I should see "exists"
+    Then I should see "Someone already has that email. Try another?"
 
 Scenario: The user registers with a non-existant username.
     Given I fill in "email" with "user@bar.com"
