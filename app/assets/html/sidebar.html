@@ -28,11 +28,10 @@
     <div class="matching-bar-container">
         <!-- TODO:
         - Figure out better verbiage for matching (both frontend HTML and angular/API calls)
-        - Show divs if there are new users after polling server
         - Link to user's profile
         - Fix other TODOs
         -->
-        <div class="sent-requests-container gladiator-heading-container" ng-hide="isSentEmpty" ng-click="toggleSentContainer()">
+        <div class="match-requests-container" ng-hide="isSentEmpty" ng-click="toggleSentContainer()">
             <p class="requests-header"> Your sent matching requests </p>
             <span class="{{ expandSentButton() }} click-to-expand"></span>
             <table ng-show="sentContainerState">
@@ -47,7 +46,7 @@
                 </tr>
             </table>
         </div>
-        <div class="received-requests-container gladiator-heading-container" ng-hide="isReceivedEmpty" ng-click="toggleReceivedContainer()">
+        <div class="match-requests-container" ng-hide="isReceivedEmpty" ng-click="toggleReceivedContainer()">
             <span class="{{ expandReceivedButton() }} click-to-expand"></span>
             <p class="requests-header"> Matching requests from other gladiators </p>
             <table ng-show="receivedContainerState">
