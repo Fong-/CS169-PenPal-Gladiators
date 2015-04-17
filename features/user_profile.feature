@@ -44,12 +44,13 @@ Scenario: Save changes
     And I press "Save Changes"
     Then I should see the text "I hate everyone" for "blurb"
     And I follow "Home"
+    And I wait 1 second
     And I follow "Profile"
+    And I wait 1 second
     Then I should see the text "I hate everyone" for "blurb"
 
 Scenario: View other Gladiator's profile
     Given "Garply" has a political hero of "Widget"
     And I navigate to the profile page of "Garply"
     Then I should see the text "Widget" for "hero"
-#    Uncomment when return 1==1 is removed from profile.coffee and logic exists to figure out who's logged in
-#    And I should not see "update-profile"
+    And I should not see "update-profile"

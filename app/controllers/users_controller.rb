@@ -4,17 +4,24 @@ class UsersController < ActionController::Base
         :invalid_email => "invalid email",
         :invalid_password => "invalid password",
         :email_exists => "email already exists",
+        :user_not_found => "user not found"
     }
 
     def authenticate
         token = params[:token]
 
-        token_results = User.parse_access_token(token)
+        begin
+            token_results = User.parse_access_token(token)
+        rescue
+            render :json => { :error => :failed }
+            return
+        end
 
         if token_results.has_key?(:error)
             render :json => { :error => :failed }
         else
-            render :json => {}
+            user = token_results[:user]
+            render :json => { :user => user.response_object }
         end
     end
 
@@ -70,11 +77,21 @@ class UsersController < ActionController::Base
     end
 
     def get_profile_info_by_id
-        render :json => User.find(params[:id]).profile_response_object
+        user = User.find_by_id(params[:id])
+        if user.present?
+            render :json => user.profile_response_object
+        else
+            render :json => { :error => ERROR_MESSAGES[:user_not_found] }
+        end
     end
 
     def post_profile_info_by_id
-        User.find(params[:id]).update_profile(params)
-        render :json => {}
+        user = User.find_by_id(params[:id])
+        if user.present?
+            user.update_profile(params)
+            render :json => {}
+        else
+            render :json => { :error => ERROR_MESSAGES[:user_not_found] }
+        end
     end
 end

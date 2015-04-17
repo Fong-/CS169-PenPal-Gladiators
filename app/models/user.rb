@@ -37,6 +37,14 @@ class User < ActiveRecord::Base
         return User.find_by_email_and_password(email, @@sha256.base64digest(password))
     end
 
+    def response_object
+        return {
+            :id => id,
+            :username => username,
+            :avatar => avatar
+        }
+    end
+
     def profile_response_object
         return {
             :username => username,

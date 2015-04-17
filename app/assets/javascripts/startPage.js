@@ -3,6 +3,7 @@
 //= require angular-ui-router
 //= require angular-cookies
 //= require ./shared/sharedServices
+//= require ./shared/api
 //= require_tree ./shared
 //= require_tree ./startpage
 
