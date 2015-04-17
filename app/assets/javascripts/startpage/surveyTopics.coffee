@@ -1,13 +1,11 @@
 surveyTopics = angular.module("SurveyTopics", ["SharedServices", "StartPageServices"])
 
 surveyTopics.controller("SurveyTopicsController", ["$scope", "$http", "$state", "API", "StartPageStaticData", "StartPageStateData", ($scope, $http, $state, API, StartPageStaticData, StartPageStateData) ->
-    $scope.MIN_NUM_TOPICS_REQUIRED = 5
+    $scope.MIN_NUM_TOPICS_REQUIRED = 1
     $scope.allTopics = []
     $scope.topicSelectionModel = {}
 
     currentState = StartPageStateData.currentState
-    if currentState == ""
-        currentState = "topics"
 
     # Get the description for the page
     $scope.pageDescription = ->
@@ -31,8 +29,8 @@ surveyTopics.controller("SurveyTopicsController", ["$scope", "$http", "$state", 
 
     # Advances to the next view.
     $scope.handleAdvanceToQuestions = ->
-        if currentState == "topics"
-            StartPageStateData.currentState = "questions-0"
+        StartPageStateData.currentState = "questions-0"
+        StartPageStateData.resetProgress()
         StartPageStateData.clearSelectedTopics()
         StartPageStateData.selectTopic(id) for id of $scope.topicSelectionModel when $scope.topicSelectionModel[id]
         sortedTopicIds = Object.keys($scope.topicSelectionModel).sort()
