@@ -9,7 +9,6 @@ class SurveyQuestionsController < ApplicationController
         question = SurveyQuestion.find_by_id(params[:id])
         if question.nil?
             render_error(:resource_not_found) and return
-            return
         end
 
         render :json => question.response_object
