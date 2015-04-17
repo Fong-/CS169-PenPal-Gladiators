@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150415181140) do
+ActiveRecord::Schema.define(:version => 20150417020759) do
 
   create_table "arenas", :force => true do |t|
     t.integer  "user1_id"
@@ -31,6 +31,15 @@ ActiveRecord::Schema.define(:version => 20150415181140) do
   end
 
   add_index "conversations", ["arena_id"], :name => "index_conversations_on_arena_id"
+
+  create_table "invites", :force => true do |t|
+    t.integer "from_id"
+    t.integer "to_id"
+    t.string  "status"
+  end
+
+  add_index "invites", ["from_id"], :name => "index_invites_on_from_id"
+  add_index "invites", ["to_id"], :name => "index_invites_on_to_id"
 
   create_table "posts", :force => true do |t|
     t.string   "text"

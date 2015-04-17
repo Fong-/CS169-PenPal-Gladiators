@@ -19,6 +19,9 @@ CS169PenpalGladiators::Application.routes.draw do
     get "/api/v1/conversation/:id" => "conversations#get_by_id"
     post "/api/v1/post/create/:conversation_id" => "posts#create"
     post "/api/v1/post/edit/:post_id" => "posts#edit"
+    get "/api/v1/invites/outbound/:user_id" => "invites#outbound"
+    get "/api/v1/invites/inbound/:user_id" => "invites#inbound"
+
     # Public routes
     get "/" => "pages#homepage"
     get "/login" => "pages#startpage"
