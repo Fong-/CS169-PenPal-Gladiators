@@ -86,6 +86,7 @@ sidebar.controller("SidebarController", ["$scope", "$http", "$state", "API", "Ti
     $scope.request_flag = true
 
     $scope.sentContainerState = false
+    $scope.receivedContainerState = false
 
     SIDEBAR_POLL_PERIOD = 10000
 
@@ -112,8 +113,11 @@ sidebar.controller("SidebarController", ["$scope", "$http", "$state", "API", "Ti
     $scope.toggleSentContainer = () ->
         $scope.sentContainerState = !$scope.sentContainerState
 
-    $scope.expandSentButton = () -> if $scope.sentContainerState then "glyphicon glyphicon-chevron-up" else "glyphicon glyphicon-chevron-down"
+    $scope.toggleReceivedContainer = () ->
+        $scope.receivedContainerState = !$scope.receivedContainerState
 
+    $scope.expandSentButton = () -> if $scope.sentContainerState then "glyphicon glyphicon-chevron-up" else "glyphicon glyphicon-chevron-down"
+    $scope.expandReceivedButton = () -> if $scope.receivedContainerState then "glyphicon glyphicon-chevron-up" else "glyphicon glyphicon-chevron-down"
 
     # Request matches from the matching algorithm
     # Assume that the API gives us an 'id' and 'username'
