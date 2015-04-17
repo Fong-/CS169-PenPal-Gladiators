@@ -9,9 +9,11 @@ router.config(["$stateProvider", "$urlRouterProvider", ($stateProvider, $urlRout
         templateUrl: "/assets/login.html"
         controller: "LoginController"
         resolve: {
-            loggedIn: ["Authentication", (Authentication) ->
-                return Authentication.isLoggedIn(false).then(
-                    (result) -> true
+            loggedIn: ["Authentication", "$window", "$q", (Authentication, $window, $q) ->
+                return Authentication.isLoggedIn().then(
+                    (result) ->
+                        $window.location.href = "/"
+                        return $q.reject()
                     (reason) -> false
                 )
             ]

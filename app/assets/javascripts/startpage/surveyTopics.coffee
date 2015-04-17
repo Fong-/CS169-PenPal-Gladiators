@@ -39,9 +39,13 @@ surveyTopics.controller("SurveyTopicsController", ["$scope", "$http", "$state", 
 
     # Asynchronously load the list of topics.
     # TODO Cache the results, so we only rerun the query if necessary.
-    API.requestTopics().success (allTopics) ->
-        StartPageStaticData.clearTopics()
-        StartPageStaticData.addTopic(topic) for topic in allTopics
-        $scope.allTopics = allTopics.sort((u, v) -> u.id - v.id)
-        $scope.topicSelectionModel[id] = true for id in StartPageStateData.selectedTopics
+    API.requestTopics()
+        .success (allTopics) ->
+            StartPageStaticData.clearTopics()
+            StartPageStaticData.addTopic(topic) for topic in allTopics
+            $scope.allTopics = allTopics.sort((u, v) -> u.id - v.id)
+            $scope.topicSelectionModel[id] = true for id in StartPageStateData.selectedTopics
+        .error (error) ->
+            reason = result.error
+            console.log "topic request failed: #{reason}"
 ])

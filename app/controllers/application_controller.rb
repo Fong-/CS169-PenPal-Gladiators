@@ -1,6 +1,19 @@
 class ApplicationController < ActionController::Base
-    def homepage
-        # TODO Move to angular controller.
-        render "public/homePage", :formats => :html
+    include ErrorHandler
+
+    before_filter :check_access_token
+
+    def check_access_token
+        token = params[:token]
+        begin
+            @token_results = User.parse_access_token(token)
+
+            if @token_results.has_key?(:error)
+                error = @token_results[:error]
+                render_error(error)
+            end
+        rescue
+            render_error(:invalid_token)
+        end
     end
 end

@@ -1,20 +1,26 @@
 class TopicsController < ApplicationController
+    skip_filter :check_access_token
+
     def get_all
         render :json => Topic.all.map { |topic| topic.response_object }
     end
 
     def get_by_id
-        topic = Topic.find_by_id params[:id]
-        render :json => topic.nil? ? {"error" => true} : topic.response_object
+        topic = Topic.find_by_id(params[:id])
+        if topic.nil?
+            render_error(:resource_not_found) and return
+        end
+
+        render :json => topic.response_object
     end
 
     def get_questions_by_id
-        topic = Topic.find_by_id params[:id]
+        topic = Topic.find_by_id(params[:id])
         if topic.nil?
-            render :json => {"error" => true}
-        else
-            questions = topic.survey_questions
-            render :json => questions.map { |q| q.response_object }
+            render_error(:resource_not_found) and return
         end
+
+        questions = topic.survey_questions
+        render :json => questions.map { |q| q.response_object }
     end
 end

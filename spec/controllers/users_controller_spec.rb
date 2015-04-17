@@ -4,6 +4,10 @@ require 'spec_helper'
 describe UsersController, :type => :controller do
 
     context "when accessing a user's profile information" do
+        before :each do
+            controller.stub(:check_access_token).and_return(true)
+        end
+
         it "should return the appropriate response object" do
             user = double(user, :profile_response_object => {:a => 1})
             User.stub(:find_by_id).and_return(user)
@@ -47,14 +51,14 @@ describe UsersController, :type => :controller do
             post "authenticate", { :token => bad_access_token }
             responseObject = JSON.parse(response.body)
             expect(responseObject["error"]).not_to eq(nil)
-            expect(responseObject["error"]).to eq("failed")
+            expect(response.status).to eq(401)
         end
 
         it "should complain if authenticated with a malformed access token" do
            post "authenticate", { :token => "abcd" }
             responseObject = JSON.parse(response.body)
             expect(responseObject["error"]).not_to eq(nil)
-            expect(responseObject["error"]).to eq("failed")
+            expect(response.status).to eq(401)
         end
 
     end
@@ -80,11 +84,11 @@ describe UsersController, :type => :controller do
             post "login", { :email => "foo@bar.com", :password => "helloworld" }
             responseObject = JSON.parse(response.body)
             expect(responseObject["error"]).not_to eq(nil)
-            expect(responseObject["error"]).to eq("incorrect credentials")
+            expect(response.status).to eq(404)
             post "login", { :email => "alice@example.com", :password => "helloworld" }
             responseObject = JSON.parse(response.body)
             expect(responseObject["error"]).not_to eq(nil)
-            expect(responseObject["error"]).to eq("incorrect credentials")
+            expect(response.status).to eq(404)
         end
 
         it "should login a user with correct credentials" do
@@ -96,7 +100,8 @@ describe UsersController, :type => :controller do
         it "should not login an unknown user" do
             get "login", { :email => "bob@example.com", :password => "12345678" }
             responseObject = JSON.parse(response.body)
-            expect(responseObject["error"]).to eq("incorrect credentials")
+            expect(responseObject["error"]).not_to eq(nil)
+            expect(response.status).to eq(404)
             expect(responseObject["token"]).to eq(nil)
         end
 
@@ -104,7 +109,7 @@ describe UsersController, :type => :controller do
             get "can_register", { :email => "alice@example.com", :password => "12345678" }
             responseObject = JSON.parse(response.body)
             expect(responseObject["error"]).not_to eq(nil)
-            expect(responseObject["error"]).to eq("email already exists")
+            expect(response.status).to eq(400)
         end
 
         it "should not allow a user to register without a password or email" do
