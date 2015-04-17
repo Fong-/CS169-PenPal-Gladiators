@@ -2,16 +2,27 @@
 
 surveyQuestions = angular.module("SurveyQuestions", ["StartPageServices"])
 
+surveyQuestions.directive("highlighter", () ->
+     (scope, element, attributes) ->
+            scope.$watch(attributes.highlighter, (nv, ov) ->
+                question = JSON.parse(attributes.question)
+                if scope.shouldBeHighlighted(question) && !element.hasClass("highlighter")
+                    element.addClass("highlighter")
+                else if !scope.shouldBeHighlighted(question) && element.hasClass("highlighter")
+                    element.removeClass("highlighter")
+            )
+)
+
 surveyQuestions.controller("SurveyQuestionsController", ["$scope", "$http", "$state", "$stateParams", "API", "StartPageStaticData", "StartPageStateData", ($scope, $http, $state, $stateParams, API, StartPageStaticData, StartPageStateData) ->
     $scope.allTopics = StartPageStaticData.topics                 # all the topics
     $scope.selectedTopicIds = StartPageStateData.selectedTopics     # the ids of the topics the user selected
     $scope.currentTopicId = $stateParams.id
     $scope.currentTopic = $scope.allTopics[$scope.currentTopicId].name # the topic we're doing now
-
     $scope.questions = StartPageStaticData.getQuestionsForTopic($scope.currentTopicId)
     $scope.questionCheckModel = StartPageStateData.getResponsesForTopic($scope.currentTopicId)
 
     currentState = StartPageStateData.currentState
+    $scope.firstUnansweredQuestionId = null                # id of the first unanswered question on the page
 
     # Regex pattern to match states of the form "questions-X" where X is a 0-index
     statePattern = /^questions-(\d+)$/
@@ -72,6 +83,21 @@ surveyQuestions.controller("SurveyQuestionsController", ["$scope", "$http", "$st
         $scope.questionCheckModel[selectedResponse.id] = true
         StartPageStateData.addResponsesForTopic($scope.currentTopicId, $scope.questionCheckModel)
         handleProgressOnResponse()
+        $scope.firstUnansweredQuestionId = null if $scope.firstUnansweredQuestionId == question.id
+
+    isQuestionAnswered = (question) ->
+        for response in question.survey_responses
+            if $scope.questionCheckModel[response.id]
+                return true
+        return false
+
+    # Get the number of questions with no responses selected yet
+    $scope.numUnansweredQuestions = ->
+        questionsLeft = $scope.questions.length
+        for question in $scope.questions
+            if isQuestionAnswered(question)
+                questionsLeft -= 1
+        return questionsLeft
 
     $scope.hideBackButton = ->
         return currentState == "summary"
@@ -136,6 +162,17 @@ surveyQuestions.controller("SurveyQuestionsController", ["$scope", "$http", "$st
             handleBackToQuestions(prevTopicId)
         else
             handleBackToTopics()
+
+    # Determine whether a question should be highlighted or not. Only the first unanswered question
+    # should be highlighted.
+    $scope.shouldBeHighlighted = (question) ->
+        # Question is already answered or it is not the first unanswered question
+        if isQuestionAnswered(question) || ($scope.firstUnansweredQuestionId != null && $scope.firstUnansweredQuestionId != question.id)
+            return false
+        # Question is the first unanswered question
+        else
+            $scope.firstUnansweredQuestionId = question.id
+            return true
 
     # Asynchronously load the list of questions for a topic
     load_questions = (topicId) ->
