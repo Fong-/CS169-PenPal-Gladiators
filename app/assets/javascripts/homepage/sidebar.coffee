@@ -87,7 +87,7 @@ sidebar.controller("SidebarController", ["$scope", "$http", "$state", "API", "Ti
     $scope.sentContainerState = false
     $scope.receivedContainerState = false
 
-    SIDEBAR_POLL_PERIOD = 10000
+    SIDEBAR_POLL_PERIOD = 100000
 
     # Hides attributes after a button click
     # Checks whether containers should be hidden or not
@@ -122,11 +122,12 @@ sidebar.controller("SidebarController", ["$scope", "$http", "$state", "API", "Ti
     # Assume that the API gives us an 'id' and 'username'
     # This should be triggered by a button press in the view
     $scope.request_matches = () ->
+        console.log("Requesting Matches")
         API.requestMatches(currentUserId)
             .success (matches) ->
                 $scope.usersMatching = matches.length
                 for match in matches
-                    $scope.matchedGladiators[match.id] = match.username
+                    $scope.matchedGladiators.push({id:match.user.id, username:match.user.username})
                     at_least_one_match = true
                 $scope.hideUserRequest = {} # reset so everything will be visible again
             .error (result, status) ->
@@ -137,13 +138,11 @@ sidebar.controller("SidebarController", ["$scope", "$http", "$state", "API", "Ti
                 console.log "matches loading failed: #{reason}"
 
     # Request to be matched with another Gladiator
-    # Assume that the API gives us an 'id' and 'username'
     # This should be triggered by a button press in the view
     $scope.request_match = (otherUserId) ->
         API.requestMatch(currentUserId, otherUserId)
-            .success (request) ->
-                $scope.outboundRequests.push(request)
-                $scope.toggleHideRequest(otherUserId)
+            .success (requestStatus) ->
+                $scope.outbound_requests()
             .error (result, status) ->
                 if result?
                     reason = result.error
@@ -156,8 +155,8 @@ sidebar.controller("SidebarController", ["$scope", "$http", "$state", "API", "Ti
     $scope.accept_match = (otherUserId) ->
         API.respondToRequest(currentUserId, otherUserId, "accept")
             .success (accept) ->
-                # Remove the user from inboundRequests
-                inboundRequests = (x for x in array when x.id != otherUserId)
+                # Remove the user from inboundRequests by querying the API
+                $scope.inboundRequests()
                 $scope.toggleHideReceived(otherUserId)
             .error (result, status) ->
                 if result?
@@ -171,8 +170,8 @@ sidebar.controller("SidebarController", ["$scope", "$http", "$state", "API", "Ti
     $scope.decline_match = (otherUserId) ->
         API.respondToRequest(currentUserId, otherUserId, "decline")
             .success (accept) ->
-                # Remove the user from inboundRequests
-                inboundRequests = (x for x in array when x.id != otherUserId)
+                # Remove the user from inboundRequests by querying the API
+                $scope.inboundRequests()
                 $scope.toggleHideReceived(otherUserId)
             .error (result, status) ->
                 if result?
@@ -187,8 +186,9 @@ sidebar.controller("SidebarController", ["$scope", "$http", "$state", "API", "Ti
     $scope.inbound_requests = () ->
         API.incomingRequests(currentUserId)
             .success (requests) ->
-                for key, request in requests
-                    $scope.inboundRequests.push(request)
+                console.log(requests)
+                for request in requests
+                    $scope.inboundRequests.push({id: request.from_id, username: request.username})
                 $scope.usersInbound = requests.length
             .error (result, status) ->
                 if result?
@@ -203,8 +203,9 @@ sidebar.controller("SidebarController", ["$scope", "$http", "$state", "API", "Ti
     $scope.outbound_requests = () ->
         API.requestStatus(currentUserId)
             .success (requests) ->
-                for key, request in requests
-                    $scope.inboundRequests.push(request)
+                console.log("Outgoing:", requests)
+                for request in requests
+                    $scope.outboundRequests.push({id:request.from_id, username:request.username, status:request.status})
                 $scope.usersOutbound = requests.length
                 for request in requests
                     status = request.status

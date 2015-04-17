@@ -73,7 +73,7 @@ angular.module("SharedServices").service("API", ["$http", "$cookieStore", ($http
         params = { token: getToken(), my_id: myUserId, user_id: otherUserId }
         $http.post(request, { params: params })
 
-    this.incomingReqests = (userId) ->
+    this.incomingRequests = (userId) ->
         request = generateRequest("incoming_requests")
         params = { token: getToken(), id: userId }
         $http.get(request, { params: params })
@@ -84,7 +84,7 @@ angular.module("SharedServices").service("API", ["$http", "$cookieStore", ($http
         $http.post(request, { params: params })
 
     this.requestStatus = (userId) ->
-        request = generateRequest("my_requests")
+        request = generateRequest("sent_requests")
         params = { token: getToken(), id: userId }
         $http.get(request, { params: params })
 

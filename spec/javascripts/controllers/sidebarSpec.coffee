@@ -15,7 +15,15 @@ describe "SidebarController", ->
                 }
             }]
         }]
+        @http.when("GET", "api/v1/sent_requests?id=1").respond [{
+            user1: {id:1, name:"Rob the Rhino", requestStatus:"Pending"}
+        }]
+        @http.when("GET", "api/v1/incoming_requests?id=1").respond [{
+            user1: {id:2, name:"Olga the Ostritch"}
+        }]
         AppState.setUserId(1)
+        @http.expectGET("/api/v1/sent_requests?id=1")
+        @http.expectGET("/api/v1/incoming_requests?id=1")
         @http.expectGET("/api/v1/arenas/1")
         @controller("SidebarController", { $scope: @scope })
         @http.flush();
