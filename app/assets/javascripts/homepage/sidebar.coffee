@@ -122,93 +122,84 @@ sidebar.controller("SidebarController", ["$scope", "$http", "$state", "API", "Ti
     # Assume that the API gives us an 'id' and 'username'
     # This should be triggered by a button press in the view
     $scope.request_matches = () ->
-        # Stubbed API call, fix indentation of for loop when un-stubbing
-        #API.requestMatches(currentUserId).success (matches) ->
-        matches = [
-            {id:1, username:"Bob the Buffoon"},
-            {id:2, username:"William the Weasel"},
-            {id:3, username:"Larry the Llama"},
-            {id:4, username:"Olga the Ostrich"},
-            {id:5, username:"Anton the Armadillo"},
-        ]
-        $scope.usersMatching = matches.length
-        ###
-        for match in matches
-            $scope.matchedGladiators[match.id] = match.username
-            at_least_one_match = true
-        ###
-        $scope.matchedGladiators = matches
-        at_least_one_match = true
-        $scope.hideUserRequest = {} # reset so everything will be visible again
+        API.requestMatches(currentUserId)
+            .success (matches) ->
+                $scope.usersMatching = matches.length
+                for match in matches
+                    $scope.matchedGladiators[match.id] = match.username
+                    at_least_one_match = true
+                $scope.hideUserRequest = {} # reset so everything will be visible again
+            .error (result, status) ->
+                reason = result.error
+                console.log "matches loading failed: #{reason}"
 
     # Request to be matched with another Gladiator
     # Assume that the API gives us an 'id' and 'username'
     # This should be triggered by a button press in the view
     $scope.request_match = (otherUserId) ->
-        # Stubbed API call
-#        API.requestMatch(otherUserId).success (request) ->
-#            $scope.outboundRequests.push(request)
-        $scope.outboundRequests.push({id:otherUserId, inviteStatus: "Pending"})
-        $scope.toggleHideRequest(otherUserId)
+        API.requestMatch(currentUserId, otherUserId)
+            .success (request) ->
+                $scope.outboundRequests.push(request)
+                $scope.toggleHideRequest(otherUserId)
+            .error (result, status) ->
+                reason = result.error
+                console.log "matching with user failed: #{reason}"
 
     # Accept a match request
     # This should be triggered by a button press in the view
     $scope.accept_match = (otherUserId) ->
-#        Stubbed API call
-#        API.acceptMatch(otherUserId).success (accept) ->
-#            # Remove the user from inboundRequests
-#            inboundRequests = (x for x in array when x.id != otherUserId))
-        $scope.toggleHideReceived(otherUserId)
+        API.respondToRequest(currentUserId, otherUserId, "accept")
+            .success (accept) ->
+                # Remove the user from inboundRequests
+                inboundRequests = (x for x in array when x.id != otherUserId))
+                $scope.toggleHideReceived(otherUserId)
+            .error (result, status) ->
+                reason = result.error
+                console.log "accepting match failed: #{reason}"
 
     # Decline a match request
     # This should be triggered by a button press in the view
     $scope.decline_match = (otherUserId) ->
-#        Stubbed API call, fix indentation when un-stubbing
-#        API.declineMatch(otherUserId).success (decline) ->
-#            # Remove the user from inboundRequests
-#            inboundRequests = (x for x in array when x.id != otherUserId))
-        $scope.toggleHideReceived(otherUserId)
+        API.respondToRequest(currentUserId, otherUserId, "decline")
+            .success (accept) ->
+                # Remove the user from inboundRequests
+                inboundRequests = (x for x in array when x.id != otherUserId))
+                $scope.toggleHideReceived(otherUserId)
+            .error (result, status) ->
+                reason = result.error
+                console.log "declining match failed: #{reason}"
 
     # Query the server for new inbound matching requests
     # Assume that the API gives us objects with an 'id' and 'username'
     # This is called automatically in setInterval
     $scope.inbound_requests = () ->
-#        Stubbed API call, fix indentation of for loop when un-stubbing
-#        API.inboundRequests().success (requests) ->
-#            for key, request in requests
-#                $scope.inboundRequests.push(request)
-        requests = [
-            {id:23, username:"Jack the Jeckyll"},
-            {id:42, username:"Ralph the Reptile"},
-            {id:18, username:"Kate the Kangaroo"}
-        ]
-        $scope.inboundRequests = requests
-        $scope.usersInbound = requests.length
-        # $scope.hideUserReceived = {}
+        API.incomingRequests(currentUserId)
+            .success (requests) ->
+                for key, request in requests
+                    $scope.inboundRequests.push(request)
+                $scope.usersInbound = requests.length
+            .error (result, status) ->
+                reason = result.error
+                console.log "querying inbound requests failed: #{reason}"
 
     # Query the server for new responses to requests that were sent out before
     # Assume that the API gives us objects with an 'id', 'username', and 'inviteStatus' of request
     # This is called automatically in setInterval
     $scope.outbound_requests = () ->
-#        Stubbed API call, fix indentation of for loop when un-stubbing
-#        API.outboundRequests().success (requests) ->
-#            for key, request in requests
-#                $scope.inboundRequests.push(request)
-        requests = [
-            {id:27, username:"Charlie the Cheetah", status:"Accepted"},
-            {id:49, username:"Dolph the Dingo", status:"Accepted"},
-            {id:11, username:"Edward the Eel", status:"Accepted"},
-            {id:16, username:"Henry the Hippo", status:"Declined"}
-        ]
-        $scope.outboundRequests = requests
-        $scope.usersOutbound = requests.length
-        # $scope.hideUserSent = {}
-        for request in requests
-            status = request.status
-            switch status
-                when "Accepted" then $scope.requestStatusById[request.id] = true
-                when "Declined" then $scope.requestStatusById[request.id] = true
-                else $scope.requestStatusById[request.id] = false
+        API.requestStatus(currentUserId)
+            .success (requests) ->
+                for key, request in requests
+                    $scope.inboundRequests.push(request)
+                $scope.usersOutbound = requests.length
+                for request in requests
+                    status = request.status
+                    switch status
+                        when "Accepted" then $scope.requestStatusById[request.id] = true
+                        when "Declined" then $scope.requestStatusById[request.id] = true
+                        else $scope.requestStatusById[request.id] = false
+            .error (result, status) ->
+                reason = result.error
+                console.log "querying outboundrequests failed: #{reason}"
 
     # This is hacky because it calls request_matches, so it's not really necessary to call it again from the view
     # Clean this up later
