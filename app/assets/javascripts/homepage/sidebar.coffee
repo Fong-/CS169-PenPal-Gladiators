@@ -1,34 +1,21 @@
 sidebar = angular.module("Sidebar", ["SharedServices"])
 
 sidebar.directive("requestsPopover", ["$compile", "$templateCache", ($compile, $templateCache) ->
-
     template = "<li ng-repeat='matchedGladiator in matchedGladiators'>{{ matchedGladiator }}</li>"
-    template2 = "<a>{{ matchedGladiators }}</a>"
-    #getTemplate = () -> $templateCache.get("requests_content.html")
-
-    #itemsTemplate = "<ul class='unstyled'><li ng-repeat='item in items'>{{item}}</li></ul>"
+    getTemplate = () -> $templateCache.get("requests_content.html")
+    html = getTemplate()
 
     obj =
         restrict: "A"
         transclude: true
         template: "<span ng-transclude></span>"
         link: (scope, element, attrs) ->
-            element.bind("click", () ->
-                scope.$apply( () ->
-                    #scope.change()
-                    scope.request_matches()
-                )
-            )
-
-            popOverContent = $compile(template2)(scope)
-            #$compile(popOverContent)(scope)
-
+            popOverContent = $compile(template)(scope)
             options =
                 html: true
                 content:  popOverContent
-                placement: "left"
+                placement: "bottom"
             $(element).popover options
-
     return obj
 ])
 
@@ -79,22 +66,48 @@ sidebar.controller("SidebarController", ["$scope", "$http", "$state", "API", "Ti
                 reason = "status code #{status}"
             console.log "sidebar failed: #{reason}"
 
-
     $scope.testvar = "nothing"
     $scope.change = () ->
         $scope.testvar = "something!"
-
-    $scope.singleModel = 0
 
     # Matching
     # TODO: API endpoints and add calls to API service, better verbiage
     $scope.matchedGladiators = []
     $scope.outboundRequests = []
     $scope.inboundRequests = []
-    $scope.requestStatusById = {}
+
+    $scope.usersMatching = 0
+    $scope.usersOutbound = 0
+    $scope.usersInbound = 0
+
     at_least_one_match = false
 
+    $scope.requestStatusById = {}
+    $scope.hideUserSent = {}
+    $scope.hideUserReceived = {}
+    $scope.singleModel = 0
+    $scope.isSentEmpty = false
+    $scope.isReceivedEmpty = false
+    $scope.request_flag = true
+
     SIDEBAR_POLL_PERIOD = 10000
+
+    # Hides attributes after a button click
+    # Checks whether containers should be hidden or not
+    $scope.toggleHideSent = (UserId) ->
+        $scope.hideUserSent[UserId] = true
+        $scope.usersOutbound -= 1
+        if $scope.usersOutbound == 0 then $scope.isSentEmpty = true
+
+    $scope.toggleHideReceived = (UserId) ->
+        $scope.hideUserReceived[UserId] = true
+        $scope.usersInbound -= 1
+        if $scope.usersInbound == 0 then $scope.isReceivedEmpty = true
+
+    # Only call the API on button toggle
+    $scope.request_matches_check = () ->
+        if $scope.request_flag then $scope.request_matches()
+        $scope.request_flag = !$scope.request_flag
 
     # Request matches from the matching algorithm
     # Assume that the API gives us an 'id' and 'username'
@@ -109,9 +122,14 @@ sidebar.controller("SidebarController", ["$scope", "$http", "$state", "API", "Ti
             {id:4, username:"Olga the Ostrich"},
             {id:5, username:"Anton the Armadillo"},
         ]
+        $scope.usersMatching = matches.length
+        ###
         for match in matches
             $scope.matchedGladiators[match.id] = match.username
             at_least_one_match = true
+        ###
+        $scope.matchedGladiators = matches
+        at_least_one_match = true
 
     # Request to be matched with another Gladiator
     # Assume that the API gives us an 'id' and 'username'
@@ -129,6 +147,7 @@ sidebar.controller("SidebarController", ["$scope", "$http", "$state", "API", "Ti
 #        API.acceptMatch(otherUserId).success (accept) ->
 #            # Remove the user from inboundRequests
 #            inboundRequests = (x for x in array when x.id != otherUserId))
+        $scope.toggleHideReceived(otherUserId)
 
     # Decline a match request
     # This should be triggered by a button press in the view
@@ -137,6 +156,7 @@ sidebar.controller("SidebarController", ["$scope", "$http", "$state", "API", "Ti
 #        API.declineMatch(otherUserId).success (decline) ->
 #            # Remove the user from inboundRequests
 #            inboundRequests = (x for x in array when x.id != otherUserId))
+        $scope.toggleHideReceived(otherUserId)
 
     # Query the server for new inbound matching requests
     # Assume that the API gives us objects with an 'id' and 'username'
@@ -152,6 +172,7 @@ sidebar.controller("SidebarController", ["$scope", "$http", "$state", "API", "Ti
             {id:18, username:"Kate the Kangaroo"}
         ]
         $scope.inboundRequests = requests
+        $scope.usersInbound = requests.length
 
     # Query the server for new responses to requests that were sent out before
     # Assume that the API gives us objects with an 'id', 'username', and 'inviteStatus' of request
@@ -162,12 +183,13 @@ sidebar.controller("SidebarController", ["$scope", "$http", "$state", "API", "Ti
 #            for key, request in requests
 #                $scope.inboundRequests.push(request)
         requests = [
-            {id:27, username:"Charlie the Cheetah", status:"Pending"},
-            {id:49, username:"Dolph the Dingo", status:"Pending"},
+            {id:27, username:"Charlie the Cheetah", status:"Accepted"},
+            {id:49, username:"Dolph the Dingo", status:"Accepted"},
             {id:11, username:"Edward the Eel", status:"Accepted"},
             {id:16, username:"Henry the Hippo", status:"Declined"}
         ]
         $scope.outboundRequests = requests
+        $scope.usersOutbound = requests.length
         for request in requests
             status = request.status
             switch status
