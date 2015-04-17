@@ -35,10 +35,11 @@
         <div class="sent-requests-container gladiator-heading-container" ng-hide="isSentEmpty" ng-click="toggleSentContainer()">
             <p class="requests-header"> Your sent matching requests </p>
             <span class="{{ expandSentButton() }} click-to-expand"></span>
-            <!-- TODO:
-                - Add headers to table
-             -->
             <table ng-show="sentContainerState">
+                <tr class="sent-requests-header">
+                    <td>Username</td>
+                    <td>Status</td>
+                </tr>
                 <tr class="sent-requets" ng-repeat="request in outboundRequests" ng-hide="hideUserSent[request.id]">
                     <td class="request-text">{{ request.username }}</td>
                     <td class="request-text">{{ request.status }}</td>
@@ -46,9 +47,10 @@
                 </tr>
             </table>
         </div>
-        <div class="received-requests-container" ng-hide="isReceivedEmpty">
+        <div class="received-requests-container gladiator-heading-container" ng-hide="isReceivedEmpty" ng-click="toggleReceivedContainer()">
+            <span class="{{ expandReceivedButton() }} click-to-expand"></span>
             <p class="requests-header"> Matching requests from other gladiators </p>
-            <table>
+            <table ng-show="receivedContainerState">
                 <tr class="received-requests" ng-repeat="request in inboundRequests" ng-hide="hideUserReceived[request.id]">
                     <td class="request-text">{{ request.username }}</td>
                     <td><a class="btn btn-primary accept-request" ng-click="accept_match(request.id)">Accept</a></td>
