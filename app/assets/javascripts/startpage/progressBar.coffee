@@ -15,20 +15,8 @@ progressBar.controller("ProgressBarController", ["$scope", "StartPageStateData",
         percentPerTopic = 1 / numSelectedTopics
         topicPercentBuffer = 0.1 * percentPerTopic
 
-        console.log "======"
-        console.log numTopicsCompleted
-        console.log numSelectedTopics
-        # console.log numQuestionsCompleted
-        # console.log numQuestions
-        # console.log topicPercent
-        # console.log questionPercent
-
         if numQuestions is 0
-            console.log "here1"
-            console.log topicPercent * 100
             return topicPercent * 100
         else
-            console.log "here2"
-            console.log (topicPercent + (percentPerTopic - topicPercentBuffer) * questionPercent) * 100
             return (topicPercent + (percentPerTopic - topicPercentBuffer) * questionPercent) * 100
 ])
