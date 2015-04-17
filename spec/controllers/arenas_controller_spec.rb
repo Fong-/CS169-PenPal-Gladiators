@@ -4,9 +4,10 @@ require "json"
 describe ArenasController do
     context "#get_by_user_id" do
         before :each do
+            controller.stub(:check_access_token).and_return(true)
             @arena = double "Arena Instance", :response_object => { :a => 1 }
             user = double "User", :arenas => [@arena] * 5
-            User.stub(:find).and_return(user)
+            User.stub(:find_by_id).and_return(user)
         end
 
         it "should construct responses for each arena object" do

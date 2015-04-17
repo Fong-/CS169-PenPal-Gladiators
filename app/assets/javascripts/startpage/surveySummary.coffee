@@ -29,21 +29,15 @@ surveySummary.controller("SurveySummaryController", ["$scope", "$http", "$state"
     $scope.handleRegister = ->
         $scope.submitRegistrationText = "Registering..."
         $scope.disableRegistration = true
-        API.register(StartPageStateData.email, StartPageStateData.password).then(
-            (result) ->
-                data = result.data
-                if data? and "error" not of data and "token" of data
-                    user = { accessToken: data["token"] }
-                    $cookieStore.put("user", user)
-                    $window.location.href = "/#/"
-                else
-                    $scope.status = if data then data["error"] else "Oops, an error occurred."
-            (reason) ->
+        API.register(StartPageStateData.email, StartPageStateData.password)
+            .success (result) ->
+                $cookieStore.put("accessToken", result["token"])
+                $window.location.href = "/#/"
+            .error (result) ->
                 $scope.status = "Oops, an error occurred. Try again!"
-        ).finally(() ->
-            $scope.submitRegistrationText = "Try Again"
-            $scope.disableRegistration = false
-        )
+            .finally () ->
+                $scope.submitRegistrationText = "Try Again"
+                $scope.disableRegistration = false
 
         return
 ])

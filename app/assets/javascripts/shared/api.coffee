@@ -1,14 +1,18 @@
-angular.module("SharedServices").service("API", ["$http", ($http) ->
+angular.module("SharedServices").service("API", ["$http", "$cookieStore", ($http, $cookieStore) ->
+
     generateRequest = (requestString) ->
         "/api/v1/#{requestString}"
+
+    getToken = () ->
+        return $cookieStore.get("accessToken")
 
     this.requestTopics = () ->
         request = generateRequest("topics")
         $http.get(request)
 
-    this.authenticate = (token) ->
+    this.authenticate = () ->
         request = generateRequest("authenticate")
-        params = { token: token }
+        params = { token: getToken() }
         $http.get(request, { params: params })
 
     this.login = (email, password) ->
@@ -34,16 +38,18 @@ angular.module("SharedServices").service("API", ["$http", ($http) ->
 
     this.requestProfileByUID = (userId) ->
         request = generateRequest("user/#{userId}/profile")
-        $http.get(request)
+        params = { token: getToken() }
+        $http.get(request, { params: params })
 
     this.updateProfileByUID = (userId, username, avatar, blurb, hero, spectrum) ->
         request = generateRequest("user/#{userId}/profile")
-        params = { username: username, avatar: avatar, political_blurb: blurb, political_hero: hero, political_spectrum: spectrum}
+        params = { username: username, avatar: avatar, political_blurb: blurb, political_hero: hero, political_spectrum: spectrum, token: getToken() }
         $http.post(request, params)
 
     this.requestArenasByUser = (userId) ->
         request = generateRequest("arenas/#{userId}")
-        $http.get(request)
+        params = { token: getToken() }
+        $http.get(request, { params: params })
 
     return
 ])
