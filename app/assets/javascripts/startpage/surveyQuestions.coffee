@@ -125,8 +125,11 @@ surveyQuestions.controller("SurveyQuestionsController", ["$scope", "$http", "$st
                     $scope.questions = allQuestions
                     StartPageStaticData.addQuestionsForTopic($scope.currentTopicId, $scope.questions)
                     $scope.numQuestions = $scope.questions.length
-                .error (result) ->
-                    reason = result.reason
+                .error (result, status) ->
+                    if result?
+                        reason = result.error
+                    else
+                        reason = "status code #{status}"
                     console.log "topic question request failed: #{reason}"
         $scope.currentTopic = $scope.allTopics[topicId].name
         if Object.keys($scope.questionCheckModel).length == 0
