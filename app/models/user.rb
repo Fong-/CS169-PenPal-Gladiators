@@ -70,4 +70,8 @@ class User < ActiveRecord::Base
         self.political_spectrum = params[:political_spectrum]
         save
     end
+
+    def refresh_secret
+        self.secret = SecureRandom.base64(24)
+    end
 end
