@@ -1,17 +1,13 @@
-<!-- This template is deprecated for now but leave for debugging
-- <script type="text/ng-template" id="requests_content.html">
--     <div class="fetched-users-container">
--         <li ng-repeat="matchedGladiator in matchedGladiators">
--             <div class="fetched-user">
--                 <a class="fetched-user-name">{{ matchedGladiator }}</a>
--                 <a>{{ testvar }}</a>
--             </div>
--         </li>
--     </div>
-- </script>
--->
-<!-- Add this later
-    <a class="btn btn-primary send-request" ng-click="request_match(request.id)">Request</a>
+<!--
+<script type="text/ng-template" id="requests_content.html">
+    <div class="fetched-users-container">
+        <li ng-repeat="matchedGladiator in matchedGladiators">
+            <div class="fetched-user">
+                <a class="fetched-user-name">{{ matchedGladiator }}</a>
+            </div>
+        </li>
+    </div>
+</script>
 -->
 
 <!-- TODO: General
@@ -26,40 +22,37 @@
     - Make button press work
     - Fix trigger to close when clicking outside
 -->
+<!-- ng-init="items = [{'id':1,'username':'Bob the Buffoon'},{'id':2,'username':'William the Weasel'},{'id':3,'username':'Larry the Llama'},{'id':4,'username':'Olga the Ostrich'},{'id':5,'username':'Anton the Armadillo'}]" -->
+
 <div class="requests-menu" ng-controller="SidebarController">
-    <button type="button" ng-model="singleModel" btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0" requests-popover title="Send requests to be matched with other gladiators">Find Gladiators!</button>
-    <!-- <a class="test-div">{{ testvar }}</a> -->
+    <a class="btn btn-primary" ng-click="request_matches_check()" requests-popover>Find Gladiators!</a>
 </div>
 
 <div class="nav-side-menu" ng-controller="SidebarController">
     <div class="matching-bar-container">
         <!-- TODO:
         - Figure out better verbiage for matching (both frontend HTML and angular/API calls)
-        - Hide divs when there's no applicable content
+        - Show divs if there are new users after polling server
         - Link to user's profile
         - Fix other TODOs
         -->
-
-        <div class="sent-requests-container">
-            <p class="requests-header"> Sent requests </p>
-            <!-- TODO: Refactor this - consider a table or better verbiage
-                - request.status?
-                - Hook "Ok" button to some scope method to erase message
+        <div class="sent-requests-container" ng-hide="isSentEmpty">
+            <p class="requests-header"> Your sent matching requests </p>
+            <!-- TODO:
                 - Add headers to table
              -->
             <table>
-                <tr class="sent-requets" ng-repeat="request in outboundRequests">
+                <tr class="sent-requets" ng-repeat="request in outboundRequests" ng-hide="hideUserSent[request.id]">
                     <td class="request-text">{{ request.username }}</td>
                     <td class="request-text">{{ request.status }}</td>
-                    <td><span class="btn btn-secondary" ng-show="requestStatusById[request.id]">OK</span></td>
+                    <td><span class="btn btn-secondary" ng-show="requestStatusById[request.id]" ng-click="toggleHideSent(request.id)">Close</span></td>
                 </tr>
             </table>
         </div>
-
-        <div class="received-requests-container">
-            <p class="requests-header"> Match Requests from other Gladiators </p>
+        <div class="received-requests-container" ng-hide="isReceivedEmpty">
+            <p class="requests-header"> Matching requests from other gladiators </p>
             <table>
-                <tr class="received-requests" ng-repeat="request in inboundRequests">
+                <tr class="received-requests" ng-repeat="request in inboundRequests" ng-hide="hideUserReceived[request.id]">
                     <td class="request-text">{{ request.username }}</td>
                     <td><a class="btn btn-primary accept-request" ng-click="accept_match(request.id)">Accept</a></td>
                     <td><a class="btn btn-secondary decline-request" ng-click="decline_match(request.id)">Decline</a></td>
