@@ -8,13 +8,8 @@ surveyQuestions.controller("SurveyQuestionsController", ["$scope", "$http", "$st
     $scope.currentTopicId = $stateParams.id
     $scope.currentTopic = $scope.allTopics[$scope.currentTopicId].name # the topic we're doing now
 
-    # For progress bar
-    StartPageStateData.setCurrentTopic($scope.currentTopicId)
-    if ($scope.currentTopicId > StartPageStateData.progressBar.latestTopic) then StartPageStateData.setLatestTopic($scope.currentTopicId)
-
     $scope.questions = StartPageStaticData.getQuestionsForTopic($scope.currentTopicId)
     $scope.questionCheckModel = StartPageStateData.getResponsesForTopic($scope.currentTopicId)
-    $scope.numQuestions = if $scope.questions.length == 0 then -1 else $scope.questions.length  # the number of questions for this topic
 
     currentState = StartPageStateData.currentState
 
@@ -28,6 +23,36 @@ surveyQuestions.controller("SurveyQuestionsController", ["$scope", "$http", "$st
             if $scope.selectedTopicIds.indexOf($scope.currentTopicId) == i
                 return true
         return false
+
+    # Get the number of questions with no responses selected yet
+    numUnansweredQuestions = ->
+        questionsLeft = $scope.questions.length
+        for question in $scope.questions
+            for response in question.survey_responses
+                if $scope.questionCheckModel[response.id]
+                    questionsLeft -= 1
+                    break
+
+        return questionsLeft
+
+    # Updates the progress bar when the user answers a question.
+    handleProgressOnResponse = () ->
+        questionsLeft = numUnansweredQuestions()
+        StartPageStateData.setNumQuestionsCompleted($scope.questions.length - questionsLeft)
+
+    if isCurrentState()
+        handleProgressOnResponse()
+
+    # Updates the progress bar when moving on to a new topic.
+    handleProgressOnAdvance = () ->
+        if isCurrentState()
+            StartPageStateData.incrNumTopicsCompleted()
+            StartPageStateData.setNumQuestionsCompleted(0)
+
+    handleProgressQuestions = () ->
+        if isCurrentState()
+            StartPageStateData.setNumQuestions($scope.questions.length)
+
     # Get the description for the page, which changes depending on whether the user is visiting
     # a page with ALL questions answered already
     $scope.pageDescription = ->
@@ -46,38 +71,23 @@ surveyQuestions.controller("SurveyQuestionsController", ["$scope", "$http", "$st
             $scope.questionCheckModel[response.id] = false
         $scope.questionCheckModel[selectedResponse.id] = true
         StartPageStateData.addResponsesForTopic($scope.currentTopicId, $scope.questionCheckModel)
-
-    # Get the number of questions with no responses selected yet
-    $scope.numUnansweredQuestions = ->
-        questionsLeft = $scope.questions.length
-        for question in $scope.questions
-            for response in question.survey_responses
-                if $scope.questionCheckModel[response.id]
-                    questionsLeft -= 1
-                    break
-
-        # For progress bar
-        StartPageStateData.setQuestionsLeft(questionsLeft)
-        if (StartPageStateData.progressBar.currentTopic == StartPageStateData.progressBar.latestTopic)
-            StartPageStateData.setQuestionsLeft_static(questionsLeft)
-
-        return questionsLeft
+        handleProgressOnResponse()
 
     $scope.hideBackButton = ->
         return currentState == "summary"
 
     $scope.disableNextButton = ->
-        return $scope.numUnansweredQuestions() > 0
+        return numUnansweredQuestions() > 0
 
     # Get the text that should be displayed on the Next button
     $scope.nextButtonValue = ->
-        questionsLeft = $scope.numUnansweredQuestions()
+        questionsLeft = numUnansweredQuestions()
         if currentState == "summary"
             return "Save changes and return to Summary"
         else if questionsLeft == 0
             return "Next"
         else
-            return "#{questionsLeft} Unanswered Question#{if $scope.numUnansweredQuestions() == 1 then '' else 's'}"
+            return "#{questionsLeft} Unanswered Question#{if numUnansweredQuestions() == 1 then '' else 's'}"
 
     # Helper function to advance to the summary page
     $scope.handleAdvanceToSummary = ->
@@ -95,12 +105,13 @@ surveyQuestions.controller("SurveyQuestionsController", ["$scope", "$http", "$st
             match = currentState.match(statePattern)
             i = parseInt(match[1])
             StartPageStateData.currentState = "questions-#{i+1}"
+
         $state.go("questions", { id: topicId })
 
     # Call either handleAdvanceToQuestions or handleAdvanceToSummary depending on
     # if there are more topics to answer questions for
     $scope.handleAdvance = ->
-        StartPageStateData.finishedTopicQuestions($scope.currentTopicId) # added this back because it's necessary for progress bar
+        handleProgressOnAdvance()
         nextIndex = $scope.selectedTopicIds.indexOf($scope.currentTopicId) + 1
         if currentState != "summary" && nextIndex < $scope.selectedTopicIds.length
             nextTopicId = $scope.selectedTopicIds[nextIndex]
@@ -135,20 +146,26 @@ surveyQuestions.controller("SurveyQuestionsController", ["$scope", "$http", "$st
                     allQuestions = allQuestions.sort((u, v) -> u.index - v.index)
                     $scope.questions = allQuestions
                     StartPageStaticData.addQuestionsForTopic($scope.currentTopicId, $scope.questions)
-                    $scope.numQuestions = $scope.questions.length
 
                     StartPageStateData.setNumQuestions($scope.numQuestions) # For progress bar
+
+                    if Object.keys($scope.questionCheckModel).length == 0
+                        for question in $scope.questions
+                            for response in question.survey_responses
+                                $scope.questionCheckModel[response.id] = false
                 .error (result, status) ->
                     if result?
                         reason = result.error
                     else
                         reason = "status code #{status}"
                     console.log "topic question request failed: #{reason}"
+        else
+            handleProgressQuestions()
 
         $scope.currentTopic = $scope.allTopics[topicId].name
-        if Object.keys($scope.questionCheckModel).length == 0
-            for question in $scope.questions
-                for response in question.survey_responses
-                    $scope.questionCheckModel[response.id] = false
+
     load_questions($scope.currentTopicId)
 ])
+
+
+

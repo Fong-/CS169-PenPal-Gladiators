@@ -26,7 +26,7 @@ startPageServices.service("StartPageStaticData", () ->
 startPageServices.service("StartPageStateData", () ->
     email = ""
     password = ""
-    currentState = ""
+    currentState = "topics"
     selectedTopics = {}
     responsesForSelectedTopics = {}
 
@@ -67,28 +67,27 @@ startPageServices.service("StartPageStateData", () ->
     this.getResponsesForTopic = (topicId) ->
         if topicId of responsesForSelectedTopics then responsesForSelectedTopics[topicId] else {}
 
-    # Progress bar interface
-    progressBar = {
-        latestTopic: 0
-        topicsCompleted: 0
+    # Progress interface
+    progress = {
+        numQuestions: 0
+        numQuestionsCompleted: 0
+        numTopicsCompleted: 0
     }
 
-    # Progress bar state
-    Object.defineProperty(this, "progressBar", {
-        get: () -> progressBar
+    Object.defineProperty(this, "progress", {
+        get: () -> progress
     })
-    this.setNumQuestions = (q) -> progressBar.numQuestions = q
-    this.setQuestionsLeft = (q) -> progressBar.questionsLeft = q
-    this.setQuestionsLeft_static = (q) -> progressBar.questionsLeft_static = q
-    this.setCurrentTopic = (topicId) -> progressBar.currentTopic = topicId
-    this.setLatestTopic = (topicId) -> progressBar.latestTopic = topicId
-    this.incTopicsCompleted = -> progressBar.topicsCompleted += 1
-    this.clearTopicsCompleted = -> progressBar.topicsCompleted = 0
 
-    topicQuestionsDone = {}
-    this.getTopicQuestionsDone = () -> topicQuestionsDone
-    this.finishedTopicQuestions = (topicId) -> topicQuestionsDone[topicId] = true
-    this.isTopicQuestionsDone = (topicId) -> return topicId of topicQuestionsDone
+    this.setNumQuestions = (num) ->
+        progress.numQuestions = num
+    this.setNumQuestionsCompleted = (num)->
+        progress.numQuestionsCompleted = num
+    this.incrNumTopicsCompleted = () ->
+        progress.numTopicsCompleted += 1
+    this.resetProgress = () ->
+        progress.numQuestions = 0
+        progress.numQuestionsCompleted = 0
+        progress.numTopicsCompleted = 0
 
     return
 )
