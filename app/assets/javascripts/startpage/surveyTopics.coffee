@@ -6,8 +6,6 @@ surveyTopics.controller("SurveyTopicsController", ["$scope", "$http", "$state", 
     $scope.topicSelectionModel = {}
 
     currentState = StartPageStateData.currentState
-    if currentState == ""
-        currentState = "topics"
 
     # Get the description for the page
     $scope.pageDescription = ->
@@ -26,12 +24,13 @@ surveyTopics.controller("SurveyTopicsController", ["$scope", "$http", "$state", 
     $scope.disableNextButton = -> numTopicsRemaining() > 0
 
     # Called when a topic is toggled.
-    $scope.handleTopicToggled = (topicId) -> $scope.topicSelectionModel[topicId] = !$scope.topicSelectionModel[topicId]
+    $scope.handleTopicToggled = (topicId) ->
+        $scope.topicSelectionModel[topicId] = !$scope.topicSelectionModel[topicId]
 
     # Advances to the next view.
     $scope.handleAdvanceToQuestions = ->
-        if currentState == "topics"
-            StartPageStateData.currentState = "questions-0"
+        StartPageStateData.currentState = "questions-0"
+        StartPageStateData.resetProgress()
         StartPageStateData.clearSelectedTopics()
         StartPageStateData.selectTopic(id) for id of $scope.topicSelectionModel when $scope.topicSelectionModel[id]
         sortedTopicIds = Object.keys($scope.topicSelectionModel).sort()

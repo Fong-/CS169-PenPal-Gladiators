@@ -23,17 +23,26 @@ router.config(["$stateProvider", "$urlRouterProvider", ($stateProvider, $urlRout
         templateUrl: "/assets/survey_topics.html"
         controller: "SurveyTopicsController"
     })
-    .state("questions", {
-        templateUrl: "/assets/survey_questions.html"
-        controller: "SurveyQuestionsController"
-        params: { id: null }
+    .state("survey", {
+        abstract: true
+        views: {
+            "": {
+                templateUrl: "/assets/survey.html"
+            }
+            "progressbar@survey": {
+                templateUrl: "/assets/progress_bar.html"
+                controller: "ProgressBarController"
+            }
+        }
     })
-    .state("questionsEdit", {
+    .state("questions", {
+        parent: "survey"
+        params: { id: null }
         templateUrl: "/assets/survey_questions.html"
         controller: "SurveyQuestionsController"
-        params: { id: null }
     })
     .state("summary", {
+        parent: "survey"
         templateUrl: "/assets/survey_summary.html"
         controller: "SurveySummaryController"
     })
