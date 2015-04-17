@@ -23,6 +23,16 @@ class UsersController < ApplicationController
         render :json => {:token => user.access_token}
     end
 
+    def logout
+        user = User.find_by_id(params[:id])
+        if user.nil?
+            render_error(:resource_not_found) and return
+        end
+        user.refresh_secret
+        user.save!
+        render :json => {}
+    end
+
     def register
         if can_user_register(params)
             user = User.create :email => params[:email], :password => params[:password]
