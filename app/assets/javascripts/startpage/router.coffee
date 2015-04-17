@@ -25,12 +25,15 @@ router.config(["$stateProvider", "$urlRouterProvider", ($stateProvider, $urlRout
     })
     .state("questions", {
         templateUrl: "/assets/survey_questions.html"
-        controller: "SurveyQuestionsController"
         params: { id: null }
-        views: {
+        views {
             progressbar: {
                 templateUrl: "/assets/progress_bar.html"
                 controller: "ProgressBarController"
+            }
+            content: {
+                templateUrl: "/assets/survey_questions_content.html"
+                controller: "SurveyQuestionsController"
             }
         }
     })
