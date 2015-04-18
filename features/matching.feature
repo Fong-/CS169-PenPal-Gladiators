@@ -5,15 +5,16 @@ Feature: Provide a Gladiator a list of "compatible" Gladiators so Gladiators can
     I want to be able to match myself with a compatible Gladiator
 
 Background: I am a Gladiator that has completed the on-boarding process
-    Given the database is setup
+    Given I sign in as "alice@example.com" with password "12345678"
 
 Scenario: Request a list of compatible Gladiators to pair with
     Given I am on the home page
-    Then I should see a button with "Match Me with Another Gladiator"
+    Then I should see a button with "Match Me with Another Gladiator!"
 
 Scenario: Initiate Gladiation
-    Given I press "Match Me with Another Gladiator"
+    Given I am on the home page
     And that the algorithm matches me with "Alice", "Bob", "Charlie", "David", and "Edward"
+    And I press the button to match me with another Gladiator
     Then I should see the option to initiate Gladiation with "Alice"
     And I should see the option to initiate Gladiation with "Edward"
 

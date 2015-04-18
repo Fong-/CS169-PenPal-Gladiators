@@ -122,7 +122,6 @@ sidebar.controller("SidebarController", ["$scope", "$http", "$state", "API", "Ti
     # Assume that the API gives us an 'id' and 'username'
     # This should be triggered by a button press in the view
     $scope.request_matches = () ->
-        console.log("Requesting Matches")
         API.requestMatches(currentUserId)
             .success (matches) ->
                 $scope.usersMatching = matches.length
@@ -186,7 +185,6 @@ sidebar.controller("SidebarController", ["$scope", "$http", "$state", "API", "Ti
     $scope.inbound_requests = () ->
         API.incomingRequests(currentUserId)
             .success (requests) ->
-                console.log(requests)
                 for request in requests
                     $scope.inboundRequests.push({id: request.from_id, username: request.username})
                 $scope.usersInbound = requests.length
@@ -203,7 +201,6 @@ sidebar.controller("SidebarController", ["$scope", "$http", "$state", "API", "Ti
     $scope.outbound_requests = () ->
         API.requestStatus(currentUserId)
             .success (requests) ->
-                console.log("Outgoing:", requests)
                 for request in requests
                     $scope.outboundRequests.push({id:request.from_id, username:request.username, status:request.status})
                 $scope.usersOutbound = requests.length
