@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 ruby '1.9.3'
 
 gem 'rails', '3.2.16'
+gem 'timecop'
 
 group :assets do
   gem 'therubyracer'
@@ -27,7 +28,6 @@ group :development, :test do
   gem 'poltergeist'
   gem 'capybara-angular'
   gem 'codeclimate-test-reporter'
-  gem 'timecop'
 end
 
 group :production do
