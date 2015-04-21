@@ -86,7 +86,7 @@ class User < ActiveRecord::Base
     def score_user(other_user)
         max = 0
         max_topic = nil
-        
+
         common_topics = self.find_common_topics(other_user)
         for topic in common_topics
             topic_score = self.find_topic_score(other_user, topic)
@@ -116,7 +116,7 @@ class User < ActiveRecord::Base
     def find_topic_score(other_user, topic)
         sum = 0
         my_responses_hash = self.build_hash()
-        
+
         other_responses = UserSurveyResponse.where({:user_id => other_user.id})
         for other_response in other_responses
             if other_response.survey_response.survey_question.topic.id == topic

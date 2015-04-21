@@ -4,7 +4,7 @@ class InvitesController < ActionController::Base
         :not_exists => "does not exist",
         :invalid_parameters => "invalid parameters"
     }
-    
+
     def send_request()
         current_user = params[:my_id]
         to_user = params[:to_id]
@@ -19,13 +19,15 @@ class InvitesController < ActionController::Base
             render :json => {:error => ERROR_MESSAGES[:already_exists] }
         end
     end
-    
+
     def incoming_requests()
         result = []
         for invite in Invite.where(:to_id => params[:my_id].to_i)
             corresponding_user = User.where(:id => invite.to_id)
             if corresponding_user.empty?
-                render :json => {:error => ERROR_MESSAGES[:not_exists]}
+                # Commented out because Angular constantly polls this; polling
+                # when there are no incoming_requests is not an error
+                # render :json => {:error => ERROR_MESSAGES[:not_exists]}
                 return
             end
             corresponding_user = corresponding_user.first
@@ -33,7 +35,7 @@ class InvitesController < ActionController::Base
         end
         render :json => result
     end
-    
+
     def modify_request()
         if params[:status] != "accept" and params[:status] != "decline"
             render :json => {:error => ERROR_MESSAGES[:invalid_parameters] }
@@ -55,13 +57,15 @@ class InvitesController < ActionController::Base
         end
         render :json => {:success => current_invite}
     end
-    
+
     def sent_requests()
         result = []
         for invite in Invite.where(:from_id => params[:my_id])
             corresponding_user = User.where(:id => invite.to_id)
             if corresponding_user.empty?
-                render :json => {:error => ERROR_MESSAGES[:not_exists]}
+                # Commented out because Angular constantly polls this; polling
+                # when there are no sent_requests is not an error
+                # render :json => {:error => ERROR_MESSAGES[:not_exists]}
                 return
             end
             corresponding_user = corresponding_user.first
@@ -69,5 +73,4 @@ class InvitesController < ActionController::Base
         end
         render :json => result
     end
-        
 end
