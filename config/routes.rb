@@ -7,6 +7,11 @@ CS169PenpalGladiators::Application.routes.draw do
     post "/api/v1/register" => "users#register"
     get "/api/v1/register" => "users#can_register"
     get "/api/v1/authenticate" => "users#authenticate"
+    get "/api/v1/matches" => "users#matches"
+    post "/api/v1/send_request" => "invites#send_request"
+    get "/api/v1/incoming_requests" => "invites#incoming_requests"
+    post "/api/v1/modify_request" => "invites#modify_request"
+    get "/api/v1/sent_requests" => "invites#sent_requests"
     get "/api/v1/survey_questions" => "survey_questions#get_all"
     get "/api/v1/survey_question/:id" => "survey_questions#get_by_id"
     get "/api/v1/survey_question/:id/survey_responses" => "survey_questions#get_responses_by_id"
@@ -18,6 +23,9 @@ CS169PenpalGladiators::Application.routes.draw do
     get "/api/v1/conversation/:id" => "conversations#get_by_id"
     post "/api/v1/post/create/:conversation_id" => "posts#create"
     post "/api/v1/post/edit/:post_id" => "posts#edit"
+    get "/api/v1/invites/outbound/:user_id" => "invites#outbound"
+    get "/api/v1/invites/inbound/:user_id" => "invites#inbound"
+
     # Public routes
     get "/" => "pages#homepage"
     get "/login" => "pages#startpage"

@@ -1,4 +1,64 @@
+<script type="text/ng-template" id="requests_content.html">
+    <div class="fetched-users-container">
+        <li ng-repeat="matchedGladiator in matchedGladiators" ng-hide="hideUserRequest[matchedGladiator.id]">
+            <div class="fetched-user">
+                <a class="fetched-user-name">{{ matchedGladiator.username }}</a>
+            </div>
+            <div>
+            <a class="request-button btn btn-primary" ng-click="request_match(matchedGladiator.id)">Request</a>
+            </div>
+        </li>
+    </div>
+</script>
+
+<!-- TODO: General
+    - CSS Makeover
+    - Hook up to API calls on backend
+-->
+
+<!-- TODO: Requests Popover
+    - Fix Popover clipping
+    - Make button press work
+    - Fix trigger to close when clicking outside
+-->
+<div class="requests-menu" ng-controller="SidebarController">
+    <input id="match-button" class="btn btn-primary" ng-click="request_matches_check()" value="Match Me with Another Gladiator!" requests-popover/>
+</div>
 <div class="nav-side-menu" ng-controller="SidebarController">
+    <div class="matching-bar-container">
+        <!-- TODO:
+        - Figure out better verbiage for matching (both frontend HTML and angular/API calls)
+        - Link to user's profile
+        - Fix other TODOs
+        -->
+        <div class="match-requests-container" ng-hide="isSentEmpty" ng-click="toggleSentContainer()">
+            <p class="requests-header"> Your sent matching requests </p>
+            <span class="{{ expandSentButton() }} click-to-expand"></span>
+            <table ng-show="sentContainerState">
+                <tr class="sent-requests-header">
+                    <td>Username</td>
+                    <td>Status</td>
+                </tr>
+                <tr class="sent-requets" ng-repeat="request in outboundRequests" ng-hide="hideUserSent[request.id]">
+                    <td class="request-text">{{ request.username }}</td>
+                    <td class="request-text">{{ request.status }}</td>
+                    <td><span class="btn btn-secondary" ng-show="requestStatusById[request.id]" ng-click="toggleHideSent(request.id)">Close</span></td>
+                </tr>
+            </table>
+        </div>
+        <div class="match-requests-container" ng-hide="isReceivedEmpty" ng-click="toggleReceivedContainer()">
+            <span class="{{ expandReceivedButton() }} click-to-expand"></span>
+            <p class="requests-header"> Matching requests from other gladiators </p>
+            <table ng-show="receivedContainerState">
+                <tr class="received-requests" ng-repeat="request in inboundRequests" ng-hide="hideUserReceived[request.id]">
+                    <td class="request-text">{{ request.username }}</td>
+                    <td><a class="btn btn-primary accept-request" ng-click="accept_match(request.id)">Accept</a></td>
+                    <td><a class="btn btn-secondary decline-request" ng-click="decline_match(request.id)">Decline</a></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
     <div class="menu-list">
         <ul class="menu-content">
             <li ng-repeat="gladiatorId in gladiatorIds">

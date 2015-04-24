@@ -15,16 +15,25 @@ describe "SidebarController", ->
                 }
             }]
         }]
+        @http.when("GET", "/api/v1/sent_requests?id=1").respond [{
+            user1: {id:1, name:"Rob the Rhino", requestStatus:"Pending"}
+        }]
+        @http.when("GET", "/api/v1/incoming_requests?id=1").respond [{
+            user1: {id:2, name:"Olga the Ostritch"}
+        }]
         AppState.setUserId(1)
-        @http.expectGET("/api/v1/arenas/1")
+        @http.expectGET("/api/v1/sent_requests?id=1")
+        @http.expectGET("/api/v1/incoming_requests?id=1")
         @controller("SidebarController", { $scope: @scope })
         @http.flush();
 
     it "should store the correct arenas", ->
+        @http.expectGET("/api/v1/arenas/1")
         expect(3 of @scope.conversationsByUserId).toEqual true
         expect(1 of @scope.conversationsByUserId).toEqual false
 
     it "should store the correct conversations", ->
+        @http.expectGET("/api/v1/arenas/1")
         conversations = @scope.conversationsByUserId[3]
         expect(conversations.length).toEqual 1
         conversation = conversations[0]
@@ -33,6 +42,7 @@ describe "SidebarController", ->
         expect(conversation.post_preview_text).toMatch /^You said: "You, sir, are an idiot.*\.\.\."$/
 
     it "should store the correct conversations", ->
+        @http.expectGET("/api/v1/arenas/1")
         conversations = @scope.conversationsByUserId[3]
         expect(conversations.length).toEqual 1
         conversation = conversations[0]
@@ -41,11 +51,13 @@ describe "SidebarController", ->
         expect(conversation.post_preview_text).toMatch /^You said: "You, sir, are an idiot.*\.\.\."$/
 
     it "should store the correct list of gladiators and their names", ->
+        @http.expectGET("/api/v1/arenas/1")
         expect(@scope.gladiatorIds).toEqual [3]
         expect(@scope.gladiatorNameById[3]).toEqual "bob@schmitt.com"
         expect(Object.keys @scope.gladiatorNameById).toEqual ["1", "3"]
 
     it "should be able to toggle arena states", ->
+        @http.expectGET("/api/v1/arenas/1")
         expect(3 of @scope.arenaStateByUserId).toEqual true
         expect(@scope.arenaStateByUserId[3]).toEqual false
         @scope.toggleGladiatorPanel(3)
@@ -54,6 +66,7 @@ describe "SidebarController", ->
         expect(@scope.arenaStateByUserId[3]).toEqual false
 
     it "should toggle expand and collapse buttons", ->
+        @http.expectGET("/api/v1/arenas/1")
         expect(@scope.expandButtonClass(3)).toMatch "down"
         @scope.toggleGladiatorPanel(3)
         expect(@scope.expandButtonClass(3)).toMatch "up"

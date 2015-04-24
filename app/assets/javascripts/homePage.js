@@ -4,6 +4,7 @@
 //= require angular-cookies
 //= require ./shared/sharedServices
 //= require ./shared/api
+//= require ./shared/timeUtil
 //= require_tree ./shared
 //= require_tree ./homepage
 
