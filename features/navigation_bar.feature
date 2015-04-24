@@ -21,6 +21,7 @@ Scenario: can navigate to the home page and back
     When I follow "Profile"
     Then I should be on the profile page
 
+@wip
 Scenario: can log out of the app
     Given I am on the home page
     When I follow "Log out"
