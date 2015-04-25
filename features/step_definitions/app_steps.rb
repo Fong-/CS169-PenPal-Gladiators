@@ -34,6 +34,7 @@ Given /^I am on (?:the|a|my) (.*?) page$/ do |page_name|
     case (page_name)
         when "Login/Register"
             visit "/login"
+            step "I wait 2 seconds"
         when "Survey Topic Checkboxes"
             visit "/login"
             step 'I fill in "email" with "alice@example.com"'
@@ -78,6 +79,10 @@ end
 
 Then /I should be on the (.*?) page/ do |page_name|
     case page_name
+    when "login"
+        page.should have_content "PenPal Gladiators"
+        page.should have_content "Login"
+        page.should have_content "Registration"
     when "topics"
         page.should have_content "Which topics interest you?"
     when "profile"
