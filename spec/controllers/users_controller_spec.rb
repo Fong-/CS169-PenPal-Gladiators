@@ -15,6 +15,22 @@ describe UsersController, :type => :controller do
             get "get_profile_info_by_id", :id => 1
         end
 
+        it "should complain when getting profile info for a user that does not exist" do
+            User.stub(:find_by_id).and_return(nil)
+            get "get_profile_info_by_id", :id => 1
+            responseObject = JSON.parse(response.body)
+            expect(responseObject["error"]).not_to be(nil)
+            expect(response.status).to eq(404)
+        end
+
+        it "should complain when updating profile info for a user that does not exist" do
+            User.stub(:find_by_id).and_return(nil)
+            post "get_profile_info_by_id", :id => 1
+            responseObject = JSON.parse(response.body)
+            expect(responseObject["error"]).not_to be(nil)
+            expect(response.status).to eq(404)
+        end
+
         it "should update the user profile" do
             user = double(user, :update_profile => nil)
             User.stub(:find_by_id).and_return(user)

@@ -20,3 +20,10 @@ Scenario: can navigate to the home page and back
     Then I should be on the home page
     When I follow "Profile"
     Then I should be on the profile page
+
+@wip
+Scenario: can log out of the app
+    Given I am on the home page
+    When I follow "Log out"
+    When I visit the home page
+    Then I should be on the login page
