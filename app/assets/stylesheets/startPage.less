@@ -128,7 +128,7 @@ input[type=text], input[type=password] {
         padding: 0px;
 
         div {
-            border: 1px solid @border-color;
+            border: 1px solid #cccccc;
             border-radius: 4px;
             overflow: hidden;
             padding: 0px;
@@ -144,13 +144,13 @@ input[type=text], input[type=password] {
             z-index: 999;
 
             p {
-                color: #888;
+                color: #aaa;
                 margin-top: 0px;
                 padding-left: 6px;
                 padding-top: 5px;
                 padding: 4px;
                 font-size: 13px;
-                border-top: 1px solid #888;
+                border-top: 1px dotted #cccccc;
                 width: @topic-icon-display-size;
                 cursor: pointer;
                 z-index: 1000;
@@ -172,19 +172,38 @@ input[type=text], input[type=password] {
                 &+ label span {
                     .check_sprite;
                     border: none;
-                    background-color: white;
-                    opacity: 0.4;
                     cursor: pointer;
                     z-index: 999;
                 }
 
                 &:checked + label span {
-                    .check_sprite;
                     border: none;
                     background-color: @primary-color;
                     opacity: 1;
                     cursor: pointer;
                     z-index: 999;
+                    width: 28px;
+                    height: 28px;
+                    top: 10px;
+                    border: none;
+                    background-color: #5bcffa;
+                    opacity: 1;
+                    cursor: pointer;
+                    z-index: 999;
+                    right: 5px;
+                    border-radius: 50%;
+                    padding: 7px;
+                    color: white;
+                    display: inline-block;
+                    font-family: 'Glyphicons Halflings';
+                    font-style: normal;
+                    font-weight: 400;
+                    line-height: 1;
+                    -webkit-font-smoothing: antialiased;
+                }
+
+                &:checked + label span:before {
+                    content: "\e013";
                 }
             }
         }
@@ -293,18 +312,22 @@ input[type=text], input[type=password] {
 
 #progress-bar {
     margin: 1px auto 1px auto;
-    height: 50px;
+    height: 30px;
     background: white;
     border: 1px solid #ccc;
-    border-radius: 2px;
-
+    border-radius: 15px;
+    padding: 5px;
+    margin-bottom: -20px;
 }
 
 #progress-bar-percent {
     height: 100%;
     background: #5bcffa;
+    border-radius: 10px;
 }
 
 .highlighter {
-    background-color: yellow;
+    background-color: #efefef;
+    padding: 20px;
+    margin-bottom: 20px;
 }
