@@ -8,7 +8,7 @@
                     <span class="{{expandButtonClass(gladiatorId)}} click-to-expand"></span>
                 </div>
 
-                <div class="conversation-start-container" ng-show="arenaStateByUserId[gladiatorId]" ng-click="">
+                <div class="conversation-start-container" ng-show="arenaStateByUserId[gladiatorId]" ng-click="conversationStartClicked(gladiatorId)">
                     <a class="conversation-start">Start a new converstation</a>
                     <span class="btn glyphicon glyphicon-plus"></span>
                 </div>
