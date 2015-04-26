@@ -8,7 +8,10 @@ module ErrorHandler
         :user_exists => "user exists",
         :resource_not_found => "resource not found",
         :cannot_invite => "cannot invite user",
-        :cannot_accept_or_reject => "cannot accept or reject invitation"
+        :cannot_accept_or_reject => "cannot accept or reject invitation",
+        :no_such_conversation => "no such conversation",
+        :no_such_conversation_or_user => "no such conversation or user",
+        :invalid_action => "you are not allowed to do this"
     }
 
     ERROR_CODE = {
@@ -20,7 +23,10 @@ module ErrorHandler
         :user_exists => 400,
         :resource_not_found => 404,
         :cannot_invite => 400,
-        :cannot_accept_or_reject => 400
+        :cannot_accept_or_reject => 400,
+        :no_such_conversation => 401,
+        :no_such_conversation_or_user => 401,
+        :unauthorized_access => 401
     }
 
     def render_error(error)
