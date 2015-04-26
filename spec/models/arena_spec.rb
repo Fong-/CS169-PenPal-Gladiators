@@ -31,7 +31,6 @@ describe Arena do
 
         it "should generate an appropriate response object" do
             response = @arena.response_object
-
             expect(response[:user1][:id]).to eq(@user1.id)
             expect(response[:user2][:name]).to eq(@user2.username)
             expect(response[:conversations].length).to eq(1)

@@ -27,4 +27,12 @@ class Arena < ActiveRecord::Base
         }
         return response
     end
+
+    def is_first_user(user_id)
+        return self.user1_id == user_id
+    end
+
+    def is_second_user(user_id)
+        return self.user2_id == user_id
+    end
 end
