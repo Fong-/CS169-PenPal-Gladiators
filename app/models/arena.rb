@@ -4,6 +4,10 @@ class Arena < ActiveRecord::Base
     has_many :conversations
     attr_accessible :user1, :user2
 
+    scope :for_users, ->(user1, user2) do
+        where("(user1_id = :user1 AND user2_id = :user2) OR (user1_id = :user2 AND user2_id = :user1)", :user1 => user1, :user2 => user2)
+    end
+
     def response_object
         conversations_response = []
         conversations.each do |conversation|
