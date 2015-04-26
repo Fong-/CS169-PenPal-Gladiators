@@ -125,6 +125,10 @@ When /^I click "(.*)" in the sidebar$/ do |element_name|
     find(".conversation-preview", :text => element_name, :exact => true).click
 end
 
+When /^I click on the logout button$/ do
+    page.find("#logout_nav").click
+end
+
 Then /^I should( not)? be able to edit "(.*)"$/ do |should_not, post_text|
     element = find(".post-content-panel", :text => post_text, :exact => true)
     if should_not
