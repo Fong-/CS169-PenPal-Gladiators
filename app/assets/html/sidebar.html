@@ -7,7 +7,12 @@
                     <span class="{{expandButtonClass(gladiatorId)}} click-to-expand"></span>
                 </div>
                 <div class="conversation-preview" ng-repeat="conversation in conversationsByUserId[gladiatorId]" ng-show="arenaStateByUserId[gladiatorId]" ng-click="conversationPreviewClicked(conversation.id)">
-                    <p class="conversation-title">{{conversation.title}}</p>
+                    <div class="conversation-heading">
+                        <div class="conversation-actions">
+                            <div class="conversation-advance glyphicon glyphicon-arrow-right btn" ng-click="conversationPreviewClicked(conversation.id)"></div>
+                        </div>
+                        <p class="conversation-title">{{conversation.title}}</p>
+                    </div>
                     <p class="conversation-time">{{conversation.time}}</p>
                     <p class="conversation-text">{{conversation.post_preview_text}}</p>
                 </div>
