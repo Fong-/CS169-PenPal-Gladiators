@@ -195,40 +195,24 @@ p {
     overflow: auto;
     font-family: verdana;
     font-size: 12px;
-    font-weight: 200;
-    background-color: #EFEFEF;
-    position: fixed;
-    top: 0px;
-    width: @sidebar-width;
-    height: 100%;
-    color: black;
-    right: 0px;
-    border-left: 1px solid #D4D4D4;
+    font-weight: 300;
 
     @media(min-width: 768px) {
         padding-top: 50px;
-        overflow: auto;
-        font-size: 12px;
-        font-weight: 300;
         background-color: #ffffff;
         position: fixed;
-        top: 0px;
-        width: 300px;
+        top: 0px; right: 0px;
+        width: @sidebar-width;
         height: 100%;
-        color: black;
-        right: 0px;
         border-left: 1px solid @border-color;
     }
 
     @media(max-width: 768px) {
         margin-bottom: 20px;
-        overflow: auto;
-        font-size: 12px;
-        font-weight: 300;
         background-color: #ffffff;
         position: relative;
         width: 100%;
-        color: black;
+        border: 1px solid @border-color;
     }
 
     .menu-list .menu-content {
@@ -260,6 +244,12 @@ p {
     li {
         padding: 5px 5px 0px 5px;
         border-bottom: 1px solid #D4D4D4;
+
+        @media(max-width: 768px) {
+            &:last-child {
+                border-bottom: none;
+            }
+        }
 
         .conversation-preview {
             padding-left: 10px;
