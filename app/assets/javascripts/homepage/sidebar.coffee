@@ -1,6 +1,6 @@
 sidebar = angular.module("Sidebar", ["SharedServices"])
 
-sidebar.controller("SidebarController", ["$scope", "$http", "$state", "API", "TimeUtil", "AppState", ($scope, $http, $state, API, TimeUtil, AppState) ->
+sidebar.controller("SidebarController", ["$scope", "$state", "API", "TimeUtil", "AppState", ($scope, $state, API, TimeUtil, AppState) ->
 
     MAX_PREVIEW_TEXT_LENGTH = 100;
     authorTextForId = (id) -> if id == currentUserId then "You" else $scope.gladiatorNameById[id]
@@ -61,4 +61,19 @@ sidebar.controller("SidebarController", ["$scope", "$http", "$state", "API", "Ti
                 console.log "sidebar failed: #{reason}"
 
     reloadSidebarArenas()
+])
+
+sidebar.controller("SidebarMatchesController", ["$scope", "$state", "API", "AppState", ($scope, $state, API, AppState) ->
+    notExpandedClasses = ["glyphicon", "glyphicon-chevron-down"]
+    expandedClasses = ["glyphicon", "glyphicon-chevron-up"]
+
+    $scope.expanded = { "pending": false, "matches": false, "incoming": false }
+    $scope.classes = { "pending": notExpandedClasses, "matches": notExpandedClasses, "incoming": notExpandedClasses }
+
+    $scope.toggle = (which) ->
+        $scope.expanded[which] = !$scope.expanded[which]
+        if $scope.expanded[which]
+            $scope.classes[which] = expandedClasses
+        else
+            $scope.classes[which] = notExpandedClasses
 ])

@@ -1,0 +1,34 @@
+<li class="matches-container">
+    <div class="matches-header-container" ng-click="toggle('matches')">
+        <a class="matches-header">My Matches</a>
+        <span ng-class="classes['matches']" class="click-to-expand"></span>
+    </div>
+
+    <div class="user" ng-repeat="user in matches" ng-show="expanded['matches']">
+        <p>{{user.name}}</p>
+    </div>
+</li>
+
+<li class="pending-matches-container">
+    <div class="pending-matches-header-container" ng-click="toggle('pending')">
+        <a class="matches-header">Pending Matches</a>
+        <span ng-class="classes['pending']" class="click-to-expand"></span>
+    </div>
+
+    <div class="user" ng-repeat="user in pending" ng-show="expanded['pending']">
+        <p>{{user.name}}</p>
+        <!-- Something for status -->
+    </div>
+</li>
+
+<li class="incoming-matches-container">
+    <div class="incoming-matches-header-container" ng-click="toggle('incoming')">
+        <a class="matches-header">Incoming Matches</a>
+        <span ng-class="classes['incoming']" class="click-to-expand"></span>
+    </div>
+
+    <div class="user" ng-repeat="user in incoming" ng-show="expanded['incoming']">
+        <p>{{user.name}}</p>
+        <!-- Something for status -->
+    </div>
+</li>
