@@ -19,8 +19,8 @@ module ErrorHandler
         :resource_not_found => 404
     }
 
-    def render_error(error)
-        render :json => { :error => ERROR[error] }, :status => ERROR_CODE[error]
+    def render_error(error, args = {})
+        render :json => { :error => ERROR[error] }.merge(args), :status => ERROR_CODE[error]
     end
 
 end
