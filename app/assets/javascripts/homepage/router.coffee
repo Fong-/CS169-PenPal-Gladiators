@@ -19,6 +19,10 @@ router.config(["$stateProvider", "$urlRouterProvider", ($stateProvider, $urlRout
                 templateUrl: "/assets/sidebar.html"
                 controller: "SidebarController"
             }
+            "sidebar-matching@root": {
+                templateUrl: "/assets/sidebar_matching.html"
+                controller: "SidebarMatchesController"
+            }
         }
         resolve: {
             loggedIn: ["Authentication", "$window", "$q", (Authentication, $window, $q) ->
