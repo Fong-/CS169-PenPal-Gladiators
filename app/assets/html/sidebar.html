@@ -1,6 +1,8 @@
 <div class="nav-side-menu" ng-controller="SidebarController">
     <div class="menu-list">
         <ul class="menu-content">
+            <div ui-view="sidebar-matching" class="sidebar-matching-container"></div>
+
             <li ng-repeat="gladiatorId in gladiatorIds">
                 <div class="gladiator-heading-container" ng-click="toggleGladiatorPanel(gladiatorId)">
                     <img class="user-avatar-small" ng-src="{{gladiatorById[gladiatorId].avatar}}"></img>
