@@ -232,6 +232,19 @@ p {
         display: block;
     }
 
+    .menu-item {
+        padding: 5px 10px;
+
+        &:hover {
+            background-color: #F8F8F8;
+        }
+    }
+
+    .subitem {
+        border-top: 1px dotted #E1E1E1;
+        padding-left: 25px;
+    }
+
     .click-to-expand {
         font-size: 16px;
         color: black;
@@ -240,14 +253,15 @@ p {
         padding-top: 8px;
     }
 
+    .heading {
+        font-size: 16px;
+        color: #888;
+        text-decoration: none;
+    }
+
     .sidebar-matching-container {
         padding-bottom: 5px;
         border-bottom: 1px solid #E1E1E1;
-
-        a {
-            font-size: 16px;
-            color: #888;
-        }
 
         li {
             &:last-child {
@@ -275,7 +289,6 @@ p {
     }
 
     li {
-        padding: 5px 5px 0px 5px;
         border-bottom: 1px solid #E1E1E1;
 
         @media(max-width: 768px) {
@@ -285,20 +298,6 @@ p {
         }
 
         .conversation-start-container {
-            padding: 10px;
-            padding-left: 25px;
-            border-top: 1px dotted #E1E1E1;
-
-            &:hover {
-                background-color: #F8F8F8;
-            }
-
-            .conversation-start {
-                padding: 0;
-                font-size: 16px;
-                color: #888;
-            }
-
             .glyphicon-plus {
                 float: right;
                 font-size: 10px;
@@ -307,23 +306,14 @@ p {
         }
 
         .conversation-preview {
-            padding: 10px;
-            padding-left: 25px;
             font-size: 13px;
             background-color: #ffffff;
-            border-top: 1px dotted #e1e1e1;
-
-            &:hover {
-                background-color: #F8F8F8;
-            }
 
             .conversation-heading {
 
                 .conversation-title {
-                    color: #888;
-                    margin-bottom: 0px;
+                    margin: 0;
                     line-height: 1.7;
-                    font-size: 16px;
                 }
 
                 .conversation-actions {
@@ -338,23 +328,14 @@ p {
             }
 
             .conversation-time {
+                margin: 0;
                 color: #ccc;
-                padding-right: 5px;
-                margin-bottom: 0px;
             }
 
             .conversation-text {
-                margin-top: 0px;
-                padding-right: 5px;
-                margin-bottom: 5px;
+                margin: 0;
                 line-height: 1.7;
             }
-        }
-
-        a {
-            text-decoration: none;
-            font-size: 13px;
-            padding-left: 10px;
         }
     }
 
