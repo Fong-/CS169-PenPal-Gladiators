@@ -29,7 +29,7 @@ sidebar.controller("SidebarController", ["$scope", "$http", "$state", "API", "Ti
                 if result?
                     reason = result.error
                 else
-                reason = "status code #{status}"
+                    reason = "status code #{status}"
                 console.log "sidebar failed: #{reason}"
 
     reloadSidebarArenas = () ->
