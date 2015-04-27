@@ -193,42 +193,25 @@ p {
 
 .nav-side-menu {
     overflow: auto;
-    font-family: verdana;
     font-size: 12px;
-    font-weight: 200;
-    background-color: #EFEFEF;
-    position: fixed;
-    top: 0px;
-    width: @sidebar-width;
-    height: 100%;
-    color: black;
-    right: 0px;
-    border-left: 1px solid #D4D4D4;
+    font-weight: 300;
 
     @media(min-width: 768px) {
         padding-top: 50px;
-        overflow: auto;
-        font-size: 12px;
-        font-weight: 300;
         background-color: #ffffff;
         position: fixed;
-        top: 0px;
-        width: 300px;
+        top: 0px; right: 0px;
+        width: @sidebar-width;
         height: 100%;
-        color: black;
-        right: 0px;
         border-left: 1px solid @border-color;
     }
 
     @media(max-width: 768px) {
         margin-bottom: 20px;
-        overflow: auto;
-        font-size: 12px;
-        font-weight: 300;
         background-color: #ffffff;
         position: relative;
         width: 100%;
-        color: black;
+        border: 1px solid @border-color;
     }
 
     .menu-list .menu-content {
@@ -261,23 +244,44 @@ p {
         padding: 5px 5px 0px 5px;
         border-bottom: 1px solid #D4D4D4;
 
+        @media(max-width: 768px) {
+            &:last-child {
+                border-bottom: none;
+            }
+        }
+
         .conversation-preview {
-            padding-left: 10px;
+            padding: 10px;
+            padding-left: 20px;
             font-size: 13px;
             background-color: #ffffff;
+            border-top: 1px dotted #e1e1e1;
 
             &:hover {
                 background-color: #F8F8F8;
             }
 
-            .conversation-title {
-                margin-bottom: 0px;
-                font-weight: bold;
-                line-height: 1.7;
+            .conversation-heading {
+
+                .conversation-title {
+                    color: #888;
+                    margin-bottom: 0px;
+                    line-height: 1.7;
+                    font-size: 16px;
+                }
+
+                .conversation-actions {
+                    float: right;
+
+                    .conversation-advance {
+                        font-size: 10px;
+                        padding: 6px 8px;
+                    }
+                }
             }
 
             .conversation-time {
-                color: #888888;
+                color: #ccc;
                 padding-right: 5px;
                 margin-bottom: 0px;
             }
@@ -287,16 +291,6 @@ p {
                 padding-right: 5px;
                 margin-bottom: 5px;
                 line-height: 1.7;
-            }
-
-            .conversation-actions {
-                width: 100%;
-                padding-left: 10px;
-                padding-bottom: 10px;
-                color: #ffffff;
-                .conversation-reply {
-                    margin-left: 10px;
-                }
             }
         }
 
