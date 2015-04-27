@@ -3,7 +3,7 @@ sidebar = angular.module("Sidebar", ["SharedServices"])
 sidebar.controller("SidebarController", ["$scope", "$http", "$state", "API", "TimeUtil", "AppState", ($scope, $http, $state, API, TimeUtil, AppState) ->
 
     MAX_PREVIEW_TEXT_LENGTH = 100;
-    authorTextForId = (id) -> if id == currentUserId then "You" else $scope.gladiatorNameById[id]
+    authorTextForId = (id) -> if id == currentUserId then "You" else $scope.gladiatorById[id].username
     previewTextFromPost = (text) -> if text.length > MAX_PREVIEW_TEXT_LENGTH then text.substr(0, MAX_PREVIEW_TEXT_LENGTH) + "..." else text
     postPreviewTextForConversation = (conversation) ->
         if conversation.recent_post
@@ -14,7 +14,7 @@ sidebar.controller("SidebarController", ["$scope", "$http", "$state", "API", "Ti
 
     $scope.conversationsByUserId = {}
     $scope.gladiatorIds = []
-    $scope.gladiatorNameById = {}
+    $scope.gladiatorById = {}
     $scope.arenaStateByUserId = {}
     $scope.toggleGladiatorPanel = (id) -> $scope.arenaStateByUserId[id] = !$scope.arenaStateByUserId[id]
     $scope.expandButtonClass = (id) -> if $scope.arenaStateByUserId[id] then "glyphicon glyphicon-chevron-up" else "glyphicon glyphicon-chevron-down"
@@ -25,8 +25,8 @@ sidebar.controller("SidebarController", ["$scope", "$http", "$state", "API", "Ti
             $scope.conversationsByUserId = {}
             $scope.gladiatorIds = []
             for arena in arenas
-                $scope.gladiatorNameById[arena.user1.id] = arena.user1.name
-                $scope.gladiatorNameById[arena.user2.id] = arena.user2.name
+                $scope.gladiatorById[arena.user1.id] = arena.user1
+                $scope.gladiatorById[arena.user2.id] = arena.user2
                 otherGladiatorId = if currentUserId is arena.user1.id then arena.user2.id else arena.user1.id
                 $scope.conversationsByUserId[otherGladiatorId] = []
                 for conversation in arena.conversations

@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 ruby '1.9.3'
 
 gem 'rails', '3.2.16'
+gem 'identicon'
 
 group :assets do
   gem 'therubyracer'
