@@ -1,5 +1,8 @@
 <div id="conversation-container">
-    <p class="title">{{title}}</p>
+    <div class="title">
+        <p ng-blur="titleTextLostFocus()" on-enter="finishEditingTitle()" id="title-text">{{title()}}</p>
+        <a ng-click="editTitleClicked()">Edit</a>
+    </div>
     <div id="posts-container" class="posts {{postLengthClass()}}">
         <p id="status" ng-if="shouldDisplayEmptyConversationsMessage()" class="empty-conversation-message">It looks like there are no posts yet. Be the first to write something!</p>
         <div ng-repeat="post in posts" class="post-content {{postContentClass(post.id)}}">

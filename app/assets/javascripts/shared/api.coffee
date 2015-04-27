@@ -111,5 +111,9 @@ angular.module("SharedServices").service("API", ["$http", "$cookieStore", ($http
         request = generateRequest("invite/reject/#{id}")
         $http.post(request, { token: getToken() })
 
+    this.editTitleByConversationId = (conversationId, text) ->
+        request = generateRequest("conversation/edit_title/#{conversationId}")
+        $http.post(request, { text: text, token: getToken() })
+
     return
 ])
