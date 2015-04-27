@@ -21,8 +21,8 @@ describe Arena do
 
     context "when using the Arenas API" do
         before :each do
-            @user1 = User.create! :email => "asdf1@asdf.com", :password => "abcdef"
-            @user2 = User.create! :email => "asdf2@asdf.com", :password => "abcdef"
+            @user1 = User.create! :email => "asdf1@asdf.com", :password => "abcdef", :username => "User1"
+            @user2 = User.create! :email => "asdf2@asdf.com", :password => "abcdef", :username => "User2"
             @arena = Arena.create! :user1 => @user1, :user2 => @user2
             @conversation = @arena.conversations.create! :title => "I love education, how about you?"
             @user1.posts.create! :text => "Yea, I do!", :conversation => @conversation
@@ -33,7 +33,7 @@ describe Arena do
             response = @arena.response_object
 
             expect(response[:user1][:id]).to eq(@user1.id)
-            expect(response[:user2][:name]).to eq(@user2.email)
+            expect(response[:user2][:name]).to eq(@user2.username)
             expect(response[:conversations].length).to eq(1)
             expect(response[:conversations].first[:timestamp]).to eq(@conversation.timestamp)
             expect(response[:conversations].first[:recent_post][:author_id]).to eq(@user2.id)
