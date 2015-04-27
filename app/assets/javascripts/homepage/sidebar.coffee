@@ -78,9 +78,34 @@ sidebar.controller("SidebarMatchesController", ["$scope", "$state", "API", "AppS
             $scope.classes[which] = notExpandedClasses
 
     $scope.matchWith = (id) ->
-        x = 1
+        # Matching
+        reloadSidebarMatches()
+        reloadSidebarNotifications()
+
     $scope.goToProfile = (id) ->
         $state.go("profile", { id: id })
+
+    $scope.accept = (id) ->
+        API.acceptInvite(id)
+            .success (invites) ->
+                reloadSidebarNotifications()
+            .error (result, status) ->
+                if result?
+                    reason = result.error
+                else
+                    reason = "status code #{status}"
+                console.log "sidebar failed: #{reason}"
+
+    $scope.reject = (id) ->
+        API.rejectInvite(id)
+            .success (invites) ->
+                reloadSidebarNotifications()
+            .error (result, status) ->
+                if result?
+                    reason = result.error
+                else
+                    reason = "status code #{status}"
+                console.log "sidebar failed: #{reason}"
 
     $scope.matches = []
     $scope.pending = []
@@ -99,6 +124,10 @@ sidebar.controller("SidebarMatchesController", ["$scope", "$state", "API", "AppS
         API.outgoingInvites()
             .success (invites) ->
                 $scope.pending = invites.outgoing
+                $scope.pending = [
+                    { name: "bob", id: 1 }
+                    { name: "john", id: 2 }
+                ]
             .error (result, status) ->
                 if result?
                     reason = result.error
@@ -109,6 +138,10 @@ sidebar.controller("SidebarMatchesController", ["$scope", "$state", "API", "AppS
         API.incomingInvites()
             .success (invites) ->
                 $scope.incoming = invites.incoming
+                $scope.incoming = [
+                    { name: "bob", id: 1 }
+                    { name: "john", id: 2 }
+                ]
             .error (result, status) ->
                 if result?
                     reason = result.error
