@@ -3,8 +3,8 @@
 describe "SidebarController", ->
     beforeEach inject (AppState) ->
         @http.when("GET", "/api/v1/arenas/1").respond [{
-            user1: {id: 1, name: "ben@bitdiddle.com"},
-            user2: {id: 3, name: "bob@schmitt.com"},
+            user1: {id: 1, username: "ben@bitdiddle.com", avatar: "/path/to/ben.png"},
+            user2: {id: 3, username: "bob@schmitt.com", avatar: "/path/to/bob.png"},
             conversations: [{
                 id: 1,
                 title: "Why is the US education system terrible?",
@@ -42,8 +42,8 @@ describe "SidebarController", ->
 
     it "should store the correct list of gladiators and their names", ->
         expect(@scope.gladiatorIds).toEqual [3]
-        expect(@scope.gladiatorNameById[3]).toEqual "bob@schmitt.com"
-        expect(Object.keys @scope.gladiatorNameById).toEqual ["1", "3"]
+        expect(@scope.gladiatorById[3].username).toEqual "bob@schmitt.com"
+        expect(Object.keys @scope.gladiatorById).toEqual ["1", "3"]
 
     it "should be able to toggle arena states", ->
         expect(3 of @scope.arenaStateByUserId).toEqual true

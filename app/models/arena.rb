@@ -21,8 +21,8 @@ class Arena < ActiveRecord::Base
         end
 
         response = {
-            :user1 => { :id => user1.id, :name => user1.username },
-            :user2 => { :id => user2.id, :name => user2.username },
+            :user1 => user1.response_object,
+            :user2 => user2.response_object,
             :conversations => conversations_response
         }
         return response

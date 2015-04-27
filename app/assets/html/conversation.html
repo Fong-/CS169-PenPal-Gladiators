@@ -4,7 +4,7 @@
         <p ng-if="shouldDisplayEmptyConversationsMessage()" class="empty-conversation-message">It looks like there are no posts yet. Be the first to write something!</p>
         <div ng-repeat="post in posts" class="post-content {{postContentClass(post.id)}}">
             <div class="post-author-avatar-container">
-                <img class="post-author-avatar" src="/assets/default_avatar.png"></img>
+                <img class="user-avatar-medium" ng-src="{{post.author.avatar}}"></img>
             </div>
             <div class="post-content-panel">
                 <p class="post-author-name">{{authorDisplayNameForPost(post.id)}}

@@ -3,7 +3,8 @@
         <ul class="menu-content">
             <li ng-repeat="gladiatorId in gladiatorIds">
                 <div class="gladiator-heading-container" ng-click="toggleGladiatorPanel(gladiatorId)">
-                    <a class="gladiator-heading">{{gladiatorNameById[gladiatorId]}}</a>
+                    <img class="user-avatar-small" ng-src="{{gladiatorById[gladiatorId].avatar}}"></img>
+                    <a class="gladiator-heading">{{gladiatorById[gladiatorId].username}}</a>
                     <span class="{{expandButtonClass(gladiatorId)}} click-to-expand"></span>
                 </div>
                 <div class="conversation-preview" ng-repeat="conversation in conversationsByUserId[gladiatorId]" ng-show="arenaStateByUserId[gladiatorId]" ng-click="conversationPreviewClicked(conversation.id)">
