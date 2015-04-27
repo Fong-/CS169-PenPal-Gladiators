@@ -1,34 +1,34 @@
-<li class="matches-container menu-item">
-    <div class="matches-header-container" ng-click="toggle('matches')">
+<li class="matches-container">
+    <div class="matches-header-container menu-item" ng-click="toggle('matches')">
         <a class="matches-header heading">My Matches</a>
         <span ng-class="classes['matches']" class="click-to-expand"></span>
     </div>
 
-    <div class="user" ng-repeat="user in matches" ng-show="expanded['matches']">
-        <p>{{user.name}}</p>
+    <div class="user menu-item subitem" ng-repeat="user in matches" ng-show="expanded['matches']">
+        <a class="heading">{{user.name}}</a>
     </div>
 </li>
 
-<li class="pending-matches-container menu-item">
-    <div class="pending-matches-header-container" ng-click="toggle('pending')">
+<li class="pending-matches-container" ng-show="showPending()">
+    <div class="pending-matches-header-container menu-item" ng-click="toggle('pending')">
         <a class="pending-matches-header heading">Pending Matches</a>
+        <span class="notification">({{pending.length}})</span>
         <span ng-class="classes['pending']" class="click-to-expand"></span>
     </div>
 
-    <div class="user" ng-repeat="user in pending" ng-show="expanded['pending']">
-        <p>{{user.name}}</p>
-        <!-- Something for status -->
+    <div class="user menu-item subitem" ng-repeat="user in pending" ng-show="expanded['pending'] ">
+        <a class="heading">{{user.name}}</a>
     </div>
 </li>
 
-<li class="incoming-matches-container menu-item">
-    <div class="incoming-matches-header-container" ng-click="toggle('incoming')">
+<li class="incoming-matches-container" ng-show="showIncoming()">
+    <div class="incoming-matches-header-container menu-item" ng-click="toggle('incoming')">
         <a class="incoming-matches-header heading">Incoming Matches</a>
+        <span class="notification">({{incoming.length}})</span>
         <span ng-class="classes['incoming']" class="click-to-expand"></span>
     </div>
 
-    <div class="user" ng-repeat="user in incoming" ng-show="expanded['incoming']">
-        <p>{{user.name}}</p>
-        <!-- Something for status -->
+    <div class="user menu-item subitem" ng-repeat="user in incoming" ng-show="expanded['incoming']">
+        <a class="heading">{{user.name}}</a>
     </div>
 </li>
