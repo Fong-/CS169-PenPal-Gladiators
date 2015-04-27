@@ -50,6 +50,8 @@ router.config(["$stateProvider", "$urlRouterProvider", ($stateProvider, $urlRout
             profileData: ["API", "$stateParams", (API, $stateParams) ->
                 userId = $stateParams.id
                 return API.requestProfileByUID(userId)
+                    .success (profile) ->
+                        return profile
                     .error (result, status) ->
                         if result?
                             reason = result.error
