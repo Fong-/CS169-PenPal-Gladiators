@@ -20,10 +20,11 @@ describe ConversationsController do
             Conversation.stub(:find_by_id).and_return(nil)
             get "get_by_id", :id => 2
             response_object = JSON.parse(response.body)
-            expect(response_object["error"]).to eq("no such conversation")
+            expect(response_object["error"]).not_to be(nil)
             expect(response_object["id"]).to eq(nil)
             expect(response_object["title"]).to eq(nil)
             expect(response_object["posts"]).to eq(nil)
+            expect(response.status).to eq(404)
         end
     end
 
