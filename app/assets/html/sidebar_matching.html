@@ -6,7 +6,7 @@
 
     <div class="user menu-item subitem" ng-repeat="match in matches" ng-show="expanded['matches']" ng-click="goToProfile(match.user.id)">
         <a class="heading">{{match.user.username}}</a>
-        <span class="btn" ng-click="matchWith(match.user.id)">Match</span>
+        <span class="btn" ng-click="matchWith(match.user.id); $event.stopPropagation();">Match</span>
     </div>
 </li>
 
@@ -31,7 +31,7 @@
 
     <div class="user menu-item subitem" ng-repeat="user in incoming" ng-show="expanded['incoming']" ng-click="goToProfile(user.id)">
         <a class="heading">{{user.username}}</a>
-        <span class="btn" ng-click="reject(user.id)">Reject</span>
-        <span class="btn" ng-click="accept(user.id)">Accept</span>
+        <span class="btn" ng-click="reject(user.id); $event.stopPropagation();">Reject</span>
+        <span class="btn" ng-click="accept(user.id); $event.stopPropagation();">Accept</span>
     </div>
 </li>
