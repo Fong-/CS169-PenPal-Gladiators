@@ -1,6 +1,6 @@
 sidebar = angular.module("Sidebar", ["SharedServices"])
 
-sidebar.controller("SidebarController", ["$scope", "$state", "API", "TimeUtil", "AppState", ($scope, $state, API, TimeUtil, AppState) ->
+sidebar.controller("SidebarController", ["$scope", "$rootScope", "$state", "API", "TimeUtil", "AppState", ($scope, $rootScope, $state, API, TimeUtil, AppState, SidebarService) ->
 
     MAX_PREVIEW_TEXT_LENGTH = 100;
     authorTextForId = (id) -> if id == currentUserId then "You" else $scope.gladiatorById[id].username
@@ -61,9 +61,18 @@ sidebar.controller("SidebarController", ["$scope", "$state", "API", "TimeUtil", 
                 console.log "sidebar failed: #{reason}"
 
     reloadSidebarArenas()
+
+    $rootScope.$on("reloadSidebarArenas", reloadSidebarArenas)
+
+    setTimeout(() ->
+        $rootScope.$broadcast("reloadSidebarArenas")
+        $rootScope.$broadcast("reloadSidebarNotifications")
+    , MATCH_TIMEOUT_PERIOD)
 ])
 
-sidebar.controller("SidebarMatchesController", ["$scope", "$state", "API", "AppState", ($scope, $state, API, AppState) ->
+sidebar.controller("SidebarMatchesController", ["$scope", "$rootScope", "$state", "API", ($scope, $rootScope, $state, API) ->
+    MATCH_TIMEOUT_PERIOD = 5000
+
     notExpandedClasses = ["glyphicon", "glyphicon-chevron-down"]
     expandedClasses = ["glyphicon", "glyphicon-chevron-up"]
 
@@ -78,7 +87,17 @@ sidebar.controller("SidebarMatchesController", ["$scope", "$state", "API", "AppS
             $scope.classes[which] = notExpandedClasses
 
     $scope.matchWith = (id) ->
-        # Matching
+        API.sendInvite(id)
+            .success (result) ->
+                reloadSidebarMatches()
+                reloadSidebarNotifications()
+            .error (result, status) ->
+                if result?
+                    reason = result.error
+                else
+                    reason = "status code #{status}"
+                console.log "sidebar failed: #{reason}"
+
         reloadSidebarMatches()
         reloadSidebarNotifications()
 
@@ -89,6 +108,7 @@ sidebar.controller("SidebarMatchesController", ["$scope", "$state", "API", "AppS
         API.acceptInvite(id)
             .success (invites) ->
                 reloadSidebarNotifications()
+                $rootScope.$broadcast("reloadSidebarArenas")
             .error (result, status) ->
                 if result?
                     reason = result.error
@@ -115,19 +135,20 @@ sidebar.controller("SidebarMatchesController", ["$scope", "$state", "API", "AppS
     $scope.showIncoming = () -> $scope.incoming.length > 0
 
     reloadSidebarMatches = () ->
-        $scope.matches = [
-            { name: "bob", id: 1 }
-            { name: "john", id: 2 }
-        ]
+        API.matches()
+            .success (matches) ->
+                $scope.matches = matches
+            .error (result, status) ->
+                if result?
+                    reason = result.error
+                else
+                    reason = "status code #{status}"
+                console.log "sidebar failed: #{reason}"
 
     reloadSidebarNotifications = () ->
         API.outgoingInvites()
             .success (invites) ->
                 $scope.pending = invites.outgoing
-                $scope.pending = [
-                    { name: "bob", id: 1 }
-                    { name: "john", id: 2 }
-                ]
             .error (result, status) ->
                 if result?
                     reason = result.error
@@ -138,10 +159,6 @@ sidebar.controller("SidebarMatchesController", ["$scope", "$state", "API", "AppS
         API.incomingInvites()
             .success (invites) ->
                 $scope.incoming = invites.incoming
-                $scope.incoming = [
-                    { name: "bob", id: 1 }
-                    { name: "john", id: 2 }
-                ]
             .error (result, status) ->
                 if result?
                     reason = result.error
@@ -151,4 +168,7 @@ sidebar.controller("SidebarMatchesController", ["$scope", "$state", "API", "AppS
 
     reloadSidebarMatches()
     reloadSidebarNotifications()
+
+    $rootScope.$on("reloadSidebarMatches", reloadSidebarMatches)
+    $rootScope.$on("reloadSidebarNotifications", reloadSidebarNotifications)
 ])

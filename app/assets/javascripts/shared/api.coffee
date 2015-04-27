@@ -85,6 +85,11 @@ angular.module("SharedServices").service("API", ["$http", "$cookieStore", ($http
 
     this.approveResolutionByConversationId = (conversationId) ->
         request = generateRequest("conversation/approve_resolution/#{conversationId}")
+        $http.post(request, { token: getToken() })
+
+    this.matches = () ->
+        request = generateRequest("matches")
+        $http.get(request, { params: { token: getToken() } })
 
     this.outgoingInvites = () ->
         request = generateRequest("invites/outgoing")
