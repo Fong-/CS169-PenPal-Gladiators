@@ -13,6 +13,7 @@ describe "ConversationController", ->
                         "avatar": null,
                         "id": 1
                     },
+                    "post_type": "post",
                     "text": "Hello world (third post)",
                     "timestamp": "2015-04-12T18:48:52Z"
                 },
@@ -23,6 +24,7 @@ describe "ConversationController", ->
                         "avatar": null,
                         "id": 3
                     },
+                    "post_type": "post",
                     "text": "Hello world (second post)",
                     "timestamp": "2015-04-12T18:48:52Z"
                 },
@@ -33,13 +35,36 @@ describe "ConversationController", ->
                         "avatar": null,
                         "id": 1
                     },
+                    "post_type": "post",
                     "text": "Hello world (first post)",
                     "timestamp": "2015-04-12T18:48:52Z"
                 }
-            ]
+            ],
+            "summaries": [
+                {
+                    "author": {
+                        "username": "MuddyTree",
+                        "avatar": null,
+                        "id": 3
+                    },
+                    "text": "I am summarizing your views."
+                },
+                {
+                    "author": {
+                        "username": "SnowySun",
+                        "avatar": null,
+                        "id": 1
+                    },
+                    "text": ""
+                }
+            ],
         }
         @http.expectGET("/api/v1/conversation/1")
-        @controller("ConversationController", { $scope: @scope, $stateParams: {id: 1} })
+        @controller("ConversationController", {
+            $scope: @scope,
+            $stateParams: {id: 1},
+            AppState: {user: {id: 1}}
+        })
         @http.flush()
 
     it "should have the correct title and posts", ->
@@ -90,10 +115,30 @@ describe "ConversationController", ->
         @http.flush()
         expect(@scope.shouldHidePostEditor()).toEqual true
 
-    it "should be edit an existing post", ->
+    it "should allow the user to edit an existing post", ->
         @http.expectPOST("/api/v1/post/edit/1").respond { "success": "Successfully saved post!" }
         @scope.editPostClicked(1)
         @scope.editPostText = "Hello world (1st post)"
         @scope.submitPostClicked()
         @http.flush()
         expect(@scope.shouldHidePostEditor()).toEqual true
+
+    it "should show the correct opponent and summaries", ->
+        expect(@scope.opponentDisplayName()).toEqual "MuddyTree"
+        expect(@scope.ownPendingSummaryText()).toEqual "I am summarizing your views."
+        expect(@scope.ownPendingSummaryExists()).toEqual true
+
+    it "should allow the user to edit the opposing summary", ->
+        @http.expectPOST("/api/v1/conversation/edit_summary/1").respond { "success": true }
+        @scope.proposeSummaryClicked()
+        @scope.editPostText = "Hello world!"
+        @scope.submitPostClicked()
+        @http.flush()
+        expect(@scope.editPostText).toEqual "Hello world!"
+
+    it "should allow the user to approve a pending summary of his/her viewpoint", ->
+        @http.expectPOST("/api/v1/conversation/approve_summary/1").respond { "success": true }
+        @scope.proposeSummaryClicked()
+        @scope.approveSummaryClicked()
+        @http.flush()
+        expect(@scope.editPostText).toEqual ""

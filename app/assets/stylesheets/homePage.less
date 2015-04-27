@@ -157,6 +157,14 @@ p {
     }
 }
 
+.post-content-summary {
+    background-color: #FFFFE0;
+}
+
+.post-content-resolution {
+    background-color: #EEFCE1;
+}
+
 .post-editor-half {
     width: 48%;
 }
@@ -416,7 +424,7 @@ html {
         margin: 0px 10px 0px 8px;
         text-align: center;
 
-        #consensus-container {
+        #summary-container {
             position: relative;
             width: 48%;
             height: 100%;
@@ -442,10 +450,20 @@ html {
                 }
             }
 
-            #approve-consensus {
+            #approve-summary {
                 position: absolute;
                 bottom: 10px;
                 right: 15px;
+            }
+
+            #own-summary-content {
+                p:first-child {
+                    font-size: 18px;
+                    color: #AAA
+                }
+                p {
+                    color: black;
+                }
             }
         }
 
