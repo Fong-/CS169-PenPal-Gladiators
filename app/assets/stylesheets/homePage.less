@@ -260,7 +260,7 @@ p {
 
     li {
         padding: 5px 5px 0px 5px;
-        border-bottom: 1px solid #D4D4D4;
+        border-bottom: 1px solid #E1E1E1;
 
         @media(max-width: 768px) {
             &:last-child {
@@ -268,9 +268,31 @@ p {
             }
         }
 
+        .conversation-start-container {
+            padding: 10px;
+            padding-left: 25px;
+            border-top: 1px dotted #E1E1E1;
+
+            &:hover {
+                background-color: #F8F8F8;
+            }
+
+            .conversation-start {
+                padding: 0;
+                font-size: 16px;
+                color: #888;
+            }
+
+            .glyphicon-plus {
+                float: right;
+                font-size: 10px;
+                padding: 6px 8px;
+            }
+        }
+
         .conversation-preview {
             padding: 10px;
-            padding-left: 20px;
+            padding-left: 25px;
             font-size: 13px;
             background-color: #ffffff;
             border-top: 1px dotted #e1e1e1;
@@ -290,6 +312,7 @@ p {
 
                 .conversation-actions {
                     float: right;
+                    margin-left: 5px;
 
                     .conversation-advance {
                         font-size: 10px;
