@@ -24,7 +24,7 @@ class ConversationsController < ApplicationController
             arenas = Arena.for_users(user, other_user)
 
             if arenas.length == 0
-                render_error(:resource_not_found, :resource => :arena)
+                render_error(:resource_not_found, :resource => :arena) and return
             end
 
             arena = arenas[0]
