@@ -1,6 +1,7 @@
 sidebar = angular.module("Sidebar", ["SharedServices"])
 
 sidebar.controller("SidebarController", ["$scope", "$rootScope", "$state", "API", "TimeUtil", "AppState", ($scope, $rootScope, $state, API, TimeUtil, AppState, SidebarService) ->
+    SIDEBAR_REFRESH_RATE = 5000
 
     MAX_PREVIEW_TEXT_LENGTH = 100;
     authorTextForId = (id) -> if id == currentUserId then "You" else $scope.gladiatorNameById[id]
@@ -64,15 +65,13 @@ sidebar.controller("SidebarController", ["$scope", "$rootScope", "$state", "API"
 
     $rootScope.$on("reloadSidebarArenas", reloadSidebarArenas)
 
-    setTimeout(() ->
+    setInterval(() ->
         $rootScope.$broadcast("reloadSidebarArenas")
         $rootScope.$broadcast("reloadSidebarNotifications")
-    , MATCH_TIMEOUT_PERIOD)
+    , SIDEBAR_REFRESH_RATE)
 ])
 
 sidebar.controller("SidebarMatchesController", ["$scope", "$rootScope", "$state", "API", ($scope, $rootScope, $state, API) ->
-    MATCH_TIMEOUT_PERIOD = 5000
-
     notExpandedClasses = ["glyphicon", "glyphicon-chevron-down"]
     expandedClasses = ["glyphicon", "glyphicon-chevron-up"]
 
