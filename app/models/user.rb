@@ -1,3 +1,5 @@
+require 'identicon'
+
 class User < ActiveRecord::Base
     include Authenticable
 
@@ -13,6 +15,7 @@ class User < ActiveRecord::Base
     after_initialize do
         self.secret ||= SecureRandom.base64(24)
         self.username ||= UsernameGenerator.new
+        self.avatar ||= Identicon.data_url_for SecureRandom.base64(10), 256, [255, 255, 255]
     end
 
     @@sha256 = Digest::SHA256.new
