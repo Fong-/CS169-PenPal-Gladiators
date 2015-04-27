@@ -18,7 +18,7 @@ conversation.directive("onEnter", ->
         )
 )
 
-conversation.controller("ConversationController", ["$scope", "$stateParams", "API", "TimeUtil", "AppState", ($scope, $stateParams, API, TimeUtil, AppState) ->
+conversation.controller("ConversationController", ["$scope", "$stateParams", "API", "TimeUtil", "AppState", "$rootScope", ($scope, $stateParams, API, TimeUtil, AppState, $rootScope) ->
     # Constants
     POST_SUBMISSION_TIMEOUT_PERIOD_MS = 5000
     CONVERSATION_POLL_PERIOD = 60 # seconds
@@ -49,12 +49,17 @@ conversation.controller("ConversationController", ["$scope", "$stateParams", "AP
         if title
             title.setAttribute("contentEditable", true)
             title.focus()
-    $scope.titleTextLostFocus = -> $scope.finishEditingTitle()
-    $scope.finishEditingTitle = ->
+    $scope.titleTextLostFocus = -> $scope.finishEditingTitle(true)
+    $scope.finishEditingTitle = (updateTitle) ->
         title = document.getElementById("title-text")
-        if title and title.textContent != "" and title.textContent != conversation.title
-            title.setAttribute("contentEditable", false)
-            API.editTitleByConversationId(conversationId, title.textContent).success (response) -> updateConversationData(false)
+        if !title then return
+        title.setAttribute("contentEditable", false)
+        if updateTitle and title.textContent != "" and title.textContent != conversation.title
+            API.editTitleByConversationId(conversationId, title.textContent).success (response) ->
+                updateConversationData(false)
+                $rootScope.$broadcast("reloadSidebarArenas")
+        else
+            title.textContent = conversation.title
 
     $scope.timeElapsedMessage = (timestamp) -> TimeUtil.timeIntervalAsString(TimeUtil.timeSince1970InSeconds() - TimeUtil.timeFromTimestampInSeconds(timestamp)) + " ago"
     $scope.shouldHidePostEditor = -> conversationPageState is READ_POSTS

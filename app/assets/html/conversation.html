@@ -1,6 +1,6 @@
 <div id="conversation-container">
     <div class="title">
-        <p ng-blur="titleTextLostFocus()" on-enter="finishEditingTitle()" id="title-text">{{title()}}</p>
+        <p ng-blur="titleTextLostFocus()" on-escape="finishEditingTitle(false)" on-enter="finishEditingTitle(true)" id="title-text">{{title()}}</p>
         <a ng-click="editTitleClicked()">Edit</a>
     </div>
     <div id="posts-container" class="posts {{postLengthClass()}}">
