@@ -1,8 +1,6 @@
 sidebar = angular.module("Sidebar", ["SharedServices"])
 
 sidebar.controller("SidebarController", ["$scope", "$rootScope", "$state", "API", "TimeUtil", "AppState", ($scope, $rootScope, $state, API, TimeUtil, AppState, SidebarService) ->
-    SIDEBAR_REFRESH_RATE = 5000
-
     MAX_PREVIEW_TEXT_LENGTH = 100;
     authorTextForId = (id) -> if id == currentUserId then "You" else $scope.gladiatorNameById[id]
     previewTextFromPost = (text) -> if text.length > MAX_PREVIEW_TEXT_LENGTH then text.substr(0, MAX_PREVIEW_TEXT_LENGTH) + "..." else text
@@ -63,8 +61,11 @@ sidebar.controller("SidebarController", ["$scope", "$rootScope", "$state", "API"
 
     reloadSidebarArenas()
 
+    # Register events to trigger sidebar reloading
     $rootScope.$on("reloadSidebarArenas", reloadSidebarArenas)
 
+    # Refresh the sidebar every few seconds
+    SIDEBAR_REFRESH_RATE = 5000
     setInterval(() ->
         $rootScope.$broadcast("reloadSidebarArenas")
         $rootScope.$broadcast("reloadSidebarNotifications")
@@ -72,6 +73,7 @@ sidebar.controller("SidebarController", ["$scope", "$rootScope", "$state", "API"
 ])
 
 sidebar.controller("SidebarMatchesController", ["$scope", "$rootScope", "$state", "API", ($scope, $rootScope, $state, API) ->
+    # Toggling different views
     notExpandedClasses = ["glyphicon", "glyphicon-chevron-down"]
     expandedClasses = ["glyphicon", "glyphicon-chevron-up"]
 
@@ -85,6 +87,7 @@ sidebar.controller("SidebarMatchesController", ["$scope", "$rootScope", "$state"
         else
             $scope.classes[which] = notExpandedClasses
 
+    # Controls for handling matches and match invitations
     $scope.matchWith = (id) ->
         API.sendInvite(id)
             .success (result) ->
@@ -126,6 +129,7 @@ sidebar.controller("SidebarMatchesController", ["$scope", "$rootScope", "$state"
                     reason = "status code #{status}"
                 console.log "sidebar failed: #{reason}"
 
+    # Helpers to refresh and store matches and invites
     $scope.matches = []
     $scope.pending = []
     $scope.incoming = []
@@ -168,6 +172,7 @@ sidebar.controller("SidebarMatchesController", ["$scope", "$rootScope", "$state"
     reloadSidebarMatches()
     reloadSidebarNotifications()
 
+    # Register events to trigger sidebar reloading
     $rootScope.$on("reloadSidebarMatches", reloadSidebarMatches)
     $rootScope.$on("reloadSidebarNotifications", reloadSidebarNotifications)
 ])
