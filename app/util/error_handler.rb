@@ -24,13 +24,13 @@ module ErrorHandler
         :resource_not_found => 404,
         :cannot_invite => 400,
         :cannot_accept_or_reject => 400,
-        :no_such_conversation => 401,
+        :no_such_conversation => 404,
         :no_such_conversation_or_user => 401,
         :unauthorized_access => 401
     }
 
-    def render_error(error)
-        render :json => { :error => ERROR[error] }, :status => ERROR_CODE[error]
+    def render_error(error, args = {})
+        render :json => { :error => ERROR[error] }.merge(args), :status => ERROR_CODE[error]
     end
 
 end
