@@ -77,6 +77,11 @@ sidebar.controller("SidebarMatchesController", ["$scope", "$state", "API", "AppS
         else
             $scope.classes[which] = notExpandedClasses
 
+    $scope.matchWith = (id) ->
+        x = 1
+    $scope.goToProfile = (id) ->
+        $state.go("profile", { id: id })
+
     $scope.matches = []
     $scope.pending = []
     $scope.incoming = []
@@ -86,8 +91,8 @@ sidebar.controller("SidebarMatchesController", ["$scope", "$state", "API", "AppS
 
     reloadSidebarMatches = () ->
         $scope.matches = [
-            { name: "bob" }
-            { name: "john" }
+            { name: "bob", id: 1 }
+            { name: "john", id: 2 }
         ]
 
     reloadSidebarNotifications = () ->
