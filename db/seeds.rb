@@ -9,7 +9,6 @@ users = [
     :email => "ben@bitdiddle.com",
     :password => "bitsrocks",
     :username => "ben",
-    :avatar => "/path/to/ben.png",
     :political_blurb => "I like Ron Bitdiddle",
     :political_hero => "Ron Bitdiddle",
     :political_spectrum => 2
@@ -18,7 +17,6 @@ users = [
     :email => "generic@email.com",
     :password => "asdfasdf",
     :username => "generic",
-    :avatar => "/path/to/generic.png",
     :political_blurb => "Go generic party!",
     :political_hero => "Generic George",
     :political_spectrum => 1
@@ -27,7 +25,6 @@ users = [
     :email => "bob@schmitt.com",
     :password => "imboring",
     :username => "bob",
-    :avatar => "/path/to/bob.png",
     :political_blurb => "Bob for county clerk!",
     :political_hero => "ME!",
     :political_spectrum => 3
@@ -36,7 +33,6 @@ users = [
     :email => "genericasiankid@gmail.com",
     :password => "password",
     :username => "generickid",
-    :avatar => "/path/to/generickid.png",
     :political_blurb => "Bob embezzles from widget farmers!",
     :political_hero => "Not Bob!",
     :political_spectrum => 1
@@ -45,7 +41,6 @@ users = [
     :email => "rosenthal@policy.com",
     :password => "publicpolicy",
     :username => "rosenthal",
-    :avatar => "/path/to/rosenthal.png",
     :political_blurb => "Discuss your view on PenPal Gladiators!",
     :political_hero => "Thomas Jefferson",
     :political_spectrum => 2
@@ -84,7 +79,7 @@ topics.each do |t|
     survey_question1 = topic.survey_questions.create(:text => "Do you hate #{topic.name}?", :index => 1)
     survey_question2 = topic.survey_questions.create(:text => "Do you care about #{topic.name}?", :index => 3)
     created_responses = []
-    
+
     responses.each do |r|
         verb1 = r[:text] == "Yes" ? "hate" : "don't hate"
         verb2 = r[:text] == "Yes" ? "care" : "don't care"
@@ -95,7 +90,7 @@ topics.each do |t|
         created_responses.push(survey_question1.survey_responses.create(actual_response1))
         created_responses.push(survey_question2.survey_responses.create(actual_response2))
     end
-    
+
     ResponseWeight.create({:response1_id => created_responses[0].id, :response2_id => created_responses[1].id, :weight => 5})
     ResponseWeight.create({:response1_id => created_responses[0].id, :response2_id => created_responses[2].id, :weight => 1})
     ResponseWeight.create({:response1_id => created_responses[0].id, :response2_id => created_responses[3].id, :weight => 1})
