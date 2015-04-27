@@ -6,7 +6,10 @@ module ErrorHandler
         :invalid_email => "invalid email",
         :invalid_password => "invalid password",
         :user_exists => "user exists",
-        :resource_not_found => "resource not found"
+        :resource_not_found => "resource not found",
+        :invalid_request => "invalid request",
+        :cannot_invite => "cannot invite user",
+        :cannot_accept_or_reject => "cannot accept or reject invitation"
     }
 
     ERROR_CODE = {
@@ -16,7 +19,10 @@ module ErrorHandler
         :invalid_email => 400,
         :invalid_password => 400,
         :user_exists => 400,
-        :resource_not_found => 404
+        :resource_not_found => 404,
+        :invalid_request => 400,
+        :cannot_invite => 400,
+        :cannot_accept_or_reject => 400
     }
 
     def render_error(error)

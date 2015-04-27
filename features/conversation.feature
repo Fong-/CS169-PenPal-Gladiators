@@ -38,3 +38,39 @@ Scenario: the user can edit his/her existing post
     Then I should not see "post-textarea"
     And I should not see "First post"
     And I should see "I have edited the 1st post!"
+
+@wip
+Scenario: the user can propose a summary
+    Given I am on the conversation page for "What messages are you posting?"
+    And I click "Manage summaries" in the conversation page
+    When I fill in "post-textarea" with "Here is a summary of the opposing views"
+    And I click "Submit" in the conversation page
+    Then I should not see "post-textarea"
+    And "Here is a summary of the opposing views" should be saved
+
+@wip
+Scenario: the user can approve a proposed summary
+    Given "Bob" has submitted a summary containing "Here is a summary of my views"
+    And I am on the conversation page for "What messages are you posting?"
+    And I click "Manage summaries" in the conversation page
+    And I click "Approve" in the conversation page
+    Then I should not see "post-textarea"
+    And I should see "Here is a summary of my views"
+
+@wip
+Scenario: the user can edit the resolution
+    Given I am on the conversation page for "What messages are you posting?"
+    And I click "Edit the resolution" in the conversation page
+    And I fill in "post-textarea" with "Here is a resolution"
+    And I click "Submit" in the coversation page
+    Then I should not see "post-textarea"
+    And "Here is a resolution" should be saved
+
+@wip
+Scenario: the user can approve a resolution
+    Given "Bob" has submitted a resolution containing "Here is my resolution"
+    And I am on the conversation page for "What messages are you posting?"
+    And I click "Edit the resolution" in the conversation page
+    And I click "Approve" in the conversation page
+    Then I should not see "post-textarea"
+    And I should see "Here is my resolution"
