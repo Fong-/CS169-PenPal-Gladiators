@@ -85,6 +85,25 @@ angular.module("SharedServices").service("API", ["$http", "$cookieStore", ($http
 
     this.approveResolutionByConversationId = (conversationId) ->
         request = generateRequest("conversation/approve_resolution/#{conversationId}")
+
+    this.outgoingInvites = () ->
+        request = generateRequest("invites/outgoing")
+        $http.get(request, { params: { token: getToken() } })
+
+    this.incomingInvites = () ->
+        request = generateRequest("invites/incoming")
+        $http.get(request, { params: { token: getToken() } })
+
+    this.sendInvite = (id) ->
+        request = generateRequest("invite/send/#{id}")
+        $http.post(request, { token: getToken() })
+
+    this.acceptInvite = (id) ->
+        request = generateRequest("invite/accept/#{id}")
+        $http.post(request, { token: getToken() })
+
+    this.rejectInvite = (id) ->
+        request = generateRequest("invite/reject/#{id}")
         $http.post(request, { token: getToken() })
 
     return
