@@ -66,5 +66,19 @@ router.config(["$stateProvider", "$urlRouterProvider", ($stateProvider, $urlRout
         url: "/conversation/{id:int}"
         templateUrl: "/assets/conversation.html"
         controller: "ConversationController"
+        resolve: {
+            conversationData: ["API", "$stateParams", (API, $stateParams) ->
+                conversationId = parseInt($stateParams["id"])
+                return API.requestConversationById(conversationId)
+                    .success (response) ->
+                        return response
+                    .error (result, status) ->
+                        if result?
+                            reason = result.error
+                        else
+                            reason = "status code #{status}"
+                        console.log "conversation loading failed: #{reason}"
+            ]
+        }
     })
 ])
