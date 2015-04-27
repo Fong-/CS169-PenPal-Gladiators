@@ -76,4 +76,18 @@ sidebar.controller("SidebarMatchesController", ["$scope", "$state", "API", "AppS
             $scope.classes[which] = expandedClasses
         else
             $scope.classes[which] = notExpandedClasses
+
+    $scope.pending = [
+        { name: "bob" }
+        { name: "janice" }
+    ]
+
+    $scope.showPending = () -> $scope.pending.length > 0
+
+    $scope.incoming = [
+        { name: "john" }
+        { name: "george" }
+    ]
+
+    $scope.showIncoming = () -> $scope.incoming.length > 0
 ])
