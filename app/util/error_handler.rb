@@ -7,7 +7,6 @@ module ErrorHandler
         :invalid_password => "invalid password",
         :user_exists => "user exists",
         :resource_not_found => "resource not found",
-        :invalid_request => "invalid request",
         :cannot_invite => "cannot invite user",
         :cannot_accept_or_reject => "cannot accept or reject invitation"
     }
@@ -20,7 +19,6 @@ module ErrorHandler
         :invalid_password => 400,
         :user_exists => 400,
         :resource_not_found => 404,
-        :invalid_request => 400,
         :cannot_invite => 400,
         :cannot_accept_or_reject => 400
     }
