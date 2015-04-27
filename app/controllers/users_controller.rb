@@ -2,6 +2,15 @@ class UsersController < ApplicationController
 
     skip_filter :check_access_token, :only => [:can_register, :register, :login]
 
+    def matches
+        user = User.find_by_id(params[:id])
+        if user.present?
+            render :json => user.matches
+        else
+            render :json => []
+        end
+    end
+    
     def authenticate
         user = @token_results[:user]
         render :json => { :user => user.response_object }
