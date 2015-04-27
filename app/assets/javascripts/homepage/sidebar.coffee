@@ -77,17 +77,40 @@ sidebar.controller("SidebarMatchesController", ["$scope", "$state", "API", "AppS
         else
             $scope.classes[which] = notExpandedClasses
 
-    $scope.pending = [
-        { name: "bob" }
-        { name: "janice" }
-    ]
+    $scope.matches = []
+    $scope.pending = []
+    $scope.incoming = []
 
     $scope.showPending = () -> $scope.pending.length > 0
-
-    $scope.incoming = [
-        { name: "john" }
-        { name: "george" }
-    ]
-
     $scope.showIncoming = () -> $scope.incoming.length > 0
+
+    reloadSidebarMatches = () ->
+        $scope.matches = [
+            { name: "bob" }
+            { name: "john" }
+        ]
+
+    reloadSidebarNotifications = () ->
+        API.outgoingInvites()
+            .success (invites) ->
+                $scope.pending = invites.outgoing
+            .error (result, status) ->
+                if result?
+                    reason = result.error
+                else
+                    reason = "status code #{status}"
+                console.log "sidebar failed: #{reason}"
+
+        API.incomingInvites()
+            .success (invites) ->
+                $scope.incoming = invites.incoming
+            .error (result, status) ->
+                if result?
+                    reason = result.error
+                else
+                    reason = "status code #{status}"
+                console.log "sidebar failed: #{reason}"
+
+    reloadSidebarMatches()
+    reloadSidebarNotifications()
 ])
