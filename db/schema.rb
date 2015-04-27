@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150426202521) do
+ActiveRecord::Schema.define(:version => 20150425025047) do
 
   create_table "arenas", :force => true do |t|
     t.integer  "user1_id"
@@ -26,8 +26,14 @@ ActiveRecord::Schema.define(:version => 20150426202521) do
   create_table "conversations", :force => true do |t|
     t.string   "title"
     t.integer  "arena_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",               :null => false
+    t.datetime "updated_at",               :null => false
+    t.string   "summary_of_first"
+    t.string   "summary_of_second"
+    t.string   "resolution"
+    t.string   "resolution_state"
+    t.datetime "resolution_updated_at"
+    t.integer  "resolution_updated_by_id"
   end
 
   add_index "conversations", ["arena_id"], :name => "index_conversations_on_arena_id"
@@ -46,6 +52,7 @@ ActiveRecord::Schema.define(:version => 20150426202521) do
     t.integer  "conversation_id"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
+    t.string   "post_type"
   end
 
   add_index "posts", ["conversation_id"], :name => "index_posts_on_conversation_id"
