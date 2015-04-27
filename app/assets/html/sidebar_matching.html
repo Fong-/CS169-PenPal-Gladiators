@@ -4,8 +4,9 @@
         <span ng-class="classes['matches']" class="click-to-expand"></span>
     </div>
 
-    <div class="user menu-item subitem" ng-repeat="user in matches" ng-show="expanded['matches']">
+    <div class="user menu-item subitem" ng-repeat="user in matches" ng-show="expanded['matches']" ng-click="goToProfile(user.id)">
         <a class="heading">{{user.name}}</a>
+        <span class="btn btn-primary" ng-click="matchWith(user.id)">Match</span>
     </div>
 </li>
 
