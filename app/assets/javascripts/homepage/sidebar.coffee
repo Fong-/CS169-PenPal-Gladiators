@@ -38,8 +38,8 @@ sidebar.controller("SidebarController", ["$scope", "$http", "$state", "API", "Ti
                 $scope.conversationsByUserId = {}
                 $scope.gladiatorIds = []
                 for arena in arenas
-                    $scope.gladiatorNameById[arena.user1.id] = arena.user1.name
-                    $scope.gladiatorNameById[arena.user2.id] = arena.user2.name
+                    $scope.gladiatorById[arena.user1.id] = arena.user1
+                    $scope.gladiatorById[arena.user2.id] = arena.user2
                     otherGladiatorId = if currentUserId is arena.user1.id then arena.user2.id else arena.user1.id
                     $scope.conversationsByUserId[otherGladiatorId] = []
                     for conversation in arena.conversations

@@ -24,7 +24,7 @@ module ErrorHandler
         :resource_not_found => 404,
         :cannot_invite => 400,
         :cannot_accept_or_reject => 400,
-        :no_such_conversation => 401,
+        :no_such_conversation => 404,
         :no_such_conversation_or_user => 401,
         :unauthorized_access => 401
     }
