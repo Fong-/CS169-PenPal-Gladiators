@@ -71,10 +71,18 @@ describe UsersController, :type => :controller do
         end
 
         it "should complain if authenticated with a malformed access token" do
-           post "authenticate", { :token => "abcd" }
+            post "authenticate", { :token => "abcd" }
             responseObject = JSON.parse(response.body)
             expect(responseObject["error"]).not_to eq(nil)
             expect(response.status).to eq(401)
+        end
+
+        it "should not allow the user to authenticate with old access tokens" do
+            post "logout", { :id => @user.id, :token => @access_token }
+            expect(JSON.parse(response.body)["error"]).to eq(nil)
+            post "authenticate", { :token => @access_token }
+            expect(response.status).to eq(401)
+            expect(JSON.parse(response.body)["error"]).to eq("invalid access token")
         end
 
     end
