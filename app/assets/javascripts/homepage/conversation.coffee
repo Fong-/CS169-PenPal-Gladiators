@@ -18,7 +18,7 @@ conversation.directive("onEnter", ->
         )
 )
 
-conversation.controller("ConversationController", ["$scope", "$stateParams", "API", "TimeUtil", "AppState", "$rootScope", ($scope, $stateParams, API, TimeUtil, AppState, $rootScope) ->
+conversation.controller("ConversationController", ["$scope", "$stateParams", "API", "TimeUtil", "AppState", "$rootScope", "conversationData", ($scope, $stateParams, API, TimeUtil, AppState, $rootScope, conversationData) ->
     # Constants
     POST_SUBMISSION_TIMEOUT_PERIOD_MS = 5000
     CONVERSATION_POLL_PERIOD = 10 # seconds
@@ -199,28 +199,7 @@ conversation.controller("ConversationController", ["$scope", "$stateParams", "AP
 
     updateConversationData = (scrollToEnd) ->
         API.requestConversationById(conversationId).success (response) ->
-            conversation.id = response.id
-            conversation.title = response.title
-            # The "own" summary is the summary of the user's own viewpoint, written by the opposing gladiator.
-            # The "opposing" summary is the summary of the opposing viewpoint, written by the user.
-            conversation.pendingSummaries = { own: "", opposing: "" }
-            conversation.opponent = null
-            conversation.resolution = response.resolution
-            $scope.posts = if "posts" of response then response.posts.reverse() else []
-            for post in response.posts
-                post.type = post.post_type
-                delete post["post_type"]
-                postsById[post.id] = post
-            if response.summaries[0].author.id == AppState.user.id
-                selfIndex = 0
-            else if response.summaries[1].author.id == AppState.user.id
-                selfIndex = 1
-            conversation.pendingSummaries.own = response.summaries[1 - selfIndex].text
-            conversation.pendingSummaries.opposing = response.summaries[selfIndex].text
-            conversation.opponent = response.summaries[1 - selfIndex].author
-            conversation.self = response.summaries[selfIndex].author
-            dispatchScrollElementToBottom("posts-container") if scrollToEnd
-            lastUpdateTime = TimeUtil.timeSince1970InSeconds()
+            parse_conversation(response, scrollToEnd)
 
     shouldPollConversationData = -> TimeUtil.timeSince1970InSeconds() - lastUpdateTime > CONVERSATION_POLL_PERIOD
     conversationPollingProcess = setInterval( ->
@@ -230,5 +209,29 @@ conversation.controller("ConversationController", ["$scope", "$stateParams", "AP
     $rootScope.$on "conversationPageWillLoad", (scope, args) ->
         if conversationId isnt args.conversationId then clearInterval conversationPollingProcess
 
-    updateConversationData(true)
+    parse_conversation = (response, scrollToEnd) ->
+        conversation.id = response.id
+        conversation.title = response.title
+        # The "own" summary is the summary of the user's own viewpoint, written by the opposing gladiator.
+        # The "opposing" summary is the summary of the opposing viewpoint, written by the user.
+        conversation.pendingSummaries = { own: "", opposing: "" }
+        conversation.opponent = null
+        conversation.resolution = response.resolution
+        $scope.posts = if "posts" of response then response.posts.reverse() else []
+        for post in response.posts
+            post.type = post.post_type
+            delete post["post_type"]
+            postsById[post.id] = post
+        if response.summaries[0].author.id == AppState.user.id
+            selfIndex = 0
+        else if response.summaries[1].author.id == AppState.user.id
+            selfIndex = 1
+        conversation.pendingSummaries.own = response.summaries[1 - selfIndex].text
+        conversation.pendingSummaries.opposing = response.summaries[selfIndex].text
+        conversation.opponent = response.summaries[1 - selfIndex].author
+        conversation.self = response.summaries[selfIndex].author
+        dispatchScrollElementToBottom("posts-container") if scrollToEnd
+        lastUpdateTime = TimeUtil.timeSince1970InSeconds()
+
+    parse_conversation(conversationData.data, true)
 ])
