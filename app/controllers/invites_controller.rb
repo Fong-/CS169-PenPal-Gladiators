@@ -17,7 +17,7 @@ class InvitesController < ApplicationController
 
     def invite
         if !extract_arguments_from_params(:to_user)
-            render_error :invalid_request and return
+            render_error :resource_not_found and return
         end
         if Invite.did_create_new_invite @me, @to_user
             render :json => { :success => SUCCESS_MESSAGES[:create_success] }
@@ -36,7 +36,7 @@ class InvitesController < ApplicationController
 
     def accept_or_reject_invitation(decision)
         if !extract_arguments_from_params(:from_user)
-            render_error :invalid_request and return
+            render_error :resource_not_found and return
         end
         invite = Invite.pending_invite @from_user, @me
         if invite.present?
