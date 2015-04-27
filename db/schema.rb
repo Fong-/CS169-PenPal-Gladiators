@@ -58,6 +58,14 @@ ActiveRecord::Schema.define(:version => 20150425025047) do
   add_index "posts", ["conversation_id"], :name => "index_posts_on_conversation_id"
   add_index "posts", ["user_id"], :name => "index_posts_on_user_id"
 
+  create_table "response_weights", :force => true do |t|
+    t.integer  "response1_id"
+    t.integer  "response2_id"
+    t.integer  "weight"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
   create_table "survey_questions", :force => true do |t|
     t.string   "text"
     t.integer  "topic_id"
@@ -110,4 +118,3 @@ ActiveRecord::Schema.define(:version => 20150425025047) do
   end
 
 end
-
