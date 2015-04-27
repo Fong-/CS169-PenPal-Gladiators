@@ -46,6 +46,18 @@ router.config(["$stateProvider", "$urlRouterProvider", ($stateProvider, $urlRout
         url: "/profile/{id:int}"
         templateUrl: "/assets/profile.html"
         controller: "ProfileController"
+        resolve: {
+            profileData: ["API", "$stateParams", (API, $stateParams) ->
+                userId = $stateParams.id
+                return API.requestProfileByUID(userId)
+                    .error (result, status) ->
+                        if result?
+                            reason = result.error
+                        else
+                            reason = "status code #{status}"
+                        console.log "profile loading failed: #{reason}"
+            ]
+        }
     })
     .state("conversation", {
         parent: "root"
