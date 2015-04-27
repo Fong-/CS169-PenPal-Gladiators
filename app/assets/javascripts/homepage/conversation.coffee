@@ -194,4 +194,9 @@ conversation.controller("ConversationController", ["$scope", "$stateParams", "AP
     , CONVERSATION_POLL_PERIOD * 1000)
 
     updateConversationData(true)
+    resize = () ->
+        element = document.getElementById("posts-container")
+        element.setAttribute("style", "height:" + (window.innerHeight - 390) + "px")
+    window.onresize = resize
+    resize()
 ])

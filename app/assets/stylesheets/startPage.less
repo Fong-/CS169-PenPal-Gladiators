@@ -128,7 +128,6 @@ input[type=text], input[type=password] {
         padding: 0px;
 
         div {
-            border: 1px solid #cccccc;
             border-radius: 4px;
             overflow: hidden;
             padding: 0px;
@@ -145,19 +144,20 @@ input[type=text], input[type=password] {
 
             p {
                 color: #aaa;
-                margin-top: 0px;
+                margin-top: 5px;
                 padding-left: 6px;
                 padding-top: 5px;
                 padding: 4px;
                 font-size: 13px;
-                border-top: 1px dotted #cccccc;
                 width: @topic-icon-display-size;
                 cursor: pointer;
                 z-index: 1000;
+                text-align: center;
             }
 
             img {
-                border-radius: 2px;
+                border-radius: 5px;
+                border: 1px solid #cccccc;
                 width: @topic-icon-display-size;
                 height: @topic-icon-display-size - 5px;
                 margin-bottom: 0px;
@@ -330,4 +330,6 @@ input[type=text], input[type=password] {
     background-color: #efefef;
     padding: 20px;
     margin-bottom: 20px;
+    margin-left: -20px;
+    margin-right: -20px;
 }

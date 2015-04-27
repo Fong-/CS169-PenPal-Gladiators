@@ -150,13 +150,13 @@ p {
     height: 44%;
 
     .fade-bottom {
-        top: 47%;
+        bottom: 0%;
     }
 }
 
 .posts-full-length {
     .fade-bottom {
-        top: 91%;
+        bottom: 0%;
     }
 }
 
@@ -168,13 +168,10 @@ p {
     background-color: #EEFCE1;
 }
 
-.post-editor-half {
-    width: 48%;
-}
-
 .post-editor-full {
     width: 100%;
 }
+
 
 .fade-element() {
     width: 100%;
@@ -382,8 +379,16 @@ p {
     }
 }
 
-html {
-    height: 100%;
+.fade-top {
+    .fade-element;
+    border-top: 1px solid @border-color;
+    /* background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(210, 210, 210, 0.9)), color-stop(60%, rgba(255, 255, 255, 0))); */
+}
+
+.fade-bottom {
+    .fade-element;
+    border-bottom: 1px solid @border-color;
+    /* background: -webkit-gradient(linear, left bottom, left top, color-stop(60%, rgba(255, 255, 255, 0)), color-stop(0%,rgba(210, 210, 210, 0.9))); */
 }
 
 .user-avatar-medium {
@@ -413,7 +418,8 @@ html {
     }
 
     .empty-conversation-message {
-        color: #888888;
+        color: #aaaaaa;
+        margin-top: 15px;
     }
 
     .posts {
@@ -473,24 +479,22 @@ html {
 
     .editor-popup-container {
         position: relative;
-        height: 44%;
-        margin: 0px 10px 0px 8px;
+
         text-align: center;
 
         #summary-container {
             position: relative;
-            width: 48%;
             height: 100%;
-            display: inline-block;
             background-color: white;
             border: solid @border-color 1px;
             border-radius: 10px;
             text-align: left;
             vertical-align: top;
             padding: 20px 20px 45px 20px;
+            margin-bottom: 20px;
 
             div {
-                font-size: 18px;
+                font-size: 14px;
                 height: 100%;
                 overflow: scroll;
 
@@ -511,7 +515,7 @@ html {
 
             #own-summary-content {
                 p:first-child {
-                    font-size: 18px;
+                    font-size: 14px;
                     color: #AAA
                 }
                 p {
@@ -524,13 +528,15 @@ html {
             display: inline-block;
             height: 100%;
             position: relative;
+            padding: 0px;
+            margin-bottom: 20px;
 
             textarea {
                 height: 100%;
                 resize: none;
                 border: solid @border-color 1px;
                 border-radius: 10px;
-                font-size: 20px;
+                font-size: 14px;
                 padding: 20px 20px 100px 20px;
                 -webkit-box-shadow: none;
                 -moz-box-shadow: none;
@@ -542,7 +548,7 @@ html {
             .post-editor-actions {
                 position: absolute;
                 bottom: 10px;
-                right: 15px;
+                right: 30px;
 
                 .post-submit {
                     width: 100px;
@@ -575,4 +581,32 @@ html {
             width: 175px;
         }
     }
+}
+
+@media(min-width: 992px) {
+    .pad-right {
+        padding-right: 5px;
+    }
+    .pad-left {
+        padding-left: 5px;
+    }
+}
+
+@media(max-width: 992px) {
+    .hspace {
+        display: block;
+    }
+}
+
+#posts-container {
+    overflow: scroll;
+    margin-bottom: 20px;
+}
+
+.no-padding {
+    padding: 0px;
+}
+
+#profile-form {
+    padding-bottom: 10px;
 }
