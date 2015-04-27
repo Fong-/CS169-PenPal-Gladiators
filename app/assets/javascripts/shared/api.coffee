@@ -6,6 +6,10 @@ angular.module("SharedServices").service("API", ["$http", "$cookieStore", ($http
     getToken = () ->
         return $cookieStore.get("accessToken")
 
+    this.logout = (id) ->
+        request = generateRequest("logout/#{id}")
+        $http.post(request, { token: getToken() })
+
     this.requestTopics = () ->
         request = generateRequest("topics")
         $http.get(request)
