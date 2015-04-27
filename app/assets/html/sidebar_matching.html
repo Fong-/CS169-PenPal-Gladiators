@@ -4,9 +4,9 @@
         <span ng-class="classes['matches']" class="click-to-expand"></span>
     </div>
 
-    <div class="user menu-item subitem" ng-repeat="user in matches" ng-show="expanded['matches']" ng-click="goToProfile(user.id)">
-        <a class="heading">{{user.name}}</a>
-        <span class="btn" ng-click="matchWith(user.id)">Match</span>
+    <div class="user menu-item subitem" ng-repeat="match in matches" ng-show="expanded['matches']" ng-click="goToProfile(match.user.id)">
+        <a class="heading">{{match.user.username}}</a>
+        <span class="btn" ng-click="matchWith(match.user.id)">Match</span>
     </div>
 </li>
 
@@ -17,9 +17,8 @@
         <span ng-class="classes['pending']" class="click-to-expand"></span>
     </div>
 
-    <div class="user menu-item subitem" ng-repeat="user in pending" ng-show="expanded['pending'] ">
-        <a class="heading">{{user.name}}</a>
-        <span class="btn" ng-click="reject(user.id)">Reject</span>
+    <div class="user menu-item subitem" ng-repeat="user in pending" ng-show="expanded['pending']" ng-click="goToProfile(user.id)">
+        <a class="heading">{{user.username}}</a>
     </div>
 </li>
 
@@ -30,8 +29,8 @@
         <span ng-class="classes['incoming']" class="click-to-expand"></span>
     </div>
 
-    <div class="user menu-item subitem" ng-repeat="user in incoming" ng-show="expanded['incoming']">
-        <a class="heading">{{user.name}}</a>
+    <div class="user menu-item subitem" ng-repeat="user in incoming" ng-show="expanded['incoming']" ng-click="goToProfile(user.id)">
+        <a class="heading">{{user.username}}</a>
         <span class="btn" ng-click="reject(user.id)">Reject</span>
         <span class="btn" ng-click="accept(user.id)">Accept</span>
     </div>
