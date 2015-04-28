@@ -5,6 +5,7 @@
 
             <li ng-repeat="gladiatorId in gladiatorIds">
                 <div class="gladiator-heading-container menu-item" ng-click="toggleGladiatorPanel(gladiatorId)">
+                    <img class="user-avatar-small" ng-src="{{gladiatorById[gladiatorId].avatar}}"></img>
                     <a class="gladiator-heading heading">{{gladiatorById[gladiatorId].username}}</a>
                     <span class="{{expandButtonClass(gladiatorId)}} click-to-expand"></span>
                 </div>
