@@ -8,7 +8,7 @@ class PostsController < ApplicationController
 
     def create
         conversation = Conversation.find_by_id(params[:conversation_id])
-        author = User.find_by_id(1) # TODO Get the author from the access token.
+        author = get_authenticated_user
         if conversation.nil?
             render :json => { :error => RESPONSE_MESSAGES[:no_such_conversation] }
         elsif !params_contain_text(params)
@@ -20,7 +20,6 @@ class PostsController < ApplicationController
     end
 
     def edit
-        author = User.find_by_id(1) # TODO Get the author from the access token.
         if !params_contain_text(params)
             render :json => { :error => RESPONSE_MESSAGES[:invalid_post] }
         else
@@ -34,6 +33,7 @@ class PostsController < ApplicationController
     end
 
     def params_contain_text(params)
+
         return params[:text].present?
     end
 end
