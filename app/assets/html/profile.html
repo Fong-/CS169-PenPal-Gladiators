@@ -1,11 +1,11 @@
 <div id="profile-container">
     <div ng-switch="moduleState">
         <div ng-switch-when="view">
-            <div class="col-sm-5 col-xs-12">
+            <div class="avatar-container">
                 <img id="avatar" class="user-avatar-medium" ng-src="{{profile.avatar}}"></img>
                 <div class="title">{{ profile.username }}'s Profile</div>
             </div>
-            <div class="col-md-7 col-xs-12">
+            <div class="info-container">
                 <div class="header">About Me</div>
                 <p id="blurb">{{ profile.blurb }}</p>
 
