@@ -77,18 +77,29 @@ And /^I click on the edit button for topic "(.*)"$/ do |topic|
     step "I press \"edit-#{topic}\""
 end
 
+And /^I click on the Next button$/ do
+    step 'I should see a button with "Next"'
+    expect(page.find("#continue-button").value).to eq "Next"
+    page.find("#continue-button").click
+    #step 'I press "Next"'
+end
+
 Given /^I have navigated to the summary page$/ do
-    step "I am on the Survey Topic Checkboxes page"
-    step 'I click topics "Climate", "Education", "Economy", "Technology", "LGBT Rights"'
-    step 'I press "Continue to Survey Questions"'
+    step 'I have selected the topics "Climate", "Education", "Economy", "Technology", "LGBT Rights"'
+    step 'I have navigated to the first survey questions page'
+    step 'I should see "Climate"'
     step "I select response 1 for every question"
-    step 'I press "Next"'
+    step 'I click on the Next button'
+    step 'I should see "Education"'
     step "I select response 1 for every question"
-    step 'I press "Next"'
+    step 'I click on the Next button'
+    step 'I should see "Economy"'
     step "I select response 1 for every question"
-    step 'I press "Next"'
+    step 'I click on the Next button'
+    step 'I should see "Technology"'
     step "I select response 1 for every question"
-    step 'I press "Next"'
+    step 'I click on the Next button'
+    step 'I should see "LGBT Rights"'
     step "I select response 1 for every question"
-    step 'I press "Next"'
+    step 'I click on the Next button'
 end
