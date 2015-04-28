@@ -48,6 +48,11 @@
                 <input type="radio" name="spectrum" ng-model="profile.spectrum" id="liberal" ng-value="spectrumOptions.liberal.value">
                     <label for="liberal">{{ spectrumOptions.liberal.value }}</label><br/>
             </form>
+
+            <span>
+                <div class="header">Password</div>
+                <input type="password" name="password" ng-model="password">
+            </span>
             <br/>
             <span>
                 <input class="btn btn-primary" type="button" id="save" ng-click="save()" value="Save Changes">
