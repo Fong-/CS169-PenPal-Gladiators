@@ -1,5 +1,5 @@
 Given /^I navigate to the home page$/ do
-    visit "/"
+    visit "/home"
     step "I wait 2 seconds"
 end
 

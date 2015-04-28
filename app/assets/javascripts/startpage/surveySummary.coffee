@@ -32,7 +32,7 @@ surveySummary.controller("SurveySummaryController", ["$scope", "$http", "$state"
         API.register(StartPageStateData.email, StartPageStateData.password)
             .success (result) ->
                 $cookieStore.put("accessToken", result["token"])
-                $window.location.href = "/#/"
+                $window.location.href = "/home"
             .error (result) ->
                 $scope.status = "Oops, an error occurred. Try again!"
             .finally () ->
