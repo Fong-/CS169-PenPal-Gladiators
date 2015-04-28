@@ -8,6 +8,7 @@ describe PostsController do
         @posts = double "posts", :create => nil
         @conversation = double "conversation", :posts => @posts
         controller.stub(:check_access_token).and_return(true)
+        controller.stub(:get_authenticated_user).and_return(user)
     end
 
     context "when adding posts" do
