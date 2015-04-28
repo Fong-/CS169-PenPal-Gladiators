@@ -10,7 +10,10 @@
         <div id="homepage-container" class="container" ng-app="HomePage">
             <div ui-view="navbar"></div>
             <div ui-view="sidebar"></div>
-            <div id="main-view-container" class="container" ui-view="content"></div>
+            <div id="main-view-container" class="container">
+                <div id="main-view" ui-view="content">
+                </div>
+            </div>
         </div>
         <script src="/assets/homePage.js"></script>
     </body>
