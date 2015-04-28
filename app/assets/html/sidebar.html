@@ -1,24 +1,26 @@
 <div class="nav-side-menu" ng-controller="SidebarController">
     <div class="menu-list">
         <ul class="menu-content">
+            <div ui-view="sidebar-matching" class="sidebar-matching-container"></div>
+
             <li ng-repeat="gladiatorId in gladiatorIds">
-                <div class="gladiator-heading-container" ng-click="toggleGladiatorPanel(gladiatorId)">
+                <div class="gladiator-heading-container menu-item" ng-click="toggleGladiatorPanel(gladiatorId)">
                     <img class="user-avatar-small" ng-src="{{gladiatorById[gladiatorId].avatar}}"></img>
-                    <a class="gladiator-heading">{{gladiatorById[gladiatorId].username}}</a>
+                    <a class="gladiator-heading heading">{{gladiatorById[gladiatorId].username}}</a>
                     <span class="{{expandButtonClass(gladiatorId)}} click-to-expand"></span>
                 </div>
 
-                <div class="conversation-start-container" ng-show="arenaStateByUserId[gladiatorId]" ng-click="conversationStartClicked(gladiatorId)">
-                    <a class="conversation-start">Start a new converstation</a>
+                <div class="conversation-start-container menu-item subitem" ng-show="arenaStateByUserId[gladiatorId]" ng-click="conversationStartClicked(gladiatorId)">
+                    <a class="conversation-start heading">Start a new converstation</a>
                     <span class="btn glyphicon glyphicon-plus"></span>
                 </div>
 
-                <div class="conversation-preview" ng-repeat="conversation in conversationsByUserId[gladiatorId]" ng-show="arenaStateByUserId[gladiatorId]" ng-click="conversationPreviewClicked(conversation.id)">
+                <div class="conversation-preview menu-item subitem" ng-repeat="conversation in conversationsByUserId[gladiatorId]" ng-show="arenaStateByUserId[gladiatorId]" ng-click="conversationPreviewClicked(conversation.id)">
                     <div class="conversation-heading">
                         <div class="conversation-actions">
                             <div class="conversation-advance glyphicon glyphicon-arrow-right btn" ng-click="conversationPreviewClicked(conversation.id)"></div>
                         </div>
-                        <p class="conversation-title">{{conversation.title}}</p>
+                        <p class="conversation-title heading">{{conversation.title}}</p>
                     </div>
                     <p class="conversation-time">{{conversation.time}}</p>
                     <p class="conversation-text">{{conversation.post_preview_text}}</p>

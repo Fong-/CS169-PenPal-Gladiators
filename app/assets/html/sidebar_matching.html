@@ -1,0 +1,37 @@
+<li class="matches-container">
+    <div class="matches-header-container menu-item" ng-click="toggle('matches')">
+        <a class="matches-header heading">My Matches</a>
+        <span ng-class="classes['matches']" class="click-to-expand"></span>
+    </div>
+
+    <div class="user menu-item subitem" ng-repeat="match in matches" ng-show="expanded['matches']" ng-click="goToProfile(match.user.id)">
+        <a class="heading">{{match.user.username}}</a>
+        <span class="btn" ng-click="matchWith(match.user.id); $event.stopPropagation();">Match</span>
+    </div>
+</li>
+
+<li class="pending-matches-container" ng-show="showPending()">
+    <div class="pending-matches-header-container menu-item" ng-click="toggle('pending')">
+        <a class="pending-matches-header heading">Pending Matches</a>
+        <span class="notification">({{pending.length}})</span>
+        <span ng-class="classes['pending']" class="click-to-expand"></span>
+    </div>
+
+    <div class="user menu-item subitem" ng-repeat="user in pending" ng-show="expanded['pending']" ng-click="goToProfile(user.id)">
+        <a class="heading">{{user.username}}</a>
+    </div>
+</li>
+
+<li class="incoming-matches-container" ng-show="showIncoming()">
+    <div class="incoming-matches-header-container menu-item" ng-click="toggle('incoming')">
+        <a class="incoming-matches-header heading">Incoming Matches</a>
+        <span class="notification">({{incoming.length}})</span>
+        <span ng-class="classes['incoming']" class="click-to-expand"></span>
+    </div>
+
+    <div class="user menu-item subitem" ng-repeat="user in incoming" ng-show="expanded['incoming']" ng-click="goToProfile(user.id)">
+        <a class="heading">{{user.username}}</a>
+        <span class="btn" ng-click="reject(user.id); $event.stopPropagation();">Reject</span>
+        <span class="btn" ng-click="accept(user.id); $event.stopPropagation();">Accept</span>
+    </div>
+</li>
