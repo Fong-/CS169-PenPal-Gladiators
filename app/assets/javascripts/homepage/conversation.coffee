@@ -9,7 +9,16 @@ conversation.directive("onEscape", ->
         )
 )
 
-conversation.controller("ConversationController", ["$scope", "$stateParams", "API", "TimeUtil", "AppState", ($scope, $stateParams, API, TimeUtil, AppState) ->
+conversation.directive("onEnter", ->
+    (scope, element, attributes) ->
+        element.bind("keydown keypress", (event) ->
+            if event.which == 13
+                scope.$apply(-> scope.$eval(attributes.onEnter))
+                event.preventDefault()
+        )
+)
+
+conversation.controller("ConversationController", ["$scope", "$stateParams", "API", "TimeUtil", "AppState", "$rootScope", ($scope, $stateParams, API, TimeUtil, AppState, $rootScope) ->
     # Constants
     POST_SUBMISSION_TIMEOUT_PERIOD_MS = 5000
     CONVERSATION_POLL_PERIOD = 60 # seconds
@@ -34,6 +43,24 @@ conversation.controller("ConversationController", ["$scope", "$stateParams", "AP
     # Scope methods and models
     $scope.editPostText = ""
     $scope.postSubmitError = ""
+    $scope.title = -> if "title" of conversation then conversation.title else ""
+    $scope.editTitleClicked = ->
+        title = document.getElementById("title-text")
+        if title
+            title.setAttribute("contentEditable", true)
+            title.focus()
+    $scope.titleTextLostFocus = -> $scope.finishEditingTitle(true)
+    $scope.finishEditingTitle = (updateTitle) ->
+        title = document.getElementById("title-text")
+        if !title then return
+        title.setAttribute("contentEditable", false)
+        if updateTitle and title.textContent != "" and title.textContent != conversation.title
+            API.editTitleByConversationId(conversationId, title.textContent).success (response) ->
+                updateConversationData(false)
+                $rootScope.$broadcast("reloadSidebarArenas")
+        else
+            title.textContent = conversation.title
+
     $scope.timeElapsedMessage = (timestamp) -> TimeUtil.timeIntervalAsString(TimeUtil.timeSince1970InSeconds() - TimeUtil.timeFromTimestampInSeconds(timestamp)) + " ago"
     $scope.shouldHidePostEditor = -> conversationPageState is READ_POSTS
     $scope.postLengthClass = -> if conversationPageState is READ_POSTS then "posts-full-length" else "posts-shortened"
@@ -50,7 +77,7 @@ conversation.controller("ConversationController", ["$scope", "$stateParams", "AP
         currentPostEditId = null
         dispatchFocusTextarea()
 
-    $scope.shouldDisplayEmptyConversationsMessage = -> conversation.posts and conversation.posts.length == 0
+    $scope.shouldDisplayEmptyConversationsMessage = -> !conversation.posts or conversation.posts.length == 0
     $scope.cancelPostClicked = -> conversationPageState = READ_POSTS
     $scope.escapeTextEditor = -> conversationPageState = READ_POSTS
     $scope.submitPostText = -> if postSubmissionInProgress then "Sending..." else "Submit"
@@ -172,8 +199,7 @@ conversation.controller("ConversationController", ["$scope", "$stateParams", "AP
                 resolution: response.resolution
             }
             $scope.posts = if "posts" of conversation then conversation.posts.reverse() else []
-            $scope.title = if "title" of conversation then conversation.title else ""
-            for post in $scope.posts
+            for post in response.posts
                 post.type = post.post_type
                 delete post["post_type"]
                 postsById[post.id] = post

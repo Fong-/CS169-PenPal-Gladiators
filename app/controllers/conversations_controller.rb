@@ -4,7 +4,8 @@ class ConversationsController < ApplicationController
         :edited_summary => "successfully edited summary",
         :approved_summary => "successfully approved summary",
         :edited_resolution => "successfully edited resolution",
-        :approved_resolution => "successfully approved resolution"
+        :approved_resolution => "successfully approved resolution",
+        :updated_title => "successfully updated conversation title"
     }
 
     def get_by_id
@@ -54,6 +55,19 @@ class ConversationsController < ApplicationController
         end
     end
 
+    def edit_title
+        unless did_extract_arguments_from_params
+            render_error :resource_not_found and return
+        end
+        arena = @conversation.arena
+        if arena.user1_id == @user.id || arena.user2_id == @user.id
+            @conversation.update_column :title, @text
+            render :json => { :success => SUCCESS_MESSAGES[:updated_title] }
+        else
+            render_error :invalid_action
+        end
+    end
+
     def approve_summary
         edit_or_approve_resolution_or_summary :user_did_approve_summary, :approved_summary, :approve
     end
@@ -72,7 +86,7 @@ class ConversationsController < ApplicationController
 
     private
     def edit_or_approve_resolution_or_summary(conversation_handler, success_message_key, edit_or_approve)
-        unless did_extract_summary_or_consensus_arguments_from_params
+        unless did_extract_arguments_from_params
             render_error :no_such_conversation_or_user and return
         end
         if successfully_edited_or_approved conversation_handler, edit_or_approve
@@ -90,7 +104,7 @@ class ConversationsController < ApplicationController
         end
     end
 
-    def did_extract_summary_or_consensus_arguments_from_params
+    def did_extract_arguments_from_params
         @text = params[:text] || ""
         @user = @token_results[:user]
         if @user.nil? || params[:conversation_id].nil?
