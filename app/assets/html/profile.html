@@ -2,8 +2,8 @@
     <div ng-switch="moduleState">
         <div ng-switch-when="view">
             <div class="col-sm-5 col-xs-12">
+                <img id="avatar" class="user-avatar-medium" ng-src="{{profile.avatar}}"></img>
                 <div class="title">{{ profile.username }}'s Profile</div>
-                <img class="user-avatar-medium" ng-src="{{profile.avatar}}"></img>
             </div>
             <div class="col-md-7 col-xs-12">
                 <div class="header">About Me</div>

@@ -90,8 +90,18 @@ p {
 #profile-container {
     margin-bottom: 20px;
 
-    @media(min-width: 768px) {
-        width: ~"calc(100% - 300px)";
+    #avatar {
+        margin-bottom: 15px;
+    }
+
+    @media only screen
+    and (min-width: 768px)
+    and (max-width: 1800px) {
+        width: @main-view-width;
+    }
+
+    @media(min-width: 1800px) {
+        width: 100%;
     }
 
     @media(max-width: 768px) {
@@ -100,6 +110,10 @@ p {
 
     #save {
         margin-top: 15px;
+    }
+
+    #profile-form {
+        padding-bottom: 10px;
     }
 }
 
@@ -209,8 +223,14 @@ p {
 }
 
 #main-view {
-    @media(min-width: 768px) {
-        width: ~"calc(100% - 300px)";
+    @media only screen
+    and (min-width: 768px)
+    and (max-width: 1800px) {
+        width: @main-view-width;
+    }
+
+    @media(min-width: 1800px) {
+        width: 100%;
     }
 }
 
@@ -409,6 +429,11 @@ p {
     padding-left: 0px;
     padding-right: 0px;
 
+    #posts-container {
+        overflow: scroll;
+        margin-bottom: 20px;
+    }
+
     .title {
         padding: 10px;
         margin: 0px;
@@ -598,15 +623,6 @@ p {
     }
 }
 
-#posts-container {
-    overflow: scroll;
-    margin-bottom: 20px;
-}
-
 .no-padding {
     padding: 0px;
-}
-
-#profile-form {
-    padding-bottom: 10px;
 }
