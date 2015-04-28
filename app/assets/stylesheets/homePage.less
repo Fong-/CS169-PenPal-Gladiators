@@ -98,20 +98,23 @@ p {
 }
 
 #profile-container {
-    margin-bottom: 20px;
+    padding-bottom: 25px;
+    height: calc(~"100vh - 80px");
+    width: 100%;
+    overflow: scroll;
 
     #avatar {
         margin-bottom: 15px;
     }
 
-    @media only screen
-    and (min-width: 768px)
-    and (max-width: 1800px) {
-        width: @main-view-width;
+    .avatar-container {
+        display: inline-block;
+        width: 180px;
+        vertical-align: top;
     }
 
-    @media(min-width: 1800px) {
-        width: 100%;
+    .info-container {
+        display: inline-block;
     }
 
     @media(max-width: 768px) {
@@ -124,6 +127,10 @@ p {
 
     #profile-form {
         padding-bottom: 10px;
+    }
+
+    input[type=radio] {
+        margin-left: 2px;
     }
 }
 
@@ -284,7 +291,7 @@ p {
 
     .subitem {
         border-top: 1px dotted #E1E1E1;
-        padding-left: 25px;
+        padding-left: 30px;
     }
 
     .click-to-expand {
@@ -328,7 +335,7 @@ p {
 
     .gladiator-heading-container {
         img {
-            padding-left: 5px;
+            margin-right: 5px;
         }
 
         &:hover {
@@ -336,9 +343,7 @@ p {
         }
 
         .gladiator-heading {
-            font-size: 14px;
             color: #888;
-            font-weight: 300;
         }
     }
 
