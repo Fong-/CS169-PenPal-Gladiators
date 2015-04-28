@@ -68,7 +68,7 @@ describe "ConversationController", ->
         @http.flush()
 
     it "should have the correct title and posts", ->
-        expect(@scope.title).toEqual "Why is the US education system terrible?"
+        expect(@scope.title()).toEqual "Why is the US education system terrible?"
         expect(@scope.posts.length).toEqual 3
         expect(@scope.posts[2].text).toEqual "Hello world (third post)"
         expect(@scope.posts[1].text).toEqual "Hello world (second post)"

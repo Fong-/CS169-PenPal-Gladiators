@@ -159,4 +159,32 @@ describe ConversationsController do
             expect(response_object["error"]).to eq "you are not allowed to do this"
         end
     end
+
+    context "#edit_title" do
+        before :each do
+            controller.stub(:check_access_token).and_return(true)
+            arena = double "Arena", :user1_id => 1, :user2_id => 2
+            @conversation = double "Conversation", :update_column => nil, :arena => arena
+            Conversation.stub(:find_by_id).and_return @conversation
+        end
+
+        it "should return an error if the title could not be edited" do
+            @me = double "the user", :id => 100000
+            @token_results = { :user => @me }
+            controller.instance_variable_set(:@token_results, @token_results)
+            post "edit_title", :conversation_id => 1, :text => "Hello world"
+            response_object = JSON.parse(response.body)
+            expect(response_object["error"]).to_not eq nil
+        end
+
+        it "should allow the user to edit the title" do
+            @me = double "the user", :id => 1
+            @token_results = { :user => @me }
+            controller.instance_variable_set(:@token_results, @token_results)
+            expect(@conversation).to receive(:update_column).exactly(1).times
+            post "edit_title", :conversation_id => 1, :text => "Hello world"
+            response_object = JSON.parse(response.body)
+            expect(response_object["error"]).to eq nil
+        end
+    end
 end
