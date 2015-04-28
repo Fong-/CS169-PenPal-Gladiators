@@ -74,7 +74,8 @@ describe UsersController, :type => :controller do
         end
 
         it "should return the correct matches" do
-            get "matches", :id => User.find_by_email("ben@bitdiddle.com").id, :token => ""
+            controller.stub(:get_authenticated_user).and_return(User.find_by_email("ben@bitdiddle.com"))
+            get "matches"
             responseObject = JSON.parse(response.body)
             expect(responseObject.first["user"]["id"]).to eq User.find_by_email("rosenthal@policy.com").id
         end

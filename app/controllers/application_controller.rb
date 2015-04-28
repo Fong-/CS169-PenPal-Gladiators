@@ -16,4 +16,8 @@ class ApplicationController < ActionController::Base
             render_error(:invalid_token)
         end
     end
+
+    def get_authenticated_user
+        return @token_results[:user]
+    end
 end
