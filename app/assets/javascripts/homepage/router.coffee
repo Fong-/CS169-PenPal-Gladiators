@@ -47,7 +47,7 @@ router.config(["$stateProvider", "$urlRouterProvider", ($stateProvider, $urlRout
         templateUrl: "/assets/profile.html"
         controller: "ProfileController"
         resolve: {
-            profileData: ["API", "$stateParams", (API, $stateParams) ->
+            profileData: ["API", "$stateParams", "$q", (API, $stateParams, $q) ->
                 userId = $stateParams.id
                 return API.requestProfileByUID(userId)
                     .success (profile) ->
@@ -58,6 +58,7 @@ router.config(["$stateProvider", "$urlRouterProvider", ($stateProvider, $urlRout
                         else
                             reason = "status code #{status}"
                         console.log "profile loading failed: #{reason}"
+                        return $q.reject()
             ]
         }
     })
@@ -67,7 +68,7 @@ router.config(["$stateProvider", "$urlRouterProvider", ($stateProvider, $urlRout
         templateUrl: "/assets/conversation.html"
         controller: "ConversationController"
         resolve: {
-            conversationData: ["API", "$stateParams", (API, $stateParams) ->
+            conversationData: ["API", "$stateParams", "$q", (API, $stateParams, $q) ->
                 conversationId = parseInt($stateParams["id"])
                 return API.requestConversationById(conversationId)
                     .success (response) ->
@@ -78,6 +79,7 @@ router.config(["$stateProvider", "$urlRouterProvider", ($stateProvider, $urlRout
                         else
                             reason = "status code #{status}"
                         console.log "conversation loading failed: #{reason}"
+                        return $q.reject()
             ]
         }
     })
