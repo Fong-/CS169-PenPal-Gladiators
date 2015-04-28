@@ -10,7 +10,7 @@ login.controller("LoginController", ["$state", "$window", "$scope", "$cookieStor
         API.login($scope.email, $scope.password)
             .success (result) ->
                 $cookieStore.put("accessToken", result["token"])
-                $window.location.href = "/#/"
+                $window.location.href = "/home"
             .error (result) ->
                 reason = result.error
                 if reason is "resource not found"

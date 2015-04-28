@@ -8,4 +8,8 @@ class PagesController < ApplicationController
     def startpage
         render "public/startPage", :formats => :html
     end
+
+    def landingpage
+        render "public/landingPage", :formats => :html
+    end
 end
