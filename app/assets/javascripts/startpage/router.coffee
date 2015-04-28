@@ -54,6 +54,21 @@ router.config(["$stateProvider", "$urlRouterProvider", ($stateProvider, $urlRout
         params: { id: null }
         templateUrl: "/assets/survey_questions.html"
         controller: "SurveyQuestionsController"
+        resolve: {
+            questionData: ["API", "$stateParams", "$q", (API, $stateParams, $q) ->
+                topicId = $stateParams.id
+                return API.requestQuestionsByTopic(topicId)
+                    .success (response) ->
+                        return response
+                    .error (result, status) ->
+                        if result?
+                            reason = result.error
+                        else
+                            reason = "status code #{status}"
+                        console.log "topic question request failed: #{reason}"
+                        return $q.reject()
+            ]
+        }
     })
     .state("summary", {
         parent: "survey"
