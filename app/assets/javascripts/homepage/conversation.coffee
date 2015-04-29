@@ -21,9 +21,9 @@ conversation.directive("onEnter", ->
 conversation.controller("ConversationController", ["$scope", "$stateParams", "API", "TimeUtil", "AppState", "$rootScope", ($scope, $stateParams, API, TimeUtil, AppState, $rootScope) ->
     # Constants
     POST_SUBMISSION_TIMEOUT_PERIOD_MS = 5000
-    CONVERSATION_POLL_PERIOD = 60 # seconds
+    CONVERSATION_POLL_PERIOD = 10 # seconds
     READ_POSTS = 1
-    EDIT_POST = 2 # Editing or adding a new post.
+    EDIT_OR_ADD_POST = 2
     EDIT_SUMMARY = 3
     EDIT_RESOLUTION = 4
     EDIT_POST_PLACEHOLDER_TEXT = ""
@@ -39,7 +39,9 @@ conversation.controller("ConversationController", ["$scope", "$stateParams", "AP
     currentPostEditId = null
     postSubmissionTimer = null
     lastUpdateTime = 0
+    isEditingTitle = false
     conversationPageState = READ_POSTS
+    previousPostContainerOffset = 0
     # Scope methods and models
     $scope.editPostText = ""
     $scope.postSubmitError = ""
@@ -49,8 +51,10 @@ conversation.controller("ConversationController", ["$scope", "$stateParams", "AP
         if title
             title.setAttribute("contentEditable", true)
             title.focus()
+            isEditingTitle = true
     $scope.titleTextLostFocus = -> $scope.finishEditingTitle(true)
     $scope.finishEditingTitle = (updateTitle) ->
+        if not isEditingTitle then return
         title = document.getElementById("title-text")
         if !title then return
         title.setAttribute("contentEditable", false)
@@ -58,6 +62,8 @@ conversation.controller("ConversationController", ["$scope", "$stateParams", "AP
             API.editTitleByConversationId(conversationId, title.textContent).success (response) ->
                 updateConversationData(false)
                 $rootScope.$broadcast("reloadSidebarArenas")
+            isEditingTitle = false
+            title.blur()
         else
             title.textContent = conversation.title
 
@@ -72,12 +78,11 @@ conversation.controller("ConversationController", ["$scope", "$stateParams", "AP
         return ""
     $scope.addPostClicked = ->
         $scope.postSubmitError = ""
-        conversationPageState = EDIT_POST
         $scope.editPostText = "" if currentPostEditId # Clear the editor if the user was previously editing an existing post.
         currentPostEditId = null
-        dispatchFocusTextarea()
+        expandEditorViewForState(EDIT_OR_ADD_POST)
 
-    $scope.shouldDisplayEmptyConversationsMessage = -> !conversation.posts or conversation.posts.length == 0
+    $scope.shouldDisplayEmptyConversationsMessage = -> !$scope.posts or $scope.posts.length == 0
     $scope.cancelPostClicked = -> conversationPageState = READ_POSTS
     $scope.escapeTextEditor = -> conversationPageState = READ_POSTS
     $scope.submitPostText = -> if postSubmissionInProgress then "Sending..." else "Submit"
@@ -88,7 +93,7 @@ conversation.controller("ConversationController", ["$scope", "$stateParams", "AP
     $scope.shouldDisableSubmitPost = ->
         if postSubmissionInProgress or $scope.editPostText == ""
             return true
-        if conversationPageState is EDIT_POST and currentPostEditId != null
+        if conversationPageState is EDIT_OR_ADD_POST and currentPostEditId != null
             return $scope.editPostText == postsById[currentPostEditId].text
         if conversationPageState is EDIT_SUMMARY and conversation.pendingSummaries
             return $scope.editPostText == conversation.pendingSummaries.opposing
@@ -118,17 +123,15 @@ conversation.controller("ConversationController", ["$scope", "$stateParams", "AP
     $scope.editPostClicked = (id) ->
         currentPostEditId = id
         $scope.editPostText = postsById[id].text
-        conversationPageState = EDIT_POST
-        dispatchFocusTextarea()
+        expandEditorViewForState(EDIT_OR_ADD_POST)
 
-    $scope.shouldDisableAddPost = -> conversationPageState is EDIT_POST
+    $scope.shouldDisableAddPost = -> conversationPageState is EDIT_OR_ADD_POST
     $scope.shouldHideSummary = -> conversationPageState isnt EDIT_SUMMARY
     $scope.postEditorWidthClass = -> if conversationPageState isnt EDIT_SUMMARY then "post-editor-full" else "post-editor-half"
     $scope.shouldDisableProposeSummary = -> conversationPageState is EDIT_SUMMARY
     $scope.proposeSummaryClicked = ->
-        conversationPageState = EDIT_SUMMARY
         $scope.editPostText = if conversation.pendingSummaries then conversation.pendingSummaries.opposing else ""
-        dispatchFocusTextarea()
+        expandEditorViewForState(EDIT_SUMMARY)
 
     $scope.ownPendingSummaryText = -> if conversation.pendingSummaries then conversation.pendingSummaries.own else ""
     $scope.ownPendingSummaryExists = -> $scope.ownPendingSummaryText() != ""
@@ -144,7 +147,7 @@ conversation.controller("ConversationController", ["$scope", "$stateParams", "AP
             conversationPageState = READ_POSTS
 
     $scope.editorPlaceholderText = ->
-        if conversationPageState is EDIT_POST
+        if conversationPageState is EDIT_OR_ADD_POST
             return if currentPostEditId is null then NEW_POST_PLACEHOLDER_TEXT else EDIT_POST_PLACEHOLDER_TEXT
         if conversationPageState is EDIT_SUMMARY
             return EDIT_SUMMARY_PLACEHOLDER_TEXT
@@ -162,9 +165,17 @@ conversation.controller("ConversationController", ["$scope", "$stateParams", "AP
     $scope.shouldDisableApproveResolution = -> conversation.resolution.state != "in_progress" or conversation.resolution.updated_by_id is AppState.user.id
     $scope.showApproveResolution = -> conversationPageState is EDIT_RESOLUTION
     $scope.editResolutionClicked = ->
-        conversationPageState = EDIT_RESOLUTION
         $scope.editPostText = conversation.resolution.text
-        dispatchFocusTextarea()
+        expandEditorViewForState(EDIT_RESOLUTION)
+
+    expandEditorViewForState = (state) ->
+        if conversationPageState is READ_POSTS and state isnt READ_POSTS
+            postsContainer = document.getElementById("posts-container")
+            if postsContainer
+                previousPostContainerOffset = postsContainer.scrollTop + postsContainer.clientHeight
+                setTimeout -> postsContainer.scrollTop = previousPostContainerOffset - postsContainer.clientHeight
+            dispatchFocusTextarea()
+        conversationPageState = state
 
     dispatchScrollElementToBottom = (elementId) ->
         setTimeout ->
@@ -188,17 +199,12 @@ conversation.controller("ConversationController", ["$scope", "$stateParams", "AP
 
     updateConversationData = (scrollToEnd) ->
         API.requestConversationById(conversationId).success (response) ->
-            conversation = {
-                id: response.id,
-                posts: response.posts,
-                title: response.title,
-                # The "own" summary is the summary written by the opponent describing your own viewpoint. Conversely,
-                # you (the current user) is the author of the "opposing" summary.
-                pendingSummaries: { own: "", opposing: "" },
-                opponent: null,
-                resolution: response.resolution
-            }
-            $scope.posts = if "posts" of conversation then conversation.posts.reverse() else []
+            conversation.id = response.id
+            conversation.title = response.title
+            conversation.pendingSummaries = { own: "", opposing: "" }
+            conversation.opponent = null
+            conversation.resolution = response.resolution
+            $scope.posts = if "posts" of response then response.posts.reverse() else []
             for post in response.posts
                 post.type = post.post_type
                 delete post["post_type"]
@@ -215,9 +221,12 @@ conversation.controller("ConversationController", ["$scope", "$stateParams", "AP
             lastUpdateTime = TimeUtil.timeSince1970InSeconds()
 
     shouldPollConversationData = -> TimeUtil.timeSince1970InSeconds() - lastUpdateTime > CONVERSATION_POLL_PERIOD
-    setInterval( ->
+    conversationPollingProcess = setInterval( ->
         updateConversationData(false) if shouldPollConversationData()
     , CONVERSATION_POLL_PERIOD * 1000)
+
+    $rootScope.$on "conversationPageWillLoad", (scope, args) ->
+        if conversationId isnt args.conversationId then clearInterval conversationPollingProcess
 
     updateConversationData(true)
 ])

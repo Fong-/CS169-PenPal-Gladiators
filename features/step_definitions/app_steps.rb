@@ -44,10 +44,10 @@ Given /^I am on (?:the|a|my) (.*?) page$/ do |page_name|
         when "survey"
             pending "No survey route."
         when "home"
-            visit "/"
+            visit "/home"
             step "I wait 2 seconds"
         when "profile"
-            visit "/#/profile/1"
+            visit "/home#/profile/1"
             step "I wait 2 seconds"
         when "conversation"
             pending "No conversation route."
@@ -68,7 +68,7 @@ Given /^I sign in as "(.*)" with password "(.*)"$/ do |email, password|
     unless User.exists_with_credentials(email, password)
         User.create({:email => email, :password => password})
     end
-    visit "/"
+    visit "/home"
     step "I fill in \"email\" with \"#{email}\""
     step "I fill in \"password\" with \"#{password}\""
     step 'I press "Login"'
@@ -108,7 +108,7 @@ end
 
 And /^I am on the conversation page for "(.*)"$/ do |title|
     conversation = Conversation.find_by_title(title)
-    visit "/#/conversation/#{conversation.id}"
+    visit "/home#/conversation/#{conversation.id}"
 end
 
 When /^I click "(.*)" in the conversation page$/ do |element_name|
