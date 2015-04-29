@@ -21,7 +21,7 @@ conversation.directive("onEnter", ->
 conversation.controller("ConversationController", ["$scope", "$stateParams", "API", "TimeUtil", "AppState", "$rootScope", ($scope, $stateParams, API, TimeUtil, AppState, $rootScope) ->
     # Constants
     POST_SUBMISSION_TIMEOUT_PERIOD_MS = 5000
-    CONVERSATION_POLL_PERIOD = 60 # seconds
+    CONVERSATION_POLL_PERIOD = 10 # seconds
     READ_POSTS = 1
     EDIT_OR_ADD_POST = 2
     EDIT_SUMMARY = 3
@@ -82,7 +82,7 @@ conversation.controller("ConversationController", ["$scope", "$stateParams", "AP
         currentPostEditId = null
         transitionPageState(EDIT_OR_ADD_POST)
 
-    $scope.shouldDisplayEmptyConversationsMessage = -> !conversation.posts or conversation.posts.length == 0
+    $scope.shouldDisplayEmptyConversationsMessage = -> !$scope.posts or $scope.posts.length == 0
     $scope.cancelPostClicked = -> conversationPageState = READ_POSTS
     $scope.escapeTextEditor = -> conversationPageState = READ_POSTS
     $scope.submitPostText = -> if postSubmissionInProgress then "Sending..." else "Submit"
@@ -199,17 +199,12 @@ conversation.controller("ConversationController", ["$scope", "$stateParams", "AP
 
     updateConversationData = (scrollToEnd) ->
         API.requestConversationById(conversationId).success (response) ->
-            conversation = {
-                id: response.id,
-                posts: response.posts,
-                title: response.title,
-                # The "own" summary is the summary written by the opponent describing your own viewpoint. Conversely,
-                # you (the current user) is the author of the "opposing" summary.
-                pendingSummaries: { own: "", opposing: "" },
-                opponent: null,
-                resolution: response.resolution
-            }
-            $scope.posts = if "posts" of conversation then conversation.posts.reverse() else []
+            conversation.id = response.id
+            conversation.title = response.title
+            conversation.pendingSummaries = { own: "", opposing: "" }
+            conversation.opponent = null
+            conversation.resolution = response.resolution
+            $scope.posts = if "posts" of response then response.posts.reverse() else []
             for post in response.posts
                 post.type = post.post_type
                 delete post["post_type"]
@@ -226,9 +221,12 @@ conversation.controller("ConversationController", ["$scope", "$stateParams", "AP
             lastUpdateTime = TimeUtil.timeSince1970InSeconds()
 
     shouldPollConversationData = -> TimeUtil.timeSince1970InSeconds() - lastUpdateTime > CONVERSATION_POLL_PERIOD
-    setInterval( ->
+    conversationPollingProcess = setInterval( ->
         updateConversationData(false) if shouldPollConversationData()
     , CONVERSATION_POLL_PERIOD * 1000)
+
+    $rootScope.$on "conversationPageWillLoad", (scope, args) ->
+        if conversationId isnt args.conversationId then clearInterval conversationPollingProcess
 
     updateConversationData(true)
 ])

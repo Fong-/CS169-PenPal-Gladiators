@@ -17,7 +17,9 @@ sidebar.controller("SidebarController", ["$scope", "$rootScope", "$state", "API"
     $scope.arenaStateByUserId = {}
     $scope.toggleGladiatorPanel = (id) -> $scope.arenaStateByUserId[id] = !$scope.arenaStateByUserId[id]
     $scope.expandButtonClass = (id) -> if $scope.arenaStateByUserId[id] then "glyphicon glyphicon-chevron-up" else "glyphicon glyphicon-chevron-down"
-    $scope.conversationPreviewClicked = (id) -> $state.go("conversation", { id: id })
+    $scope.conversationPreviewClicked = (id) ->
+        $rootScope.$broadcast "conversationPageWillLoad", { conversationId: id }
+        $state.go("conversation", { id: id })
 
     $scope.conversationStartClicked = (id) ->
         API.createConversationByUser(id)
