@@ -137,7 +137,7 @@ p {
 
     #profile-form {
         label {
-            font-weight: 300;
+            font-weight: 400;
             margin-left: 5px;
         }
 
@@ -160,7 +160,7 @@ p {
         border: none;
     }
 
-    .navbar-collapse, .navbar-default .navbar-form {
+    .navbar-collapse, .navbar-form {
         border-color: #ffffff;
     }
 
@@ -168,7 +168,7 @@ p {
         background-color: #ffffff;
     }
 
-    .navbar-nav>li>a:hover {
+    .navbar-nav>li>a:hover, .navbar-nav>li>a:focus {
         background-color: #4fc1e9;
         border-color: #4fc1e9;
     }
@@ -185,15 +185,15 @@ p {
     }
 
     .btn-link, .navbar-brand {
-        color: #aaaaaa;
-        font-size: 18px;
+        color: #999999;
+        font-size: 20px;
     }
 
     .navbar-brand:focus, .navbar-brand:hover, .navbar-brand:active {
         color: #4fc1e9;
     }
 
-    .btn-link:focus, .btn-link:hover, .navbar-default .navbar-link:hover {
+    .btn-link:focus, .btn-link:hover, .navbar-link:hover {
         color: #ffffff;
         background-color: #4fc1e9;
         border-color: #4fc1e9;
@@ -212,12 +212,39 @@ p {
     height: calc(~'100vh - 210px');
 }
 
-.post-content-summary {
-    background-color: #FFFFE0;
+#conversation-container .posts .post-content + .post-content.post-content-summary {
+    border-top: 2px solid #5bcffa;
+    border-bottom: 2px solid #5bcffa;
 }
 
-.post-content-resolution {
-    background-color: #EEFCE1;
+#conversation-container .posts .post-content.post-content-summary + .post-content.post-content-summary {
+    border-top: none;
+}
+
+#conversation-container .posts .post-content.post-content-resolution + .post-content.post-content-summary {
+    border-top: none;
+}
+
+#conversation-container .posts .post-content.post-content-resolution + .post-content.post-content-resolution {
+    border-top: none;
+}
+
+#conversation-container .posts .post-content.post-content-summary + .post-content.post-content-resolution {
+    border-top: none;
+}
+
+#conversation-container .posts .post-content + .post-content.post-content-resolution {
+    border-top: 2px solid #76d945;
+    border-bottom: 2px solid #76d945;
+
+}
+
+#conversation-container .posts .post-content.post-content-summary + .post-content {
+    border-top: none;
+}
+
+#conversation-container .posts .post-content.post-content-resolution + .post-content {
+    border-top: none;
 }
 
 .post-editor-full {
@@ -309,7 +336,7 @@ p {
     }
 
     .menu-item {
-        padding: 5px 10px;
+        padding: 10px 15px;
 
         &:hover {
             background-color: #F8F8F8;
@@ -478,19 +505,16 @@ p {
     .title {
         padding: 10px;
         margin: 0px;
-        border-bottom: 1px #D0D0D0 solid;
         height: 6%;
 
         p {
-            color: #444444;
-            background-color: #EFEFEF;
             font-size: 20px;
             display: inline-block;
             margin-bottom: 0px;
 
             &:focus {
                 outline: none;
-                border-bottom: 1px dashed @border-color;
+                border-bottom: 1px dotted @border-color;
             }
         }
 
@@ -502,7 +526,7 @@ p {
 
         a {
             font-size: 12px;
-            margin-left: 25px;
+            margin-left: 10px;
             cursor: pointer;
         }
     }
