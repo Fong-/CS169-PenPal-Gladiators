@@ -1,19 +1,10 @@
 <div id="newsfeed-container">
-    <p id="newsfeed-heading">The latest conversations from around your network</p>
+    <p id="newsfeed-heading">Trending Resolutions</p>
     <p ng-if="shouldDisplayNoConversationsMessage()" id="newsfeed-subheading">There don't seem to be any conversations yet. Check back later!</p>
     <div id="newsfeed-content-container">
-        <div id="left-newsfeed-container">
-            <div ng-repeat="conversation in conversations[0]" class="newsfeed-conversation-container">
-                <p class="newsfeed-conversation-title">{{conversation.title}}</p>
-                <p class="newsfeed-conversation-text">{{conversation.resolution}}</p>
-            </div>
-        </div>
-
-        <div id="right-newsfeed-container">
-            <div ng-repeat="conversation in conversations[1]" class="newsfeed-conversation-container">
-                <p class="newsfeed-conversation-title">{{conversation.title}}</p>
-                <p class="newsfeed-conversation-text">{{conversation.resolution}}</p>
-            </div>
+        <div ng-repeat="conversation in conversations" class="newsfeed-conversation-container">
+            <p class="newsfeed-conversation-title">{{conversation.title}}</p>
+            <p class="newsfeed-conversation-text">{{conversation.resolution}}</p>
         </div>
     </div>
 </div>
