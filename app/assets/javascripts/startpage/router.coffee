@@ -12,7 +12,7 @@ router.config(["$stateProvider", "$urlRouterProvider", ($stateProvider, $urlRout
             loggedIn: ["Authentication", "$window", "$q", (Authentication, $window, $q) ->
                 return Authentication.isLoggedIn().then(
                     (result) ->
-                        $window.location.href = "/"
+                        $window.location.href = "/home"
                         return $q.reject()
                     (reason) -> false
                 )

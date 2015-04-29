@@ -8,7 +8,6 @@
         <style>
             html, body {
                 height: 100%;
-                background-image: url(/assets/sunrise.jpg);
                 background-size: cover;
                 background-repeat: no-repeat;
 
@@ -53,12 +52,38 @@
             #title {
                 margin-bottom: 30px;
             }
+
+            .hidden {
+                display: none;
+            }
+
+            .sunset-background {
+                background-image: url(/assets/sunrise.jpg);
+            }
         </style>
+
+        <script>
+        window.onload = function() {
+            if (document.cookie != "") {
+                window.location.href = "/login";
+
+            } else {
+                document.body.className += "sunset-background";
+                document.documentElement.className += "sunset-background";
+                hiddenElements = document.getElementsByClassName("hidden");
+                while (hiddenElements.length > 0) {
+                    var element = hiddenElements[0];
+                    element.className = element.className.replace(/hidden/, "");
+                    hiddenElements = document.getElementsByClassName("hidden");
+                }
+            }
+        }
+        </script>
 
     </head>
     <body>
-        <div id="background-overlay"></div>
-        <div id="main-view-container" class="container">
+        <div id="background-overlay" class="hidden"></div>
+        <div id="main-view-container" class="container hidden">
             <div id="main-view" ui-view="content">
                 <h3 id="title">PenPal Gladiators</h3>
                 <p id="tag">
@@ -67,7 +92,7 @@
                 <p>
                     Find people of other perspectives and learn something new.
                 </p>
-                <button id="continue" class="btn btn-primary">Get Started</button>
+                <a id="continue" class="btn btn-primary" href="/login">Get Started</a>
             </div>
         </div>
     </body>

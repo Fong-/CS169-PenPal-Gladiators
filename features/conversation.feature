@@ -23,6 +23,7 @@ Scenario: the user can see the previous posts
 Scenario: the user can create a new post
     Given I am on the conversation page for "What messages are you posting?"
     And I click "Add a post" in the conversation page
+    And I wait 1 second
     When I fill in "post-textarea" with "Latest post"
     And I click "Submit" in the conversation page
     Then I should not see "post-textarea"
@@ -33,6 +34,7 @@ Scenario: the user can edit his/her existing post
     Then I should not be able to edit "Second post"
     Then I should be able to edit "Third post"
     When I edit the post "First post"
+    And I wait 1 second
     When I fill in "post-textarea" with "I have edited the 1st post!"
     And I click "Submit" in the conversation page
     Then I should not see "post-textarea"
