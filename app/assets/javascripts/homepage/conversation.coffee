@@ -152,7 +152,7 @@ conversation.controller("ConversationController", ["$scope", "$stateParams", "AP
         if conversationPageState is EDIT_SUMMARY
             return EDIT_SUMMARY_PLACEHOLDER_TEXT
         if conversationPageState is EDIT_RESOLUTION
-            return if conversation.resolution.state is "unstarted" then BEGIN_RESOLUTION_PLACEHOLDER_TEXT else EDIT_RESOLUTION_PLACEHOLDER_TEXT
+            return if !conversation.resolution or conversation.resolution.state is "unstarted" then BEGIN_RESOLUTION_PLACEHOLDER_TEXT else EDIT_RESOLUTION_PLACEHOLDER_TEXT
         return ""
 
     $scope.showLastEditedMessage = -> conversationPageState is EDIT_RESOLUTION
@@ -165,7 +165,7 @@ conversation.controller("ConversationController", ["$scope", "$stateParams", "AP
     $scope.shouldDisableApproveResolution = -> conversation.resolution.state != "in_progress" or conversation.resolution.updated_by_id is AppState.user.id
     $scope.showApproveResolution = -> conversationPageState is EDIT_RESOLUTION
     $scope.editResolutionClicked = ->
-        $scope.editPostText = conversation.resolution.text
+        $scope.editPostText = if conversation.resolution then conversation.resolution.text else ""
         expandEditorViewForState(EDIT_RESOLUTION)
 
     expandEditorViewForState = (state) ->
