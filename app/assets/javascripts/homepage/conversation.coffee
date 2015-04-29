@@ -221,6 +221,7 @@ conversation.controller("ConversationController", ["$scope", "$stateParams", "AP
             conversation.self = response.summaries[selfIndex].author
             dispatchScrollElementToBottom("posts-container") if scrollToEnd
             lastUpdateTime = TimeUtil.timeSince1970InSeconds()
+            console.log conversation
 
     shouldPollConversationData = -> TimeUtil.timeSince1970InSeconds() - lastUpdateTime > CONVERSATION_POLL_PERIOD
     conversationPollingProcess = setInterval( ->
