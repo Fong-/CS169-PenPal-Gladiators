@@ -39,7 +39,6 @@ router.config(["$stateProvider", "$urlRouterProvider", ($stateProvider, $urlRout
         parent: "root"
         url: "/"
         templateUrl: "/assets/home.html"
-        controller: "NewsController"
     })
     .state("profile", {
         parent: "root"
