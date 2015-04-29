@@ -80,7 +80,7 @@ conversation.controller("ConversationController", ["$scope", "$stateParams", "AP
         $scope.postSubmitError = ""
         $scope.editPostText = "" if currentPostEditId # Clear the editor if the user was previously editing an existing post.
         currentPostEditId = null
-        transitionPageState(EDIT_OR_ADD_POST)
+        expandEditorViewForState(EDIT_OR_ADD_POST)
 
     $scope.shouldDisplayEmptyConversationsMessage = -> !$scope.posts or $scope.posts.length == 0
     $scope.cancelPostClicked = -> conversationPageState = READ_POSTS
@@ -123,7 +123,7 @@ conversation.controller("ConversationController", ["$scope", "$stateParams", "AP
     $scope.editPostClicked = (id) ->
         currentPostEditId = id
         $scope.editPostText = postsById[id].text
-        transitionPageState(EDIT_OR_ADD_POST)
+        expandEditorViewForState(EDIT_OR_ADD_POST)
 
     $scope.shouldDisableAddPost = -> conversationPageState is EDIT_OR_ADD_POST
     $scope.shouldHideSummary = -> conversationPageState isnt EDIT_SUMMARY
@@ -131,7 +131,7 @@ conversation.controller("ConversationController", ["$scope", "$stateParams", "AP
     $scope.shouldDisableProposeSummary = -> conversationPageState is EDIT_SUMMARY
     $scope.proposeSummaryClicked = ->
         $scope.editPostText = if conversation.pendingSummaries then conversation.pendingSummaries.opposing else ""
-        transitionPageState(EDIT_SUMMARY)
+        expandEditorViewForState(EDIT_SUMMARY)
 
     $scope.ownPendingSummaryText = -> if conversation.pendingSummaries then conversation.pendingSummaries.own else ""
     $scope.ownPendingSummaryExists = -> $scope.ownPendingSummaryText() != ""
@@ -166,9 +166,9 @@ conversation.controller("ConversationController", ["$scope", "$stateParams", "AP
     $scope.showApproveResolution = -> conversationPageState is EDIT_RESOLUTION
     $scope.editResolutionClicked = ->
         $scope.editPostText = conversation.resolution.text
-        transitionPageState(EDIT_RESOLUTION)
+        expandEditorViewForState(EDIT_RESOLUTION)
 
-    transitionPageState = (state) ->
+    expandEditorViewForState = (state) ->
         if conversationPageState is READ_POSTS and state isnt READ_POSTS
             postsContainer = document.getElementById("posts-container")
             if postsContainer
