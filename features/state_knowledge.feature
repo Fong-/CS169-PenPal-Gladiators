@@ -40,6 +40,6 @@ Scenario: Correct message is displayed when going back to survey question page
     Then I should see "Answer the following"
     When I select response 1 for every question
     And I press "Next"
-    And I wait 1 second         # Not sure why it fails without this line
+    And I wait 1 second
     And I press "Back"
     Then I should see "Edit responses and press Next to continue"
