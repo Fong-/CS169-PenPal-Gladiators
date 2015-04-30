@@ -43,32 +43,40 @@ Scenario: the user can edit his/her existing post
 
 Scenario: the user can propose a summary
     Given I am on the conversation page for "What messages are you posting?"
+    And I wait 1 second
     And I click "Propose a summary" in the conversation page
     When I fill in "post-textarea" with "Here is a summary of the opposing views"
     And I click "Submit" in the conversation page
     Then I should not see "post-textarea"
+    And I wait 1 second
     And the second user's summary is "Here is a summary of the opposing views"
 
 Scenario: the user can approve a proposed summary
     Given the second user wrote a summary "Here is a summary of the opposing views"
     And I am on the conversation page for "What messages are you posting?"
+    And I wait 1 second
     And I click "Propose a summary" in the conversation page
     And I approve the summary
     Then I should not see "post-textarea"
+    And I wait 1 second
     And I should see "Here is a summary of the opposing views"
 
 Scenario: the user can edit the resolution
     Given I am on the conversation page for "What messages are you posting?"
+    And I wait 1 second
     And I click "Edit resolution" in the conversation page
     And I fill in "post-textarea" with "Here is a resolution"
     And I click "Submit" in the conversation page
     Then I should not see "post-textarea"
+    And I wait 1 second
     And the resolution should be "Here is a resolution"
 
 Scenario: the user can approve a resolution
     Given the second user edited the resolution to be "Here is my resolution"
     And I am on the conversation page for "What messages are you posting?"
+    And I wait 1 second
     And I click "Edit resolution" in the conversation page
     And I approve the resolution
     Then I should not see "post-textarea"
+    And I wait 1 second
     And I should see "Here is my resolution"
