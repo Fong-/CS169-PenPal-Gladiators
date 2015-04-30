@@ -17,6 +17,16 @@ class ConversationsController < ApplicationController
         end
     end
 
+    def get_with_resolutions
+        conversations = Conversation.recent_with_resolutions(20).map { |conversation|
+            {
+                :title => conversation.title,
+                :resolution => conversation.resolution
+            }
+        }
+        render :json => { :conversations => conversations }
+    end
+
     def create
         user = @token_results[:user]
         other_user = User.find_by_id(params[:user_id])
