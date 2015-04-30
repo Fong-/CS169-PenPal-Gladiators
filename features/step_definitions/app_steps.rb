@@ -111,16 +111,6 @@ And /^I am on the conversation page for "(.*)"$/ do |title|
     visit "/home#/conversation/#{conversation.id}"
 end
 
-When /^I click "(.*)" in the conversation page$/ do |element_name|
-    case element_name
-    when "Add a post" then
-        find("#add-post-button").click
-    when "Submit" then
-        find("#submit-post-button").click
-    else raise "No check for clicking the #{element_name} element in the conversation page."
-    end
-end
-
 When /^I click "(.*)" in the sidebar$/ do |element_name|
     find(".conversation-preview", :text => element_name, :exact => true).click
 end

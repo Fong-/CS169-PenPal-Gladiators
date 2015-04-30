@@ -98,7 +98,7 @@ conversation.controller("ConversationController", ["$scope", "$stateParams", "AP
         if conversationPageState is EDIT_SUMMARY and conversation.pendingSummaries
             return $scope.editPostText == conversation.pendingSummaries.opposing
         if conversationPageState is EDIT_RESOLUTION
-            return $scope.editPostText == conversation.resolution.text
+            return !conversation.resolution or $scope.editPostText == conversation.resolution.text
         return false
 
     $scope.shouldDisableEditor = -> postSubmissionInProgress
@@ -152,7 +152,7 @@ conversation.controller("ConversationController", ["$scope", "$stateParams", "AP
         if conversationPageState is EDIT_SUMMARY
             return EDIT_SUMMARY_PLACEHOLDER_TEXT
         if conversationPageState is EDIT_RESOLUTION
-            return if conversation.resolution.state is "unstarted" then BEGIN_RESOLUTION_PLACEHOLDER_TEXT else EDIT_RESOLUTION_PLACEHOLDER_TEXT
+            return if !conversation.resolution or conversation.resolution.state is "unstarted" then BEGIN_RESOLUTION_PLACEHOLDER_TEXT else EDIT_RESOLUTION_PLACEHOLDER_TEXT
         return ""
 
     $scope.showLastEditedMessage = -> conversationPageState is EDIT_RESOLUTION
@@ -162,10 +162,10 @@ conversation.controller("ConversationController", ["$scope", "$stateParams", "AP
         latestAuthorName = if conversation.resolution.updated_by_id is conversation.self.id then "you" else conversation.opponent.username
         return "Last edited by #{latestAuthorName} #{timeElapsed.toLowerCase()}"
     $scope.shouldDisableEditResolution = -> conversationPageState is EDIT_RESOLUTION
-    $scope.shouldDisableApproveResolution = -> conversation.resolution.state != "in_progress" or conversation.resolution.updated_by_id is AppState.user.id
+    $scope.shouldDisableApproveResolution = -> !conversation.resolution or conversation.resolution.state != "in_progress" or conversation.resolution.updated_by_id is AppState.user.id
     $scope.showApproveResolution = -> conversationPageState is EDIT_RESOLUTION
     $scope.editResolutionClicked = ->
-        $scope.editPostText = conversation.resolution.text
+        $scope.editPostText = if conversation.resolution then conversation.resolution.text else ""
         expandEditorViewForState(EDIT_RESOLUTION)
 
     expandEditorViewForState = (state) ->
@@ -201,6 +201,8 @@ conversation.controller("ConversationController", ["$scope", "$stateParams", "AP
         API.requestConversationById(conversationId).success (response) ->
             conversation.id = response.id
             conversation.title = response.title
+            # The "own" summary is the summary of the user's own viewpoint, written by the opposing gladiator.
+            # The "opposing" summary is the summary of the opposing viewpoint, written by the user.
             conversation.pendingSummaries = { own: "", opposing: "" }
             conversation.opponent = null
             conversation.resolution = response.resolution
