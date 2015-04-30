@@ -1,6 +1,6 @@
 profile = angular.module("Profile",["SharedServices"])
 
-profile.controller("ProfileController", ["$http", "$location", "$scope", "$stateParams", "API", "AppState", "profileData", ($http, $location, $scope, $stateParams, API, AppState, profileData) ->
+profile.controller("ProfileController", ["$http", "$location", "$scope", "$stateParams", "API", "AppState", "ProfileData", ($http, $location, $scope, $stateParams, API, AppState, ProfileData) ->
     # moduleState can be either "view" or "edit"
     $scope.moduleState = "view"
 
@@ -56,7 +56,7 @@ profile.controller("ProfileController", ["$http", "$location", "$scope", "$state
     load_profile = (userId) ->
         API.requestProfileByUID(userId)
             .success (profile) ->
-                parse_profile(profile)
+                parseProfile(profile)
             .error (result, status) ->
                 if result?
                     reason = result.error
@@ -64,7 +64,7 @@ profile.controller("ProfileController", ["$http", "$location", "$scope", "$state
                     reason = "status code #{status}"
                 console.log "profile loading failed: #{reason}"
 
-    parse_profile = (profile) ->
+    parseProfile = (profile) ->
         $scope.profile.username = profile.username
         $scope.profile.avatar = profile.avatar
         $scope.profile.blurb = profile.political_blurb
@@ -73,5 +73,5 @@ profile.controller("ProfileController", ["$http", "$location", "$scope", "$state
         for k, v of $scope.spectrumOptions
             if profile.political_spectrum == v.id
                 $scope.profile.spectrum = v.value
-    parse_profile(profileData.data)
+    parseProfile(ProfileData.data)
 ])

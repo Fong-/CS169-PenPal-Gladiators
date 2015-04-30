@@ -1,6 +1,6 @@
 surveyTopics = angular.module("SurveyTopics", ["SharedServices", "StartPageServices"])
 
-surveyTopics.controller("SurveyTopicsController", ["$scope", "$http", "$state", "API", "StartPageStaticData", "StartPageStateData", "topicData", ($scope, $http, $state, API, StartPageStaticData, StartPageStateData, topicData) ->
+surveyTopics.controller("SurveyTopicsController", ["$scope", "$http", "$state", "API", "StartPageStaticData", "StartPageStateData", "TopicData", ($scope, $http, $state, API, StartPageStaticData, StartPageStateData, TopicData) ->
     $scope.MIN_NUM_TOPICS_REQUIRED = 5
     $scope.allTopics = []
     $scope.topicSelectionModel = {}
@@ -38,10 +38,10 @@ surveyTopics.controller("SurveyTopicsController", ["$scope", "$http", "$state", 
 
     # Parse the list of topics.
     # TODO Cache the results, so we only rerun the query if necessary.
-    parse_topics = (allTopics) ->
+    parseTopics = (allTopics) ->
         StartPageStaticData.clearTopics()
         StartPageStaticData.addTopic(topic) for topic in allTopics
         $scope.allTopics = allTopics.sort((u, v) -> u.id - v.id)
         $scope.topicSelectionModel[id] = true for id in StartPageStateData.selectedTopics
-    parse_topics(topicData.data)
+    parseTopics(TopicData.data)
 ])

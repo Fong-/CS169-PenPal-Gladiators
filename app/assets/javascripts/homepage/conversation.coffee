@@ -18,7 +18,7 @@ conversation.directive("onEnter", ->
         )
 )
 
-conversation.controller("ConversationController", ["$scope", "$stateParams", "API", "TimeUtil", "AppState", "$rootScope", "conversationData", ($scope, $stateParams, API, TimeUtil, AppState, $rootScope, conversationData) ->
+conversation.controller("ConversationController", ["$scope", "$stateParams", "API", "TimeUtil", "AppState", "$rootScope", "ConversationData", ($scope, $stateParams, API, TimeUtil, AppState, $rootScope, ConversationData) ->
     # Constants
     POST_SUBMISSION_TIMEOUT_PERIOD_MS = 5000
     CONVERSATION_POLL_PERIOD = 10 # seconds
@@ -199,7 +199,7 @@ conversation.controller("ConversationController", ["$scope", "$stateParams", "AP
 
     updateConversationData = (scrollToEnd) ->
         API.requestConversationById(conversationId).success (response) ->
-            parse_conversation(response, scrollToEnd)
+            parseConversation(response, scrollToEnd)
 
     shouldPollConversationData = -> TimeUtil.timeSince1970InSeconds() - lastUpdateTime > CONVERSATION_POLL_PERIOD
     conversationPollingProcess = setInterval( ->
@@ -209,7 +209,7 @@ conversation.controller("ConversationController", ["$scope", "$stateParams", "AP
     $rootScope.$on "conversationPageWillLoad", (scope, args) ->
         if conversationId isnt args.conversationId then clearInterval conversationPollingProcess
 
-    parse_conversation = (response, scrollToEnd) ->
+    parseConversation = (response, scrollToEnd) ->
         conversation.id = response.id
         conversation.title = response.title
         # The "own" summary is the summary of the user's own viewpoint, written by the opposing gladiator.
@@ -233,5 +233,5 @@ conversation.controller("ConversationController", ["$scope", "$stateParams", "AP
         dispatchScrollElementToBottom("posts-container") if scrollToEnd
         lastUpdateTime = TimeUtil.timeSince1970InSeconds()
 
-    parse_conversation(conversationData.data, true)
+    parseConversation(ConversationData.data, true)
 ])

@@ -23,7 +23,7 @@ router.config(["$stateProvider", "$urlRouterProvider", ($stateProvider, $urlRout
         templateUrl: "/assets/survey_topics.html"
         controller: "SurveyTopicsController"
         resolve: {
-            topicData: ["API", "$q", (API, $q) ->
+            TopicData: ["API", "$q", (API, $q) ->
                 return API.requestTopics()
                     .success (response) ->
                         return response
@@ -55,7 +55,7 @@ router.config(["$stateProvider", "$urlRouterProvider", ($stateProvider, $urlRout
         templateUrl: "/assets/survey_questions.html"
         controller: "SurveyQuestionsController"
         resolve: {
-            questionData: ["API", "$stateParams", "$q", (API, $stateParams, $q) ->
+            QuestionData: ["API", "$stateParams", "$q", (API, $stateParams, $q) ->
                 topicId = $stateParams.id
                 return API.requestQuestionsByTopic(topicId)
                     .success (response) ->

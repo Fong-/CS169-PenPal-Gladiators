@@ -13,7 +13,7 @@ surveyQuestions.directive("highlighter", () ->
             )
 )
 
-surveyQuestions.controller("SurveyQuestionsController", ["$scope", "$http", "$state", "$stateParams", "API", "StartPageStaticData", "StartPageStateData", "questionData", ($scope, $http, $state, $stateParams, API, StartPageStaticData, StartPageStateData, questionData) ->
+surveyQuestions.controller("SurveyQuestionsController", ["$scope", "$http", "$state", "$stateParams", "API", "StartPageStaticData", "StartPageStateData", "QuestionData", ($scope, $http, $state, $stateParams, API, StartPageStaticData, StartPageStateData, QuestionData) ->
     $scope.allTopics = StartPageStaticData.topics                 # all the topics
     $scope.selectedTopicIds = StartPageStateData.selectedTopics     # the ids of the topics the user selected
     $scope.currentTopicId = $stateParams.id
@@ -179,7 +179,7 @@ surveyQuestions.controller("SurveyQuestionsController", ["$scope", "$http", "$st
         if $scope.questions.length == 0
             API.requestQuestionsByTopic(topicId)
                 .success (allQuestions) ->
-                    parse_questions(allQuestions)
+                    parseQuestions(allQuestions)
                 .error (result, status) ->
                     if result?
                         reason = result.error
@@ -192,7 +192,7 @@ surveyQuestions.controller("SurveyQuestionsController", ["$scope", "$http", "$st
         $scope.currentTopic = $scope.allTopics[topicId].name
 
     # Initializing/updating the local variables using the question data from database
-    parse_questions = (allQuestions) ->
+    parseQuestions = (allQuestions) ->
         $scope.questions = []
         allQuestions = allQuestions.sort((u, v) -> u.index - v.index)
         $scope.questions = allQuestions
@@ -204,7 +204,7 @@ surveyQuestions.controller("SurveyQuestionsController", ["$scope", "$http", "$st
                     $scope.questionCheckModel[response.id] = false
 
         handleProgressQuestions()
-    parse_questions(questionData.data)
+    parseQuestions(QuestionData.data)
 ])
 
 
