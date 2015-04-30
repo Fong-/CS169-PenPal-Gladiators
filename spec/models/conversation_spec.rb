@@ -91,5 +91,28 @@ describe Conversation do
             expect(@conversation.user_did_edit_resolution(@ben.id, "hello?")).to eq false
             expect(@conversation.resolution_state).to eq :consensus_reached
         end
+
+        it "should return recent matches containing resolutions" do
+            Timecop.freeze 5.days.ago
+            conversation_2 = Conversation.create :title => "Convo2"
+            conversation_2.user_did_edit_resolution 1, "Hello world"
+            Timecop.return
+            Timecop.freeze 10.days.ago
+            conversation_3 = Conversation.create :title => "Convo3"
+            conversation_3.user_did_edit_resolution 1, "Foo bar"
+            Timecop.return
+            Timecop.freeze 1.day.ago
+            conversation_4 = Conversation.create :title => "Convo4"
+            conversation_5 = Conversation.create :title => "Convo5"
+            conversation_5.user_did_edit_resolution 1, "Fizz buzz"
+            Timecop.return
+            result = Conversation.recent_with_resolutions(5).map { |c|
+                [c.title, c.resolution]
+            }
+            expect(result.length).to eq 3
+            expect(result[0]).to eq ["Convo5", "Fizz buzz"]
+            expect(result[1]).to eq ["Convo2", "Hello world"]
+            expect(result[2]).to eq ["Convo3", "Foo bar"]
+        end
     end
 end
