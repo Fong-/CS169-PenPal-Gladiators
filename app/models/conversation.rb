@@ -16,6 +16,15 @@ class Conversation < ActiveRecord::Base
         return has_posts ? recent_post.updated_at : updated_at
     end
 
+    # Grabs a list of conversations which have recently updated resolutions. Does not include
+    # conversations that do not have resolutions. Returns at most max_num_conversation
+    # conversations.
+    def self.recent_with_resolutions(max_num_conversations)
+        return Conversation.order(:resolution_updated_at).reverse_order.limit(max_num_conversations).reject { |conversation|
+            conversation.resolution_state == "unstarted"
+        }
+    end
+
     # The columns summary_of_first and summary_of_second respectively refer to the summaries of
     # the viewpoints of the first and second gladiator, i.e. the summary_of_first is the summary
     # of user1's view written by user2.
