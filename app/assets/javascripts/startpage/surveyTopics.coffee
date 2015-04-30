@@ -1,6 +1,6 @@
 surveyTopics = angular.module("SurveyTopics", ["SharedServices", "StartPageServices"])
 
-surveyTopics.controller("SurveyTopicsController", ["$scope", "$http", "$state", "API", "StartPageStaticData", "StartPageStateData", ($scope, $http, $state, API, StartPageStaticData, StartPageStateData) ->
+surveyTopics.controller("SurveyTopicsController", ["$scope", "$http", "$state", "API", "StartPageStaticData", "StartPageStateData", "TopicData", ($scope, $http, $state, API, StartPageStaticData, StartPageStateData, TopicData) ->
     $scope.MIN_NUM_TOPICS_REQUIRED = 5
     $scope.allTopics = []
     $scope.topicSelectionModel = {}
@@ -36,18 +36,12 @@ surveyTopics.controller("SurveyTopicsController", ["$scope", "$http", "$state", 
         sortedTopicIds = Object.keys($scope.topicSelectionModel).sort()
         $state.go("questions", { id: sortedTopicIds[0] })
 
-    # Asynchronously load the list of topics.
+    # Parse the list of topics.
     # TODO Cache the results, so we only rerun the query if necessary.
-    API.requestTopics()
-        .success (allTopics) ->
-            StartPageStaticData.clearTopics()
-            StartPageStaticData.addTopic(topic) for topic in allTopics
-            $scope.allTopics = allTopics.sort((u, v) -> u.id - v.id)
-            $scope.topicSelectionModel[id] = true for id in StartPageStateData.selectedTopics
-        .error (result, status) ->
-            if result?
-                reason = result.error
-            else
-                reason = "status code #{status}"
-            console.log "topic request failed: #{reason}"
+    parseTopics = (allTopics) ->
+        StartPageStaticData.clearTopics()
+        StartPageStaticData.addTopic(topic) for topic in allTopics
+        $scope.allTopics = allTopics.sort((u, v) -> u.id - v.id)
+        $scope.topicSelectionModel[id] = true for id in StartPageStateData.selectedTopics
+    parseTopics(TopicData.data)
 ])

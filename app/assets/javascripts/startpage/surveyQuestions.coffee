@@ -13,12 +13,12 @@ surveyQuestions.directive("highlighter", () ->
             )
 )
 
-surveyQuestions.controller("SurveyQuestionsController", ["$scope", "$http", "$state", "$stateParams", "API", "StartPageStaticData", "StartPageStateData", ($scope, $http, $state, $stateParams, API, StartPageStaticData, StartPageStateData) ->
+surveyQuestions.controller("SurveyQuestionsController", ["$scope", "$http", "$state", "$stateParams", "API", "StartPageStaticData", "StartPageStateData", "QuestionData", ($scope, $http, $state, $stateParams, API, StartPageStaticData, StartPageStateData, QuestionData) ->
     $scope.allTopics = StartPageStaticData.topics                 # all the topics
     $scope.selectedTopicIds = StartPageStateData.selectedTopics     # the ids of the topics the user selected
     $scope.currentTopicId = $stateParams.id
     $scope.currentTopic = $scope.allTopics[$scope.currentTopicId].name # the topic we're doing now
-    $scope.questions = StartPageStaticData.getQuestionsForTopic($scope.currentTopicId)
+    $scope.questions = []
     $scope.questionCheckModel = StartPageStateData.getResponsesForTopic($scope.currentTopicId)
 
     currentState = StartPageStateData.currentState
@@ -179,17 +179,7 @@ surveyQuestions.controller("SurveyQuestionsController", ["$scope", "$http", "$st
         if $scope.questions.length == 0
             API.requestQuestionsByTopic(topicId)
                 .success (allQuestions) ->
-                    $scope.questions = []
-                    allQuestions = allQuestions.sort((u, v) -> u.index - v.index)
-                    $scope.questions = allQuestions
-                    StartPageStaticData.addQuestionsForTopic($scope.currentTopicId, $scope.questions)
-
-                    if Object.keys($scope.questionCheckModel).length == 0
-                        for question in $scope.questions
-                            for response in question.survey_responses
-                                $scope.questionCheckModel[response.id] = false
-
-                    handleProgressQuestions()
+                    parseQuestions(allQuestions)
                 .error (result, status) ->
                     if result?
                         reason = result.error
@@ -201,7 +191,20 @@ surveyQuestions.controller("SurveyQuestionsController", ["$scope", "$http", "$st
 
         $scope.currentTopic = $scope.allTopics[topicId].name
 
-    load_questions($scope.currentTopicId)
+    # Initializing/updating the local variables using the question data from database
+    parseQuestions = (allQuestions) ->
+        $scope.questions = []
+        allQuestions = allQuestions.sort((u, v) -> u.index - v.index)
+        $scope.questions = allQuestions
+        StartPageStaticData.addQuestionsForTopic($scope.currentTopicId, $scope.questions)
+
+        if Object.keys($scope.questionCheckModel).length == 0
+            for question in $scope.questions
+                for response in question.survey_responses
+                    $scope.questionCheckModel[response.id] = false
+
+        handleProgressQuestions()
+    parseQuestions(QuestionData.data)
 ])
 
 
