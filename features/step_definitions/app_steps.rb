@@ -57,7 +57,7 @@ Given /^I am on (?:the|a|my) (.*?) page$/ do |page_name|
 end
 
 When /^I expand all names in the sidebar$/ do
-    find(".gladiator-heading-container span").click
+    find(".gladiator-heading-container").click
 end
 
 Given /^I sign in$/ do
