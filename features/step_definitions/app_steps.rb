@@ -133,3 +133,7 @@ When /^I edit the post "(.*)"$/ do |post_text|
     element.should have_content("Edit")
     element.find("a", :text => "Edit", :exact => true).click
 end
+
+And /I click a delete button/ do
+    find(".glyphicon-remove").click
+end

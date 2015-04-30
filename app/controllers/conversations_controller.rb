@@ -5,7 +5,8 @@ class ConversationsController < ApplicationController
         :approved_summary => "successfully approved summary",
         :edited_resolution => "successfully edited resolution",
         :approved_resolution => "successfully approved resolution",
-        :updated_title => "successfully updated conversation title"
+        :updated_title => "successfully updated conversation title",
+        :deleted => "successfully deleted conversation"
     }
 
     def get_by_id
@@ -54,6 +55,19 @@ class ConversationsController < ApplicationController
         if arena.user1_id == @user.id || arena.user2_id == @user.id
             @conversation.update_column :title, @text
             render :json => { :success => SUCCESS_MESSAGES[:updated_title] }
+        else
+            render_error :invalid_action
+        end
+    end
+    
+    def delete
+        unless did_extract_arguments_from_params
+            render_error :resource_not_found and return
+        end
+        arena = @conversation.arena
+        if arena.user1_id == @user.id || arena.user2_id == @user.id
+            @conversation.destroy
+            render :json => { :success => SUCCESS_MESSAGES[:deleted] }
         else
             render_error :invalid_action
         end
