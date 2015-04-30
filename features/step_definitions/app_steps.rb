@@ -88,7 +88,7 @@ Then /I should be on the (.*?) page/ do |page_name|
     when "profile"
         page.should have_content "My Position on the Political Spectrum"
     when "home"
-        page.should have_content "News"
+        page.should have_content "latest conversations"
     else
         raise "No check for the #{page_name} page."
     end

@@ -7,4 +7,4 @@
 //= require_tree ./shared
 //= require_tree ./homepage
 
-app = angular.module("HomePage", ["ui.bootstrap", "ui.router", "ngCookies", "Router", "Profile", "Sidebar", "NavigationBar", "Conversation"])
+app = angular.module("HomePage", ["ui.bootstrap", "ui.router", "ngCookies", "Router", "Home", "Profile", "Sidebar", "NavigationBar", "Conversation"])

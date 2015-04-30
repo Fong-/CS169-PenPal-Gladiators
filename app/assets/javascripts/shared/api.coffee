@@ -115,5 +115,9 @@ angular.module("SharedServices").service("API", ["$http", "$cookieStore", ($http
         request = generateRequest("conversation/edit_title/#{conversationId}")
         $http.post(request, { text: text, token: getToken() })
 
+    this.recentConversationsWithResolutions = () ->
+        request = generateRequest("conversations/recent_with_resolutions")
+        $http.get(request, { params: { token: getToken() } })
+
     return
 ])

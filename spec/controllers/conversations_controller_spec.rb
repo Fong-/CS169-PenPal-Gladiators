@@ -187,4 +187,20 @@ describe ConversationsController do
             expect(response_object["error"]).to eq nil
         end
     end
+
+    context "#get_with_resolutions" do
+        it "should return recent conversations with resolutions" do
+            controller.stub(:check_access_token).and_return(true)
+            conv1 = double "first conversation", :title => "first", :resolution => "first resolution"
+            conv2 = double "second conversation", :title => "second", :resolution => "second resolution"
+            Conversation.stub(:recent_with_resolutions).and_return([conv1, conv2])
+            get "get_with_resolutions"
+            response_object = JSON.parse(response.body)
+            expect(response_object["conversations"]).to_not eq nil
+            convos = response_object["conversations"]
+            expect(convos.length).to eq 2
+            expect(convos[0]).to eq({ "title" => "first", "resolution" => "first resolution" })
+            expect(convos[1]).to eq({ "title" => "second", "resolution" => "second resolution" })
+        end
+    end
 end
