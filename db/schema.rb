@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150426202521) do
+ActiveRecord::Schema.define(:version => 20150430174743) do
 
   create_table "arenas", :force => true do |t|
     t.integer  "user1_id"
@@ -28,9 +28,9 @@ ActiveRecord::Schema.define(:version => 20150426202521) do
     t.integer  "arena_id"
     t.datetime "created_at",               :null => false
     t.datetime "updated_at",               :null => false
-    t.string   "summary_of_first"
-    t.string   "summary_of_second"
-    t.string   "resolution"
+    t.text     "summary_of_first"
+    t.text     "summary_of_second"
+    t.text     "resolution"
     t.string   "resolution_state"
     t.datetime "resolution_updated_at"
     t.integer  "resolution_updated_by_id"
@@ -47,7 +47,7 @@ ActiveRecord::Schema.define(:version => 20150426202521) do
   add_index "invites", ["to_id"], :name => "index_invites_on_to_id"
 
   create_table "posts", :force => true do |t|
-    t.string   "text"
+    t.text     "text"
     t.integer  "user_id"
     t.integer  "conversation_id"
     t.datetime "created_at",      :null => false
@@ -107,11 +107,11 @@ ActiveRecord::Schema.define(:version => 20150426202521) do
   create_table "users", :force => true do |t|
     t.string   "email"
     t.string   "password"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
     t.string   "secret"
     t.string   "username"
-    t.string   "avatar"
+    t.text     "avatar",             :limit => 1024
     t.text     "political_blurb"
     t.string   "political_hero"
     t.integer  "political_spectrum"
