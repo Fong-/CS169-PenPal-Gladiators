@@ -61,6 +61,9 @@ sidebar.controller("SidebarController", ["$scope", "$rootScope", "$state", "API"
                     reason = "status code #{status}"
                 console.log "sidebar failed: #{reason}"
 
+    $scope.goToProfile = (id) ->
+        $state.go("profile", { id: id })
+
     reloadSidebarArenas()
 
     # Register events to trigger sidebar reloading

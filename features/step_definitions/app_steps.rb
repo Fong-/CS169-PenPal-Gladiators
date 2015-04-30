@@ -57,7 +57,7 @@ Given /^I am on (?:the|a|my) (.*?) page$/ do |page_name|
 end
 
 When /^I expand all names in the sidebar$/ do
-    find(".gladiator-heading-container").click
+    find(".gladiator-heading-container span").click
 end
 
 Given /^I sign in$/ do
@@ -80,7 +80,7 @@ end
 Then /I should be on the (.*?) page/ do |page_name|
     case page_name
     when "login"
-        page.should have_content "PenPal Gladiators"
+        page.should have_content "The Coliseum"
         page.should have_content "Login"
         page.should have_content "Registration"
     when "topics"
@@ -88,7 +88,7 @@ Then /I should be on the (.*?) page/ do |page_name|
     when "profile"
         page.should have_content "My Position on the Political Spectrum"
     when "home"
-        page.should have_content "latest conversations"
+        page.should have_content "Trending Resolutions"
     else
         raise "No check for the #{page_name} page."
     end
