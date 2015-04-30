@@ -47,7 +47,7 @@ router.config(["$stateProvider", "$urlRouterProvider", ($stateProvider, $urlRout
         templateUrl: "/assets/profile.html"
         controller: "ProfileController"
         resolve: {
-            profileData: ["API", "$stateParams", "$q", (API, $stateParams, $q) ->
+            ProfileData: ["API", "$stateParams", "$q", (API, $stateParams, $q) ->
                 userId = $stateParams.id
                 return API.requestProfileByUID(userId)
                     .success (response) ->
@@ -68,7 +68,7 @@ router.config(["$stateProvider", "$urlRouterProvider", ($stateProvider, $urlRout
         templateUrl: "/assets/conversation.html"
         controller: "ConversationController"
         resolve: {
-            conversationData: ["API", "$stateParams", "$q", (API, $stateParams, $q) ->
+            ConversationData: ["API", "$stateParams", "$q", (API, $stateParams, $q) ->
                 conversationId = parseInt($stateParams["id"])
                 return API.requestConversationById(conversationId)
                     .success (response) ->
