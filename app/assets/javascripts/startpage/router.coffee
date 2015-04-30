@@ -22,6 +22,20 @@ router.config(["$stateProvider", "$urlRouterProvider", ($stateProvider, $urlRout
     .state("topics", {
         templateUrl: "/assets/survey_topics.html"
         controller: "SurveyTopicsController"
+        resolve: {
+            TopicData: ["API", "$q", (API, $q) ->
+                return API.requestTopics()
+                    .success (response) ->
+                        return response
+                    .error (result, status) ->
+                        if result?
+                            reason = result.error
+                        else
+                            reason = "status code #{status}"
+                        console.log "topic request failed: #{reason}"
+                        return $q.reject()
+            ]
+        }
     })
     .state("survey", {
         abstract: true
@@ -40,6 +54,25 @@ router.config(["$stateProvider", "$urlRouterProvider", ($stateProvider, $urlRout
         params: { id: null }
         templateUrl: "/assets/survey_questions.html"
         controller: "SurveyQuestionsController"
+        resolve: {
+            QuestionData: ["API", "$stateParams", "StartPageStaticData", "$q", (API, $stateParams, StartPageStaticData, $q) ->
+                topicId = $stateParams.id
+                questions = StartPageStaticData.getQuestionsForTopic(topicId)
+                if questions.length == 0
+                    return API.requestQuestionsByTopic(topicId)
+                        .success (response) ->
+                            return response
+                        .error (result, status) ->
+                            if result?
+                                reason = result.error
+                            else
+                                reason = "status code #{status}"
+                            console.log "topic question request failed: #{reason}"
+                            return $q.reject()
+                else
+                    return {data: questions}
+            ]
+        }
     })
     .state("summary", {
         parent: "survey"

@@ -2,7 +2,7 @@
 
 describe "ConversationController", ->
     beforeEach ->
-        @http.when("GET", "/api/v1/conversation/1").respond {
+        fakeConversation = {
             "id": 1,
             "title": "Why is the US education system terrible?",
             "posts": [
@@ -59,13 +59,13 @@ describe "ConversationController", ->
                 }
             ],
         }
-        @http.expectGET("/api/v1/conversation/1")
+        @http.when("GET", "/api/v1/conversation/1").respond( fakeConversation )
         @controller("ConversationController", {
             $scope: @scope,
             $stateParams: {id: 1},
-            AppState: {user: {id: 1}}
+            AppState: {user: {id: 1}},
+            ConversationData: {data: fakeConversation}
         })
-        @http.flush()
 
     it "should have the correct title and posts", ->
         expect(@scope.title()).toEqual "Why is the US education system terrible?"

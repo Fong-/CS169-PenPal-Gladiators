@@ -15,7 +15,7 @@ Background: Questions have been added to database.
     And the following responses exist:
         | question_text                | response_text                                     | index | summary_text |
         | Opinion on climate changes?  | Climate change is happening.                      | 1     | I believe climate change is happening. |
-        | Opinion on climate changes?  | Climate change is not happening.                  | 2     | I don't believe climate change is happening. | 
+        | Opinion on climate changes?  | Climate change is not happening.                  | 2     | I don't believe climate change is happening. |
         | Opinion on education?        | Education should follow no child left behind.     | 1     | I believe education should follow no child left behind. |
         | Opinion on education?        | Education should not follow no child left behind. | 2     | I believe education should not follow no child left behind. |
         | Opinion on economy?          | Obama destroys our economy.                       | 1     | I believe Obama destroyed our economy. |
@@ -40,5 +40,6 @@ Scenario: Correct message is displayed when going back to survey question page
     Then I should see "Answer the following"
     When I select response 1 for every question
     And I press "Next"
+    And I wait 1 second
     And I press "Back"
     Then I should see "Edit responses and press Next to continue"
