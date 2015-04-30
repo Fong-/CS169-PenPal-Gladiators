@@ -164,13 +164,17 @@ conversation = arena.conversations.create :title => "Why is the US education sys
 conversation.posts.create :text => "It all starts in the home. If the parents don't care, no one will.", :author => ben
 conversation.posts.create :text => "No, it's actually because the unions have too much power.", :author => bob
 conversation.posts.create :text => "You, sir, are an idiot. This is really why the education system sucks. Because people like you go on and on about unions and never do anything to address the real problems at hand. Damnit Bob, get it together.", :author => ben
+conversation.user_did_edit_resolution bob.id, "The reality is that most children will not play professional sports, sing on Broadway or star in a film. The reality is that the most in-demand, high-paying college degrees are in science, technology, engineering and math (STEM) fields. But to engage our students in STEM, we must spark an early interest in math and science."
 
 arena = ben.arenas.create :user1 => ben, :user2 => wenson
 conversation = arena.conversations.create :title => "What is our role in mitigating climate change?"
 conversation.posts.create :text => "I believe everyone should go back to living in caves.", :author => ben
 conversation.posts.create :text => "No you.", :author => wenson
+conversation.user_did_edit_resolution ben.id, "The very idea of thinking about how to adapt to drastic environmental changes was basically considered taboo, an acknowledgment of defeat. 'Earlier on, you wouldn't use the 'A' word in polite conversation,' said Henry D. Jacoby, a professor at the Sloan School of Management at M.I.T. and a climate policy researcher - the 'A' word being 'adaptation.' 'People thought you weren't serious about mitigation. 'Oh, you're giving up.' But climate change defied that playbook. There was no immediate crisis to point to -- no bird eggs laced with DDT, no acid rain corroding city monuments. There was no one industry to target or overwhelming constituency to push legislators."
+
 conversation = arena.conversations.create :title => "Is technology to blame for the housing crisis in SF?"
 conversation.posts.create :text => "What housing crisis?", :author => wenson
+conversation.user_did_edit_resolution wenson.id, "While the technology boom has bred hostility, it has also brought San Francisco undeniable benefits. Mayor Edwin M. Lee credits the technology sector with helping to pull the city out of the recession, creating jobs and nourishing a thriving economy that is the envy of cash-starved cities across the country."
 
 arena = ben.arenas.create :user1 => ben, :user2 => rosenthal
 conversation = arena.conversations.create :title => "This conversation should be blank!"
