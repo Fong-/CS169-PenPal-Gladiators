@@ -18,7 +18,7 @@ surveyQuestions.controller("SurveyQuestionsController", ["$scope", "$http", "$st
     $scope.selectedTopicIds = StartPageStateData.selectedTopics     # the ids of the topics the user selected
     $scope.currentTopicId = $stateParams.id
     $scope.currentTopic = $scope.allTopics[$scope.currentTopicId].name # the topic we're doing now
-    $scope.questions = StartPageStaticData.getQuestionsForTopic($scope.currentTopicId)
+    $scope.questions = []
     $scope.questionCheckModel = StartPageStateData.getResponsesForTopic($scope.currentTopicId)
 
     currentState = StartPageStateData.currentState
