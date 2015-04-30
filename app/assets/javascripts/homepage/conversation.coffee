@@ -201,6 +201,8 @@ conversation.controller("ConversationController", ["$scope", "$stateParams", "AP
         API.requestConversationById(conversationId).success (response) ->
             conversation.id = response.id
             conversation.title = response.title
+            # The "own" summary is the summary of the user's own viewpoint, written by the opposing gladiator.
+            # The "opposing" summary is the summary of the opposing viewpoint, written by the user.
             conversation.pendingSummaries = { own: "", opposing: "" }
             conversation.opponent = null
             conversation.resolution = response.resolution
