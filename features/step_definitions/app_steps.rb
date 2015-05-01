@@ -80,7 +80,7 @@ end
 Then /I should be on the (.*?) page/ do |page_name|
     case page_name
     when "login"
-        page.should have_content "The Coliseum"
+        page.should have_content "The Colosseum"
         page.should have_content "Login"
         page.should have_content "Registration"
     when "topics"

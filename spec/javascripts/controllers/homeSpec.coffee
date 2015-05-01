@@ -23,7 +23,15 @@ describe "HomeController", ->
         @http.flush();
 
     it "should layout conversations appropriately", ->
-        expect(@scope.conversations.length).toEqual 3
-        expect(@scope.conversations[0].title).toEqual "This is the title of the first conversation."
-        expect(@scope.conversations[1].title).toEqual "And this is the second conversation."
-        expect(@scope.conversations[2].title).toEqual "This is the third and final conversation."
+        expect(@scope.conversations[0].length + @scope.conversations[1].length).toEqual 3
+        if @scope.conversations[0].length > @scope.conversations[1].length
+            minConversations = @scope.conversations[1]
+            maxConversations = @scope.conversations[0]
+        else
+            minConversations = @scope.conversations[0]
+            maxConversations = @scope.conversations[1]
+        expect(minConversations.length).toEqual 1
+        expect(maxConversations.length).toEqual 2
+        expect(maxConversations[0].title).toEqual "This is the title of the first conversation."
+        expect(maxConversations[1].title).toEqual "This is the third and final conversation."
+        expect(minConversations[0].title).toEqual "And this is the second conversation."
