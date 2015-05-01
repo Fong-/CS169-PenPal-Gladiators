@@ -168,7 +168,11 @@ conversation.controller("ConversationController", ["$scope", "$stateParams", "AP
         latestAuthorName = if conversation.resolution.updated_by_id is conversation.self.id then "you" else conversation.opponent.username
         return "Last edited by #{latestAuthorName} #{timeElapsed.toLowerCase()}"
     $scope.shouldDisableEditResolution = -> conversationPageState is EDIT_RESOLUTION
-    $scope.shouldDisableApproveResolution = -> !conversation.resolution or conversation.resolution.state != "in_progress" or conversation.resolution.updated_by_id is AppState.user.id
+    $scope.shouldDisableApproveResolution = -> !conversation.resolution or
+        conversation.resolution.updated_by_id is AppState.user.id or
+        conversation.resolution.state != "in_progress" or
+        conversation.resolution.text != $scope.editPostText
+
     $scope.showApproveResolution = -> conversationPageState is EDIT_RESOLUTION
     $scope.editResolutionClicked = ->
         savePostInProgress()
