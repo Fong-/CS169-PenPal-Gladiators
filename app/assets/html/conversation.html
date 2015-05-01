@@ -1,18 +1,20 @@
 <div id="conversation-container">
     <div class="title">
-        <p ng-blur="titleTextLostFocus()" on-escape="finishEditingTitle(false)" on-enter="finishEditingTitle(true)" id="title-text">{{title()}}</p>
-        <a ng-click="editTitleClicked()">Edit</a>
+        <div class="header" ng-blur="titleTextLostFocus()" on-escape="finishEditingTitle(false)" on-enter="finishEditingTitle(true)" id="title-text" spellcheck="false">{{title()}}</div>
+        <a class="glyphicon glyphicon-edit" ng-click="editTitleClicked()"></a>
     </div>
+
     <div id="posts-container" class="posts {{postLengthClass()}}">
         <p id="status" ng-if="shouldDisplayEmptyConversationsMessage()" class="empty-conversation-message">It looks like there are no posts yet. Be the first to write something!</p>
         <div ng-repeat="post in posts" class="post-content {{postContentClass(post.id)}}">
-            <div class="post-author-avatar-container">
-                <img class="user-avatar-medium" ng-src="{{post.author.avatar}}"></img>
+            <div class="post-data-container">
+                <img class="user-avatar" ng-src="{{post.author.avatar}}"></img>
+                <div class="post-data">
+                    <p class="post-time">{{timeElapsedMessage(post.timestamp)}}</p>
+                </div>
             </div>
             <div class="post-content-panel">
-                <p class="post-author-name">{{authorDisplayNameForPost(post.id)}}
-                    <span class="post-time">{{timeElapsedMessage(post.timestamp)}}</span>
-                </p>
+                <p class="post-author-name">{{authorDisplayNameForPost(post.id)}} said:</p>
                 <p class="post-text">{{post.text}}</p>
                 <a ng-if="shouldDisplayPostEdit(post.id)" class="post-edit" ng-click="editPostClicked(post.id)">Edit</a>
             </div>
@@ -21,33 +23,29 @@
     </div>
 
     <div ng-hide="shouldHidePostEditor()" class="no-padding editor-popup-container">
-        <div ng-hide="shouldHideSummary()" class="editor-left-container col-xs-12 col-md-6 no-padding">
-            <div class="pad-right">
-                <div id="summary-container">
-                    <div id="own-summary-content">
-                        <p ng-if="!ownPendingSummaryExists()">{{opponentDisplayName()}} does not have a pending summary for you to review. Check back later!</p>
-                        <p ng-if="ownPendingSummaryExists()">{{opponentDisplayName()}} summarized your views! Click Approve if the summary accurately reflects your views.</p>
-                        <p ng-if="ownPendingSummaryExists()">{{ownPendingSummaryText()}}</p>
-                    </div>
-                    <a class="btn btn-primary" id="approve-summary" ng-click="approveSummaryClicked()" ng-disabled="!ownPendingSummaryExists()">Approve</a>
+        <div ng-hide="shouldHideSummary()" class="editor-left-container no-padding">
+            <div id="summary-container">
+                <div id="own-summary-content">
+                    <p ng-if="!ownPendingSummaryExists()">{{opponentDisplayName()}} does not have a pending summary for you to review. Check back later!</p>
+                    <p ng-if="ownPendingSummaryExists()">{{opponentDisplayName()}} summarized your views! Click Approve if the summary accurately reflects your views.</p>
+                    <p ng-if="ownPendingSummaryExists()">{{ownPendingSummaryText()}}</p>
                 </div>
+                <a class="btn btn-primary" id="approve-summary" ng-click="approveSummaryClicked()" ng-disabled="!ownPendingSummaryExists()">Approve</a>
             </div>
         </div>
-        <div class="post-editor col-xs-12 col-md-6 no-padding {{postEditorWidthClass()}}">
-            <div class="pad-left">
-                <textarea placeholder="{{editorPlaceholderText()}}" name="post-textarea" class="form-control" on-escape="escapeTextEditor()" ng-disabled="shouldDisableEditor()" ng-model="editPostText" maxlength="100000" spellcheck="false"></textarea>
-                <div class="post-editor-actions">
-                    <span ng-if="showLastEditedMessage()" class="last-edited-message">{{lastEditedMessage()}}</span>
-                    <span class="post-submit-error">{{postSubmitError}}</span>
-                    <a ng-if="showApproveResolution()" ng-disabled="shouldDisableApproveResolution()" class="btn btn-primary" id="approve-resolution" ng-click="approveResolutionClicked()">Approve</a>
-                    <a id="submit-post-button" class="post-submit btn btn-primary" ng-disabled="shouldDisableSubmitPost()" ng-click="submitPostClicked()">{{submitPostText()}}</a>
-                    <a id="cancel-post-button" class="post-cancel btn" ng-click="cancelPostClicked()">Cancel</a>
-                </div>
+        <div class="post-editor no-padding {{postEditorWidthClass()}}">
+            <textarea placeholder="{{editorPlaceholderText()}}" name="post-textarea" class="form-control" on-escape="escapeTextEditor()" ng-disabled="shouldDisableEditor()" ng-model="editPostText" maxlength="100000" spellcheck="false"></textarea>
+            <div class="post-editor-actions">
+                <span ng-if="showLastEditedMessage()" class="last-edited-message">{{lastEditedMessage()}}</span>
+                <span class="post-submit-error">{{postSubmitError}}</span>
+                <a ng-if="showApproveResolution()" ng-disabled="shouldDisableApproveResolution()" class="btn btn-primary" id="approve-resolution" ng-click="approveResolutionClicked()">Approve</a>
+                <a id="submit-post-button" class="post-submit btn btn-primary" ng-disabled="shouldDisableSubmitPost()" ng-click="submitPostClicked()">{{submitPostText()}}</a>
+                <a id="cancel-post-button" class="post-cancel btn" ng-click="cancelPostClicked()">Cancel</a>
             </div>
         </div>
     </div>
 
-    <div class="post-actions">
+    <div id="post-actions">
         <a id="add-post-button" class="post-action btn btn-primary" ng-disabled="shouldDisableAddPost()" ng-click="addPostClicked()">Add a post</a>
         <span class="hspace"></span>
         <a id="propose-summary-button" class="post-action btn btn-primary" ng-disabled="shouldDisableProposeSummary()" ng-click="proposeSummaryClicked()">Propose a summary</a>

@@ -1,7 +1,9 @@
 <div id="home-container">
     <div id="newsfeed-container">
-        <p id="newsfeed-heading">Trending Resolutions</p>
-        <p ng-if="shouldDisplayNoConversationsMessage()" id="newsfeed-subheading">There don't seem to be any conversations yet. Check back later!</p>
+        <div id="newsfeed-heading" class="header">Trending Resolutions</div>
+        <p ng-if="shouldDisplayNoConversationsMessage()" id="newsfeed-subheading">
+            There don't seem to be any conversations yet. Check back later!
+        </p>
         <div class="newsfeed-content-container">
             <div class="column">
                 <div ng-repeat="conversation in conversations[0]" class="newsfeed-conversation-container">

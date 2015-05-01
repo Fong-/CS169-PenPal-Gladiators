@@ -13,7 +13,7 @@ router.config(["$stateProvider", "$urlRouterProvider", ($stateProvider, $urlRout
                 controller: "NavigationBarController"
             }
             content: {
-                template: "<ui-view/>"
+                template: "<div ui-view/>"
             }
             sidebar: {
                 templateUrl: "/assets/sidebar.html"
