@@ -77,14 +77,15 @@ conversation.controller("ConversationController", ["$scope", "$stateParams", "AP
             return "post-content-resolution"
         return ""
     $scope.addPostClicked = ->
+        savePostInProgress()
         $scope.postSubmitError = ""
-        $scope.editPostText = "" if currentPostEditId # Clear the editor if the user was previously editing an existing post.
+        $scope.editPostText = ConversationService.getAddPostText(conversationId)
         currentPostEditId = null
         expandEditorViewForState(EDIT_OR_ADD_POST)
 
     $scope.shouldDisplayEmptyConversationsMessage = -> !$scope.posts or $scope.posts.length == 0
-    $scope.cancelPostClicked = -> conversationPageState = READ_POSTS
-    $scope.escapeTextEditor = -> conversationPageState = READ_POSTS
+    $scope.cancelPostClicked = -> closeTextEditor()
+    $scope.escapeTextEditor = -> closeTextEditor()
     $scope.submitPostText = -> if postSubmissionInProgress then "Sending..." else "Submit"
     $scope.authorDisplayNameForPost = (id) ->
         if postsById[id].type is "resolution"
@@ -106,10 +107,13 @@ conversation.controller("ConversationController", ["$scope", "$stateParams", "AP
         $scope.postSubmitError = ""
         postSubmissionInProgress = true
         if conversationPageState is EDIT_SUMMARY
+            ConversationService.updateSummaryText(conversationId, "")
             API.editSummaryByConversationId(conversationId, $scope.editPostText).success (response) -> handlePostEditResponse(response, false)
         else if conversationPageState is EDIT_RESOLUTION
+            ConversationService.updateResolutionText(conversationId, "")
             API.editResolutionByConversationId(conversationId, $scope.editPostText).success (response) -> handlePostEditResponse(response, false)
         else if currentPostEditId is null
+            ConversationService.updateAddPostText(conversationId, "")
             API.createPostByConversationId(conversationId, $scope.editPostText).success (response) -> handlePostEditResponse(response, true)
         else
             API.editPostById(currentPostEditId, $scope.editPostText).success (response) -> handlePostEditResponse(response, false)
@@ -121,6 +125,7 @@ conversation.controller("ConversationController", ["$scope", "$stateParams", "AP
 
     $scope.shouldDisplayPostEdit = (id) -> postsById[id].author.id == AppState.user.id and postsById[id].type is "post"
     $scope.editPostClicked = (id) ->
+        savePostInProgress()
         currentPostEditId = id
         $scope.editPostText = postsById[id].text
         expandEditorViewForState(EDIT_OR_ADD_POST)
@@ -130,7 +135,8 @@ conversation.controller("ConversationController", ["$scope", "$stateParams", "AP
     $scope.postEditorWidthClass = -> if conversationPageState isnt EDIT_SUMMARY then "post-editor-full" else "post-editor-half"
     $scope.shouldDisableProposeSummary = -> conversationPageState is EDIT_SUMMARY
     $scope.proposeSummaryClicked = ->
-        $scope.editPostText = if conversation.pendingSummaries then conversation.pendingSummaries.opposing else ""
+        savePostInProgress()
+        $scope.editPostText = if conversation.pendingSummaries && conversation.pendingSummaries.opposing != "" then conversation.pendingSummaries.opposing else ConversationService.getSummaryText(conversationId)
         expandEditorViewForState(EDIT_SUMMARY)
 
     $scope.ownPendingSummaryText = -> if conversation.pendingSummaries then conversation.pendingSummaries.own else ""
@@ -165,13 +171,24 @@ conversation.controller("ConversationController", ["$scope", "$stateParams", "AP
     $scope.shouldDisableApproveResolution = -> !conversation.resolution or conversation.resolution.state != "in_progress" or conversation.resolution.updated_by_id is AppState.user.id
     $scope.showApproveResolution = -> conversationPageState is EDIT_RESOLUTION
     $scope.editResolutionClicked = ->
-        $scope.editPostText = if conversation.resolution then conversation.resolution.text else ""
+        savePostInProgress()
+        $scope.editPostText = if conversation.resolution && conversation.resolution.text != "" then conversation.resolution.text else ConversationService.getResolutionText(conversationId)
         expandEditorViewForState(EDIT_RESOLUTION)
 
-    # Handle editor switching state, ex. writing a new post and switching (before submitting) to editing an old post
-    handleEditorStateChange = (state) ->
-        # TODO: implement this
-        return
+    savePostInProgress = () ->
+        if conversationPageState == EDIT_OR_ADD_POST && currentPostEditId == null
+            # User was writing a new post
+            ConversationService.updateAddPostText(conversationId, $scope.editPostText)
+        else if conversationPageState == EDIT_SUMMARY
+            # User was writing a summary
+            ConversationService.updateSummaryText(conversationId, $scope.editPostText)
+        else if conversationPageState == EDIT_RESOLUTION
+            # User was writing the resolution
+            ConversationService.updateResolutionText(conversationId, $scope.editPostText)
+
+    closeTextEditor = () ->
+        savePostInProgress()
+        conversationPageState = READ_POSTS
 
     expandEditorViewForState = (state) ->
         if conversationPageState is READ_POSTS and state isnt READ_POSTS
@@ -250,6 +267,7 @@ conversation.service("ConversationService", () ->
             c = {addPostText: "", summaryText: "", resolutionText: ""}
             conversations[conversationId] = c
             return c
+    # getter and setter for posts in progress
     this.updateAddPostText = (conversationId, text) ->
         getConversation(conversationId).addPostText = text
     this.updateSummaryText = (conversationId, text) ->
@@ -262,5 +280,8 @@ conversation.service("ConversationService", () ->
         return getConversation(conversationId).summaryText
     this.getResolutionText = (conversationId) ->
         return getConversation(conversationId).resolutionText
+    this.hasUnsavedProgress = (conversationId) ->
+        c = getConversation(conversationId)
+        return (c.addPostText || c.summaryText || c.resolutionText)
     return
 )
