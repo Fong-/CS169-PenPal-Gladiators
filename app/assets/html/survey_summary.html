@@ -6,7 +6,7 @@
         <div id="topic-{{topic.name}}" class="topic-summary" ng-repeat="topic in selectedTopics">
             <div class="topic">
                 {{ topic.name }}
-                <input id="edit-{{topic.name}}" class="btn btn-secondary no-button" type="button" value="Edit", ng-click="editResponses(topic.id)"/>
+                <input id="edit-{{topic.name}}" class="btn" type="button" value="Edit", ng-click="editResponses(topic.id)"/>
             </div>
             <div>{{responseTexts[topic.id]}}</div>
         <div class="spacing"></div>

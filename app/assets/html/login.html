@@ -1,17 +1,19 @@
 <div class="vertical-center">
     <div id="login-container" class="container">
-        <div class="header">The Coliseum</div>
+        <div class="header">The Colosseum</div>
         <div id="status" ng-bind="status"></div>
         <form>
-            <div class="label">Email</div><br/>
-            <input id="email" name="email" ng-model="email" type="text"></input><br/>
+            <div class="label">Email:</div>
+            <input id="email" name="email" ng-model="email" type="text"></input>
             <div class="spacing"></div>
-            <div class="label">Password</div><br/>
-            <input id="password" name="password" ng-model="password" type="password"></input><br/>
+            <div class="label">Password:</div>
+            <input id="password" name="password" ng-model="password" type="password"></input>
             <div class="spacing"></div>
-            <div class="center">
-                <a ng-click="login()" value="Login"><button class="btn btn-secondary main-btn">Login</button></a>
-                <a ng-click="can_register()" value="Register"><button class="btn btn-primary main-btn">Start Registration</button></a>
+            <div class="controls">
+                <div class="center">
+                    <a value="Login" class="btn btn-secondary main-btn" ng-click="login()">Login</a>
+                    <a value="Register" class="btn btn-primary main-btn" ng-click="can_register()">Start Registration</a>
+                </div>
             </div>
         </form>
     </div>
