@@ -27,7 +27,7 @@ conversation.controller("ConversationController", ["$scope", "$stateParams", "AP
     EDIT_SUMMARY = 3
     EDIT_RESOLUTION = 4
     EDIT_POST_PLACEHOLDER_TEXT = ""
-    NEW_POST_PLACEHOLDER_TEXT = "Write a new post here and click Submit when you are finished."
+    NEW_POST_PLACEHOLDER_TEXT = "Write a new post here and submit when you are finished."
     EDIT_SUMMARY_PLACEHOLDER_TEXT = "Summarize your opponent's viewpoint and click Submit when you are finished. If your opponent accepts your summary, it will become a post."
     BEGIN_RESOLUTION_PLACEHOLDER_TEXT = "Be the first to write a statement of resolution between you and your opponent!"
     EDIT_RESOLUTION_PLACEHOLDER_TEXT = "Help edit the final statement of resolution between you and your opponent."

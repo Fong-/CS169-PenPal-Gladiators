@@ -1,5 +1,5 @@
 When /^I am editing my profile$/ do
-    step "I press \"Edit Your Profile\""
+    step "I press \"Edit\""
     step "I wait 3 seconds"
 end
 
