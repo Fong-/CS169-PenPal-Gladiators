@@ -230,6 +230,8 @@ conversation.controller("ConversationController", ["$scope", "$stateParams", "AP
 
     $rootScope.$on "conversationPageWillLoad", (scope, args) ->
         if conversationId isnt args.conversationId then clearInterval conversationPollingProcess
+    $rootScope.$on '$locationChangeStart', (event, next, current) ->
+        savePostInProgress()
 
     parseConversation = (response, scrollToEnd) ->
         conversation.id = response.id
