@@ -18,7 +18,7 @@ conversation.directive("onEnter", ->
         )
 )
 
-conversation.controller("ConversationController", ["$scope", "$stateParams", "API", "TimeUtil", "AppState", "$rootScope", "ConversationData", ($scope, $stateParams, API, TimeUtil, AppState, $rootScope, ConversationData) ->
+conversation.controller("ConversationController", ["$scope", "$stateParams", "API", "TimeUtil", "AppState", "$rootScope", "ConversationService", "ConversationData", ($scope, $stateParams, API, TimeUtil, AppState, $rootScope, ConversationService, ConversationData) ->
     # Constants
     POST_SUBMISSION_TIMEOUT_PERIOD_MS = 5000
     CONVERSATION_POLL_PERIOD = 10 # seconds
@@ -168,6 +168,11 @@ conversation.controller("ConversationController", ["$scope", "$stateParams", "AP
         $scope.editPostText = if conversation.resolution then conversation.resolution.text else ""
         expandEditorViewForState(EDIT_RESOLUTION)
 
+    # Handle editor switching state, ex. writing a new post and switching (before submitting) to editing an old post
+    handleEditorStateChange = (state) ->
+        # TODO: implement this
+        return
+
     expandEditorViewForState = (state) ->
         if conversationPageState is READ_POSTS and state isnt READ_POSTS
             postsContainer = document.getElementById("posts-container")
@@ -235,3 +240,27 @@ conversation.controller("ConversationController", ["$scope", "$stateParams", "AP
 
     parseConversation(ConversationData.data, true)
 ])
+
+conversation.service("ConversationService", () ->
+    conversations = {}
+    getConversation = (conversationId) ->
+        if conversationId of conversations
+            return conversations[conversationId]
+        else
+            c = {addPostText: "", summaryText: "", resolutionText: ""}
+            conversations[conversationId] = c
+            return c
+    this.updateAddPostText = (conversationId, text) ->
+        getConversation(conversationId).addPostText = text
+    this.updateSummaryText = (conversationId, text) ->
+        getConversation(conversationId).summaryText = text
+    this.updateResolutionText = (conversationId, text) ->
+        getConversation(conversationId).resolutionText = text
+    this.getAddPostText = (conversationId) ->
+        return getConversation(conversationId).addPostText
+    this.getSummaryText = (conversationId) ->
+        return getConversation(conversationId).summaryText
+    this.getResolutionText = (conversationId) ->
+        return getConversation(conversationId).resolutionText
+    return
+)
