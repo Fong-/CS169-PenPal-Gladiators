@@ -75,65 +75,487 @@ topics = [
 
 topics.each do |t|
     topic = Topic.create!(t)
-
-    survey_question1 = topic.survey_questions.create(:text => "Do you hate #{topic.name}?", :index => 1)
-    survey_question2 = topic.survey_questions.create(:text => "Do you care about #{topic.name}?", :index => 3)
-    created_responses = []
-
-    responses.each do |r|
-        verb1 = r[:text] == "Yes" ? "hate" : "don't hate"
-        verb2 = r[:text] == "Yes" ? "care" : "don't care"
-        actual_response1 = r.clone
-        actual_response2 = r.clone
-        actual_response1[:summary_text] = "I #{verb1} #{topic.name}."
-        actual_response2[:summary_text] = "I #{verb2} about #{topic.name}."
-        created_responses.push(survey_question1.survey_responses.create(actual_response1))
-        created_responses.push(survey_question2.survey_responses.create(actual_response2))
-    end
-
-    ResponseWeight.create({:response1_id => created_responses[0].id, :response2_id => created_responses[1].id, :weight => 5})
-    ResponseWeight.create({:response1_id => created_responses[0].id, :response2_id => created_responses[2].id, :weight => 1})
-    ResponseWeight.create({:response1_id => created_responses[0].id, :response2_id => created_responses[3].id, :weight => 1})
-    ResponseWeight.create({:response1_id => created_responses[1].id, :response2_id => created_responses[2].id, :weight => 1})
-    ResponseWeight.create({:response1_id => created_responses[1].id, :response2_id => created_responses[3].id, :weight => 1})
-    ResponseWeight.create({:response1_id => created_responses[2].id, :response2_id => created_responses[3].id, :weight => 1})
-
 end
-
-#More complicated responses
+# Climate question 1
+climate = Topic.find_by_name("Climate")
+climate_question = climate.survey_questions.create(:text => "What is your view on climate change?", :index => 0)
 responses = [
     {
-        :text => "Education in the US is the best",
-        :summary_text => "I believe that education in the US is the best.",
-        :index => 2
+    :index => 0,
+    :text => "It is happening and is caused directly by humans",
+    :summary_text => "Climate change is happening and is caused directly by humans."
     },
     {
-        :text => "Need to fund education less",
-        :summary_text => "I believe that we need to fund education less.",
-        :index => 1
+    :index => 1,
+    :text => "It is happening but is not being caused by humans",
+    :summary_text => "Climate change is happening but is not being caused by humans."
     },
     {
-        :text => "Need more focus on STEM",
-        :summary_text => "I believe that there needs to be more focus on STEM.",
-        :index => 0
+    :index => 2,
+    :text => "It is happening but it is part of a natural cycle",
+    :summary_text => "Climate change is happening but it is part of a natural cycle."
     },
     {
-        :text => "Too many college grads, need to raise tuition fee",
-        :summary_text => "I believe that there are too many college gradudates, therefore, we need to raise the tuition fees.",
-        :index => 3
+    :index => 3,
+    :text => "It is not happening",
+    :summary_text => "Climate change is not happening."
     }
-]
+].map { |data| climate_question.survey_responses.create data }
+ResponseWeight.create :response1_id => responses[0].id, :response2_id => responses[1].id, :weight => 0.75
+ResponseWeight.create :response1_id => responses[0].id, :response2_id => responses[2].id, :weight => 0.75
+ResponseWeight.create :response1_id => responses[0].id, :response2_id => responses[3].id, :weight => 0.25
+ResponseWeight.create :response1_id => responses[1].id, :response2_id => responses[2].id, :weight => 0.75
+ResponseWeight.create :response1_id => responses[1].id, :response2_id => responses[3].id, :weight => 1.25
+ResponseWeight.create :response1_id => responses[2].id, :response2_id => responses[3].id, :weight => 1.5
 
-education = Topic.find_by_name("Education")
-survey_question = education.survey_questions.create(:text => "What's your view on US higher education?", :index => 2)
-responses.each do |r|
-    survey_question.survey_responses.create(r)
-end
+# Climate question 2
+climate_question = climate.survey_questions.create(:text => "What is the best way to prevent climate change in the long term?", :index => 1)
+responses = [
+    {
+    :index => 0,
+    :text => "It is not a threat",
+    :summary_text => "Climate change is not a threat."
+    },
+    {
+    :index => 1,
+    :text => "We must consume fewer resources to reduce our ecological footprint",
+    :summary_text => "We must consume fewer resources to reduce our ecological footprint."
+    },
+    {
+    :index => 2,
+    :text => "New, sustainable technology is vital to preventing environmental damage",
+    :summary_text => "New, sustainable technology is vital to preventing environmental damage."
+    }
+].map { |data| climate_question.survey_responses.create data }
+ResponseWeight.create :response1_id => responses[0].id, :response2_id => responses[1].id, :weight => 1
+ResponseWeight.create :response1_id => responses[0].id, :response2_id => responses[2].id, :weight => 1
+ResponseWeight.create :response1_id => responses[1].id, :response2_id => responses[2].id, :weight => 1.5
+
+# Seed education survey questions.
+
+topic = Topic.find_by_name "Education"
+
+survey_question = topic.survey_questions.create :text => "Should higher education be free for everyone?", :index => 0
+survey_responses = [{
+    :text => "Yes",
+    :summary_text => "I think higher education should not be free for everyone.",
+    :index => 0
+},
+{
+    :text => "No",
+    :summary_text => "I think higher education should be free for everyone.",
+    :index => 1
+}].map { |data| survey_question.survey_responses.create data }
+
+ResponseWeight.create :response1_id => survey_responses[0].id, :response2_id => survey_responses[1].id, :weight => 1
+
+survey_question = topic.survey_questions.create :text => "Which of the following do you agree most strongly with?", :index => 1
+survey_responses = [{
+    :text => "Teachers should dedicate their time to helping struggling students catch up if it means neglecting and possibly impeding advancing students' learning",
+    :summary_text => "I think teachers should dedicate their time to helping struggling students catch up if it means neglecting and possibly impeding advancing students' learning.",
+    :index => 0
+},
+{
+    :text => "Teachers should dedicate their time to helping advancing students excel even if it means neglecting and possibly leaving behind struggling students",
+    :summary_text => "I think teachers should dedicate their time to helping advancing students excel even if it means neglecting and possibly leaving behind struggling students.",
+    :index => 1
+},
+{
+    :text => "Teachers should ensure that all their students are on the same page so that this problem isn't a problem",
+    :summary_text => "I think teachers should ensure that all their students are on the same page so that this problem isn't a problem.",
+    :index => 2
+},
+{
+    :text => "Students should be taught at a rate in which they do not fall behind and can excel if they desire to, even if this means sometimes splitting up classes for parts of the day",
+    :summary_text => "I think students should be taught at a rate in which they do not fall behind and can excel if they desire to, even if this means sometimes splitting up classes for parts of the day.",
+    :index => 3
+}].map { |data| survey_question.survey_responses.create data }
+
+ResponseWeight.create :response1_id => survey_responses[0].id, :response2_id => survey_responses[1].id, :weight => 1
+ResponseWeight.create :response1_id => survey_responses[0].id, :response2_id => survey_responses[2].id, :weight => 0.5
+ResponseWeight.create :response1_id => survey_responses[0].id, :response2_id => survey_responses[3].id, :weight => 0.25
+ResponseWeight.create :response1_id => survey_responses[1].id, :response2_id => survey_responses[2].id, :weight => 1
+ResponseWeight.create :response1_id => survey_responses[1].id, :response2_id => survey_responses[3].id, :weight => 0.5
+ResponseWeight.create :response1_id => survey_responses[2].id, :response2_id => survey_responses[3].id, :weight => 1
+
+# economy question 1
+economy = Topic.find_by_name("Economy")
+economy_question = economy.survey_questions.create(:text => "What should be done to fix the financial crisis?", :index => 0)
+responses = [
+    {
+    :index => 0,
+    :text => "Raise taxes",
+    :summary_text => "More taxes are needed to balance the economy."
+    },
+    {
+    :index => 1,
+    :text => "Increase Federal Reserve production",
+    :summary_text => "We can fix the financial crisis by printing more money."
+    },
+    {
+    :index => 2,
+    :text => "What financial crisis?",
+    :summary_text => "I don't believe that we are in a financial crisis."
+    }
+].map { |data| economy_question.survey_responses.create data }
+ResponseWeight.create :response1_id => survey_responses[0].id, :response2_id => survey_responses[1].id, :weight => 1
+ResponseWeight.create :response1_id => survey_responses[0].id, :response2_id => survey_responses[2].id, :weight => 1
+ResponseWeight.create :response1_id => survey_responses[1].id, :response2_id => survey_responses[2].id, :weight => 1.5
+
+# economy question 2
+economy_question = economy.survey_questions.create(:text => "Which of the following should we do?", :index => 1)
+responses = [
+    {
+    :index => 0,
+    :text => "Invest in renewable energy (spend more now but becoming less reliant on foreign fuel later)",
+    :summary_text => "I believe we should invest in renewable energy now so that we are less reliant on foreign oil later.."
+    },
+    {
+    :index => 1,
+    :text => "Invest in the cheap procurement of non-renewable energy (spend less now and perhaps have to invest in renewable fuel later)",
+    :summary_text => "I believe that we should invest in cheap sources of energy now, even if it means looking for alternatives when we desperately need them later."
+    }
+].map { |data| economy_question.survey_responses.create data }
+ResponseWeight.create :response1_id => survey_responses[0].id, :response2_id => survey_responses[1].id, :weight => 1
+
+# technology question 1
+technology = Topic.find_by_name("Technology")
+technology_question = technology.survey_questions.create(:text => "What is your view on being forced to give up passwords encrypting personal data?", :index => 0)
+responses = [
+    {
+    :index => 0,
+    :text => "It should be legal for anyone to guard and protect their sensitive information; encrypting my financial information is no different than keeping a ledger in code",
+    :summary_text => "People have the right to making their data private by encrypting it and the government should not be able to compel a user to decrypt their data."
+    },
+    {
+    :index => 1,
+    :text => "The government needs to have the ability to read electronic communications and documents for the sake of national security",
+    :summary_text => "The government should be able to compel people to decrypt their personal data in the name of national security."
+    }
+].map { |data| technology_question.survey_responses.create data }
+ResponseWeight.create :response1_id => survey_responses[0].id, :response2_id => survey_responses[1].id, :weight => 1
+
+# technology question 2
+technology_question = technology.survey_questions.create(:text => "What is your view on privacy in the age of social networking?", :index => 1)
+responses = [
+    {
+    :index => 0,
+    :text => "Companies like Facebook, Twitter, and Google need to harvest their users' data to survive: it is their business model",
+    :summary_text => "Companies like Facebook, Twitter, and Google need to harvest their users' data to survive: it is their business model."
+    },
+    {
+    :index => 1,
+    :text => "Companies need to make their use of their users' data more transparent and give users a way to opt out of data harvesting and selling, even if companies begin charging their users for services",
+    :summary_text => "Companies need to make their use of their users' data more transparent and give users a way to opt out of data harvesting and selling, even if companies begin charging their users for services."
+    },
+    {
+    :index => 2,
+    :text => "Tech companies have a duty to their users to keep their users' interests first.  Selling users' information to advertisers and other organizations is immoral",
+    :summary_text => "Tech companies have a duty to their users to keep their users' interests first.  Selling users' information to advertisers and other organizations is immoral."
+    }
+].map { |data| technology_question.survey_responses.create data }
+ResponseWeight.create :response1_id => survey_responses[0].id, :response2_id => survey_responses[1].id, :weight => 1
+ResponseWeight.create :response1_id => survey_responses[0].id, :response2_id => survey_responses[2].id, :weight => 1
+ResponseWeight.create :response1_id => survey_responses[1].id, :response2_id => survey_responses[2].id, :weight => 1.5
+
+# LGBT Rights question 1
+lgbt = Topic.find_by_name("LGBT Rights")
+lgbt_question = lgbt.survey_questions.create(:text => "Do you support LGBT rights?", :index => 0)
+responses = [
+    {
+    :index => 0,
+    :text => "Yes",
+    :summary_text => "I support LGBT rights."
+    },
+    {
+    :index => 1,
+    :text => "No",
+    :summary_text => "I do not support LGBT rights."
+    }
+].map { |data| lgbt_question.survey_responses.create data }
+ResponseWeight.create :response1_id => survey_responses[0].id, :response2_id => survey_responses[1].id, :weight => 1
+# LGBT Rights question 2
+lgbt_question = lgbt.survey_questions.create(:text => "What level of government should decide the legality of same-sex marriage?", :index => 1)
+responses = [
+    {
+    :index => 0,
+    :text => "City/Local",
+    :summary_text => "City/Local government should decide the legality of same-sex marriage."
+    },
+    {
+    :index => 1,
+    :text => "State",
+    :summary_text => "State government should decide the legality of same-sex marriage."
+    },
+    {
+    :index => 2,
+    :text => "National",
+    :summary_text => "National government should decide the legality of same-sex marriage."
+    },
+    {
+    :index => 3,
+    :text => "International",
+    :summary_text => "International law should decide the legality of same-sex marriage."
+    }
+].map { |data| lgbt_question.survey_responses.create data }
+ResponseWeight.create :response1_id => survey_responses[0].id, :response2_id => survey_responses[1].id, :weight => 0.75
+ResponseWeight.create :response1_id => survey_responses[0].id, :response2_id => survey_responses[2].id, :weight => 0.75
+ResponseWeight.create :response1_id => survey_responses[0].id, :response2_id => survey_responses[3].id, :weight => 0.25
+ResponseWeight.create :response1_id => survey_responses[1].id, :response2_id => survey_responses[2].id, :weight => 0.75
+ResponseWeight.create :response1_id => survey_responses[1].id, :response2_id => survey_responses[3].id, :weight => 1.25
+ResponseWeight.create :response1_id => survey_responses[2].id, :response2_id => survey_responses[3].id, :weight => 1.5
+# LGBT Rights question 3
+lgbt_question = lgbt.survey_questions.create(:text => "What rights should married same-sex couples have?", :index => 2)
+responses = [
+    {
+    :index => 0,
+    :text => "The same rights as heterosexual married couples",
+    :summary_text => "Married same-sex couples should have the same rights as heterosexual married couples."
+    },
+    {
+    :index => 1,
+    :text => "The rights granted in a civil union",
+    :summary_text => "Married same-sex couples should have the rights granted in a civil union."
+    },
+    {
+    :index => 2,
+    :text => "No rights, as they should not be allowed to get married",
+    :summary_text => "Married same-sex couples should have no rights, as they should not be allowed to get married."
+    }
+].map { |data| lgbt_question.survey_responses.create data }
+ResponseWeight.create :response1_id => survey_responses[0].id, :response2_id => survey_responses[1].id, :weight => 1
+ResponseWeight.create :response1_id => survey_responses[0].id, :response2_id => survey_responses[2].id, :weight => 1
+ResponseWeight.create :response1_id => survey_responses[1].id, :response2_id => survey_responses[2].id, :weight => 1.5
+
+# immigration question 1
+immigration = Topic.find_by_name("Immigration")
+immigration_question = immigration.survey_questions.create(:text => "What best describes your views about the immigration process (for general-case immigrants) into the United States? ", :index => 0)
+responses = [
+    {
+    :index => 0,
+    :text => "All immigrants should be allowed, no questions asked",
+    :summary_text => "All immigrants should be allowed, no questions asked."
+    },
+    {
+    :index => 1,
+    :text => "Immigrants should go through a screening process and then be allowed or denied entry to the United States",
+    :summary_text => "Immigrants should go through a screening process and then be allowed or denied entry to the United States."
+    },
+    {
+    :index => 2,
+    :text => "No immigrants should be allowed, no questions asked",
+    :summary_text => "No immigrants should be allowed, no questions asked."
+    }
+].map { |data| immigration_question.survey_responses.create data }
+ResponseWeight.create :response1_id => survey_responses[0].id, :response2_id => survey_responses[1].id, :weight => 1
+ResponseWeight.create :response1_id => survey_responses[0].id, :response2_id => survey_responses[2].id, :weight => 1
+ResponseWeight.create :response1_id => survey_responses[1].id, :response2_id => survey_responses[2].id, :weight => 1.5
+
+immigration_question = immigration.survey_questions.create(:text => "What best describes your views about how to deal with the influx of immigrants from Mexico and other second and third-world countries? ", :index => 1)
+responses = [
+    {
+    :index => 0,
+    :text => "Close the borders",
+    :summary_text => "Close the borders."
+    },
+    {
+    :index => 1,
+    :text => "Allow only immigrants who can show that they have a job lined up in the United States",
+    :summary_text => "Allow only immigrants who can show that they have a job lined up in the United States."
+    },
+    {
+    :index => 2,
+    :text => "Allow only a certain number of immigrants per unit time",
+    :summary_text => "Allow only a certain number of immigrants per unit time."
+    },
+    {
+    :index => 3,
+    :text => "Allow all immigrants who have no criminal history",
+    :summary_text => "Allow all immigrants who have no criminal history"
+    },
+    {
+    :index => 4,
+    :text => "Allow all immigrants, no questions asked",
+    :summary_text => "Allow all immigrants, no questions asked"
+    }
+].map { |data| immigration_question.survey_responses.create data }
+ResponseWeight.create :response1_id => survey_responses[0].id, :response2_id => survey_responses[1].id, :weight => 1
+ResponseWeight.create :response1_id => survey_responses[0].id, :response2_id => survey_responses[2].id, :weight => 0.5
+ResponseWeight.create :response1_id => survey_responses[0].id, :response2_id => survey_responses[3].id, :weight => 0.25
+ResponseWeight.create :response1_id => survey_responses[1].id, :response2_id => survey_responses[2].id, :weight => 1
+ResponseWeight.create :response1_id => survey_responses[1].id, :response2_id => survey_responses[3].id, :weight => 0.5
+ResponseWeight.create :response1_id => survey_responses[2].id, :response2_id => survey_responses[3].id, :weight => 1
+
+# Seed foreign policy survey questions -- done
+foreign = Topic.find_by_name("Foreign Policy")
+foreign_question = foreign.survey_questions.create(:text => "What best describes your view on the United States' relations with the Middle East?", :index => 0)
+responses = [
+    {
+    :index => 0,
+    :text => "The United States should be responsible for bringing democracy to the world",
+    :summary_text => "The United States should be responsible for bringing democracy to the world."
+    },
+    {
+    :index => 1,
+    :text => "The United States has a vested interest in the stability of the Middle East for economic reasons, so the United States should do its best to stabilize Middle Eastern countries' governments",
+    :summary_text => "The United States has a vested interest in the stability of the Middle East for economic reasons, so the United States should do its best to stabilize Middle Eastern countries' governments."
+    },
+    {
+    :index => 2,
+    :text => "The United States has no business getting involved in another country's affairs",
+    :summary_text => "The United States has no business getting involved in another country's affairs"
+    }
+].map { |data| foreign_question.survey_responses.create data }
+ResponseWeight.create :response1_id => survey_responses[0].id, :response2_id => survey_responses[1].id, :weight => 1
+ResponseWeight.create :response1_id => survey_responses[0].id, :response2_id => survey_responses[2].id, :weight => 1
+ResponseWeight.create :response1_id => survey_responses[1].id, :response2_id => survey_responses[2].id, :weight => 1.5
+
+# Seed religion survey questions.
+
+topic = Topic.find_by_name "Religion"
+
+survey_question = topic.survey_questions.create :text => "Are your beliefs aligned with any mainstream religion (e.g. Christianity, Judaism, Buddhism, Islam, Hinduism, etc.)", :index => 1
+survey_responses = [{
+    :text => "Yes",
+    :summary_text => "I am religious.",
+    :index => 0
+},
+{
+    :text => "No",
+    :summary_text => "I am not religious.",
+    :index => 1
+},
+{
+    :text => "I don't know; I'm agnostic",
+    :summary_text => "I am agnostic.",
+    :index => 2
+}].map { |data| survey_question.survey_responses.create data }
+
+ResponseWeight.create :response1_id => survey_responses[0].id, :response2_id => survey_responses[1].id, :weight => 1
+ResponseWeight.create :response1_id => survey_responses[0].id, :response2_id => survey_responses[2].id, :weight => 1
+ResponseWeight.create :response1_id => survey_responses[1].id, :response2_id => survey_responses[2].id, :weight => 1.5
+
+
+survey_question = topic.survey_questions.create :text => "How much control should the government have over religious institutions?", :index => 2
+survey_responses = [{
+    :text => "No control",
+    :summary_text => "Government should have no control over religious institutions.",
+    :index => 0
+},
+{
+    :text => "Some control over religious events taking place on public property",
+    :summary_text => "Government should have some control over religious events taking place on public property.",
+    :index => 1
+},
+{
+    :text => "Control over events where the public has access",
+    :summary_text => "Government should have control over events where the public has access.",
+    :index => 2
+},
+{
+    :text => "Control over all religious events",
+    :summary_text => "Government should have control over all religious events.",
+    :index => 3
+}].map { |data| survey_question.survey_responses.create data }
+
+ResponseWeight.create :response1_id => survey_responses[0].id, :response2_id => survey_responses[1].id, :weight => 0.75
+ResponseWeight.create :response1_id => survey_responses[0].id, :response2_id => survey_responses[2].id, :weight => 0.75
+ResponseWeight.create :response1_id => survey_responses[0].id, :response2_id => survey_responses[3].id, :weight => 0.25
+ResponseWeight.create :response1_id => survey_responses[1].id, :response2_id => survey_responses[2].id, :weight => 0.75
+ResponseWeight.create :response1_id => survey_responses[1].id, :response2_id => survey_responses[3].id, :weight => 1.25
+ResponseWeight.create :response1_id => survey_responses[2].id, :response2_id => survey_responses[3].id, :weight => 1.5
+
+# Philosophy question 1
+philosophy = Topic.find_by_name("Philosophy")
+philosophy_question = philosophy.survey_questions.create(:text => "Do you believe that all lives have a higher purpose/calling?", :index => 0)
+responses = [
+    {
+    :index => 0,
+    :text => "Yes",
+    :summary_text => "I believe that all lives have a higher purpose/calling"
+    },
+    {
+    :index => 1,
+    :text => "No",
+    :summary_text => "I do not believe that all lives have a higher purpose/calling"
+    }
+].map { |data| philosophy_question.survey_responses.create data }
+ResponseWeight.create :response1_id => survey_responses[0].id, :response2_id => survey_responses[1].id, :weight => 0.5
+
+# philosophy question 2
+philosophy = Topic.find_by_name("Philosophy")
+philosophy_question = philosophy.survey_questions.create(:text => "How much control do people have over their own lives?", :index => 1)
+responses = [
+    {
+    :index => 0,
+    :text => "Everyone has free will.",
+    :summary_text => "Everyone has free will."
+    },
+    {
+    :index => 1,
+    :text => "Everything is deterministic.",
+    :summary_text => "Everything is deterministic."
+    },
+    {
+    :index => 2,
+    :text => "While some things are in the our control, other aspects may be out of our control.",
+    :summary_text => "While some things are in the our control, other aspects may be out of our control."
+    }
+].map { |data| philosophy_question.survey_responses.create data }
+ResponseWeight.create :response1_id => survey_responses[0].id, :response2_id => survey_responses[1].id, :weight => 1
+ResponseWeight.create :response1_id => survey_responses[0].id, :response2_id => survey_responses[2].id, :weight => 1
+ResponseWeight.create :response1_id => survey_responses[1].id, :response2_id => survey_responses[2].id, :weight => 1.5
+
+# Criminal Law Seed
+criminallaw = Topic.find_by_name("Criminal Law")
+criminallaw_question = criminallaw.survey_questions.create(:text => "Do you believe in the death penalty as a form of criminal justice?", :index => 0)
+responses = [
+    {
+    :index => 0,
+    :text => "Yes",
+    :summary_text => "I believe in the death penalty as a form of criminal justice."
+    },
+    {
+    :index => 1,
+    :text => "No",
+    :summary_text => "I do not believe in the death penalty as a form of criminal justice."
+    }
+].map { |data| criminallaw_question.survey_responses.create data }
+ResponseWeight.create :response1_id => survey_responses[0].id, :response2_id => survey_responses[1].id, :weight => 0.5
+
+criminallaw_question = criminallaw.survey_questions.create(:text => "Which of the following best describes your opinion of the American prison system?", :index => 1)
+responses = [
+    {
+    :index => 0,
+    :text => "Private, for-profit prisons are necessary",
+    :summary_text => "Private, for-profit prisons are necessary."
+    },
+    {
+    :index => 1,
+    :text => "Non-violent offenders should not be imprisoned",
+    :summary_text => "Non-violent offenders should not be imprisoned."
+    },
+    {
+    :index => 2,
+    :text => "The US needs to focus on rehabilitation over incarceration",
+    :summary_text => "The US needs to focus on rehabilitation over incarceration."
+    },
+    {
+    :index => 3,
+    :text => "The US prison system is in dire need of overhaul",
+    :summary_text => "The US prison system is in dire need of overhaul."
+    }
+].map { |data| criminallaw_question.survey_responses.create data }
+ResponseWeight.create :response1_id => survey_responses[0].id, :response2_id => survey_responses[1].id, :weight => 0.75
+ResponseWeight.create :response1_id => survey_responses[0].id, :response2_id => survey_responses[2].id, :weight => 0.75
+ResponseWeight.create :response1_id => survey_responses[0].id, :response2_id => survey_responses[3].id, :weight => 0.25
+ResponseWeight.create :response1_id => survey_responses[1].id, :response2_id => survey_responses[2].id, :weight => 0.75
+ResponseWeight.create :response1_id => survey_responses[1].id, :response2_id => survey_responses[3].id, :weight => 1.25
+ResponseWeight.create :response1_id => survey_responses[2].id, :response2_id => survey_responses[3].id, :weight => 1.5
 
 ############################################################
 # Users <-> survey responses through user survey responses
 ############################################################
-
 
 ben = User.find_by_email("ben@bitdiddle.com")
 response = Topic.find_by_name("Climate").survey_questions.find_by_index(1).survey_responses.find_by_index(0)
