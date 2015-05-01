@@ -1,0 +1,25 @@
+@import "../constants.less";
+@import "../mixins.less";
+@import "startPageStyle.less";
+
+#progress-bar-container {
+    margin: 40px auto 40px auto;
+    width: 2 * @num-topics-per-row * @topic-icon-margin + @num-topics-per-row * @topic-icon-display-size + 70px;
+
+}
+
+#progress-bar {
+    margin: 1px auto 1px auto;
+    height: 30px;
+    background: white;
+    border: 1px solid @border-dark-color;
+    border-radius: 15px;
+    padding: 5px;
+    margin-bottom: -20px;
+}
+
+#progress-bar-percent {
+    height: 100%;
+    background: @primary-dark-color;
+    border-radius: 10px;
+}

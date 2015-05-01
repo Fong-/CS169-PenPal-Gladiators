@@ -4,16 +4,14 @@
         <title>The Colosseum</title>
         <link rel="stylesheet" type="text/css" href="/assets/bootstrap.min.css"/>
         <link rel="stylesheet" type="text/css" href="/assets/bootflat.min.css"/>
+        <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" type="text/css" href="/assets/homePage.css"/>
     </head>
     <body>
-        <div id="homepage-container" class="container" ng-app="HomePage">
+        <div id="homepage-container" ng-app="HomePage">
             <div ui-view="navbar"></div>
             <div ui-view="sidebar"></div>
-            <div id="main-view-container" class="container">
-                <div id="main-view" ui-view="content">
-                </div>
-            </div>
+            <div ui-view="content"></div>
         </div>
         <script src="/assets/homePage.js"></script>
     </body>

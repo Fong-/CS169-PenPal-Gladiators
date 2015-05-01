@@ -1,0 +1,52 @@
+@import "../constants.less";
+@import "../mixins.less";
+@import "startPageStyle.less";
+
+#survey-summary-container {
+    background: white;
+    width: 2 * @num-topics-per-row * @topic-icon-margin + @num-topics-per-row * @topic-icon-display-size + 70px;
+    margin: 40px auto 40px auto;
+    max-width: 100%;
+    max-height: 640px;
+    background: white;
+    text-align: left;
+    padding: 30px;
+    border: 1px solid @border-dark-color;
+    box-shadow: 0 2px 10px -2px @border-dark-color;
+    border-radius: 5px;
+    overflow: auto;
+
+    font-size: 14px;
+    font-weight: 300;
+
+    .topic {
+        font-size: 18px;
+        font-weight: 400;
+    }
+
+    #topic-summaries-container {
+        margin-top: 15px;
+
+        .topic-summary {
+            margin-top: 10px;
+            margin-below: 5px;
+        }
+
+        .btn {
+            margin-top: -3px;
+            padding: 2px 8px;
+        }
+    }
+
+    #submit {
+        text-align: right;
+        margin-top: 10px;
+
+        #status {
+            display: inline-block;
+            vertical-align: middle;
+            color: red;
+            padding-right: 10px;
+        }
+    }
+}
