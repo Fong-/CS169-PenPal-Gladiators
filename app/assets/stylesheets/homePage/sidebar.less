@@ -13,7 +13,7 @@
     @media(min-width: 768px) {
         position: fixed;
         top: @navbar-height; right: 0;
-        height: calc(~"100% - @{navbar-height}"); width: @sidebar-width;
+        height: calc(~"100vh - @{navbar-height}"); width: @sidebar-width;
         border-left: 1px solid @border-dark-color;
     }
 
@@ -51,7 +51,7 @@
     // Menu styles
 
     .notification {
-        color: @text-lighter;
+        color: @text-lighter-color;
         margin-left: 5px;
     }
 
@@ -60,13 +60,13 @@
         margin-top: 4px; margin-left: 10px;
         padding: 3px 6px;
         background-color: @background-color;
-        border: 1px solid @navbar-color;
-        color: @navbar-color;
+        border: 1px solid @primary-dark-color;
+        color: @primary-dark-color;
         font-size: 12px;
 
         &:hover {
-            background-color: @navbar-color;
-            border-color: @navbar-color;
+            background-color: @primary-dark-color;
+            border-color: @primary-dark-color;
             color: white;
         }
 
@@ -83,7 +83,7 @@
         }
 
         a {
-            color: @text-dark;
+            color: @text-dark-color;
         }
     }
 
@@ -103,7 +103,7 @@
     }
 
     .conversation-time {
-        color: @text-lighter;
+        color: @text-lighter-color;
         font-weight: 300;
         padding: 3px 0;
     }
@@ -111,7 +111,7 @@
     .conversation-text {
         word-wrap: break-word;
         font-weight: 300;
-        color: @text-light;
+        color: @text-light-color;
     }
 
     .user-avatar {
@@ -121,7 +121,7 @@
 
     .click-to-expand {
         font-size: 14px;
-        color: @navbar-color;
+        color: @primary-dark-color;
         float: right;
         padding-right: 5px;
         padding-top: 8px;
