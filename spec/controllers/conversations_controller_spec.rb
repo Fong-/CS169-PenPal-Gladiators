@@ -203,4 +203,22 @@ describe ConversationsController do
             expect(convos[1]).to eq({ "title" => "second", "resolution" => "second resolution" })
         end
     end
+    
+    context "#delete_conversation" do
+        before :each do
+            controller.stub(:check_access_token).and_return(true)
+            arena = double "Arena", :user1_id => 1, :user2_id => 2
+            @conversation = double "Conversation", :update_column => nil, :arena => arena
+            Conversation.stub(:find_by_id).and_return @conversation
+        end
+
+        it "should delete" do
+            @me = double "the user", :id => 100000
+            @token_results = { :user => @me }
+            controller.instance_variable_set(:@token_results, @token_results)
+            post "delete", :conversation_id => 1
+            response_object = JSON.parse(response.body)
+            expect(response_object["error"]).to_not eq nil
+        end
+    end
 end

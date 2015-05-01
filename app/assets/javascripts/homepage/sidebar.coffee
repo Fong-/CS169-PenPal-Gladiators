@@ -21,6 +21,10 @@ sidebar.controller("SidebarController", ["$scope", "$rootScope", "$state", "API"
         $rootScope.$broadcast "conversationPageWillLoad", { conversationId: id }
         $state.go("conversation", { id: id })
 
+    $scope.deleteIconClicked = (id) ->
+        API.deleteConversationId(id).success (response) ->
+            reloadSidebarArenas()
+
     $scope.conversationStartClicked = (id) ->
         API.createConversationByUser(id)
             .success (conversation) ->

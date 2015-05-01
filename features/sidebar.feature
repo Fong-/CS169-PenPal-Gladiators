@@ -51,3 +51,10 @@ Scenario: read posts should not be marked as unread
     And I click on an unread post
     And I am on the home page
     Then I should not see an unread post
+
+Scenario: read posts should not be marked as unread
+    Given an arena is set up with posts containing "Hello world this is the first post"
+    And I sign in as "alice@example.com" with password "12345678"
+    And I expand all names in the sidebar
+    And I click a delete button
+    Then I should not see "Hello world"

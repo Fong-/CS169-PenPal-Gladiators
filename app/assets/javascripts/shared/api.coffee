@@ -87,6 +87,10 @@ angular.module("SharedServices").service("API", ["$http", "$cookieStore", ($http
         request = generateRequest("conversation/approve_resolution/#{conversationId}")
         $http.post(request, { token: getToken() })
 
+    this.deleteConversationId = (conversationId) ->
+        request = generateRequest("conversation/delete/#{conversationId}")
+        $http.post(request, { token: getToken() })
+
     this.matches = () ->
         request = generateRequest("matches")
         $http.get(request, { params: { token: getToken() } })
