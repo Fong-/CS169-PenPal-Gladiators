@@ -230,7 +230,7 @@ conversation.controller("ConversationController", ["$scope", "$stateParams", "AP
 
     $rootScope.$on "conversationPageWillLoad", (scope, args) ->
         if conversationId isnt args.conversationId then clearInterval conversationPollingProcess
-    $rootScope.$on '$locationChangeStart', (event, next, current) ->
+    $rootScope.$on "$locationChangeStart", (event, next, current) ->
         savePostInProgress()
 
     parseConversation = (response, scrollToEnd) ->
@@ -261,29 +261,29 @@ conversation.controller("ConversationController", ["$scope", "$stateParams", "AP
 ])
 
 conversation.service("ConversationService", () ->
-    conversations = {}
-    getConversation = (conversationId) ->
-        if conversationId of conversations
-            return conversations[conversationId]
+    conversationTexts = {}
+    getConversationText = (conversationId) ->
+        if conversationId of conversationTexts
+            return conversationTexts[conversationId]
         else
             c = {addPostText: "", summaryText: "", resolutionText: ""}
-            conversations[conversationId] = c
+            conversationTexts[conversationId] = c
             return c
     # getter and setter for posts in progress
     this.updateAddPostText = (conversationId, text) ->
-        getConversation(conversationId).addPostText = text
+        getConversationText(conversationId).addPostText = text
     this.updateSummaryText = (conversationId, text) ->
-        getConversation(conversationId).summaryText = text
+        getConversationText(conversationId).summaryText = text
     this.updateResolutionText = (conversationId, text) ->
-        getConversation(conversationId).resolutionText = text
+        getConversationText(conversationId).resolutionText = text
     this.getAddPostText = (conversationId) ->
-        return getConversation(conversationId).addPostText
+        return getConversationText(conversationId).addPostText
     this.getSummaryText = (conversationId) ->
-        return getConversation(conversationId).summaryText
+        return getConversationText(conversationId).summaryText
     this.getResolutionText = (conversationId) ->
-        return getConversation(conversationId).resolutionText
+        return getConversationText(conversationId).resolutionText
     this.hasUnsavedProgress = (conversationId) ->
-        c = getConversation(conversationId)
-        return (c.addPostText || c.summaryText || c.resolutionText)
+        c = getConversationText(conversationId)
+        return (c.addPostText != "" or c.summaryText != "" or c.resolutionText != "")
     return
 )
