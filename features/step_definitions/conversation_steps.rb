@@ -53,3 +53,11 @@ When /^I click "(.*)" in the conversation page$/ do |element_name|
     else raise "No check for clicking the #{element_name} element in the conversation page."
     end
 end
+
+Then /I(?: should)?( not)? see the editor filled with "(.*)"/ do |should_not_see, content|
+    if should_not_see
+        expect(page.find("[name=post-textarea]").value).not_to eq(content)
+    else
+        expect(page.find("[name=post-textarea]").value).to eq(content)
+    end
+end

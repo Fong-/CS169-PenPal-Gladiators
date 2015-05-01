@@ -80,3 +80,25 @@ Scenario: the user can approve a resolution
     Then I should not see "post-textarea"
     And I wait 1 second
     And I should see "Here is my resolution"
+
+Scenario: Posts in progress should not disappear after switching to other editors
+    Given I am on the conversation page for "What messages are you posting?"
+    And I click "Add a post" in the conversation page
+    And I wait 1 second
+    When I fill in "post-textarea" with "Writing a new post"
+    And I click "Propose a summary" in the conversation page
+    And I wait 1 second
+    And I fill in "post-textarea" with "Writing a summary"
+    And I click "Edit resolution" in the conversation page
+    And I wait 1 second
+    And I fill in "post-textarea" with "Writing a resolution"
+    When I click "Add a post" in the conversation page
+    And I wait 1 second
+    Then I should see the editor filled with "Writing a new post"
+    When I click "Propose a summary" in the conversation page
+    And I wait 1 second
+    Then I should see the editor filled with "Writing a summary"
+    When I click "Edit resolution" in the conversation page
+    And I wait 1 second
+    Then I should see the editor filled with "Writing a resolution"
+
