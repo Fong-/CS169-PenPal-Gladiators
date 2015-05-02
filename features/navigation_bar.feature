@@ -11,12 +11,12 @@ Scenario: can navigate to the profile page and back
     Given I am on the home page
     When I press "My Profile"
     Then I should be on the profile page
-    When I follow "The Colosseum"
+    When I follow "The Coliseum"
     Then I should be on the home page
 
 Scenario: can navigate to the home page and back
     Given I am on the profile page
-    When I follow "The Colosseum"
+    When I follow "The Coliseum"
     Then I should be on the home page
     When I press "My Profile"
     Then I should be on the profile page

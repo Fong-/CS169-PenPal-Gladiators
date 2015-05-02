@@ -25,6 +25,7 @@ conversation.controller("ConversationController", ["$scope", "$stateParams", "AP
     conversationPageState = READ_POSTS
     previousPostContainerOffset = 0
     # Scope methods and models
+    $scope.username = AppState.user.username
     $scope.editPostText = ""
     $scope.postSubmitError = ""
     $scope.title = -> if "title" of conversation then conversation.title else ""
@@ -58,6 +59,8 @@ conversation.controller("ConversationController", ["$scope", "$stateParams", "AP
         if postsById[id].type is "resolution"
             return "post-content-resolution"
         return ""
+    $scope.authorClass = (id) ->
+        if $scope.authorDisplayNameForPost(id) == $scope.username then 'self-post' else 'other-post'
     $scope.addPostClicked = ->
         savePostInProgress()
         $scope.postSubmitError = ""
