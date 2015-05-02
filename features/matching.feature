@@ -12,7 +12,6 @@ Background: I am a Gladiator that has completed the on-boarding process
 Scenario: Presented with a list of matches
     Given I expand the matches dropdown in the sidebar
     Then I should see "Alice"
-    And I should see "Bob"
     And I should see "Charlie"
     And I should see "David"
     And I should see "Edward"
@@ -30,3 +29,9 @@ Scenario: Accept an invitation
     And I wait 1 second
     And I expand all names in the sidebar
     Then I should see "There don't seem to be any conversations yet. Check back later!"
+
+Scenario: Should not see users already matched or with pending matches
+    Given I expand the matches dropdown in the sidebar
+    Then I should not see "Bob"
+    And I match with "Alice"
+    Then I should not see "Alice"
