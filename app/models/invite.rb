@@ -36,7 +36,7 @@ class Invite < ActiveRecord::Base
     private
     def self.should_allow_user_to_send_invite(from_user, to_user)
         return from_user.id != to_user.id &&
-            Arena.where("user1_id = :a AND user2_id = :b OR user1_id = :b AND user2_id = :a", :a => from_user.id, :b => to_user.id).empty? &&
+            Arena.for_users(from_user, to_user).empty? &&
             Invite.pending_invite(from_user, to_user).nil?
     end
 end
