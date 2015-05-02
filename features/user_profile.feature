@@ -43,7 +43,7 @@ Scenario: Save changes
     And I fill in "blurb" with "I hate everyone"
     And I press "Save Changes"
     Then I should see the text "I hate everyone" for "blurb"
-    And I follow "The Colosseum"
+    And I follow "The Coliseum"
     And I wait 1 second
     And I press "Profile"
     And I wait 1 second

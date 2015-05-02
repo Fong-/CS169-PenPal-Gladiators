@@ -3,7 +3,6 @@
         <div ng-switch-when="view">
             <div class="title header">
                 {{ profile.username }}'s Profile
-                <button class="btn btn-primary" id="edit-profile" type="button" ng-if="can_edit()" ng-click="edit()">Edit</button>
             </div>
             <div class="profile-content">
                 <img id="avatar" class="user-avatar" ng-src="{{profile.avatar}}"></img>
@@ -18,6 +17,7 @@
                          the value of the selected radio button -->
                     <div class="subheader">My Position on the Political Spectrum</div>
                     <p id="spectrum">{{ profile.spectrum }}</p>
+                    <button class="btn btn-primary" id="edit-profile" type="button" ng-if="can_edit()" ng-click="edit()">Edit</button>
                 </div>
             </div>
         </div>

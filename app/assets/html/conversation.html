@@ -6,7 +6,7 @@
 
     <div id="posts-container" class="posts {{postLengthClass()}}">
         <p id="status" ng-if="shouldDisplayEmptyConversationsMessage()" class="empty-conversation-message">It looks like there are no posts yet. Be the first to write something!</p>
-        <div ng-repeat="post in posts" class="post-content {{postContentClass(post.id)}}">
+        <div ng-repeat="post in posts" class="post-content {{ authorClass(post.id) }} {{postContentClass(post.id)}}">
             <div class="post-data-container">
                 <img class="user-avatar" ng-src="{{post.author.avatar}}"></img>
                 <div class="post-data">
