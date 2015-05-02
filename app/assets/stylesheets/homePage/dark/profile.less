@@ -4,21 +4,31 @@
 
 #profile-container {
     height: calc(~"100vh - @{navbar-height}");
-    width: calc(~"100vw - @{sidebar-width}");
     font-size: 14px;
-    font-weight: 300;
+    font-weight: 400;
     overflow-y: auto;
+    color: @text-light-color;
 
     @media(min-width: 768px) {
-        padding: 10px @global-padding-md;
+        width: calc(~"100vw - @{sidebar-width}");
     }
 
     @media(max-width: 768px) {
-        padding: 10px @global-padding-xs;
+        width: 100%;
+    }
+
+    @media(min-width: 768px) {
+        padding: 30px @global-padding-md;
+    }
+
+    @media(max-width: 768px) {
+        padding: 30px @global-padding-xs;
     }
 
     .user-avatar {
-        width: 200px; height: 200px;
+        width: 100px; height: 100px;
+        border: 1px solid @border-light-color;
+        border-radius: 20px;
     }
 
     .title {
@@ -32,12 +42,12 @@
     label {
         margin-left: 5px;
         font-size: 14px;
-        font-weight: 300;
+        font-weight: 400;
     }
 
     .subheader {
-        font-size: 18px;
-        font-weight: 300;
+        font-size: 16px;
+        font-weight: 400;
         margin-top: 10px;
         margin-bottom: 5px;
 
@@ -62,5 +72,23 @@
     .save-button {
         margin-top: 15px;
         margin-left: 0;
+    }
+
+    .info {
+        .btn {
+            margin: 15px 0px 0px 0px;
+        }
+    }
+
+    input[type=text], input[type=password] {
+        background: #ffffff;
+        border-radius: 15px;
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-top: 4px;
+        padding-bottom: 4px;
+        border: 1px solid #dddddd;
+        margin-bottom: 10px;
+        outline: none;
     }
 }
