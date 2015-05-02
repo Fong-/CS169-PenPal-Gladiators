@@ -86,7 +86,6 @@ conversation.controller("ConversationController", ["$scope", "$stateParams", "AP
     $scope.shouldDisplayEmptyConversationsMessage = -> !$scope.posts or $scope.posts.length == 0
     $scope.cancelPostClicked = -> closeTextEditor()
     $scope.escapeTextEditor = -> closeTextEditor()
-    $scope.submitPostText = -> if postSubmissionInProgress then "Sending..." else "Submit"
     $scope.authorDisplayNameForPost = (id) ->
         if postsById[id].type is "resolution"
             return "You and #{conversation.opponent.username}"
@@ -168,7 +167,11 @@ conversation.controller("ConversationController", ["$scope", "$stateParams", "AP
         latestAuthorName = if conversation.resolution.updated_by_id is conversation.self.id then "you" else conversation.opponent.username
         return "Last edited by #{latestAuthorName} #{timeElapsed.toLowerCase()}"
     $scope.shouldDisableEditResolution = -> conversationPageState is EDIT_RESOLUTION
-    $scope.shouldDisableApproveResolution = -> !conversation.resolution or conversation.resolution.state != "in_progress" or conversation.resolution.updated_by_id is AppState.user.id
+    $scope.shouldDisableApproveResolution = -> !conversation.resolution or
+        conversation.resolution.updated_by_id is AppState.user.id or
+        conversation.resolution.state != "in_progress" or
+        conversation.resolution.text != $scope.editPostText
+
     $scope.showApproveResolution = -> conversationPageState is EDIT_RESOLUTION
     $scope.editResolutionClicked = ->
         savePostInProgress()
@@ -235,7 +238,7 @@ conversation.controller("ConversationController", ["$scope", "$stateParams", "AP
 
     parseConversation = (response, scrollToEnd) ->
         conversation.id = response.id
-        conversation.title = response.title
+        if not isEditingTitle then conversation.title = response.title
         # The "own" summary is the summary of the user's own viewpoint, written by the opposing gladiator.
         # The "opposing" summary is the summary of the opposing viewpoint, written by the user.
         conversation.pendingSummaries = { own: "", opposing: "" }
