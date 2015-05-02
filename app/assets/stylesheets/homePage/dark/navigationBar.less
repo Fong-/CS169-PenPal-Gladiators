@@ -6,8 +6,9 @@
     height: @navbar-height;
 
     .navbar {
-        background-color: rgb(42, 44, 61);
+        background-color: @nav-bar-color;
         border-bottom: 1px solid @border-light-color;
+        box-shadow: 0 2px 6px -2px @border-dark-color;
     }
 
     .navbar-toggle {
@@ -22,7 +23,7 @@
             background-color: @primary-dark-color;
         }
 
-        &:hover, &:active {
+        &:hover, &:active, &:focus {
             .icon-bar {
                 background-color: @btn-hover-color;
             }
@@ -34,7 +35,7 @@
     }
 
     .navbar-brand {
-        color: white;
+        color: @nav-text-color;
         text-transform: uppercase;
         font-weight: 400;
         font-size: 18px;
