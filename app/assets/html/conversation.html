@@ -30,7 +30,7 @@
                     <p ng-if="ownPendingSummaryExists()">{{opponentDisplayName()}} summarized your views! Click Approve if the summary accurately reflects your views.</p>
                     <p ng-if="ownPendingSummaryExists()">{{ownPendingSummaryText()}}</p>
                 </div>
-                <a class="btn btn-primary" id="approve-summary" ng-click="approveSummaryClicked()" ng-disabled="!ownPendingSummaryExists()">Approve</a>
+                <a class="btn" id="approve-summary" ng-click="approveSummaryClicked()" ng-disabled="!ownPendingSummaryExists()">Approve</a>
             </div>
         </div>
         <div class="post-editor no-padding {{postEditorWidthClass()}}">
@@ -38,18 +38,18 @@
             <div class="post-editor-actions">
                 <span ng-if="showLastEditedMessage()" class="last-edited-message">{{lastEditedMessage()}}</span>
                 <span class="post-submit-error">{{postSubmitError}}</span>
-                <a ng-if="showApproveResolution()" ng-disabled="shouldDisableApproveResolution()" class="btn btn-primary" id="approve-resolution" ng-click="approveResolutionClicked()">Approve</a>
-                <a id="submit-post-button" class="post-submit btn btn-primary" ng-disabled="shouldDisableSubmitPost()" ng-click="submitPostClicked()">{{submitPostText()}}</a>
+                <a ng-if="showApproveResolution()" ng-disabled="shouldDisableApproveResolution()" class="btn" id="approve-resolution" ng-click="approveResolutionClicked()">Approve</a>
+                <a id="submit-post-button" class="post-submit btn" ng-disabled="shouldDisableSubmitPost()" ng-click="submitPostClicked()">Submit</a>
                 <a id="cancel-post-button" class="post-cancel btn" ng-click="cancelPostClicked()">Cancel</a>
             </div>
         </div>
     </div>
 
     <div id="post-actions">
-        <a id="add-post-button" class="post-action btn btn-primary" ng-disabled="shouldDisableAddPost()" ng-click="addPostClicked()">Add a post</a>
+        <a id="add-post-button" class="post-action btn" ng-disabled="shouldDisableAddPost()" ng-click="addPostClicked()">Add a post</a>
         <span class="hspace"></span>
-        <a id="propose-summary-button" class="post-action btn btn-primary" ng-disabled="shouldDisableProposeSummary()" ng-click="proposeSummaryClicked()">Propose a summary</a>
+        <a id="propose-summary-button" class="post-action btn" ng-disabled="shouldDisableProposeSummary()" ng-click="proposeSummaryClicked()">Propose a summary</a>
         <span class="hspace"></span>
-        <a id="edit-resolution-button" class="post-action btn btn-primary" ng-disabled="shouldDisableEditResolution()" ng-click="editResolutionClicked()">Edit resolution</a>
+        <a id="edit-resolution-button" class="post-action btn" ng-disabled="shouldDisableEditResolution()" ng-click="editResolutionClicked()">Edit resolution</a>
     </div>
 </div>
