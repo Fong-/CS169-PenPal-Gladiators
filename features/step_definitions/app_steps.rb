@@ -60,6 +60,18 @@ When /^I expand all names in the sidebar$/ do
     find(".gladiator-heading-container").click
 end
 
+When /^I expand the matches dropdown in the sidebar$/ do
+    find(".matches-container").click
+end
+
+When /^I expand the incoming matches dropdown in the sidebar$/ do
+    find(".incoming-matches-container").click
+end
+
+When /^I expand the pending matches dropdown in the sidebar$/ do
+    find(".pending-matches-container").click
+end
+
 Given /^I sign in$/ do
     step 'I sign in as "alice@example.com" with password "12345678"'
 end

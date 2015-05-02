@@ -70,11 +70,11 @@ sidebar.controller("SidebarController", ["$scope", "$rootScope", "$state", "API"
     $rootScope.$on("reloadSidebarArenas", reloadSidebarArenas)
 
     # Refresh the sidebar every few seconds
-    SIDEBAR_REFRESH_RATE = 5000
-    setInterval(() ->
-        $rootScope.$broadcast("reloadSidebarArenas")
-        $rootScope.$broadcast("reloadSidebarNotifications")
-    , SIDEBAR_REFRESH_RATE)
+    # SIDEBAR_REFRESH_RATE = 5000
+    # setInterval(() ->
+    #     $rootScope.$broadcast("reloadSidebarArenas")
+    #     $rootScope.$broadcast("reloadSidebarNotifications")
+    # , SIDEBAR_REFRESH_RATE)
 ])
 
 sidebar.controller("SidebarMatchesController", ["$scope", "$rootScope", "$state", "API", ($scope, $rootScope, $state, API) ->
@@ -105,9 +105,6 @@ sidebar.controller("SidebarMatchesController", ["$scope", "$rootScope", "$state"
                     reason = "status code #{status}"
                 console.log "sidebar failed: #{reason}"
 
-        reloadSidebarMatches()
-        reloadSidebarNotifications()
-
     $scope.goToProfile = (id) ->
         $state.go("profile", { id: id })
 
@@ -126,6 +123,7 @@ sidebar.controller("SidebarMatchesController", ["$scope", "$rootScope", "$state"
     $scope.reject = (id) ->
         API.rejectInvite(id)
             .success (invites) ->
+                reloadSidebarMatches()
                 reloadSidebarNotifications()
             .error (result, status) ->
                 if result?

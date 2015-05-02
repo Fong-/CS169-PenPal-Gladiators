@@ -82,7 +82,7 @@ class User < ActiveRecord::Base
         all_users = User.all
         sorted_list = []
         for other_user in all_users
-            if other_user.id != self.id
+            if other_user.id != self.id and Invite.should_allow_user_to_send_invite(self, other_user) and Invite.should_allow_user_to_send_invite(other_user, self)
                 match_data = self.score_user(other_user)
                 sorted_list.push({:user => other_user, :match_data => match_data})
             end
