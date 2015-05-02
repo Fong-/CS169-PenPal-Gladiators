@@ -7,32 +7,35 @@ html, body {
 
 body {
     background-color: @background-color;
-    font-family: "Roboto";
+    font-family: "Avenir Next";
     color: @text-dark-color;
+}
+
+@media(min-width: 768px) {
     overflow: hidden;
 }
 
 .btn {
     border: none;
-    border-radius: 3px;
-    font-weight: 300;
+    border-radius: 20px;
+    font-weight: 400;
 
     margin-left: 10px;
-    border: 1px solid @primary-dark-color;
-    color: @primary-dark-color;
-    background-color: white;
+    border: 1px solid @border-light-color;
+    color: white;
+    background-color: @primary-dark-color;
 
     &:hover {
-        border: 1px solid @background-color;
-        background-color: @primary-dark-color;
+        border: 1px solid @border-light-color;
+        background-color: @btn-hover-color;
         color: white;
     }
 
     &[disabled] {
         opacity: 0.5;
-        border: 1px solid @primary-dark-color;
-        color: @primary-dark-color;
-        background-color: white;
+        border: 1px solid @border-light-color;
+        color: white;
+        background-color: @primary-dark-color;
     }
 }
 
@@ -44,11 +47,13 @@ ul, li {
 
 p {
     margin: 0;
+    font-weight: 400;
 }
 
 .header {
-    font-size: 24px;
-    font-weight: 700;
+    font-size: 18px;
+    font-weight: 400;
+    color: #aaa;
     margin-bottom: 15px;
     margin-top: 5px;
 }

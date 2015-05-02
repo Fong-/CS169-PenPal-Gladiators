@@ -1,17 +1,25 @@
-@import "../constants.less";
-@import "../mixins.less";
+@import "../../dark/constants.less";
+@import "../../dark/mixins.less";
 @import "homePageStyle.less";
 
 #home-container {
     height: calc(~"100vh - @{navbar-height}");
-    width: calc(~"100vw - @{sidebar-width}");
+    overflow-y: auto;
 
     @media(min-width: 768px) {
-        padding: 10px @global-padding-md;
+        width: calc(~"100vw - @{sidebar-width}");
     }
 
     @media(max-width: 768px) {
-        padding: 10px @global-padding-xs;
+        width: 100%;
+    }
+
+    @media(min-width: 768px) {
+        padding: 30px @global-padding-md;
+    }
+
+    @media(max-width: 768px) {
+        padding: 30px @global-padding-xs;
     }
 }
 
@@ -131,11 +139,13 @@
         border-bottom: 1px solid @border-dark-color;
         font-size: 18px;
         font-weight: 400;
+        word-wrap: break-word;
     }
 
     .newsfeed-conversation-text {
         font-size: 14px;
         color: @text-light-color;
         font-weight: 300;
+        word-wrap: break-word;
     }
 }

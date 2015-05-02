@@ -1,0 +1,104 @@
+@import "../../light/constants.less";
+@import "../../light/mixins.less";
+@import "homePageStyle.less";
+
+#navigation-container {
+    height: @navbar-height;
+
+    .navbar {
+        background-color: white;
+        border-bottom: 1px solid @border-light-color;
+    }
+
+    .navbar-toggle {
+        background-color: white;
+        border: none;
+        padding-left: 0px;
+        padding-right: 0px;
+        color: @text-light-color;
+        margin-right: 0px;
+
+        .icon-bar {
+            background-color: @primary-dark-color;
+        }
+
+        &:hover, &:active {
+            .icon-bar {
+                background-color: @btn-hover-color;
+            }
+        }
+    }
+
+    .navbar-brand:hover {
+        color: @btn-hover-color;
+    }
+
+    .navbar-brand {
+        color: @text-light-color;
+        font-weight: 400;
+        font-size: 20px;
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    @media(min-width: 768px) {
+        .navbar {
+            padding: 0 @global-padding-md;
+        }
+
+        .navbar-nav {
+            margin: 0;
+        }
+
+        #logout_nav {
+            border: 1px solid @primary-dark-color;
+            background-color: white;
+            color: @text-light-color;
+            &:hover {
+                border-color: white;
+                background-color: @primary-dark-color;
+                color: white;
+            }
+        }
+
+        .btn {
+            height: 30px;
+            margin-left: 10px;
+            font-size: 14px;
+            line-height: 14px;
+        }
+    }
+
+    @media(max-width: 768px) {
+        .navbar {
+            padding: 0 @global-padding-xs;
+        }
+
+        .navbar-collapse {
+            border: none;
+            background-color: @primary-dark-color-2;
+            margin: 0 -@global-padding-xs;
+        }
+
+        .navbar-nav {
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+
+        .nav li {
+            border-top: 1px solid white;
+        }
+
+        .btn {
+            width: 100%; height: 100%;
+            padding: 8px @global-padding-xs;
+            border: none;
+            border-radius: unset;
+            background-color: unset;
+            color: white;
+            font-size: 14px;
+            font-weight: 100;
+            text-align: left;
+        }
+    }
+}
