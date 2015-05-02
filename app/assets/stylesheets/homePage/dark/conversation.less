@@ -1,18 +1,26 @@
-@import "../constants.less";
-@import "../mixins.less";
+@import "../../dark/constants.less";
+@import "../../dark/mixins.less";
 @import "homePageStyle.less";
 
 #conversation-container {
     @title-height: 56px;
-    @vertical-padding: 15px;
+    @vertical-padding: 30px;
     @button-height: 34px;
-    @avatar-size: 100px;
+    @avatar-size: 60px;
     @posts-size-ratio: 0.6;
     @editor-size-ratio: 0.4;
 
     height: calc(~"100vh - @{navbar-height}");
-    width: calc(~"100vw - @{sidebar-width}");
     position: relative;
+    word-wrap: break-word;
+
+    @media(min-width: 768px) {
+        width: calc(~"100vw - @{sidebar-width}");
+    }
+
+    @media(max-width: 768px) {
+        width: 100%;
+    }
 
     @media(min-width: 768px) {
         padding: @vertical-padding @global-padding-md;
@@ -26,6 +34,7 @@
         cursor: pointer;
         font-size: 18px;
         margin-left: 10px;
+        color: @primary-dark-color;
     }
 
     .title {
@@ -48,12 +57,10 @@
             height: calc(~"@{posts-size-ratio} * (100vh - @{navbar-height} - 4 * @{vertical-padding} - @{title-height} - @{button-height})");
         }
 
+        background: white;
         padding: 15px;
         margin-bottom: @vertical-padding;
-        border-radius: 5px;
-        border: 1px solid @border-dark-color;
-        box-shadow: 0 2px 10px -2px @border-dark-color;
-        background-color: white;
+        box-shadow: 0 2px 6px -2px #737575;
         overflow-y: auto;
 
         .post-content {
@@ -67,7 +74,13 @@
             }
         }
 
+        .self-post, .post-content.self-post:first-child {
+            background: @background-accent;
+            padding-top: 10px;
+        }
+
         .post-content-summary, .post-content-resolution {
+            background: @background-accent;
             position: relative;
 
             &:after {
@@ -80,11 +93,11 @@
         }
 
         .post-content-resolution:after {
-            background-color: #78BBED;
+            background-color: @primary-dark-color;
         }
 
         .post-content-summary:after {
-            background-color: #46CBAA;
+            background-color: @text-lighter-color;
         }
 
         .post-data-container {
@@ -106,25 +119,26 @@
             p {
                 margin-top: 8px;
                 line-height: 14px;
+                font-size: 10px;
             }
         }
 
         .post-time {
             font-size: 14px;
-            font-weight: 300;
+            font-weight: 400;
             color: @text-light-color;
         }
 
         .post-author-name {
             font-size: 14px;
-            font-weight: 300;
+            font-weight: 400;
             color: @text-lighter-color;
             margin-bottom: 10px;
         }
 
         .post-text {
             font-size: 14px;
-            font-weight: 300;
+            font-weight: 400;
             text-align: justify;
         }
 
@@ -133,7 +147,7 @@
             position: absolute;
             right: 20px; bottom: 0;
             font-size: 14px;
-            font-weight: 300;
+            font-weight: 400;
         }
     }
 
@@ -144,12 +158,11 @@
         .editor-left-container, textarea {
             height: 100%;
             background-color: white;
-            border: 1px solid @border-dark-color;
-            border-radius: 5px;
-            box-shadow: 0 2px 10px -2px @border-dark-color;
+            border: 1px solid @border-light-color;
+            border-radius: 0px;
             font-size: 14px;
-            font-weight: 300;
-            font-color: @text-dark-color;
+            font-weight: 400;
+            font-color: @text-light-color;
             padding: 6px 12px;
         }
 
@@ -174,11 +187,18 @@
 
         .last-edited-message {
             font-size: 14px;
-            font-weight: 300;
+            font-weight: 400;
             font-color: @text-light-color;
         }
     }
 
+    @media(max-width: 768px) {
+        #post-actions {
+            .btn {
+                margin-bottom: 15px;
+            }
+        }
+    }
 
     #post-actions {
         text-align: right;

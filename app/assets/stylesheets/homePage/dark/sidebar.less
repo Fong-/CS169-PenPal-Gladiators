@@ -1,11 +1,12 @@
-@import "../constants.less";
-@import "../mixins.less";
+@import "../../dark/constants.less";
+@import "../../dark/mixins.less";
 @import "homePageStyle.less";
 
 #sidebar {
     .unselectable();
     cursor: pointer;
     overflow-y: auto;
+    background: white;
 
     @media(max-width: 768px) {
 
@@ -15,7 +16,7 @@
         position: fixed;
         top: @navbar-height; right: 0;
         height: calc(~"100vh - @{navbar-height}"); width: @sidebar-width;
-        border-left: 1px solid @border-dark-color;
+        border-left: 1px solid @border-light-color;
     }
 
     // Border handling
@@ -24,12 +25,19 @@
     .sidebar-arenas-container .conversation-start-container,
     .sidebar-matching-container .user {
         border-top: 1px dotted @border-light-color;
+        background: @background-accent;
+    }
+
+    .sidebar-matching-container .user:hover,
+    .sidebar-arenas-container .conversation-start-container:hover,
+    .sidebar-arenas-container .conversation-preview:hover {
+        background: @background-highlight;
     }
 
     .sidebar-matching-container {
 
         ul {
-            border-bottom: 1px solid @border-dark-color;
+            border-bottom: 1px solid @primary-dark-color;
         }
 
         li:last-child {
@@ -60,14 +68,9 @@
         float: right;
         margin-top: 4px; margin-left: 10px;
         padding: 3px 6px;
-        background-color: @background-color;
-        border: 1px solid @primary-dark-color;
-        color: @primary-dark-color;
         font-size: 12px;
 
         &:hover {
-            background-color: @primary-dark-color;
-            border-color: @primary-dark-color;
             color: white;
         }
 
@@ -80,11 +83,11 @@
         padding: 8px 15px;
 
         &:hover {
-            background-color: @btn-hover-color;
+            background-color: @background-color;
         }
 
         a {
-            color: @text-dark-color;
+            color: @text-light-color;
         }
     }
 
