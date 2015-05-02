@@ -238,7 +238,7 @@ conversation.controller("ConversationController", ["$scope", "$stateParams", "AP
 
     parseConversation = (response, scrollToEnd) ->
         conversation.id = response.id
-        conversation.title = response.title
+        if not isEditingTitle then conversation.title = response.title
         # The "own" summary is the summary of the user's own viewpoint, written by the opposing gladiator.
         # The "opposing" summary is the summary of the opposing viewpoint, written by the user.
         conversation.pendingSummaries = { own: "", opposing: "" }
