@@ -84,22 +84,26 @@ And /^I click on the Next button$/ do
     #step 'I press "Next"'
 end
 
+And /^I continue to the next survey page$/ do
+    page.find("#continue-button").click
+end
+
 Given /^I have navigated to the summary page$/ do
     step 'I have selected the topics "Climate", "Education", "Economy", "Technology", "LGBT Rights"'
     step 'I have navigated to the first survey questions page'
     step 'I should see "Climate"'
     step "I select response 1 for every question"
-    step 'I click on the Next button'
+    step "I continue to the next survey page"
     step 'I should see "Education"'
     step "I select response 1 for every question"
-    step 'I click on the Next button'
+    step "I continue to the next survey page"
     step 'I should see "Economy"'
     step "I select response 1 for every question"
-    step 'I click on the Next button'
+    step "I continue to the next survey page"
     step 'I should see "Technology"'
     step "I select response 1 for every question"
-    step 'I click on the Next button'
+    step "I continue to the next survey page"
     step 'I should see "LGBT Rights"'
     step "I select response 1 for every question"
-    step 'I click on the Next button'
+    step "I continue to the next survey page"
 end
