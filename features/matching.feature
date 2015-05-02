@@ -5,20 +5,28 @@ Feature: Provide a Gladiator a list of "compatible" Gladiators so Gladiators can
     I want to be able to match myself with a compatible Gladiator
 
 Background: I am a Gladiator that has completed the on-boarding process
-    Given the database is setup
+    Given there are several gladiators using the app
+    And I sign in as "george@email.com" with password "1234"
+    And I am on the home page
 
-Scenario: Request a list of compatible Gladiators to pair with
-    Given I am on the home page
-    Then I should see a button with "Match Me with Another Gladiator"
+Scenario: Presented with a list of matches
+    Given I expand the matches dropdown in the sidebar
+    Then I should see "Alice"
+    And I should see "Bob"
+    And I should see "Charlie"
+    And I should see "David"
+    And I should see "Edward"
 
-Scenario: Initiate Gladiation
-    Given that I press the "Match Me with Another Gladiator" button
-    And that the algorithm finds that I should have a good conversation with "Alice", "Bob", "Charlie", "David", and "Edward"
-    Then I should see the option to initiate Gladiation with "Alice"
-    And I should see the option to initiate Gladiation with "Edward"
+Scenario: Initiate gladiation
+    Given I expand the matches dropdown in the sidebar
+    And I match with "Alice"
+    And I expand the pending matches dropdown in the sidebar
+    Then I should see "Alice" in the pending matches dropdown
 
 Scenario: Accept an invitation
-    Given that "Alice" invited me to Gladiate
-    Then I should see a button to "Accept Alice's Invitation"
-    And I press the "Accept Alice's Invitation" button
-    Then I should be in an empty conversation
+    Given I expand the incoming matches dropdown in the sidebar
+    Then I should see "Bob" in the incoming matches dropdown
+    And I accept the invitation from "Bob"
+    And I wait 1 second
+    And I expand all names in the sidebar
+    Then I should see "There don't seem to be any conversations yet. Check back later!"

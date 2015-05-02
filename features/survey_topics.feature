@@ -18,11 +18,11 @@ Scenario: can unselect topic checkboxes
 
 Scenario: cannot proceed with less than 3 topics checked
     Given I click topics "Education", "Climate", "LGBT Rights"
-    Then I should not see a button with "Continue to Survey Questions"
-    And I should see a button with "2 More Topics to Continue"
+    Then I should not see "Continue to Survey Questions"
+    And I should see "2 More Topics to Continue"
 
 Scenario: can proceed with 5 topics checked
     Given I click topics "Education", "Climate", "Philosophy", "Technology", "Religion"
-    And I should see a button with "Continue to Survey Questions"
+    And I should see "Continue to Survey Questions"
 
 
