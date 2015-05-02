@@ -68,13 +68,6 @@ sidebar.controller("SidebarController", ["$scope", "$rootScope", "$state", "API"
 
     # Register events to trigger sidebar reloading
     $rootScope.$on("reloadSidebarArenas", reloadSidebarArenas)
-
-    # Refresh the sidebar every few seconds
-    # SIDEBAR_REFRESH_RATE = 5000
-    # setInterval(() ->
-    #     $rootScope.$broadcast("reloadSidebarArenas")
-    #     $rootScope.$broadcast("reloadSidebarNotifications")
-    # , SIDEBAR_REFRESH_RATE)
 ])
 
 sidebar.controller("SidebarMatchesController", ["$scope", "$rootScope", "$state", "API", ($scope, $rootScope, $state, API) ->
