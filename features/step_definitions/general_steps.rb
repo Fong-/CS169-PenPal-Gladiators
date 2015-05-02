@@ -27,7 +27,7 @@ end
 
 # Checking page content
 
-Then /I(?: should)?( not)? see "(.*)"/ do |should_not_see, content|
+Then /^I(?: should)?( not)? see "(.*)"$/ do |should_not_see, content|
     if should_not_see
         expect(page).not_to have_text(content)
     else
@@ -35,12 +35,12 @@ Then /I(?: should)?( not)? see "(.*)"/ do |should_not_see, content|
     end
 end
 
-Then /I(?: should)?( not)? see a button with "(.*)"/ do |should_not_see, content|
+Then /^I(?: should)?( not)? see a button with "(.*)"$/ do |should_not_see, content|
     begin
         page.find_button(content)
-        if should_not_see then expect { }.to raise_error(Capybara::ElementNotFound) end
+        if should_not_see then assert "Found a button with \"#{content}\" when not supposed to." end
     rescue Capybara::ElementNotFound
-        unless should_not_see then expect { raise Capybara::ElementNotFound }.to raise_error(Capybara::ElementNotFound) end
+        unless should_not_see then assert "Did not find a button with \"#{content}\" when supposed to." end
     end
 end
 
