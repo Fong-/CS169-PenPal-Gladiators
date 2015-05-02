@@ -86,7 +86,6 @@ conversation.controller("ConversationController", ["$scope", "$stateParams", "AP
     $scope.shouldDisplayEmptyConversationsMessage = -> !$scope.posts or $scope.posts.length == 0
     $scope.cancelPostClicked = -> closeTextEditor()
     $scope.escapeTextEditor = -> closeTextEditor()
-    $scope.submitPostText = -> if postSubmissionInProgress then "Sending..." else "Submit"
     $scope.authorDisplayNameForPost = (id) ->
         if postsById[id].type is "resolution"
             return "You and #{conversation.opponent.username}"
