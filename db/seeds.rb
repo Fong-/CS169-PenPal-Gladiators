@@ -7,7 +7,7 @@ require "digest"
 users = [
     {
     :email => "ben@bitdiddle.com",
-    :password => "bitsrocks",
+    :password => "password",
     :username => "ben",
     :political_blurb => "I like Ron Bitdiddle",
     :political_hero => "Ron Bitdiddle",
@@ -15,7 +15,7 @@ users = [
     },
     {
     :email => "generic@email.com",
-    :password => "asdfasdf",
+    :password => "password",
     :username => "generic",
     :political_blurb => "Go generic party!",
     :political_hero => "Generic George",
@@ -23,7 +23,7 @@ users = [
     },
     {
     :email => "bob@schmitt.com",
-    :password => "imboring",
+    :password => "password",
     :username => "bob",
     :political_blurb => "Bob for county clerk!",
     :political_hero => "ME!",
@@ -39,7 +39,7 @@ users = [
     },
     {
     :email => "rosenthal@policy.com",
-    :password => "publicpolicy",
+    :password => "password",
     :username => "rosenthal",
     :political_blurb => "Discuss your view on PenPal Gladiators!",
     :political_hero => "Thomas Jefferson",
@@ -582,21 +582,39 @@ UserSurveyResponse.create(:user => rosenthal, :survey_response => response)
 ####################################################
 
 arena = ben.arenas.create :user1 => ben, :user2 => bob
-conversation = arena.conversations.create :title => "Why is the US education system terrible?"
-conversation.posts.create :text => "It all starts in the home. If the parents don't care, no one will.", :author => ben
-conversation.posts.create :text => "No, it's actually because the unions have too much power.", :author => bob
-conversation.posts.create :text => "You, sir, are an idiot. This is really why the education system sucks. Because people like you go on and on about unions and never do anything to address the real problems at hand. Damnit Bob, get it together.", :author => ben
+conversation = arena.conversations.create :title => "What are the root problems with the US education system?"
+conversation.posts.create :text => "For most of American history, parents could expect that their children would, on average, be much better educated than they were. But that is no longer true. This development has serious consequences for the economy.", :author => ben
+conversation.posts.create :text => "Hi Ben! I have a few words to say about education here in the US. Companies pay better-educated people higher wages because they are more productive. The premium that employers pay to a college graduate compared with that to a high school graduate has soared since 1970, because of higher demand for technical and communication skills at the top of the scale and a collapse in demand for unskilled and semiskilled workers at the bottom.", :author => bob
+conversation.posts.create :text => "There are numerous causes of the less-than-satisfying economic growth in America: the retirement of the baby boomers, the withdrawal of working-age men from the labor force, the relentless rise in the inequality of the income distribution and, as I have written about elsewhere, a slowdown in technological innovation.", :author => ben
 conversation.user_did_edit_resolution bob.id, "The reality is that most children will not play professional sports, sing on Broadway or star in a film. The reality is that the most in-demand, high-paying college degrees are in science, technology, engineering and math (STEM) fields. But to engage our students in STEM, we must spark an early interest in math and science."
 
 arena = ben.arenas.create :user1 => ben, :user2 => wenson
 conversation = arena.conversations.create :title => "What is our role in mitigating climate change?"
-conversation.posts.create :text => "I believe everyone should go back to living in caves.", :author => ben
-conversation.posts.create :text => "No you.", :author => wenson
+conversation.posts.create :text => "I believe that if humans are to survive for another century, we must consume less. With millions of households across the country struggling to have enough to eat, and millions of tons of food being tossed in the garbage, food waste is increasingly being seen as a serious environmental and economic issue.", :author => ben
+conversation.posts.create :text => "I mainly agree with you, and I'd also like to add that the food discarded by retailers and consumers in the most developed countries would be more than enough to feed all of the world's 870 million hungry people, according to the Food and Agriculture Organization of the United Nations.", :author => wenson
+conversation.posts.create :text => "Furthermore, the problem is expected to grow worse as the world's population increases, the report found. By 2030, when the global middle class expands, consumer food waste will cost $600 billion a year, unless actions are taken to reduce the waste, according to the report.", :author => wenson
 conversation.user_did_edit_resolution ben.id, "The very idea of thinking about how to adapt to drastic environmental changes was basically considered taboo, an acknowledgment of defeat. 'Earlier on, you wouldn't use the 'A' word in polite conversation,' said Henry D. Jacoby, a professor at the Sloan School of Management at M.I.T. and a climate policy researcher - the 'A' word being 'adaptation.' 'People thought you weren't serious about mitigation. 'Oh, you're giving up.' But climate change defied that playbook. There was no immediate crisis to point to -- no bird eggs laced with DDT, no acid rain corroding city monuments. There was no one industry to target or overwhelming constituency to push legislators."
 
 conversation = arena.conversations.create :title => "Is technology to blame for the housing crisis in SF?"
-conversation.posts.create :text => "What housing crisis?", :author => wenson
+conversation.posts.create :text => "The locals say they don't like the tech folks pouring into town to work at places like Google. They're insular. They're driving up housing prices. And they fear those newcomers are more like invaders than people trying to fit into their new community. For once, this is not about San Francisco.", :author => wenson
 conversation.user_did_edit_resolution wenson.id, "While the technology boom has bred hostility, it has also brought San Francisco undeniable benefits. Mayor Edwin M. Lee credits the technology sector with helping to pull the city out of the recession, creating jobs and nourishing a thriving economy that is the envy of cash-starved cities across the country."
 
 arena = ben.arenas.create :user1 => ben, :user2 => rosenthal
-conversation = arena.conversations.create :title => "This conversation should be blank!"
+conversation = arena.conversations.create :title => "Can capital punishment be justified on moral or practical grounds?"
+conversation.posts.create :text => "When the United States at last abandons the abhorrent practice of capital punishment, the early years of the 21st century will stand out as a peculiar period during which otherwise reasonable people hotly debated how to kill other people while inflicting the least amount of constitutionally acceptable pain.", :author => rosenthal
+conversation.user_did_edit_resolution rosenthal.id, "Executions are brutal, savage events, and nothing the state tries to do can mask that reality. Nor should it. If we as a society want to carry out executions, we should be willing to face the fact that the state is committing a horrendous brutality on our behalf."
+
+arena = nick.arenas.create :user1 => nick, :user2 => wenson
+conversation = arena.conversations.create :title => "Should public schools be allowed to teach creationism as an alternative to evolution?"
+conversation.posts.create :text => "When public-school students enrolled in Texas' largest charter program open their biology workbooks, they will read that the fossil record is \"sketchy.\" That evolution is \"dogma\" and an \"unproved theory\" with no experimental basis. They will be told that leading scientists dispute the mechanisms of evolution and the age of the Earth. These are all lies.", :author => nick
+conversation.user_did_edit_resolution wenson.id, "Bringing creationism into a classroom by undermining evolution and \"noting ... competing theories\" is still unconstitutional. What's more, contrary to Gonzalez's statement, teaching about supernatural creation in the section on the origins of life is doing far more than noting competing theories."
+
+arena = wenson.arenas.create :user1 => wenson, :user2 => rosenthal
+conversation = arena.conversations.create :title => "Does the US have any moral obligation to accept undocumented immigrants?"
+conversation.posts.create :text => "Something happened while the immigration system in the United States got broken, something that should change the way we talk about fixing it. Years went by, and nature took its course. More than 11 million unauthorized immigrants settled into our communities; many formed families and had children. Now at least one of every 15 children living in the United States has an unauthorized parent, and nearly all of those children are native-born United States citizens. Think of that statistic, one in 15, the next time you drive by a school or a playground. Think of those children living with the knowledge that the federal government can take their parents away. Common sense tells you that the threat of a parent's deportation will exact a terrible price.", :author => wenson
+conversation.user_did_edit_resolution rosenthal.id, "The American sense of fairness and system of justice have long embraced the notion that the \"sins of the father\" should not be visited on the children. Reasonable minds can debate whether there is blame to attach to the parents. There is no reasonable case to be made for punishing their children, who are citizens of the United States. Yet they are punished every day."
+
+arena = bob.arenas.create :user1 => bob, :user2 => wenson
+conversation = arena.conversations.create :title => "Is US military intervention against ISIL justified in the middle east?"
+conversation.posts.create :text => "The impulse to create a joint force originates in a yearning for greater Arab unity that has haunted Middle Eastern political culture since the short-lived Arab Kingdom of Syria was crushed by the French in 1920, in the aftermath of World War I. The idea of a united Arab force also promises to bring together the financial resources of the Persian Gulf states with the manpower of Egypt, Jordan and Morocco. This responds to traditional Arab frustrations about the separation of large populations from major oil revenues (except in Iraq).", :author => wenson
+conversation.user_did_edit_resolution bob.id, "There will have to be a significant transformation of relations between Arab governments. Otherwise, as wags have already noted, the joint Arab force could be seen as a \"triple oxymoron.\" Not \"joint,\" because of divisions among its members. Not \"Arab,\" because of sectarian differences, as well as significant numbers of Pakistani, Turkish or other non-Arab troops. And not a \"force,\" because it either can't be deployed or proves ineffective. Even if the plan cannot immediately be implemented, however, the fact that key Arab states are pursuing it demonstrates how gravely they view their strategic situation. After becoming over-reliant on the United States, they fear the Middle East is entering a \"post-American\" period. So they must move quickly to try to defend their interests. Several Arab commentators have concluded that since there is \"no alternative,\" military integration is \"inevitable.\" The members of the Arab League are clearly serious about trying. Whether they will prove capable of creating and deploying a joint military force remains to be seen."
