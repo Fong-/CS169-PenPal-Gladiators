@@ -1,19 +1,29 @@
-<div id="home-container">
+<div id="home-container" class="{{homeScrollableClass()}}">
     <div id="newsfeed-container">
-        <div id="newsfeed-heading" class="header">Trending Resolutions</div>
+        <div id="newsfeed-heading" class="header {{newsfeedHeadingOpacityClass()}}">Trending Resolutions</div>
         <p ng-if="shouldDisplayNoConversationsMessage()" id="newsfeed-subheading">
             There don't seem to be any conversations yet. Check back later!
         </p>
-        <div class="newsfeed-content-container">
+        <div class="newsfeed-content-container" ng-click="closeConversationPopup()">
+            <div id="conversation-popup" ng-if="shouldDisplayConversationPopup()" ng-click="$event.stopPropagation()">
+                <p class="header conversation-popup-title">{{popupConversationTitle()}}</p>
+                <div class="conversation-popup-posts">
+                    <div ng-repeat="content in openedConversationPosts" class="conversation-popup-post">
+                        <p class="conversation-popup-author">{{content.name}} said:</p>
+                        <p class="conversation-popup-text">{{content.text}}</p>
+                    </div>
+                </div>
+                <a class="btn" ng-click="closeConversationPopup()">Back</a>
+            </div>
             <div class="column">
-                <div ng-repeat="conversation in conversations[0]" class="newsfeed-conversation-container">
+                <div ng-repeat="conversation in conversations[0]" class="newsfeed-conversation-container {{conversationPopupClass()}}" ng-click="conversationClicked(conversation.id)">
                     <p class="newsfeed-conversation-title">{{conversation.title}}</p>
                     <p class="newsfeed-conversation-text">{{conversation.resolution}}</p>
                 </div>
             </div>
 
             <div class="column">
-                <div ng-repeat="conversation in conversations[1]" class="newsfeed-conversation-container">
+                <div ng-repeat="conversation in conversations[1]" class="newsfeed-conversation-container {{conversationPopupClass()}}" ng-click="conversationClicked(conversation.id)">
                     <p class="newsfeed-conversation-title">{{conversation.title}}</p>
                     <p class="newsfeed-conversation-text">{{conversation.resolution}}</p>
                 </div>

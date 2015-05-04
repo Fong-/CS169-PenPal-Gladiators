@@ -17,9 +17,19 @@ class ConversationsController < ApplicationController
         end
     end
 
+    def get_public_content
+        conversation = Conversation.find_by_id params[:id]
+        if conversation.present?
+            render :json => conversation.public_content
+        else
+            render_error(:resource_not_found, :resource => :conversation)
+        end
+    end
+
     def get_with_resolutions
         conversations = Conversation.recent_with_resolutions(20).map { |conversation|
             {
+                :id => conversation.id,
                 :title => conversation.title,
                 :resolution => conversation.resolution
             }
