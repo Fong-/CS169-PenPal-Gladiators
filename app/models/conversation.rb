@@ -25,6 +25,28 @@ class Conversation < ActiveRecord::Base
         }
     end
 
+    def public_content(user1_name = "The first gladiator", user2_name = "The second gladiator")
+        user1_id = arena.user1_id
+        user2_id = arena.user2_id
+        content = posts.map { |post|
+            {
+                :name => post.author.id == user1_id ? user1_name : user2_name,
+                :text => post.text
+            }
+        }
+        content.reverse!
+        if resolution_state.to_s == "in_progress"
+            content.append({
+                :name => resolution_updated_by_id == user1_id ? user1_name : user2_name,
+                :text => resolution
+            })
+        end
+        return {
+            :title => title,
+            :posts => content
+        }
+    end
+
     # The columns summary_of_first and summary_of_second respectively refer to the summaries of
     # the viewpoints of the first and second gladiator, i.e. the summary_of_first is the summary
     # of user1's view written by user2.
