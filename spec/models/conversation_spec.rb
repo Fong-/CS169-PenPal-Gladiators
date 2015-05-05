@@ -114,5 +114,18 @@ describe Conversation do
             expect(result[1]).to eq ["Convo2", "Hello world"]
             expect(result[2]).to eq ["Convo3", "Foo bar"]
         end
+
+        it "should return the public content of a conversation" do
+            result = @conversation.public_content "a", "b"
+            expect(result[:title]).to eq "Happy feet"
+            posts = result[:posts]
+            expect(posts.length).to eq 2
+            expect(posts[0][:name]).to eq "a"
+            expect(posts[1][:text]).to eq "Good conversation"
+            @conversation.user_did_edit_resolution(@ben.id, "this is Ben writing the resolution")
+            result = @conversation.public_content
+            expect(result[:posts].length).to eq 3
+            expect(result[:posts][2][:text]).to eq "this is Ben writing the resolution"
+        end
     end
 end
