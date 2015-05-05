@@ -1,23 +1,5 @@
 conversation = angular.module("Conversation", ["SharedServices"])
 
-conversation.directive("onEscape", ->
-    (scope, element, attributes) ->
-        element.bind("keydown keypress", (event) ->
-            if event.which == 27
-                scope.$apply(-> scope.$eval(attributes.onEscape))
-                event.preventDefault()
-        )
-)
-
-conversation.directive("onEnter", ->
-    (scope, element, attributes) ->
-        element.bind("keydown keypress", (event) ->
-            if event.which == 13
-                scope.$apply(-> scope.$eval(attributes.onEnter))
-                event.preventDefault()
-        )
-)
-
 conversation.controller("ConversationController", ["$scope", "$stateParams", "API", "TimeUtil", "AppState", "$rootScope", "ConversationService", "ConversationData", ($scope, $stateParams, API, TimeUtil, AppState, $rootScope, ConversationService, ConversationData) ->
     # Constants
     POST_SUBMISSION_TIMEOUT_PERIOD_MS = 5000

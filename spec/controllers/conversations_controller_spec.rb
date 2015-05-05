@@ -191,16 +191,46 @@ describe ConversationsController do
     context "#get_with_resolutions" do
         it "should return recent conversations with resolutions" do
             controller.stub(:check_access_token).and_return(true)
-            conv1 = double "first conversation", :title => "first", :resolution => "first resolution"
-            conv2 = double "second conversation", :title => "second", :resolution => "second resolution"
+            conv1 = double "first conversation", :title => "first", :resolution => "first resolution", :id => 1
+            conv2 = double "second conversation", :title => "second", :resolution => "second resolution", :id => 2
             Conversation.stub(:recent_with_resolutions).and_return([conv1, conv2])
             get "get_with_resolutions"
             response_object = JSON.parse(response.body)
             expect(response_object["conversations"]).to_not eq nil
             convos = response_object["conversations"]
             expect(convos.length).to eq 2
-            expect(convos[0]).to eq({ "title" => "first", "resolution" => "first resolution" })
-            expect(convos[1]).to eq({ "title" => "second", "resolution" => "second resolution" })
+            expect(convos[0]).to eq({ "id" => 1, "title" => "first", "resolution" => "first resolution" })
+            expect(convos[1]).to eq({ "id" => 2, "title" => "second", "resolution" => "second resolution" })
+        end
+    end
+
+    context "#get_public_content" do
+        it "should return public content of a conversation" do
+            controller.stub(:check_access_token).and_return(true)
+            conv = double "conversation", :title => "first", :public_content => {
+                :title => "foo",
+                :posts => [{:name => "name", :text => "hello world"}]
+            }
+            Conversation.stub(:find_by_id).and_return(conv)
+            get "get_public_content", :id => 1
+            response_object = JSON.parse(response.body)
+            expect(response_object["error"]).to eq nil
+            expect(response_object["title"]).to_not eq nil
+            posts = response_object["posts"]
+            expect(posts.length).to eq 1
+            expect(posts[0]).to eq({ "name" => "name", "text" => "hello world" })
+        end
+
+        it "should error when the conversation does not exist" do
+            controller.stub(:check_access_token).and_return(true)
+            conv = double "conversation", :title => "first", :public_content => {
+                :title => "foo",
+                :posts => [{:name => "name", :text => "hello world"}]
+            }
+            Conversation.stub(:find_by_id).and_return(nil)
+            get "get_public_content", :id => 1
+            response_object = JSON.parse(response.body)
+            expect(response_object["error"]).to_not eq nil
         end
     end
 end

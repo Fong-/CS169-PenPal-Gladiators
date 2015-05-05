@@ -36,6 +36,7 @@ CS169PenpalGladiators::Application.routes.draw do
     post "/api/v1/conversation/approve_resolution/:conversation_id" => "conversations#approve_resolution"
     post "/api/v1/conversation/edit_title/:conversation_id" => "conversations#edit_title"
     get "/api/v1/conversations/recent_with_resolutions" => "conversations#get_with_resolutions"
+    get "/api/v1/conversation/public/:id" => "conversations#get_public_content"
     # Public routes
     get "/" => "pages#landingpage"
     get "/login" => "pages#startpage"
