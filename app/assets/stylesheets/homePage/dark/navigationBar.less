@@ -1,38 +1,46 @@
-@import "../constants.less";
-@import "../mixins.less";
+@import "../../dark/constants.less";
+@import "../../dark/mixins.less";
 @import "homePageStyle.less";
 
 #navigation-container {
     height: @navbar-height;
 
     .navbar {
-        background-color: @primary-dark-color;
-        border: none;
+        background-color: @nav-bar-color;
+        border-bottom: 1px solid @border-light-color;
+        box-shadow: 0 2px 6px -2px @border-dark-color;
     }
 
     .navbar-toggle {
-        background-color: @primary-dark-color;
-        border-color: white;
+        background-color: transparent;
+        border: none;
+        padding-left: 0px;
+        padding-right: 0px;
+        color: @text-light-color;
+        margin-right: 0px;
 
         .icon-bar {
-            background-color: white;
+            background-color: @primary-dark-color;
         }
 
-        &:hover {
-            background-color: @background-color;
-            border-color: @primary-dark-color;
-
+        &:hover, &:active, &:focus {
             .icon-bar {
-                background-color: @primary-dark-color;
+                background-color: @btn-hover-color;
             }
         }
     }
 
+    .navbar-brand:hover {
+        color: @background-color;
+    }
+
     .navbar-brand {
-        color: white;
-        font-weight: 100;
+        color: @nav-text-color;
+        text-transform: uppercase;
+        font-weight: 400;
         font-size: 18px;
-        padding-left: 0; padding-right: 0;
+        padding-left: 0;
+        padding-right: 0;
     }
 
     @media(min-width: 768px) {
@@ -44,20 +52,22 @@
             margin: 0;
         }
 
-        .btn {
-            height: 30px;
-            margin-left: 10px;
+        #logout_nav {
             border: 1px solid @primary-dark-color;
-            background-color: @background-color;
-            color: @text-dark-color;
-            font-size: 14px;
-            line-height: 14px;
-
+            background-color: white;
+            color: @text-light-color;
             &:hover {
                 border-color: white;
                 background-color: @primary-dark-color;
                 color: white;
             }
+        }
+
+        .btn {
+            height: 30px;
+            margin-left: 10px;
+            font-size: 14px;
+            line-height: 14px;
         }
     }
 
@@ -68,7 +78,7 @@
 
         .navbar-collapse {
             border: none;
-            background-color: @primary-dark-color-2;
+            background-color: @primary-dark-color;
             margin: 0 -@global-padding-xs;
         }
 
