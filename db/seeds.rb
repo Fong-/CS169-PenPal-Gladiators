@@ -138,12 +138,12 @@ topic = Topic.find_by_name "Education"
 survey_question = topic.survey_questions.create :text => "Should higher education be free for everyone?", :index => 0
 survey_responses = [{
     :text => "Yes",
-    :summary_text => "I think higher education should not be free for everyone.",
+    :summary_text => "I think higher education should be free for everyone.",
     :index => 0
 },
 {
     :text => "No",
-    :summary_text => "I think higher education should be free for everyone.",
+    :summary_text => "I think higher education should not be free for everyone.",
     :index => 1
 }].map { |data| survey_question.survey_responses.create data }
 
