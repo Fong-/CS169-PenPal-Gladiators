@@ -29,7 +29,7 @@ surveySummary.controller("SurveySummaryController", ["$scope", "$http", "$state"
     $scope.handleRegister = ->
         $scope.submitRegistrationText = "Registering..."
         $scope.disableRegistration = true
-        API.register(StartPageStateData.email, StartPageStateData.password)
+        API.register(StartPageStateData.email, StartPageStateData.password, aggregateSurveyResponseIds())
             .success (result) ->
                 $cookieStore.put("accessToken", result["token"])
                 $window.location.href = "/home"
@@ -40,4 +40,12 @@ surveySummary.controller("SurveySummaryController", ["$scope", "$http", "$state"
                 $scope.disableRegistration = false
 
         return
+
+    aggregateSurveyResponseIds = ->
+        responseIds = []
+        for topicId of StartPageStateData.responsesForSelectedTopics
+            responses = StartPageStateData.responsesForSelectedTopics[topicId]
+            for responseId of responses
+                if responses[responseId] then responseIds.push(responseId)
+        return responseIds
 ])

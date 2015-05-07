@@ -232,7 +232,7 @@ describe UsersController, :type => :controller do
         end
 
         it "should register a new user given an email and password" do
-            post "register", { :email => "bob@example.com", :password => "12345678" }
+            post "register", { :email => "bob@example.com", :password => "12345678", :responses => [1, 5, 8, 10] }
             expect(User.all.length).to eq(2)
             kevin = User.find_by_email("bob@example.com")
             expect(kevin.password).to eq(@sha256.base64digest("12345678"))

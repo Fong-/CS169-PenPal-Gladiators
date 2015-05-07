@@ -8,8 +8,9 @@ class ResponseWeight < ActiveRecord::Base
     query2 = ResponseWeight.where(:response1_id => response2.to_i, :response2_id => response1.to_i)
     if query1.count != 0
         return query1[0].weight
-    else
+    elsif query2.count != 0
         return query2[0].weight
     end
+    return 0
   end
 end
