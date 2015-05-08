@@ -23,9 +23,9 @@ angular.module("SharedServices").service("API", ["$http", "$cookieStore", ($http
         request = generateRequest("login")
         $http.post(request, { email: email, password: password })
 
-    this.register = (email, password) ->
+    this.register = (email, password, responseIds) ->
         request = generateRequest("register")
-        $http.post(request, { email: email, password: password })
+        $http.post(request, { email: email, password: password, responses: responseIds })
 
     this.canRegister = (email, password) ->
         request = generateRequest("register")
