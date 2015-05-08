@@ -1,16 +1,14 @@
 <!DOCTYPE html>
-<html ng-app="HomePage" ng-controller="CSS as cssController">
+<html ng-app="HomePage" ng-controller="CSS">
     <head>
         <title>The Coliseum</title>
         <script src="/assets/homePage.js"></script>
         <link rel="stylesheet" type="text/css" href="/assets/bootstrap.min.css"/>
         <link rel="stylesheet" type="text/css" href="/assets/bootflat.min.css"/>
         <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" type="text/css" href="/assets/global.css"/>
-        <link rel="stylesheet" type="text/css" href="/assets/homePage{{ cssController.cssOption }}.css"/>
+        <link rel="stylesheet" type="text/css" ng-href="/assets/themes/{{ theme }}/homePage.css"/>
     </head>
     <body>
-        <button id="theme-selector" ng-class="cssController.buttonClass()" class="btn btn-primary" ng-click="cssController.toggleTheme()">{{ cssController.cssOption === "" ? 'Light Mode' : 'Default' }}</button>
         <div id="homepage-container">
             <div ui-view="navbar"></div>
             <div ui-view="sidebar"></div>

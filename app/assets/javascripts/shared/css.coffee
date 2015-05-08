@@ -1,21 +1,13 @@
 css = angular.module("CSS", ["SharedServices"])
 
-css.controller("CSS", ["AppState", (AppState) ->
-    self = this
+css.controller("CSS", ["$scope", "AppState", ($scope, AppState) ->
+    DEFAULT_THEME = "dark"
 
-    self.setThemeFromSaved = () ->
-        self.cssOption = AppState.theme
+    $scope.setThemeFromSaved = () ->
+        if not AppState.theme? or AppState.theme is ""
+            AppState.setTheme("dark")
 
-    self.cssOption = self.setThemeFromSaved()
+        $scope.theme = AppState.theme
 
-    self.toggleTheme = () ->
-        if self.cssOption == "Light"
-            AppState.setTheme("")
-            self.setThemeFromSaved()
-        else
-            AppState.setTheme("Light")
-            self.setThemeFromSaved()
-
-    self.buttonClass = () ->
-        if self.cssOption == '' then '' else 'select-default'
+    $scope.setThemeFromSaved()
 ])

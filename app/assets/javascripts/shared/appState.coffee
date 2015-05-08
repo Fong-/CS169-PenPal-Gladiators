@@ -3,9 +3,6 @@ angular.module("SharedServices").service("AppState", ["$cookieStore", ($cookieSt
 
     theme = $cookieStore.get("theme")
 
-    if theme == null
-        theme = ""
-
     # User state
     Object.defineProperty(this, "user", {
         get: () -> user
