@@ -1,20 +1,78 @@
 PenPal Gladiators
 Thanks to all who contributed and helped along the way.
 
+Legend
+======
+
+N: name
+G: github
+E: email
+D: description
+
 Project Creators
-Kevin Wu (ImpGuard)
-Wenson Hsieh (whsieh)
-Nick Fong (Fong-)
-Leo Kam (leohtkam)
-Bryan Huang (kuu2)
-Lucas Yan (smartfuse)
+================
 
 All project members are students of the University of California, Berkeley.
 
-The project concept is by Professor Larry Rosenthal.
-We also appreciate the mentorship and guidance from Professor Armando Fox (teaching us the foundations of good software practices and enforcing constant testing and refactoring to make our project maintainable) and our TA Craig Hiller (conducting our iteration reviews and keeping tabs on our progress).
+(N): Kevin Wu
+(G): ImpGuard
+(E): kevinwu.business@gmail.com
+(D): Managed this group of delinquents
 
-Thanks to Emily Chen for helping us on the design of the poster and Martin Arreola, Jeffrey Hsu, and Erica Liu for advice regarding app aesthetics.
+(N): Wenson Hsieh
+(G): whsieh
+(D): Programmed a lot of stuffs
+
+(N): Nick Fong
+(G): Fong-
+(D): The robotic voice for the trailer
+
+(N): Leo Kam
+(G): leohtkam
+(E): leohtkam@gmail.com
+(D): Whose this guy?
+
+(N): Bryan Huang
+(G): kuu2
+(D): Is he here yet?
+
+(N): Lucas Yan
+(G): smartfuse
+(E): lucasyan@gmail.com
+(D): LUCAS!
+
+Contributors
+============
+
+The project was concieved within the confines of the Berkeley Spring 2015
+rendition of CS 169. We'd like to thank everyone there for helping us make this
+application possible!
+
+(N): Larry Rosenthal
+(D): Project concept creator and project mentor
+
+(N): Steven Cataldo
+(D): Larry's sidekick in training
+
+(N): Armando Fox
+(D): Our benevolent leader and professor who taught the foundations of good
+software practices and enforcing constant testing and refactoring
+
+(N): Craig Hiller
+(D): The TA for the course who conducted iteration reviews
+
+(N): Emily Cheng
+(E): emiriic@gmail.com
+(D): Helped design the poster for the project
+
+(N): Martin Arreola
+(D): Provided advice regarding app aesthetics
+
+(N): Jeffrey Hsu
+(D): Provided advice regarding app aesthetics
+
+(N): Erica Liu
+(D): Provided advice regarding app aesthetics
 
 Go bears,
 PenPal Gladiators Team
