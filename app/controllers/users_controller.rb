@@ -43,8 +43,11 @@ class UsersController < ApplicationController
     end
 
     def register
-        if can_user_register(params)
+        if can_user_register(params) and params[:responses] != nil
             user = User.create :email => params[:email], :password => params[:password]
+            params[:responses].each do |id|
+                UserSurveyResponse.create :user => user, :survey_response => SurveyResponse.find_by_id(id)
+            end
             render :json => {:token => user.access_token}
         end
     end
