@@ -65,16 +65,15 @@
         }
 
         #profile_nav, #logout_nav {
-            background: none;
-            border-radius: 0px;
-            border: none;
             font-family: 'Avenir Next LT Pro Regular';
+            border: none;
             color: white;
-            &:hover {
-                border-color: white;
-            }
             background: @primary-dark-color-2;
             margin-left: 15px;
+
+            &:hover {
+                background: @btn-hover-color;
+            }
         }
 
         .btn {
@@ -109,7 +108,6 @@
             width: 100%; height: 100%;
             padding: 8px @global-padding-xs;
             border: none;
-            border-radius: unset;
             background: unset;
             color: white;
             font-size: 14px;
