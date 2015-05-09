@@ -30,8 +30,8 @@ Git documentation} if you're not familiar with Git.
 
 
 \subsubsection{PenPal Gladiators Git Conventions}
-All features and changes are performed on a branch.  This is called “branch per
-feature” development.  When a feature has been reviewed and is passing all tests
+All features and changes are performed on a branch.  This is called ``branch per
+feature" development.  When a feature has been reviewed and is passing all tests
 (e.g. via CI), rebase the branch on the iteration branch (if applicable) or
 master branch (if not) and merge into the iteration branch or master by running:
 \begin{verbatim}
@@ -58,12 +58,13 @@ duplication and excessive complexity before they turn into maintainability
 problems.
 
 \subsection{TravisCI}
-TravisCI is an automated testing suite for our repo. Links to it can be found on
-our GitHub repo.  Register for a \href{https://travis-ci.org/}{TravisCI} account
-and link your GitHub repository. While CodeClimate checks for the style of the
-code, TravisCI runs the app's test suite for correctness. Always look at the
-TravisCI results before merging anything to master, and always write tests for
-new features as they're implemented.
+TravisCI is an automated testing suite for our repository. Links to it can be
+found on our GitHub repository.  Register for a
+\href{https://travis-ci.org/}{TravisCI} account and link your GitHub repository.
+While CodeClimate checks for the style of the code, TravisCI runs the app's test
+suite for correctness. Always look at the TravisCI results before merging
+anything to master, and always write tests for new features as they're
+implemented.
 
 \section{Customizing Content and Options}
 \subsection{Overview}
@@ -134,7 +135,7 @@ These reside in \texttt{app/models}:
     \item \texttt{Topic} -- represents a survey topic.
     \item \texttt{SurveyQuestion} -- belongs to a survey topic, represents a question in the topic
     \item \texttt{SurveyResponse} -- belongs to a survey question, represents a possible answer to a question
-    \item \texttt{UserSurveyResponse} -- represent’s a user’s response to a question, Belongs to a SurveyResposne as well as a User
+    \item \texttt{UserSurveyResponse} -- represents a user's response to a question, Belongs to a SurveyResposne as well as a User
     \item \texttt{ResponseWeight} -- determines the score or ranking between two answers to the same question, a higher score will increase the likelihood of two users with those answers being matched.
     \item \texttt{Post} -- represents a message in a conversation
     \item \texttt{Arena} -- represents a match between two users
