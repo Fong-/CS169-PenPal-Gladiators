@@ -17,12 +17,12 @@
     }
 
     .navbar {
-        background-color: @nav-bar-color;
-        border-bottom: 1px solid @border-light-color;
+        background: @nav-bar-color;
+        border-bottom: none;
     }
 
     .navbar-toggle {
-        background-color: transparent;
+        background: transparent;
         border: none;
         padding-left: 0px;
         padding-right: 0px;
@@ -30,18 +30,14 @@
         margin-right: 0px;
 
         .icon-bar {
-            background-color: @primary-dark-color;
+            background: @primary-dark-color;
         }
 
-        &:hover, &:active {
+        &:hover {
             .icon-bar {
-                background-color: @btn-hover-color;
+                background: @btn-hover-color;
             }
         }
-    }
-
-    .navbar-brand:hover {
-        background: @btn-hover-color;
     }
 
     .navbar-brand {
@@ -51,8 +47,12 @@
         padding-left: 20px;
         padding-right: 20px;
         text-transform: uppercase;
-        background: @primary-dark-color;
+        background: @primary-dark-color-2;
         font-family: 'Avenir Next LT Pro Regular';
+
+        &:hover {
+            background: @primary-dark-color;
+        }
     }
 
     @media(min-width: 768px) {
@@ -65,16 +65,15 @@
         }
 
         #profile_nav, #logout_nav {
-            background: none;
+            font-family: 'Avenir Next LT Pro Regular';
             border: none;
-            font-family: 'Avenir Next LT Pro Demi';
-            box-shadow: none;
-            color: @text-light-color;
-            &:hover {
-                border-color: white;
-                color: @primary-dark-color;
-            }
+            color: white;
+            background: @primary-dark-color-2;
             margin-left: 15px;
+
+            &:hover {
+                background: @btn-hover-color;
+            }
         }
 
         .btn {
@@ -92,7 +91,7 @@
 
         .navbar-collapse {
             border: none;
-            background-color: @primary-dark-color;
+            background: @primary-dark-color-2;
             margin: 0 -@global-padding-xs;
         }
 
@@ -103,14 +102,17 @@
 
         .nav li {
             border-top: 1px solid white;
+
+            &:hover {
+                background-color: @primary-dark-color;
+            }
         }
 
         .btn {
             width: 100%; height: 100%;
             padding: 8px @global-padding-xs;
             border: none;
-            border-radius: unset;
-            background-color: unset;
+            background: none;
             color: white;
             font-size: 14px;
             font-weight: 100;
