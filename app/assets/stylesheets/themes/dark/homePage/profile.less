@@ -2,26 +2,29 @@
 @import "../../../mixins.less";
 
 #profile-container {
-    height: calc(~"100vh - @{navbar-height}");
+    color: @text-lighter-color;
     font-size: 14px;
     font-weight: 400;
+
     overflow-y: auto;
-    color: @text-light-color;
 
     @media(min-width: 768px) {
+        height: calc(~"100vh - @{navbar-height}");
         width: calc(~"100vw - @{sidebar-width}");
-    }
-
-    @media(max-width: 768px) {
-        width: 100%;
-    }
-
-    @media(min-width: 768px) {
         padding: 30px @global-padding-md;
     }
 
     @media(max-width: 768px) {
+        width: 100%;
         padding: 30px @global-padding-xs;
+    }
+
+    #profile {
+        padding: 30px;
+        border: 1px solid @border-light-color;
+
+        background-color: white;
+        box-shadow: 0 2px 8px -2px @border-light-color;
     }
 
     .user-avatar {
@@ -31,10 +34,10 @@
     }
 
     .title {
-        display: inline-block;
+        text-align: right;
 
-        .btn {
-            margin-top: -4px;
+        .name {
+            font-size: 20px;
         }
     }
 
@@ -44,7 +47,12 @@
         font-weight: 400;
     }
 
+    .header {
+        color: @text-dark-color;
+    }
+
     .subheader {
+        color: @text-dark-color;
         font-size: 16px;
         font-weight: 400;
         margin-top: 10px;
