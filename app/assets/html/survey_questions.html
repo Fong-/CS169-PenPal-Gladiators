@@ -7,12 +7,13 @@
             <div class="question-responses-container">
                 <div class="response" ng-repeat="response in question.survey_responses">
                     <input id="response{{$parent.$index+1}}-{{$index+1}}" type="checkbox" ng-model="questionCheckModel[response.id]" ng-change="handleResponseSelected(question,response)"/>
-                    <label><span/></label><span class="response-text">{{ response.text }}</span>
+                    <div class="response-text">{{ response.text }}</div>
                 </div>
-                <br>
             </div>
         </div>
     </div>
-    <button class="btn btn-primary" id="continue-button" type="button" ng-disabled="disableNextButton()" ng-click="handleAdvance()">{{nextButtonValue()}}</button>
-    <button class="btn btn-secondary" type="button", ng-click="handleBack()" ng-hide="hideBackButton()">Back</button>
+    <div class="controls">
+        <button class="btn btn-secondary" type="button", ng-click="handleBack()" ng-hide="hideBackButton()">Back</button>
+        <button class="btn btn-primary" id="continue-button" type="button" ng-disabled="disableNextButton()" ng-click="handleAdvance()">{{nextButtonValue()}}</button>
+    </div>
 </div>

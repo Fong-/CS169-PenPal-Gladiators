@@ -1,0 +1,72 @@
+@import "../constants.less";
+@import "constants.less";
+@import "../../../mixins.less";
+
+#survey-summary-container {
+    position: relative;
+    .flex();
+    .flex-direction(column);
+    width: 2 * @num-topics-per-row * @topic-icon-margin + @num-topics-per-row * @topic-icon-display-size + 62px;
+    max-width: 100%;
+    margin: 40px auto;
+    padding: 30px;
+    padding-bottom: 75px;
+    .card-dark();
+    border-radius: 0px;
+
+    background: white;
+
+    font-size: 14px;
+    text-align: left;
+    color: @text-lighter-color;
+
+    @media(min-width: 768px) {
+        height: 100%;
+        max-height: 640px;
+    }
+
+    @media(max-width: 768px) {
+        height: auto;
+    }
+
+    .header {
+        color: @text-dark-color;
+    }
+
+    #topic-summaries-container {
+        .flex-grow(2);
+        margin-top: 15px;
+        overflow-y: auto;
+
+        .topic {
+            color: @text-dark-color;
+            font-size: 16px;
+        }
+
+        .topic-summary {
+            padding: 20px 0;
+            border-top: 1px dotted @border-dark-color;
+
+            &:first-child {
+                border-top: none;
+            }
+        }
+
+        .btn {
+            float: right;
+            padding: 6px 12px 3px 12px;
+        }
+    }
+
+    #submit {
+        position: absolute;
+        bottom: 30px; right: 30px;
+
+        #status {
+            display: inline-block;
+            vertical-align: middle;
+            color: red;
+            padding-right: 10px;
+        }
+    }
+}

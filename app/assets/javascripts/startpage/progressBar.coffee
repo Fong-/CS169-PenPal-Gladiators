@@ -13,7 +13,7 @@ progressBar.controller("ProgressBarController", ["$scope", "StartPageStateData",
         questionPercent = numQuestionsCompleted / numQuestions
 
         percentPerTopic = 1 / numSelectedTopics
-        topicPercentBuffer = 0.1 * percentPerTopic
+        topicPercentBuffer = 0
 
         if numQuestions is 0
             return topicPercent * 100
