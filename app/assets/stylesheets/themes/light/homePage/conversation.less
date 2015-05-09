@@ -9,23 +9,17 @@
     @posts-size-ratio: 0.6;
     @editor-size-ratio: 0.4;
 
-    height: calc(~"100vh - @{navbar-height}");
     position: relative;
     word-wrap: break-word;
 
     @media(min-width: 768px) {
         width: calc(~"100vw - @{sidebar-width}");
-    }
-
-    @media(max-width: 768px) {
-        width: 100%;
-    }
-
-    @media(min-width: 768px) {
+        height: calc(~"100vh - @{navbar-height}");
         padding: @vertical-padding @global-padding-md;
     }
 
     @media(max-width: 768px) {
+        width: 100%;
         padding: @vertical-padding @global-padding-xs;
     }
 
@@ -50,23 +44,29 @@
     }
 
     #posts-container {
-        height: calc(~"100vh - @{navbar-height} - 3 * @{vertical-padding} - @{title-height} - @{button-height}");
+        @media(min-width: 768px) {
+            height: calc(~"100vh - @{navbar-height} - 3 * @{vertical-padding} - @{title-height} - @{button-height}");
 
-        &.posts-shortened {
-            height: calc(~"@{posts-size-ratio} * (100vh - @{navbar-height} - 4 * @{vertical-padding} - @{title-height} - @{button-height})");
+            &.posts-shortened {
+                height: calc(~"@{posts-size-ratio} * (100vh - @{navbar-height} - 4 * @{vertical-padding} - @{title-height} - @{button-height})");
+            }
         }
 
+        @media(max-width: 768px) {
+            max-height: 640px;
+        }
+
+        background: white;
         padding: 15px;
         margin-bottom: @vertical-padding;
-        border-top: 1px solid @border-dark-color;
-        border-bottom: 1px solid @border-dark-color;
+        box-shadow: 0 2px 6px -2px #737575;
         overflow-y: auto;
 
         .post-content {
             display: flex;
             justify-content: space-between;
             padding: 10px 0;
-            border-bottom: 1px solid @border-light-color;
+            border-bottom: 1px dotted @border-light-color;
 
             &:first-child {
                 padding-top: 0;
@@ -92,11 +92,11 @@
         }
 
         .post-content-resolution:after {
-            background-color: @primary-dark-color;
+            background: @primary-dark-color;
         }
 
         .post-content-summary:after {
-            background-color: @text-lighter-color;
+            background: @text-lighter-color;
         }
 
         .post-data-container {
@@ -156,7 +156,7 @@
 
         .editor-left-container, textarea {
             height: 100%;
-            background-color: white;
+            background: white;
             border: 1px solid @border-light-color;
             border-radius: 0px;
             font-size: 14px;
