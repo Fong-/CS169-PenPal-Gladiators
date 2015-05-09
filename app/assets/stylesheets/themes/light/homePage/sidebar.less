@@ -7,10 +7,6 @@
     overflow-y: auto;
     background: white;
 
-    @media(max-width: 768px) {
-
-    }
-
     @media(min-width: 768px) {
         position: fixed;
         top: @navbar-height; right: 0;
@@ -24,7 +20,6 @@
     .sidebar-arenas-container .conversation-start-container,
     .sidebar-matching-container .user {
         border-top: 1px dotted @border-light-color;
-        background: @background-accent;
     }
 
     .sidebar-matching-container .user:hover,
@@ -82,7 +77,7 @@
         padding: 8px 15px;
 
         &:hover {
-            background-color: @background-color;
+            background: @background-color;
         }
 
         a {
@@ -101,7 +96,7 @@
     }
 
     .conversation-title {
-        font-weight: 400;
+        font-family: "Avenir Next LT Pro Demi";
         line-height: 1.7;
     }
 
@@ -119,7 +114,6 @@
 
     .user-avatar {
         margin-right: 5px;
-        border-radius: 0px;
         width: 35px; height: 35px;
     }
 

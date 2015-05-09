@@ -8,3 +8,20 @@ body {
 .header {
     font-size: 20px;
 }
+
+.container {
+    position: relative;
+    height: 100%;
+}
+
+#survey-container {
+    width: 100%;
+
+    @media(min-width: 768px) {
+        height: calc(~"100% - @{progress-bar-total-height} - @{progress-bar-padding-top}");
+    }
+
+    @media(max-width: 768px) {
+        margin-bottom: 30px;
+    }
+}

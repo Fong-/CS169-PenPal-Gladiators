@@ -57,7 +57,6 @@
 
         #conversation-popup {
             position: absolute;
-            z-index: 100;
             top: 50%;
             transform: translate(calc(~'-50% - @{sidebar-width}/2'), calc(~'-50% + @{navbar-height}/2'));
             -ms-transform: translate(calc(~'-50% - @{sidebar-width}/2'), calc(~'-50% + @{navbar-height}/2'));
@@ -65,7 +64,7 @@
             -moz-transform: translate(calc(~'-50% - @{sidebar-width}/2'), calc(~'-50% + @{navbar-height}/2'));
 
             width: 60%; height: 80%;
-            background-color: white;
+            background: white;
             border: 1px solid @border-light-color;
             box-shadow: 0 2px 8px -2px @border-light-color;
             text-align: center;
@@ -95,7 +94,7 @@
                 border-bottom: 1px solid @primary-dark-color;
                 font-size: 15px;
                 font-weight: 400;
-                color: @text-light-color;
+                color: @text-dark-color;
                 word-wrap: break-word;
                 font-family: 'Avenir Next LT Pro Demi';
                 width: ~"calc(100% - 40px)";
@@ -148,8 +147,10 @@
         }
     }
 
-    .column {
-        width: 100%;
+    @media(min-width: 768px) {
+        .column {
+            width: calc(~"(100% - 20px) / 2");
+        }
     }
 
     .conversation-container-background {
@@ -171,25 +172,21 @@
     }
 
     .newsfeed-conversation-container {
-        cursor: pointer;
         border-radius: 0px;
         padding: 15px;
-        padding-left: 0px;
-        padding-right: 0px;
-        padding-top: 0px;
         margin-bottom: 20px;
-        border: none;
-        background-color: white;
+        box-shadow: 0 2px 6px -2px @border-dark-color;
+        background: white;
         text-align: justify;
-        border-bottom: 1px solid @primary-dark-color;
     }
 
     .newsfeed-conversation-title {
-        padding-bottom: 0px;
-        margin-bottom: 5px;
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+        border-bottom: 1px solid @primary-dark-color;
         font-size: 15px;
         font-weight: 400;
-        color: @text-light-color;
+        color: @text-dark-color;
         word-wrap: break-word;
         font-family: 'Avenir Next LT Pro Demi';
     }
