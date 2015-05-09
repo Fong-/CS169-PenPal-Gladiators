@@ -1,0 +1,189 @@
+% Based on the documentation written by Lucas yan
+
+\documentclass[12pt]{article}
+\usepackage[top=1in, bottom=1in, left=1in, right=1in]{geometry}
+\usepackage{hyperref}
+\usepackage{listings}
+\setlength\parindent{0pt}
+
+\title{PenPal Gladiators Technical Documentation}
+\author{Version 1.0.1}
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\section{A Word About Licensing}
+This app is licensed under GPLv3.  Anyone is free to modify this app so long as
+they make the source code available under GPLv3 or later.  Modifying this app
+and not making the source code available under GPLv3 is a violation of the
+license for this app’s code and will result in legal action.
+
+\section{Setting Up Your Development Environment}
+\subsection{Git Setup}
+Create an account on \href{https://github.com}{GitHub}and run
+\begin{verbatim}
+    git clone https://github.com/Fong-/CS169-PenPal-Gladiators.git
+\end{verbatim}
+to clone the repository.  See \href{https://git-scm.herokuapp.com/docs}{the
+Git documentation} if you're not familiar with Git.
+
+
+\subsubsection{PenPal Gladiators Git Conventions}
+All features and changes are performed on a branch.  This is called “branch per
+feature” development.  When a feature has been reviewed and is passing all tests
+(e.g. via CI), rebase the branch on the iteration branch (if applicable) or
+master branch (if not) and merge into the iteration branch or master by running:
+\begin{verbatim}
+git merge --no-ff [feature-branchname]
+\end{verbatim}
+
+\subsection{Heroku}
+Download the \href{https://heroku.com}{Heroku command line tools} and add the Heroku remote:
+\begin{verbatim}
+heroku git:remote -a [projectname]
+\end{verbatim}
+inside the project directory. This adds the Heroku repository to your local
+copy. Run
+\begin{verbatim}
+git push Heroku master
+\end{verbatim}
+to deploy the master branch to Heroku
+
+\subsection{CodeClimate}
+CodeClimate is linked to GitHub. Sign up for a
+\href{https://codeclimate.com}{CodeClimate} account if you would like it to run
+on your own repository. CodeClimate flags potential design issues like
+duplication and excessive complexity before they turn into maintainability
+problems.
+
+\subsection{TravisCI}
+TravisCI is an automated testing suite for our repo. Links to it can be found on
+our GitHub repo.  Register for a \href{https://travis-ci.org/}{TravisCI} account
+and link your GitHub repository. While CodeClimate checks for the style of the
+code, TravisCI runs the app's test suite for correctness. Always look at the
+TravisCI results before merging anything to master, and always write tests for
+new features as they're implemented.
+
+\section{Customizing Content and Options}
+\subsection{Overview}
+In order to add your own topics, survey questions, and response weights, you
+will need to first erase the old content, modify \texttt{db/seeds.rb}, and then reseed.
+We have provided a tool for you to erase old content without erasing user data
+which you can run in the project directory with
+\begin{verbatim}
+rails runner tools/reset_seeds.rb
+\end{verbatim}
+or
+\begin{verbatim}
+heroku run rails runner reset_seeds.rb
+\end{verbatim}
+if on Heroku. You can also reseed by running
+\begin{verbatim}
+rake db:seed
+\end{verbatim}
+or
+\begin{verbatim}
+heroku run rake db:seed
+\end{verbatim}
+if on Heroku.
+
+\subsection{Changing Topics}
+\begin{enumerate}
+    \item Open \texttt{db/seeds.rb} in a text editor of your choice
+    \item Find the line that starts with \texttt{topics = [}
+    \item You should see an indented set of lines in the format
+    \begin{verbatim}
+    { :name => "topic name", :icon => "topic icon path"},
+    \end{verbatim}
+    Each line represents a topic. Edit, add, or remove as necessary.
+\end{enumerate}
+
+\pagebreak
+\subsection{Changing Questions of a Topic}
+\begin{enumerate}
+    \item Open \texttt{db/seeds.rb} in a text editor of your choice
+    \item Create a new question and response set using the following template:
+        \begin{lstlisting}[frame=single, numbers=left, breaklines=true]
+name_of_question = Topic.find_by_name("Topic")
+.survey_questions.create(:text => "Survey Question text", :index => Question Number)
+responses = [
+    {
+    :index => Response Number,
+    :text => "Response Text",
+    :summary_text => "Summary Text"
+    },
+    ].map { |data| name_of_question.survey_responses.create data }
+        \end{lstlisting}
+        Each question and response must be assigned an index (the questions and
+        responses are 0-indexed). For example, if this was the first question, the
+        question index would be 0. If it was the second, it would be 1.
+    \item To add the weights between responses, use this template for each pair
+        of responses:
+        \begin{lstlisting}[frame=single, numbers=left, breaklines=true]
+ResponseWeight.create :response1_id => responses[Response Number].id, :response2_id => responses[Response Number].id, :weight => [weight]
+        \end{lstlisting}
+\end{enumerate}
+
+\section{Customizing and Extending the Project}
+
+\subsection{Database Models}
+These reside in \texttt{app/models}:
+\begin{itemize}
+    \item \texttt{User} -- stores the information for each user.
+    \item \texttt{Topic} -- represents a survey topic.
+    \item \texttt{SurveyQuestion} -- belongs to a survey topic, represents a question in the topic
+    \item \texttt{SurveyResponse} -- belongs to a survey question, represents a possible answer to a question
+    \item \texttt{UserSurveyResponse} -- represent’s a user’s response to a question, Belongs to a SurveyResposne as well as a User
+    \item \texttt{ResponseWeight} -- determines the score or ranking between two answers to the same question, a higher score will increase the likelihood of two users with those answers being matched.
+    \item \texttt{Post} -- represents a message in a conversation
+    \item \texttt{Arena} -- represents a match between two users
+    \item \texttt{Conversation} -- represents a conversation on a topic between two users, belongs to an Arena
+    \item \texttt{Invite} -- represents a match request from one user to another
+\end{itemize}
+
+Note: Nearly all models have their own controllers in \texttt{app/controllers}.
+The controllers publicly expose model functions.
+
+\section{Project Structure}
+Our project uses LESS, HTML, CoffeeScript and Angular.
+
+\subsection{File Locations}
+\begin{itemize}
+    \item Model (\texttt{.rb}) files are stored in \texttt{app/models}
+    \item Controllers (\texttt{.rb}) files are stored in \texttt{app/controllers}
+    \item Base level HTML pages are stored in \texttt{public/}.
+        \texttt{homePage.html} is the main application view, \texttt{landingPage.html} is the
+        landing page displayed to a first-time visitor, and
+        \texttt{startPage.html} is the login and registration view
+    \item Partial HTML fragments are stored in \texttt{app/assets/html}
+    \item Front end CoffeeScript files are stored in \texttt{app/javascripts}
+    \item Front end LESS files are stored in \texttt{app/stylesheets}
+    \item Image resources for the topics and landing page are stored in \texttt{app/images}
+    \item Fonts are stored in \texttt{vendor/fonts}
+    \item Bootstrap CSS is stored in \texttt{vendor/stylesheets}
+    \item Jasmine JS test code framework is stored in \texttt{vendor/javascripts}
+\end{itemize}
+
+\subsection{Writing and Running Tests}
+Cucumber tests are stored in \texttt{features/}.  JavaScript tests are stored
+in \texttt{spec/javascripts}. RSpec model tests are stored in
+\texttt{spec/models}.  RSpec controller tests are stored in
+\texttt{spec/controllers}.\\
+
+Run JavaScript tests with:
+\begin{verbatim}
+rake spec:javascript
+\end{verbatim}
+
+Run RSpec tests with:
+\begin{verbatim}
+rspec
+\end{verbatim}
+
+Run Cucumber tests with:
+\begin{verbatim}
+cucumber
+\end{verbatim}
+
+\end{document}
