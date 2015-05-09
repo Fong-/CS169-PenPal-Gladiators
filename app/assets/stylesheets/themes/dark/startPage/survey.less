@@ -3,36 +3,54 @@
 @import "../../../mixins.less";
 
 #survey-questions-container {
-    background: white;
-    width: 2 * @num-topics-per-row * @topic-icon-margin + @num-topics-per-row * @topic-icon-display-size + 70px;
-    margin: 40px auto 40px auto;
-    max-width: 100%;
-    max-height: 640px;
-    text-align: left;
+    position: relative;
+    .flex();
+    .flex-direction(column);
     padding: 30px;
-    box-shadow: 0 2px 8px -2px @border-dark-color;
+    padding-bottom: 75px;
+    margin: 0 auto;
+    width: 2 * @num-topics-per-row * @topic-icon-margin + @num-topics-per-row * @topic-icon-display-size + 60px;
+    max-width: 100%;
     border-radius: 0px;
-    overflow: auto;
+
+    background: white;
+    box-shadow: 0 2px 8px -2px @border-dark-color;
 
     color: @text-lighter-color;
-    font-size: 12px;
-    font-weight: 400;
+    text-align: left;
+    font-size: 14px;
     line-height: 1.5em;
 
+    @media(min-width: 768px) {
+        height: 100%;
+        max-height: 640px;
+    }
+
     #description {
-        padding-bottom: 15px;
+        padding-bottom: 10px;
     }
 
     #topic-questions-container {
+        .flex-grow(2);
         margin-top: 15px;
+        overflow: scroll;
+
+        .question-container {
+            margin-bottom: 10px;
+        }
 
         #continue-button {
             margin-left: 5px;
         }
 
+        input {
+            vertical-align: top;
+            width: 15px;
+        }
+
         .response-text {
-            padding-right: 5px;
-            margin-left: 4px;
+            width: calc(~"100% - 30px");
+            display: inline-block;
         }
 
         .question-text {
@@ -44,21 +62,16 @@
         }
     }
 
-    .btn {
-        float: right;
-        margin-top: 10px;
+    .controls {
+        position: absolute;
+        bottom: 30px ; right: 30px;
     }
 
-    .question-text, .question-responses-container {
-        padding-right: 10px;
-    }
+    .question-container {
+        border-right: 5px solid white;
 
-    .highlighter {
-        position: relative;
-        .question-text, .question-responses-container {
-            position: relative;
-            z-index: 2;
+        &.highlighter {
+            border-color: @primary-dark-color;
         }
-        border-right: 5px solid @primary-dark-color;
     }
 }

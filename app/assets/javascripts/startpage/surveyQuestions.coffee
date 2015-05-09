@@ -69,11 +69,11 @@ surveyQuestions.controller("SurveyQuestionsController", ["$scope", "$http", "$st
     $scope.pageDescription = ->
         numQuestions = $scope.questions.length
         if isCurrentState()
-            return "Answer the following #{numQuestions} questions to proceed"
+            return "Answer the following #{numQuestions} questions to proceed."
         else if currentState == "summary"
-            return "Edit responses and return to summary to complete registration"
+            return "Edit responses and return to summary to complete registration."
         else
-            return "Edit responses and press Next to continue"
+            return "Edit responses and press Next to continue."
 
     # Call this when a response is selected to toggle -- only allows one
     # response to be selected at once
