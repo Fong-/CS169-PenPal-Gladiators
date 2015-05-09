@@ -18,7 +18,7 @@
 
     .navbar {
         background: @nav-bar-color;
-        border-bottom: none;
+        border-bottom: 1px solid @border-light-color;
     }
 
     .navbar-toggle {
@@ -47,11 +47,11 @@
         padding-left: 20px;
         padding-right: 20px;
         text-transform: uppercase;
-        background: @primary-dark-color-2;
+        background: @primary-dark-color;
         font-family: 'Avenir Next LT Pro Regular';
 
         &:hover {
-            background: @primary-dark-color;
+            background: @btn-hover-color;
         }
     }
 
@@ -65,14 +65,15 @@
         }
 
         #profile_nav, #logout_nav {
-            font-family: 'Avenir Next LT Pro Regular';
+            font-family: 'Avenir Next LT Pro Demi';
             border: none;
-            color: white;
-            background: @primary-dark-color-2;
+            color: @text-light-color;
+            background: white;
             margin-left: 15px;
+            padding-bottom: 0;
 
             &:hover {
-                background: @btn-hover-color;
+                color: @primary-dark-color;
             }
         }
 
@@ -91,7 +92,7 @@
 
         .navbar-collapse {
             border: none;
-            background: @primary-dark-color-2;
+            background: @primary-dark-color;
             margin: 0 -@global-padding-xs;
         }
 
