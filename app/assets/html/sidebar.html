@@ -4,7 +4,7 @@
         <ul>
             <li ng-repeat="gladiatorId in gladiatorIds">
                 <div class="gladiator-heading-container menu-item" ng-click="toggleGladiatorPanel(gladiatorId)">
-                    <img class="user-avatar" ng-src="{{gladiatorById[gladiatorId].avatar}}"></img>
+                    <img class="user-avatar" ng-click="goToProfile(gladiatorId); $event.stopPropagation()" ng-src="{{gladiatorById[gladiatorId].avatar}}"></img>
                     <a class="gladiator-heading heading">{{gladiatorById[gladiatorId].username}}</a>
                     <span ng-class="expandButtonClass(gladiatorId)" class="click-to-expand"></span>
                     <!-- <span ng-click="goToProfile(gladiatorId); $event.stopPropagation();" class="glyphicon glyphicon-user btn"></span> -->

@@ -7,4 +7,4 @@
 //= require_tree ./shared
 //= require_tree ./startpage
 
-app = angular.module("StartPage", ["ui.bootstrap", "ui.router", "ngCookies", "Router", "Login", "SurveyTopics", "SurveyQuestions", "SurveySummary", "ProgressBar"])
+app = angular.module("StartPage", ["ui.bootstrap", "ui.router", "ngCookies", "Router", "Login", "SurveyTopics", "SurveyQuestions", "SurveySummary", "ProgressBar", "CSS"])

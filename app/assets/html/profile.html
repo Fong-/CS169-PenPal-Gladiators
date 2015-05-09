@@ -19,6 +19,7 @@
                         <div class="subheader">My Position on the Political Spectrum</div>
                         <p id="spectrum">{{ profile.spectrum }}</p>
                         <button class="btn btn-primary" id="edit-profile" type="button" ng-if="can_edit()" ng-click="edit()">Edit</button>
+                        <button ng-if="can_edit()" id="theme-selector" ng-class="toggleButtonClass()" class="btn btn-primary" ng-click="toggleTheme()">{{ cssOption === "dark" ? 'Light Theme' : 'Dark Theme' }}</button>
                     </div>
                 </div>
             </div>
