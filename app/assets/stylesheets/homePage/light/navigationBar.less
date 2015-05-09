@@ -1,0 +1,121 @@
+@import "../../light/constants.less";
+@import "../../light/mixins.less";
+@import "homePageStyle.less";
+
+#navigation-container {
+    height: @navbar-height;
+
+    @media(min-width: 768px) {
+        .navbar-header {
+            margin-left: -30px;
+        }
+    }
+
+    @media(max-width: 768px) {
+        .navbar-header {
+            margin-left: -15px;
+        }
+    }
+
+    .navbar {
+        background-color: @nav-bar-color;
+        border-bottom: 1px solid @border-light-color;
+    }
+
+    .navbar-toggle {
+        background-color: transparent;
+        border: none;
+        padding-left: 0px;
+        padding-right: 0px;
+        color: @text-light-color;
+        margin-right: 0px;
+
+        .icon-bar {
+            background-color: @primary-dark-color;
+        }
+
+        &:hover, &:active {
+            .icon-bar {
+                background-color: @btn-hover-color;
+            }
+        }
+    }
+
+    .navbar-brand:hover {
+        background: @btn-hover-color;
+    }
+
+    .navbar-brand {
+        color: white;
+        font-weight: 400;
+        font-size: 18px;
+        padding-left: 20px;
+        padding-right: 20px;
+        text-transform: uppercase;
+        background: @primary-dark-color;
+        font-family: 'Avenir Next LT Pro Regular';
+    }
+
+    @media(min-width: 768px) {
+        .navbar {
+            padding: 0 @global-padding-md;
+        }
+
+        .navbar-nav {
+            margin: 0;
+        }
+
+        #profile_nav, #logout_nav {
+            background: none;
+            border: none;
+            font-family: 'Avenir Next LT Pro Demi';
+            box-shadow: none;
+            color: @text-light-color;
+            &:hover {
+                border-color: white;
+                color: @primary-dark-color;
+            }
+            margin-left: 15px;
+        }
+
+        .btn {
+            height: 30px;
+            margin-left: 10px;
+            font-size: 14px;
+            line-height: 14px;
+        }
+    }
+
+    @media(max-width: 768px) {
+        .navbar {
+            padding: 0 @global-padding-xs;
+        }
+
+        .navbar-collapse {
+            border: none;
+            background-color: @primary-dark-color;
+            margin: 0 -@global-padding-xs;
+        }
+
+        .navbar-nav {
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+
+        .nav li {
+            border-top: 1px solid white;
+        }
+
+        .btn {
+            width: 100%; height: 100%;
+            padding: 8px @global-padding-xs;
+            border: none;
+            border-radius: unset;
+            background-color: unset;
+            color: white;
+            font-size: 14px;
+            font-weight: 100;
+            text-align: left;
+        }
+    }
+}

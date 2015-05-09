@@ -1,16 +1,18 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="StartPage" ng-controller="CSS as cssController">
     <head>
-        <title>The Colosseum</title>
+        <title>The Coliseum</title>
+        <script src="/assets/startPage.js"></script>
         <link rel="stylesheet" type="text/css" href="/assets/bootstrap.min.css"/>
         <link rel="stylesheet" type="text/css" href="/assets/bootflat.min.css"/>
         <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" type="text/css" href="/assets/startPage.css"/>
+        <link rel="stylesheet" type="text/css" href="/assets/global.css"/>
+        <link rel="stylesheet" type="text/css" href="/assets/startPage{{ cssController.cssOption }}.css"/>
     </head>
     <body>
-        <div class="container" ng-app="StartPage">
+        <button id="theme-selector" ng-class="cssController.buttonClass()" class="btn btn-primary" ng-click="cssController.toggleTheme()">{{ cssController.cssOption === "" ? 'Light Mode' : 'Default' }}</button>
+        <div class="container">
             <div class="container" ui-view/>
         </div>
-        <script src="/assets/startPage.js"></script>
     </body>
 </html>
