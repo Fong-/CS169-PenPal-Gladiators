@@ -1,34 +1,43 @@
 @import "../constants.less";
-@import "../mixins.less";
-@import "startPageStyle.less";
+@import "constants.less";
+@import "../../../mixins.less";
 
 #topic-select-container {
-    font-size: 14px;
-    font-weight: 300;
-
-    /* Container attributes */
-
-    width: 2 * @num-topics-per-row * @topic-icon-margin + @num-topics-per-row * @topic-icon-display-size + 70px;
+    position: relative;
+    .flex();
+    .flex-direction(column);
+    width: 2 * @num-topics-per-row * @topic-icon-margin + @num-topics-per-row * @topic-icon-display-size + 60px;
     max-width: 100%;
-    background: white;
-    margin-top: 40px;
-    margin-bottom: 40px;
-    background: white;
-    text-align: left;
+    margin: 40px auto;
     padding: 30px;
-    box-shadow: 0 2px 10px -2px @border-dark-color;
-    border: 1px solid @border-dark-color;
-    border-radius: 5px;
+    padding-bottom: 75px;
 
-    /* Child view attributes */
+    background: white;
+    .card-dark();
+
+    text-align: left;
+    font-size: 14px;
+
+    @media(min-width: 768px) {
+        height: calc(~"100% - 80px");
+    }
+
+    @media(max-width: 768px) {
+        height: auto;
+    }
+
+    #description {
+        color: @text-light-color;
+    }
 
     #topic-check-container {
+        .flex-grow(2);
         width: 100%;
         margin-top: 15px;
         padding: 0px;
+        overflow-y: auto;
 
         div {
-            border-radius: 4px;
             overflow: hidden;
             padding: 0px;
         }
@@ -43,7 +52,7 @@
             z-index: 999;
 
             p {
-                color: @text-dark-color;
+                color: @text-light-color;
                 margin-top: 5px;
                 padding-left: 6px;
                 padding-top: 5px;
@@ -56,7 +65,7 @@
             }
 
             img {
-                border-radius: 5px;
+                border-radius: 0px;
                 border: 1px solid #cccccc;
                 width: @topic-icon-display-size;
                 height: @topic-icon-display-size - 5px;
@@ -77,13 +86,12 @@
                     top: 10px; right: 5px;
                     width: 28px; height: 28px;
                     padding: 6px;
-                    border: 1px solid @primary-dark-color;
-                    border-radius: 50%;
-                    background-color: white;
+                    border: 1px solid @border-dark-color;
+                    border-radius: 0px;
+                    background: white;
                     color: @primary-dark-color;
                     font-family: 'Glyphicons Halflings';
                     font-style: normal;
-                    font-weight: 400;
                     line-height: 1;
                     -webkit-font-smoothing: antialiased;
                     opacity: 1;
@@ -98,7 +106,8 @@
     }
 
     #continue-button {
-        margin-left: 10px;
-        float: right;
+        position: absolute;
+        right: 30px;
+        bottom: 30px;
     }
 }

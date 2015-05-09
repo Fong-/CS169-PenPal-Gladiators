@@ -1,16 +1,18 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="StartPage">
     <head>
-        <title>The Colosseum</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>The Coliseum</title>
+        <script src="/assets/startPage.js"></script>
         <link rel="stylesheet" type="text/css" href="/assets/bootstrap.min.css"/>
         <link rel="stylesheet" type="text/css" href="/assets/bootflat.min.css"/>
         <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" type="text/css" href="/assets/startPage.css"/>
+        <link rel="stylesheet" type="text/css" ng-href="/assets/themes/dark/startPage.css"/>
     </head>
     <body>
-        <div class="container" ng-app="StartPage">
+        <div class="container">
             <div class="container" ui-view/>
         </div>
-        <script src="/assets/startPage.js"></script>
     </body>
 </html>

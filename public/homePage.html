@@ -1,18 +1,20 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="HomePage">
     <head>
-        <title>The Colosseum</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>The Coliseum</title>
+        <script src="/assets/homePage.js"></script>
         <link rel="stylesheet" type="text/css" href="/assets/bootstrap.min.css"/>
         <link rel="stylesheet" type="text/css" href="/assets/bootflat.min.css"/>
         <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" type="text/css" href="/assets/homePage.css"/>
+        <link rel="stylesheet" type="text/css" ng-href="/assets/themes/dark/homePage.css"/>
     </head>
     <body>
-        <div id="homepage-container" ng-app="HomePage">
+        <div id="homepage-container">
             <div ui-view="navbar"></div>
             <div ui-view="sidebar"></div>
             <div ui-view="content"></div>
         </div>
-        <script src="/assets/homePage.js"></script>
     </body>
 </html>

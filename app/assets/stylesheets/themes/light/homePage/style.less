@@ -1,0 +1,7 @@
+@import "../constants.less";
+
+@media(min-width: (@container-max-width + @sidebar-width)) {
+    #home-container, #conversation-container, #profile-container {
+        padding-left: ~'calc((100% - @{container-max-width} - @{sidebar-width}) / 2)';
+    }
+}

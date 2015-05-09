@@ -1,0 +1,39 @@
+@import "mixins.less";
+@import "global/theme-selector.less";
+
+@font-face {
+    font-family: 'Avenir Next LT Pro Regular';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Avenir Next LT Pro Regular'), url('/assets/AvenirNextLTPro-Regular.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Avenir Next LT Pro Demi';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Avenir Next LT Pro Demi'), url('/assets/AvenirNextLTPro-Demi.woff') format('woff');
+}
+
+.vertical-center {
+    .flex();
+    .align-items(center);
+    min-height: 100%;
+    min-height: 100vh;
+}
+
+.vertical-scroll-disabled {
+    overflow-y: hidden;
+}
+
+.vertical-scroll-enabled {
+    overflow-y: auto;
+}
+
+.background-opacity {
+    opacity: 0.1;
+}
+
+.foreground-opacity {
+    opacity: 1;
+}

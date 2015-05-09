@@ -1,21 +1,17 @@
 @import "../constants.less";
-@import "../mixins.less";
-@import "homePageStyle.less";
+@import "../../../mixins.less";
 
 #sidebar {
     .unselectable();
     cursor: pointer;
     overflow-y: auto;
-
-    @media(max-width: 768px) {
-
-    }
+    background: white;
 
     @media(min-width: 768px) {
         position: fixed;
         top: @navbar-height; right: 0;
         height: calc(~"100vh - @{navbar-height}"); width: @sidebar-width;
-        border-left: 1px solid @border-dark-color;
+        border-left: 1px solid @border-light-color;
     }
 
     // Border handling
@@ -26,10 +22,16 @@
         border-top: 1px dotted @border-light-color;
     }
 
+    .sidebar-matching-container .user:hover,
+    .sidebar-arenas-container .conversation-start-container:hover,
+    .sidebar-arenas-container .conversation-preview:hover {
+        background: @background-highlight;
+    }
+
     .sidebar-matching-container {
 
         ul {
-            border-bottom: 1px solid @border-dark-color;
+            border-bottom: 1px solid @primary-dark-color;
         }
 
         li:last-child {
@@ -60,14 +62,9 @@
         float: right;
         margin-top: 4px; margin-left: 10px;
         padding: 3px 6px;
-        background-color: @background-color;
-        border: 1px solid @primary-dark-color;
-        color: @primary-dark-color;
         font-size: 12px;
 
         &:hover {
-            background-color: @primary-dark-color;
-            border-color: @primary-dark-color;
             color: white;
         }
 
@@ -80,11 +77,11 @@
         padding: 8px 15px;
 
         &:hover {
-            background-color: @btn-hover-color;
+            background: @background-color;
         }
 
         a {
-            color: @text-dark-color;
+            color: @text-light-color;
         }
     }
 
@@ -94,24 +91,21 @@
 
     .heading {
         font-size: 14px;
-        font-weight: 400;
         line-height: 35px;
     }
 
     .conversation-title {
-        font-weight: 400;
+        font-family: "Avenir Next LT Pro Demi";
         line-height: 1.7;
     }
 
     .conversation-time {
         color: @text-lighter-color;
-        font-weight: 300;
         padding: 3px 0;
     }
 
     .conversation-text {
         word-wrap: break-word;
-        font-weight: 300;
         color: @text-light-color;
     }
 
