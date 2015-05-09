@@ -9,23 +9,17 @@
     @posts-size-ratio: 0.6;
     @editor-size-ratio: 0.4;
 
-    height: calc(~"100vh - @{navbar-height}");
     position: relative;
     word-wrap: break-word;
 
     @media(min-width: 768px) {
         width: calc(~"100vw - @{sidebar-width}");
-    }
-
-    @media(max-width: 768px) {
-        width: 100%;
-    }
-
-    @media(min-width: 768px) {
+        height: calc(~"100vh - @{navbar-height}");
         padding: @vertical-padding @global-padding-md;
     }
 
     @media(max-width: 768px) {
+        width: 100%;
         padding: @vertical-padding @global-padding-xs;
     }
 
@@ -50,10 +44,16 @@
     }
 
     #posts-container {
-        height: calc(~"100vh - @{navbar-height} - 3 * @{vertical-padding} - @{title-height} - @{button-height}");
+        @media(min-width: 768px) {
+            height: calc(~"100vh - @{navbar-height} - 3 * @{vertical-padding} - @{title-height} - @{button-height}");
 
-        &.posts-shortened {
-            height: calc(~"@{posts-size-ratio} * (100vh - @{navbar-height} - 4 * @{vertical-padding} - @{title-height} - @{button-height})");
+            &.posts-shortened {
+                height: calc(~"@{posts-size-ratio} * (100vh - @{navbar-height} - 4 * @{vertical-padding} - @{title-height} - @{button-height})");
+            }
+        }
+
+        @media(max-width: 768px) {
+            max-height: 640px;
         }
 
         background: white;
@@ -66,7 +66,7 @@
             display: flex;
             justify-content: space-between;
             padding: 10px 0;
-            border-bottom: 1px solid @border-light-color;
+            border-bottom: 1px dotted @border-light-color;
 
             &:first-child {
                 padding-top: 0;
