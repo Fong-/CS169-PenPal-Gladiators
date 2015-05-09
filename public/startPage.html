@@ -2,7 +2,6 @@
 <html ng-app="StartPage" data-css="startPage.css">
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
         <title>The Coliseum</title>
         <script src="/assets/startPage.js"></script>
         <link rel="stylesheet" type="text/css" href="/assets/bootstrap.min.css"/>
@@ -13,6 +12,5 @@
         <div class="container">
             <div class="container" ui-view/>
         </div>
-        <button id="theme-selector" ng-class="toggleButtonClass()" class="btn btn-primary" ng-click="toggleTheme()">{{ cssOption === "dark" ? 'Light Mode' : 'Default' }}</button>
     </body>
 </html>

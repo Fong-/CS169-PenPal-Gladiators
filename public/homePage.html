@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="HomePage" data-css="homePage.css">
+<html ng-app="HomePage" ng-controller="CSS" data-css="homePage.css">
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>The Coliseum</title>
@@ -8,12 +8,11 @@
         <link rel="stylesheet" type="text/css" href="/assets/bootflat.min.css"/>
         <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900' rel='stylesheet' type='text/css'>
     </head>
-    <body ng-controller="CSS">
+    <body>
         <div id="homepage-container">
             <div ui-view="navbar"></div>
             <div ui-view="sidebar"></div>
             <div ui-view="content"></div>
         </div>
-        <button id="theme-selector" ng-class="toggleButtonClass()" class="btn btn-primary" ng-click="toggleTheme()">{{ cssOption === "dark" ? 'Light Mode' : 'Default' }}</button>
     </body>
 </html>

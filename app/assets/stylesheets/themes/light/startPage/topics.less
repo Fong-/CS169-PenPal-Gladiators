@@ -45,7 +45,7 @@
         .topic-container {
             width: @topic-icon-display-size;
             height: @topic-icon-display-size + 25px;
-            margin-bottom: 2 * @topic-icon-margin;
+            margin-bottom: @topic-icon-margin;
             margin-left: @topic-icon-margin;
             margin-right: @topic-icon-margin;
             display: inline-block;
@@ -66,12 +66,15 @@
 
             img {
                 border-radius: 0px;
-                border: 1px solid #cccccc;
                 width: @topic-icon-display-size;
                 height: @topic-icon-display-size - 5px;
                 margin-bottom: 0px;
                 margin-top: -20px;
                 display: block;
+                padding-bottom: 0px;
+                padding-top: 20px;
+                padding-left: 20px;
+                padding-right: 20px;
             }
 
             input[type="checkbox"] {

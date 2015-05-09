@@ -61,16 +61,16 @@ responses = [
 ]
 
 topics = [
-    { :name => "Climate", :icon => "/assets/topic_icons/climate.png"},
-    { :name => "Education", :icon => "/assets/topic_icons/education.png"},
-    { :name => "Economy", :icon => "/assets/topic_icons/money.png"},
-    { :name => "Technology", :icon => "/assets/topic_icons/technology.png"},
-    { :name => "LGBT Rights", :icon => "/assets/topic_icons/lgbt.png"},
-    { :name => "Immigration", :icon => "/assets/topic_icons/immigration.png"},
-    { :name => "Foreign Policy", :icon => "/assets/topic_icons/international.png"},
-    { :name => "Religion", :icon => "/assets/topic_icons/religion.png"},
-    { :name => "Philosophy", :icon => "/assets/topic_icons/philosophy.png"},
-    { :name => "Criminal Law", :icon => "/assets/topic_icons/justice.png"},
+    { :name => "Climate", :icon => "/assets/topic_icons/climate.svg"},
+    { :name => "Education", :icon => "/assets/topic_icons/education.svg"},
+    { :name => "Economy", :icon => "/assets/topic_icons/money.svg"},
+    { :name => "Technology", :icon => "/assets/topic_icons/technology.svg"},
+    { :name => "LGBT Rights", :icon => "/assets/topic_icons/lgbt.svg"},
+    { :name => "Immigration", :icon => "/assets/topic_icons/immigration.svg"},
+    { :name => "Foreign Policy", :icon => "/assets/topic_icons/international.svg"},
+    { :name => "Religion", :icon => "/assets/topic_icons/religion.svg"},
+    { :name => "Philosophy", :icon => "/assets/topic_icons/philosophy.svg"},
+    { :name => "Criminal Law", :icon => "/assets/topic_icons/justice.svg"},
 ]
 
 topics.each do |t|
