@@ -1,20 +1,19 @@
 <!DOCTYPE html>
-<html ng-app="HomePage">
+<html ng-app="HomePage" data-css="homePage.css">
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
         <title>The Coliseum</title>
         <script src="/assets/homePage.js"></script>
         <link rel="stylesheet" type="text/css" href="/assets/bootstrap.min.css"/>
         <link rel="stylesheet" type="text/css" href="/assets/bootflat.min.css"/>
         <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" type="text/css" ng-href="/assets/themes/dark/homePage.css"/>
     </head>
-    <body>
+    <body ng-controller="CSS">
         <div id="homepage-container">
             <div ui-view="navbar"></div>
             <div ui-view="sidebar"></div>
             <div ui-view="content"></div>
         </div>
+        <button id="theme-selector" ng-class="toggleButtonClass()" class="btn btn-primary" ng-click="toggleTheme()">{{ cssOption === "dark" ? 'Light Mode' : 'Default' }}</button>
     </body>
 </html>

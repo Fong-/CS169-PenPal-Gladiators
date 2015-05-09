@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="StartPage">
+<html ng-app="StartPage" data-css="startPage.css">
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -8,11 +8,11 @@
         <link rel="stylesheet" type="text/css" href="/assets/bootstrap.min.css"/>
         <link rel="stylesheet" type="text/css" href="/assets/bootflat.min.css"/>
         <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" type="text/css" ng-href="/assets/themes/dark/startPage.css"/>
     </head>
-    <body>
+    <body ng-controller="CSS">
         <div class="container">
             <div class="container" ui-view/>
         </div>
+        <button id="theme-selector" ng-class="toggleButtonClass()" class="btn btn-primary" ng-click="toggleTheme()">{{ cssOption === "dark" ? 'Light Mode' : 'Default' }}</button>
     </body>
 </html>

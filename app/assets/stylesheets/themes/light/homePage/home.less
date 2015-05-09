@@ -57,7 +57,6 @@
             width: 60%; height: 80%;
             background: white;
             border: 1px solid @border-light-color;
-            .card-light();
             text-align: center;
             overflow: hidden;
             display: flex;
@@ -163,17 +162,22 @@
 
     .newsfeed-conversation-container {
         padding: 0px;
+        padding-bottom: 10px;
         margin-bottom: 20px;
         background: white;
         text-align: justify;
+        border-top: none;
+        border-left: none;
+        border-right: none;
+        border-bottom: 1px solid @primary-dark-color;
     }
 
     .newsfeed-conversation-title {
-        padding-bottom: 10px;
-        margin-bottom: 10px;
-        border-bottom: 1px solid @primary-dark-color;
+        padding-bottom: 5px;
+        margin-bottom: 0px;
+        border-bottom: none;
         font-size: 15px;
-        color: @text-dark-color;
+        color: @text-light-color;
         word-wrap: break-word;
         font-family: 'Avenir Next LT Pro Demi';
     }
