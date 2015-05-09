@@ -1,0 +1,11 @@
+@import "../constants.less";
+
+#home-container, #conversation-container, #profile-container {
+    max-width: @container-max-width;
+}
+
+@media(min-width: (@container-max-width + @sidebar-width)) {
+    #home-container, #conversation-container, #profile-container {
+        margin-left: ~'calc((100% - @{container-max-width} - @{sidebar-width}) / 2)';
+    }
+}
