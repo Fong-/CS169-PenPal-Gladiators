@@ -181,8 +181,11 @@
         }
 
         .last-edited-message {
+            @media(max-width: 768px) {
+                display: none;
+            }
             font-size: 14px;
-            font-color: @text-light-color;
+            color: @text-light-color;
         }
     }
 
