@@ -2,10 +2,12 @@
     background: transparent;
     border: 1px solid #aaaaaa;
     color: #aaaaaa;
+    box-shadow: none;
 
     &:hover {
         border: 1px solid #cccccc;
         color: #cccccc;
+        opacity: 1.0
     }
 
     &.select-default {
@@ -14,19 +16,15 @@
         color: #5bcffa;
         &:hover {
             border: 1px solid #3bafda;
-        color: #3bafda;
+            color: #3bafda;
         }
     }
 
     &.fixed {
-        opacity: 0.6;
+        opacity: 0.9;
         position: fixed;
         bottom: 15px;
         right: 15px;
         z-index: 100000;
-    }
-
-    &:hover {
-        opacity: 1.0;
     }
 }
