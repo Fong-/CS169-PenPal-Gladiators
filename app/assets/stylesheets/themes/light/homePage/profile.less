@@ -2,7 +2,7 @@
 @import "../../../mixins.less";
 
 #profile-container {
-    color: @text-lighter-color;
+    color: @text-light-color;
     font-size: 14px;
 
     overflow-y: auto;
@@ -19,9 +19,9 @@
     }
 
     #profile {
-        padding: 20px;
+        padding: 0px;
         background-color: white;
-        .card-dark();
+        border: none;
     }
 
     .user-avatar {
@@ -37,15 +37,16 @@
     }
 
     .header {
-        color: @text-dark-color;
-        border-bottom: 1px solid @primary-dark-color;
-        font-family: "Avenir Next LT Pro Demi";
-        padding-bottom: 7px;
+        color: @text-light-color;
+        border-bottom: none;
+        font-family: "Avenir Next LT Pro Regular";
+        padding-bottom: 0px;
         margin-bottom: 10px;
+        margin-top: 0px;
     }
 
     .subheader {
-        color: @text-dark-color;
+        color: @text-light-color;
         font-size: 16px;
         margin-top: 10px;
         margin-bottom: 5px;
